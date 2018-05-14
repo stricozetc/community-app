@@ -3,6 +3,8 @@ import './App.css';
 
 import logo from './logo.svg';
 
+import { Form, List } from 'components';
+
 export class App extends React.Component {
   public render(): JSX.Element {
     return (
@@ -14,6 +16,8 @@ export class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <Form />
+        <List />
       </div>
     );
   }
