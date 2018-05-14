@@ -1,9 +1,23 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts"
     ]
+  },
+  "rules": {
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "property-declaration"
+    ],
+    "no-default-export": true,
+    "newline-before-return": true
   }
 }
