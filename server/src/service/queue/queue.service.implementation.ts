@@ -30,12 +30,10 @@ export class QueueServiceImplementation extends QueueService {
     }
 
     private checkCountWaitPlayers(id: number): void {
-        let maxRoomPlayer = this.questsInfo[id].maxRoomPlayer;
-        console.log(this.queues[id].length);
-        if (this.queues[id].length === maxRoomPlayer) {
+        if (this.queues[id].length === this.questsInfo[id].maxRoomPlayer) {
 
             this.queues[id].forEach((player: SocketIO.Socket) => {
-                player.emit('redirect', 'http://localhost:2018');
+                player.emit('redirect', this.questsInfo[id].requestUrl);
             });
             this.queues[id] = [];
         }
