@@ -1,0 +1,11 @@
+{
+    "quests": [
+        {
+            "id": 0,
+            "name": "JsMarathon",
+            "eventName": "onJsMarathon",
+            "maxRoomPlayer": 5,
+            "requestUrl": "http://localhost:2018"
+        }
+    ]
+}

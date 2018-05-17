@@ -4,7 +4,7 @@
   "scripts": {
     "prebuild": "npm run lint",
     "build": "webpack --config webpack.config.js --env=dev",
-    "prestart": "npm run  && node prestart.js",
+    "prestart": "npm run build && node prestart.js",
     "start": "node ./build/community-app-server.app.bundle.js",
     "preprod": "npm test",
     "prod": "webpack --config webpack.config.js --env=prod",

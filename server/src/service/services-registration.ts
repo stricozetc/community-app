@@ -1,6 +1,7 @@
 import { Container } from 'inversify';
 
+import { QueueServiceImplementation, QueueService } from './queue';
+
 export const CONTAINER = new Container();
 
-// Example
-// CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
+CONTAINER.bind<QueueService>(QueueService).to(QueueServiceImplementation);

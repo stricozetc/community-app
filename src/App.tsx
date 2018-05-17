@@ -4,8 +4,16 @@ import './App.css';
 import logo from './logo.svg';
 
 import { Form, List } from 'components';
-
+import * as openSocket from 'socket.io-client';
 export class App extends React.Component {
+  private socket = openSocket('http://localhost:3030');
+
+  constructor(props: any) {
+    super(props);
+    this.socket.emit('onJsMarathon');
+    this.socket.on('redirect', (redirectUrl: string) => window.location.replace(redirectUrl))
+  }
+
   public render(): JSX.Element {
     return (
       <div className="App">
