@@ -12,6 +12,7 @@ export class BattleRegistration extends React.Component<BattleRegistrationProps,
     private waitBattleHelpMassage: string = 'Please, wait other users';
     private goToBattleButtonMassage: string = 'Go to the battle';
     private leaveFromBattleButtonMassage: string = 'Leave form the battle';
+    
     private isStartingBattle: boolean = false;
 
     constructor(props: any) {

@@ -11,11 +11,13 @@ export class SocketServiceImplementation extends SocketService {
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
 
     constructor(@inject(QueueService) private queueService: QueueService) {
+        //ToDo: need fix 
         super();
     }
 
     public connection(serverInstance: any): void {
         const socketIO = SocketIO(serverInstance);
+        
         socketIO.on('connection', (client: SocketIO.Socket) => {
             console.log('Player connection opened');
 

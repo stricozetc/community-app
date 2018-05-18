@@ -9,7 +9,7 @@ export class QueueServiceImplementation extends QueueService {
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
 
     constructor() {
-        //ToDo: Fix 
+        //ToDo: need fix 
         super();
 
         for (let index = 0; index < this.questsInfo.length; index++) {
@@ -34,8 +34,10 @@ export class QueueServiceImplementation extends QueueService {
 
     private checkCountWaitPlayers(id: number): void {
         if (this.queues[id].length === this.questsInfo[id].maxRoomPlayer) {
-
             this.queues[id].forEach((player: SocketIO.Socket) => {
+                player.emit(this.questsInfo[id].getCountWaitPlayersEventName, this.queues[id].length);
+                console.log('Sent count wait players in', this.questsInfo[id].name);
+
                 player.emit('redirect', this.questsInfo[id].requestUrl);
                 console.log('Redirect players group to', this.questsInfo[id].name);
             });
