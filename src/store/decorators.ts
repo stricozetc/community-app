@@ -1,16 +1,18 @@
-import { connect as _connect, DispatchProp, InferableComponentEnhancerWithProps } from 'react-redux';
-import { AnyAction, Dispatch } from 'redux';
+import { connect as _connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { AppState } from './store.config';
 
+// tslint:disable-next-line:typedef
 export function mapStateToProps<T>(
   mapStateToPropsFunc: (state: AppState) => T
-): InferableComponentEnhancerWithProps<T & DispatchProp<AnyAction>, {}> {
+) {
   return _connect(mapStateToPropsFunc);
 }
 
+// tslint:disable-next-line:typedef
 export function mapDispatchToProps<T>(
   mapDispatchToPropsFunc: (dispatch: Dispatch) => T
-): InferableComponentEnhancerWithProps<T, {}> {
+) {
   const mapStateToPropsFunc = () => ({});
 
   return _connect(mapStateToPropsFunc, mapDispatchToPropsFunc);

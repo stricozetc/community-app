@@ -5,7 +5,7 @@ export const featureReducer = (state = initialState, action: ApplicationActions)
   switch (action.type) {
     case FeatureActionTypes.ADD_ITEM: {
       const item = {
-        id: state.items.length + 1,
+        id: `${state.items.length + 1}`,
         name: action.payload
       };
 
