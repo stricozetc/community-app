@@ -15,7 +15,6 @@ import {
     QueueServiceImplementation
 } from './service';
 
-
 const server = new InversifyExpressServer(CONTAINER);
 const socket: SocketService = new SocketServiceImplementation(new QueueServiceImplementation());
 

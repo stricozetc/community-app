@@ -3,7 +3,6 @@ import { injectable } from "inversify";
 import { QuestInfo } from "@community-app/quest-info";
 
 import { QueueService } from "./queue.service";
-
 @injectable()
 export class QueueServiceImplementation extends QueueService {
     private queues: SocketIO.Socket[][] = [];
@@ -29,13 +28,23 @@ export class QueueServiceImplementation extends QueueService {
         });
     }
 
+    public deletePlayerFromQueue(id: number, deletePlayer: SocketIO.Socket): void {
+        this.queues[id] = this.queues[id].filter((player: SocketIO.Socket) => player !== deletePlayer);
+    }
+
     private checkCountWaitPlayers(id: number): void {
         if (this.queues[id].length === this.questsInfo[id].maxRoomPlayer) {
 
             this.queues[id].forEach((player: SocketIO.Socket) => {
                 player.emit('redirect', this.questsInfo[id].requestUrl);
+                console.log('Redirect players group to', this.questsInfo[id].name);
             });
             this.queues[id] = [];
+        } else {
+            this.queues[id].forEach((player: SocketIO.Socket) => {
+                player.emit(this.questsInfo[id].getCountWaitPlayersEventName, this.queues[id].length);
+                console.log('Sent count wait players in', this.questsInfo[id].name);
+            });
         }
     }
 }

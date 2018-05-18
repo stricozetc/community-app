@@ -1,12 +1,14 @@
-import { SocketService } from "./socket.service";
 import { inject, injectable } from "inversify";
-import { QueueService } from "../queue";
-import { QuestInfo } from "@community-app/quest-info";
 import * as SocketIO from 'socket.io';
+
+import { QuestInfo } from "@community-app/quest-info";
+
+import { SocketService } from "./socket.service";
+import { QueueService } from "../queue";
 
 @injectable()
 export class SocketServiceImplementation extends SocketService {
-    private questsConfig: QuestInfo[] = require('../../config/quests.json').quests;
+    private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
 
     constructor(@inject(QueueService) private queueService: QueueService) {
         super();
@@ -22,9 +24,18 @@ export class SocketServiceImplementation extends SocketService {
                 this.queueService.deletePlayer(client);
             });
 
-            for (let index = 0; index < this.questsConfig.length; index++) {
-                client.on(this.questsConfig[index].eventName,
-                    () => this.queueService.setNewPlayer(this.questsConfig[index].id, client));
+            for (let index = 0; index < this.questsInfo.length; index++) {
+                client.on(this.questsInfo[index].registrationEventName,
+                    () => {
+                        this.queueService.setNewPlayer(this.questsInfo[index].id, client);
+                        console.log('Player registration on', this.questsInfo[index].name);
+                    });
+
+                client.on(this.questsInfo[index].leaveEventName,
+                    () => {
+                        this.queueService.deletePlayerFromQueue(this.questsInfo[index].id, client);
+                        console.log('Player leave from', this.questsInfo[index].name);
+                    });
             }
         });
     }

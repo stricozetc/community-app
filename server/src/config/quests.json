@@ -3,7 +3,9 @@
         {
             "id": 0,
             "name": "JsMarathon",
-            "eventName": "onJsMarathon",
+            "registrationEventName": "onJsMarathon",
+            "leaveEventName": "onLeaveJsMarathon",
+            "getCountWaitPlayersEventName":"onWaitPlayersJsMarathon",
             "maxRoomPlayer": 5,
             "requestUrl": "http://localhost:2018"
         }
