@@ -15,6 +15,13 @@ export const featureReducer = (state = initialState, action: ApplicationActions)
       };
     }
 
+    case FeatureActionTypes.PONG: {
+      // tslint:disable-next-line:no-console
+      console.log(action.payload);
+
+      return state;
+    }
+
     default:
       return state;
   }

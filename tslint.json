@@ -4,6 +4,7 @@
     "tslint-react",
     "tslint-config-prettier"
   ],
+  "defaultSeverity": "warning",
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -25,6 +26,7 @@
       "never-prefix"
     ],
     "jsx-no-lambda": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "max-classes-per-file": false
   }
 }
