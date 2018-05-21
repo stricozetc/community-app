@@ -3,11 +3,13 @@ import './App.css';
 
 import logo from './logo.svg';
 
-import {
-  BattleRegistration,
-  // Form,
-  // List
-} from 'components';
+import BattleRegistration from 'components/BattleRegistration/BattleRegistration';
+
+// import {
+//   BattleRegistration,
+//   // Form,
+//   // List
+// } from 'components';
 export class App extends React.Component {
   public render(): JSX.Element {
     return (

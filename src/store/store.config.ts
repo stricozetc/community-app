@@ -1,23 +1,34 @@
 import { connect as nativeConnect } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { FeatureEffects, featureReducer, FeatureState } from './feature';
+
+import {
+  // FeatureEffects,
+  featureReducer,
+  FeatureState
+} from './feature';
+
+import { BattleEffects, battleReducer } from './battle';
+import { BattleState } from './battle/interfaces';
 
 // (Valiantsin): redux-observable types issue
 type Epic = any;
 
 const rootReducers = combineReducers({
-  feature: featureReducer
+  feature: featureReducer,
+  battle: battleReducer
 });
 
 const rootEpic: Epic = combineEpics(
-  ...FeatureEffects
+  // ...FeatureEffects,
+  ...BattleEffects
 );
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
 export interface AppState {
-  feature: FeatureState
+  feature: FeatureState,
+  battle: BattleState
 }
 
 export const store = createStore(

@@ -4,7 +4,7 @@ declare module '@community-app/quest-info' {
         name: string;
         registrationEventName: string;
         leaveEventName: string;
-        getCountWaitPlayersEventName: string;
+        getWaitPlayersCountEventName: string;
         maxRoomPlayer: number;
         requestUrl: string;
     }

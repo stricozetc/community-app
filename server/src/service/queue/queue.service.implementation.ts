@@ -19,7 +19,7 @@ export class QueueServiceImplementation extends QueueService {
 
     public setNewPlayer(id: number, player: SocketIO.Socket): void {
         this.queues[id].push(player);
-        this.checkCountWaitPlayers(id);
+        this.checkWaitPlayersCount(id);
     }
 
     public deletePlayer(deletePlayer: SocketIO.Socket): void {
@@ -30,12 +30,13 @@ export class QueueServiceImplementation extends QueueService {
 
     public deletePlayerFromQueue(id: number, deletePlayer: SocketIO.Socket): void {
         this.queues[id] = this.queues[id].filter((player: SocketIO.Socket) => player !== deletePlayer);
+        this.checkWaitPlayersCount(id);
     }
 
-    private checkCountWaitPlayers(id: number): void {
+    private checkWaitPlayersCount(id: number): void {
         if (this.queues[id].length === this.questsInfo[id].maxRoomPlayer) {
             this.queues[id].forEach((player: SocketIO.Socket) => {
-                player.emit(this.questsInfo[id].getCountWaitPlayersEventName, this.queues[id].length);
+                player.emit(this.questsInfo[id].getWaitPlayersCountEventName, this.queues[id].length);
                 console.log('Sent count wait players in', this.questsInfo[id].name);
 
                 player.emit('redirect', this.questsInfo[id].requestUrl);
@@ -44,7 +45,7 @@ export class QueueServiceImplementation extends QueueService {
             this.queues[id] = [];
         } else {
             this.queues[id].forEach((player: SocketIO.Socket) => {
-                player.emit(this.questsInfo[id].getCountWaitPlayersEventName, this.queues[id].length);
+                player.emit(this.questsInfo[id].getWaitPlayersCountEventName, this.queues[id].length);
                 console.log('Sent count wait players in', this.questsInfo[id].name);
             });
         }
