@@ -1,5 +1,6 @@
 import { connect as _connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { AppState } from './store.config';
 
 // tslint:disable-next-line:typedef

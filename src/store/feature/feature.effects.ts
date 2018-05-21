@@ -1,5 +1,7 @@
 import { ActionsObservable } from 'redux-observable';
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
+
 import { FeatureActionTypes, PingAction, PongAction } from './feature.actions';
 
 export const pong$ = (actions$: ActionsObservable<PingAction>) =>
@@ -7,4 +9,5 @@ export const pong$ = (actions$: ActionsObservable<PingAction>) =>
     map(action => new PongAction(action.payload))
   );
 
-export const FeatureEffects = [pong$];
+// tslint:disable-next-line:array-type
+export const FeatureEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [pong$];

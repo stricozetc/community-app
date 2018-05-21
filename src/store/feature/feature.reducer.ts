@@ -1,7 +1,7 @@
-import { ApplicationActions, FeatureActionTypes } from './feature.actions';
+import { FeatureActions, FeatureActionTypes } from './feature.actions';
 import { initialState } from './feature.initial';
 
-export const featureReducer = (state = initialState, action: ApplicationActions) => {
+export const featureReducer = (state = initialState, action: FeatureActions) => {
   switch (action.type) {
     case FeatureActionTypes.ADD_ITEM: {
       const item = {

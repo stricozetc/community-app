@@ -1,9 +1,14 @@
 import { connect as nativeConnect } from 'react-redux';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
 import {
-  // FeatureEffects,
+  applyMiddleware,
+  combineReducers,
+  createStore
+} from 'redux';
+
+import {
+  FeatureEffects,
   featureReducer,
   FeatureState
 } from './feature';
@@ -20,7 +25,7 @@ const rootReducers = combineReducers({
 });
 
 const rootEpic: Epic = combineEpics(
-  // ...FeatureEffects,
+  ...FeatureEffects,
   ...BattleEffects
 );
 

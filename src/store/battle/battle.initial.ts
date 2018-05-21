@@ -1,4 +1,5 @@
 import { BattleStatus } from 'models';
+
 import { BattleState } from './interfaces';
 
 type State = BattleState;

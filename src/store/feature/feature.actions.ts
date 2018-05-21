@@ -27,7 +27,7 @@ export class PongAction {
   constructor(public payload: string) { }
 }
 
-export type ApplicationActions =
+export type FeatureActions =
   | AddItemAction
   | PingAction
   | PongAction;

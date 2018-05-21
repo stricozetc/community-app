@@ -4,11 +4,9 @@ import * as  React from 'react';
 import { connect } from 'react-redux'
 
 import { BattleStatus } from "models";
-
 import { AppState, JoinBattleAction, LeaveBattleAction } from "store";
 
 import { BattleRegistrationProps } from "./BattleRegistration.model";
-
 
 const goToBattleHelpMassage: string = 'Press on "Go to the battle" page';
 const waitBattleHelpMassage: string = 'Please, wait other users';

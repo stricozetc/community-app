@@ -7,7 +7,6 @@ import { QueueService } from "./queue.service";
 export class QueueServiceImplementation extends QueueService {
     private queues: SocketIO.Socket[][] = [];
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
-
     constructor() {
         //ToDo: need fix 
         super();

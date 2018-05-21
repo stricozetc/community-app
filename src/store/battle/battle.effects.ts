@@ -1,5 +1,10 @@
 import { ActionsObservable } from 'redux-observable';
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
+
+import { QuestInfo } from '@community-app/quest-info';
+import { SocketService } from 'services';
+import { store } from 'store';
 
 import {
     BattleActionTypes,
@@ -9,8 +14,8 @@ import {
     SetWaitBattlePlayersCountAction,
 } from './battle.action';
 
-import { SocketService } from 'services';
-import { store } from 'store';
+// tslint:disable-next-line:no-var-requires
+const questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
 
 const socketService = new SocketService();
 socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBattleAction(url)));
@@ -19,12 +24,20 @@ socketService.waitBattlePlayersCount.subscribe((waitBattlePlayersCount: number) 
 
 export const joinBattle$ = (actions$: ActionsObservable<JoinBattleAction>) =>
     actions$.ofType(BattleActionTypes.JOIN_BATTLE).pipe(
-        map(action => socketService.emitEvent('onJsMarathon'))
+        map(action => {
+            const questInfo: QuestInfo | undefined = questsInfo.find((info: QuestInfo) => info.name === action.payload);
+
+            return socketService.emitEvent(questInfo ? questInfo.registrationEventName : '');
+        })
     );
 
 export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattleAction>) =>
     actions$.ofType(BattleActionTypes.LEAVE_BATTLE).pipe(
-        map(action => socketService.emitEvent('onLeaveJsMarathon'))
+        map(action => {
+            const questInfo: QuestInfo | undefined = questsInfo.find((info: QuestInfo) => info.name === action.payload);
+
+            socketService.emitEvent(questInfo ? questInfo.leaveEventName : '');
+        })
     );
 
 
@@ -33,4 +46,5 @@ export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattleAc
         map(action => window.location.replace(action.payload))
     );
 
-export const BattleEffects = [joinBattle$, leaveBattle$, redirectToBattle$];
+// tslint:disable-next-line:array-type
+export const BattleEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [joinBattle$, leaveBattle$, redirectToBattle$];
