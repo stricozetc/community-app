@@ -5,24 +5,27 @@ import { QuestInfo } from "@community-app/quest-info";
 
 import { SocketService } from "./socket.service";
 import { QueueService } from "../queue";
+import { LoggerService } from "../logger";
 
 @injectable()
 export class SocketServiceImplementation extends SocketService {
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
 
-    constructor(@inject(QueueService) private queueService: QueueService) {
-        //ToDo: need fix 
+    constructor(
+        @inject(LoggerService) private loggerService: LoggerService,
+        @inject(QueueService) private queueService: QueueService
+    ) {
         super();
     }
 
     public connection(serverInstance: any): void {
         const socketIO = SocketIO(serverInstance);
-        
+
         socketIO.on('connection', (client: SocketIO.Socket) => {
-            console.log('Player connection opened');
+            this.loggerService.log('Player connection opened');
 
             client.on('disconnect', () => {
-                console.log('Player connection closed');
+                this.loggerService.log('Player connection closed');
                 this.queueService.deletePlayer(client);
             });
 
@@ -30,13 +33,13 @@ export class SocketServiceImplementation extends SocketService {
                 client.on(this.questsInfo[index].registrationEventName,
                     () => {
                         this.queueService.setNewPlayer(this.questsInfo[index].id, client);
-                        console.log('Player registration on', this.questsInfo[index].name);
+                        this.loggerService.log(`Player registration on ${this.questsInfo[index].name}`);
                     });
 
                 client.on(this.questsInfo[index].leaveEventName,
                     () => {
                         this.queueService.deletePlayerFromQueue(this.questsInfo[index].id, client);
-                        console.log('Player leave from', this.questsInfo[index].name);
+                        this.loggerService.log(`Player leave from ${this.questsInfo[index].name}`);
                     });
             }
         });
