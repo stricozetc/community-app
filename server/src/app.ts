@@ -16,8 +16,9 @@ import {
 } from './service';
 
 import './controller';
-import { CONTAINER } from './service/services-registration';
+import { CONTAINER } from './service/services-registration';import * as passport from 'passport';
 
+import { db } from './../models';
 let server = new InversifyExpressServer(CONTAINER);
 
 // tslint:disable-next-line:no-var-requires
@@ -29,17 +30,17 @@ server.setConfig((app) => {
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+    app.use(passport.initialize());
+    passportConfig(passport);
     app.use(bodyParser.json());
     app.use(express.static(config.staticUrl));
 });
 
-let logger: LoggerService = new LoggerServiceImplementation();
-let application = server.build();
+const application = server.build();
+db.connect.sync({
+    logging: console.log
+});
 
-
-let serverInstance = application.listen(config.port, () => {
-    logger.infoLog(`App is running at http://localhost:${config.port}`);
-    logger.infoLog('Press CTRL+C to stop\n');
 });
 
 const socketService: SocketService = new SocketServiceImplementation();
