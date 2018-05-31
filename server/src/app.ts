@@ -15,6 +15,12 @@ import {
     QueueServiceImplementation
 } from './service';
 
+import { passportConfig } from './config/passport';
+
+import * as passport from 'passport';
+
+import { db } from './../models';
+
 const server = new InversifyExpressServer(CONTAINER);
 const socket: SocketService = new SocketServiceImplementation(new QueueServiceImplementation());
 
@@ -22,12 +28,17 @@ server.setConfig((app) => {
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+    app.use(passport.initialize());
+    passportConfig(passport);
     app.use(bodyParser.json());
     app.use(morgan('dev'));
     app.use(express.static('../build'));
 });
 
 const application = server.build();
+db.connect.sync({
+    logging: console.log
+});
 const serverInstance = application.listen(3030, () => {
     console.log(`App is running at http://localhost:3030`);
     console.log('Press CTRL+C to stop\n');

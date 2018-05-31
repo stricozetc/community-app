@@ -43,7 +43,17 @@ let webpackConfig = {
     plugins: [
         new CleanWebpackPlugin([path.resolve(__dirname, root('./build/'))], cleanOptions)
     ],
-    target: 'node'
+    target: 'node',
+    node: {
+        __dirname: false,
+        __filename: false,
+        // global: true,
+        // crypto: 'empty',
+        // process: true,
+        // module: false,
+        // clearImmediate: false,
+        // setImmediate: false
+      }
 };
 
 module.exports = webpackConfig;

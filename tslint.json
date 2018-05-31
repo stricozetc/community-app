@@ -28,6 +28,7 @@
     ],
     "jsx-no-lambda": false,
     "object-literal-sort-keys": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "disable-next-line": "array-type"
   }
 }
