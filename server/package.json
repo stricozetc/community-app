@@ -37,6 +37,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.2",
     "inversify": "^4.11.1",
     "inversify-express-utils": "^5.2.1",

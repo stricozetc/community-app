@@ -11,16 +11,16 @@ import { LoggerService } from "../logger";
 @injectable()
 export class SocketServiceImplementation extends SocketService {
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
-    @inject(LoggerService) private loggerService: LoggerService;
+    // @inject(LoggerService) private loggerService: LoggerService;
     @inject(QueueService) private queueService: QueueService;
 
     public setSocket(socketIO: any): void {
 
         socketIO.on('connection', (client: SocketIO.Socket) => {
-            this.loggerService.log('Player connection opened');
+            // this.loggerService.log('Player connection opened');
 
             client.on('disconnect', () => {
-                this.loggerService.log('Player connection closed');
+                // this.loggerService.log('Player connection closed');
                 this.queueService.deletePlayer(client);
             });
 
@@ -28,13 +28,13 @@ export class SocketServiceImplementation extends SocketService {
                 client.on(this.questsInfo[index].registrationEventName,
                     () => {
                         this.queueService.setNewPlayer(this.questsInfo[index].id, client);
-                        this.loggerService.log(`Player registration on ${this.questsInfo[index].name}`);
+                        // this.loggerService.log(`Player registration on ${this.questsInfo[index].name}`);
                     });
 
                 client.on(this.questsInfo[index].leaveEventName,
                     () => {
                         this.queueService.deletePlayerFromQueue(this.questsInfo[index].id, client);
-                        this.loggerService.log(`Player leave from ${this.questsInfo[index].name}`);
+                        // this.loggerService.log(`Player leave from ${this.questsInfo[index].name}`);
                     });
             }
         });
