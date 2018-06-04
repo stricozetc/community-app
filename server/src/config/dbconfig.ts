@@ -16,5 +16,10 @@ export const dbConfig = {
     userRole: "admin"
   },
   database: "community-app",
-  usersModel: "users"
+  usersModel: "users",
+  usersTable: "users",
+  rolesModel: "roles",
+  rolesTable: "roles",
+  userRolesModel: "userRoles",
+  userRolesTable: "user_roles"
 };
