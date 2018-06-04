@@ -1,8 +1,5 @@
-
 import * as Sequelize from "sequelize";
 import { dbConfig } from './../src/config/dbconfig';
-// import * as fs from 'fs';
-// import * as path from 'path';
 
 let connect: any;
 
@@ -21,3 +18,4 @@ db.connect = connect;
 db.Sequelize = Sequelize;
 
 export { db };
+

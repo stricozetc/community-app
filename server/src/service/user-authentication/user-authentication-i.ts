@@ -7,6 +7,10 @@ import keys from './../../config/keys';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { User } from "./../../../models/user";
+import { UserRoles } from "./../../../models/userRoles";
+import { Role } from './../../../models/role';
+import { IRole } from './../../../Interfaces/IRole';
+
 
 @injectable()
 export class UserAuthenticationRepositoryImplementation implements UserAuthenticationRepository {
@@ -25,20 +29,47 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     errors.email = 'Email already exist';
                     reject(errors);
                 } else {
-                    const newUserDate = User.build({
-                        name: data.name,
-                        email: data.email
-                    });
+                    
 
-                    bcrypt.genSalt(10, (err, salt) => {
-                        bcrypt.hash(data.password, salt, (HashErr, hash) => {
-                            if (HashErr) { throw HashErr; }
-                            newUserDate.password = hash;
-                            newUserDate.save().then((savedUser: IUser) => {
-                                resolve(savedUser);
-                            }).catch((saveErr: any) => reject(JSON.stringify(saveErr)));
+                    User.findOne({
+                        order: [ [ 'id', 'DESC' ]],
+                    }).then((lastUser: IUser) => {
+
+                        let lastId = 0;
+                        if (lastUser) {
+                            lastId = lastUser.id;
+                        }
+
+
+                        const newUserDate = User.build({
+                            id: lastId + 1,
+                            name: data.name,
+                            email: data.email,
+                            password: data.password
+                        });
+    
+    
+                        Role.findOne({
+                            where: {name: 'user'}
+                        }).then((role: IRole ) => {
+
+                            UserRoles.upsert({
+                                userId: lastId + 1,
+                                roleId: role.id
+                            }).then(() => {
+                                bcrypt.genSalt(10, (err, salt) => {
+                                    bcrypt.hash(data.password, salt, (HashErr, hash) => {
+                                        if (HashErr) { throw HashErr; }
+                                        newUserDate.password = hash;
+                                        newUserDate.save().then((savedUser: IUser) => {
+                                            resolve(savedUser);
+                                        }).catch((saveErr: any) => reject(saveErr));
+                                    });
+                                });
+                            });
                         });
                     });
+                   
                 }
             });
         });

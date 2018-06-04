@@ -18,11 +18,14 @@ import {
 import './controller';
 import { CONTAINER } from './service/services-registration';import * as passport from 'passport';
 
-import { db } from './../models';
+import { db } from './../models/SequalizeConnect';
+import { makeAssosiations } from './../models/assosiation';
+import { Role } from './../models/role';
 let server = new InversifyExpressServer(CONTAINER);
 
 // tslint:disable-next-line:no-var-requires
 const config = require('./config/app.config.json');
+
 
 server.setConfig((app) => {
     process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));
@@ -37,8 +40,25 @@ server.setConfig((app) => {
 });
 
 const application = server.build();
+
+
+makeAssosiations();
 db.connect.sync({
     logging: console.log
+}).then(() => {
+    Role.upsert({
+        id: 1,
+        name: 'admin',
+        createAt: Date.now(),
+        updatedAt: Date.now()
+    }).then(() => {
+        Role.upsert({
+            id: 2,
+            name: 'user',
+            createAt: Date.now(),
+            updatedAt: Date.now()
+    });
+    });
 });
 
 });

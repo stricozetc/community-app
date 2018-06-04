@@ -1,16 +1,12 @@
 import { controller, httpPost, httpGet } from 'inversify-express-utils';
 import { Request } from 'express';
 import { Response } from 'express';
-//import { User } from "./../../models";
 import { inject } from 'inversify';
 import { 
   UserAuthenticationRepository,
   UserAuthenticationRepositoryImplementation 
 } from '../service/user-authentication';
 
-//import * as bcrypt from 'bcryptjs';
-
-// import { IUser } from './../../Interfaces/IUser';
 
 import { validateRegisterInput } from './../validation/register';
 import { validateLoginInput } from './../validation/login';

@@ -1,0 +1,6 @@
+INSERT INTO `community-app`.users (name, password, email, isActive, createdAt, updatedAt) VALUES ('test', 'test', 'defaultEmail1@gmail.com' , 1, '2017-01-31 12:29:23', '2017-01-31 12:29:23');
+INSERT INTO `community-app`.users (name, password, email, isActive, createdAt, updatedAt) VALUES ('admin', 'admin', 'defaultEmail2@gmail.com' , 1, '2017-01-31 12:29:23', '2017-01-31 12:29:23');
+INSERT INTO `community-app`.users (name, password, email, isActive, createdAt, updatedAt) VALUES ('yauheni', 'yauheni', 'defaultEmail3@gmail.com' , 1, '2017-01-31 13:04:27', '2017-01-31 13:04:27');
+INSERT INTO `community-app`.users (name, password, email, isActive, createdAt, updatedAt) VALUES ('LenaG', 'LenaG', 'defaultEmail4@gmail.com' , 1, '2017-01-31 13:04:27', '2017-01-31 13:04:27');
+INSERT INTO `community-app`.users (name, password, email, isActive, createdAt, updatedAt) VALUES ('mikita', 'mikita','defaultEmail5@gmail.com' , 1, '2017-01-31 13:04:27', '2017-01-31 13:04:27');
+INSERT INTO `community-app`.users (name, password, email, isActive, createdAt, updatedAt) VALUES ('guuc', 'guuc', 'defaultEmail6@gmail.com' , 1, '2017-01-31 13:04:27', '2017-01-31 13:04:27');
