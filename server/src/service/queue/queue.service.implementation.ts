@@ -1,15 +1,18 @@
-import { injectable, inject } from "inversify";
+import { injectable, decorate, inject } from "inversify";
 
 import { QuestInfo } from "@community-app/quest-info";
 
 import { QueueService } from "./queue.service";
 import { LoggerService } from "../logger";
+
+decorate(injectable(), QueueService);
 @injectable()
 export class QueueServiceImplementation extends QueueService {
     private queues: SocketIO.Socket[][] = [];
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
+    @inject(LoggerService) private loggerService: LoggerService;
+
     constructor(
-        @inject(LoggerService) private loggerService: LoggerService
     ) {
         //ToDo: need fix 
         super();

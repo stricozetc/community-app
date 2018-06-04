@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { injectable, decorate } from "inversify";
 
 import {
     createLogger,

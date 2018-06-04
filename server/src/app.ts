@@ -1,17 +1,18 @@
 import 'reflect-metadata';
+
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { Container, inject } from 'inversify';
 
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as morgan from "morgan";
+import * as SocketIO from 'socket.io';
 
 import {
     LoggerService,
     LoggerServiceImplementation,
     SocketService,
-    SocketServiceImplementation,
-    QueueServiceImplementation
+    SocketServiceImplementation
 } from './service';
 
 import './controller';
@@ -36,6 +37,5 @@ let serverInstance = application.listen(3030, () => {
     logger.log('Press CTRL+C to stop\n');
 });
 
-const socket: SocketService = new SocketServiceImplementation(logger, new QueueServiceImplementation(logger));
-socket.connection(serverInstance);
-
+const socketService: SocketService = new SocketServiceImplementation();
+socketService.setSocket(SocketIO(serverInstance));

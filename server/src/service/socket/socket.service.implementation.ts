@@ -1,8 +1,9 @@
-import { inject, injectable } from "inversify";
+import { injectable } from "inversify";
 import * as SocketIO from 'socket.io';
 
 import { QuestInfo } from "@community-app/quest-info";
 
+import { inject } from "../services-registration";
 import { SocketService } from "./socket.service";
 import { QueueService } from "../queue";
 import { LoggerService } from "../logger";
@@ -10,16 +11,10 @@ import { LoggerService } from "../logger";
 @injectable()
 export class SocketServiceImplementation extends SocketService {
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
+    @inject(LoggerService) private loggerService: LoggerService;
+    @inject(QueueService) private queueService: QueueService;
 
-    constructor(
-        @inject(LoggerService) private loggerService: LoggerService,
-        @inject(QueueService) private queueService: QueueService
-    ) {
-        super();
-    }
-
-    public connection(serverInstance: any): void {
-        const socketIO = SocketIO(serverInstance);
+    public setSocket(socketIO: any): void {
 
         socketIO.on('connection', (client: SocketIO.Socket) => {
             this.loggerService.log('Player connection opened');
