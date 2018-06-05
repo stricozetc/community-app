@@ -31,7 +31,7 @@ export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
             // skip associating during working with DB
 
             UserRoles.belongsTo(models.users, { foreignKey: 'userId', onDelete: "CASCADE", onUpdate: 'CASCADE'} );
-            UserRoles.belongsTo(models.roles, { foreignKey: 'roleId', onDelete: "CASCADE", onUpdate: 'CASCADE'} );
+            UserRoles.belongsTo(models.roles, { foreignKey: 'roleId', onDelete: "SET NULL", onUpdate: 'CASCADE'} );
         }
     }
 });

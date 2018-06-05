@@ -20,7 +20,7 @@ import { passportConfig } from './config/passport';
 import * as passport from 'passport';
 
 import { db } from './../models/SequalizeConnect';
-import { makeAssosiations } from './../models/assosiation';
+import { Role } from './../models/role';
 
 
 
@@ -42,10 +42,26 @@ server.setConfig((app) => {
 const application = server.build();
 
 
-makeAssosiations();
+// makeAssosiations();
+
 db.connect.sync({
     logging: console.log
+}).then(() => {
+    Role.upsert({
+        id: 1,
+        name: 'admin',
+        createAt: Date.now(),
+        updatedAt: Date.now()
+    }).then(() => {
+        Role.upsert({
+            id: 2,
+            name: 'user',
+            createAt: Date.now(),
+            updatedAt: Date.now()
+    });
+    });
 });
+
 
 
 const serverInstance = application.listen(3030, () => {
