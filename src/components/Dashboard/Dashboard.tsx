@@ -4,7 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux'
 import { LogoutUser } from './../../store/auth/auth.action';
 import { AppState } from './../../store/store.config';
-
+import BattleRegistration from "./../BattleRegistration/BattleRegistration";
 interface LandingProps {
   auth: any,
   history: any,
@@ -22,6 +22,7 @@ class DashboardComponent extends React.Component<LandingProps, {} > {
   public render():  JSX.Element {
     return (
       <div>
+        <BattleRegistration />
         <h1>Logout</h1>
         <button onClick = {() => { this.props.logoutUser(); window.location.href = '/'}}>Logout</button>
       </div>

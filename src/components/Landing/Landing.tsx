@@ -5,10 +5,25 @@ import './landing.css'
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { AppState } from 'store';
+
+import { connect } from 'react-redux';
 
 
+interface LandingProps {
+  auth: any;
+  history: any;
+}
 
-class Landing extends React.Component {
+
+class LandingComponent extends React.Component <LandingProps, {}> {
+
+  public componentDidMount(): void {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
   public render():  JSX.Element {
     return (
       <div>
@@ -28,5 +43,15 @@ class Landing extends React.Component {
     )
   }
 }
+
+
+const mapStateToProps = (state: AppState) => ({
+  auth: state.auth
+});
+
+const Landing = connect(
+  mapStateToProps,
+  {}
+)(LandingComponent);
 
 export { Landing }
