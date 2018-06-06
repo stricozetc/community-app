@@ -7,12 +7,6 @@ import {
   createStore
 } from 'redux';
 
-import {
-  FeatureEffects,
-  featureReducer,
-  FeatureState
-} from './feature';
-
 import { BattleEffects, battleReducer } from './battle';
 import { BattleState } from './battle/interfaces';
 
@@ -20,19 +14,16 @@ import { BattleState } from './battle/interfaces';
 type Epic = any;
 
 const rootReducers = combineReducers({
-  feature: featureReducer,
   battle: battleReducer
 });
 
 const rootEpic: Epic = combineEpics(
-  ...FeatureEffects,
   ...BattleEffects
 );
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
 export interface AppState {
-  feature: FeatureState,
   battle: BattleState
 }
 
