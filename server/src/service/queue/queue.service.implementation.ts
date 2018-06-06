@@ -16,7 +16,7 @@ export class QueueServiceImplementation extends QueueService {
         }
     }
 
-    public setNewPlayer(id: number, player: SocketIO.Socket): void {
+    public setNewPlayer(id: number, player: SocketIO.Socket): void {    
         this.queues[id].push(player);
         this.checkWaitPlayersCount(id);
     }

@@ -17,7 +17,6 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
 
     public registerUser(data: IUser): Promise<IUser> {
-       
 
         return new Promise<IUser>((resolve, reject) => {
 
@@ -29,47 +28,32 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     errors.email = 'Email already exist';
                     reject(errors);
                 } else {
-                    
 
-                    User.findOne({
-                        order: [ [ 'id', 'DESC' ]],
-                    }).then((lastUser: IUser) => {
+                  const newUserDate = User.build({
+                      name: data.name,
+                      email: data.email,
+                      password: data.password
+                  });
 
-                        let lastId = 0;
-                        if (lastUser) {
-                            lastId = lastUser.id;
-                        }
-
-
-                        const newUserDate = User.build({
-                            id: lastId + 1,
-                            name: data.name,
-                            email: data.email,
-                            password: data.password
-                        });
-    
-    
-                        Role.findOne({
-                            where: {name: 'user'}
-                        }).then((role: IRole ) => {
-
-                            UserRoles.upsert({
-                                userId: lastId + 1,
-                                roleId: role.id
-                            }).then(() => {
-                                bcrypt.genSalt(10, (err, salt) => {
-                                    bcrypt.hash(data.password, salt, (HashErr, hash) => {
-                                        if (HashErr) { throw HashErr; }
-                                        newUserDate.password = hash;
-                                        newUserDate.save().then((savedUser: IUser) => {
-                                            resolve(savedUser);
-                                        }).catch((saveErr: any) => reject(saveErr));
-                                    });
-                                });
-                            });
-                        });
-                    });
-                   
+                  bcrypt.genSalt(10, (err, salt) => {
+                      bcrypt.hash(data.password, salt, (HashErr, hash) => {
+                          if (HashErr) { throw HashErr; }
+                          newUserDate.password = hash;
+                          newUserDate.save().then((savedUser: IUser) => {
+                              Role.findOne({
+                                  where: {name: 'user'}
+                              }).then((role: IRole ) => {
+      
+                                  UserRoles.upsert({
+                                      userId: savedUser.id,
+                                      roleId: role.id
+                                  }).then(() => {
+                                      resolve(savedUser);
+                                  });
+                              });
+                          }).catch((saveErr: any) => reject(saveErr));
+                      });
+                  }); 
                 }
             });
         });
@@ -86,7 +70,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             User.findOne({ where: {email} }).then((user: any) => {
                 if (!user) {
                     errors.email = 'User with this email is not found';
-                    reject(JSON.stringify(errors));
+                    reject(errors);
                 } else {
                     bcrypt.compare(password, user.password)
                     .then(isMatch => {
@@ -104,8 +88,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                                 resolve({
                                     success: true,
                                     token: 'Bearer ' + token
-                                }
-                                );
+                                });
                             });
                         } else {
                             errors.password = `Password incorrect for ${user.email}`;
@@ -121,7 +104,6 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
         return new Promise<string[]>((resolve, reject) => {
             User.findAll({}, (error: any, data: string[]) => {
                 if (error) {
-            
                     reject(error);
                 } else {
                     resolve(data);
