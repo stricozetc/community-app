@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { QueueServiceImplementation } from "../queue.service.implementation";
-import { LoggerServiceImplementation } from '../..';
+import { LoggerServiceImplementation } from '../../logger';
 
 describe('QueueServiceImplementation', () => {
     let service: QueueServiceImplementation;

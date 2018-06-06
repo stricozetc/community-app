@@ -14,8 +14,7 @@ export class SocketServiceImplementation extends SocketService {
     @inject(LoggerService) private loggerService: LoggerService;
     @inject(QueueService) private queueService: QueueService;
 
-    public setSocket(socketIO: any): void {
-
+    public setSocket(socketIO: SocketIO.Server): void {
         socketIO.on('connection', (client: SocketIO.Socket) => {
             this.loggerService.log('Player connection opened');
 
