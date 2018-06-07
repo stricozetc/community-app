@@ -7,6 +7,7 @@ import { db } from './../../models/SequalizeConnect';
 import { User } from './../../models/user';
 import { PassportStatic } from 'passport';
 import { PassportOptions } from '../../Interfaces/PassportOptions';
+import { IUser } from './../../Interfaces/IUser';
 
 const options: PassportOptions = {
     jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,7 +20,7 @@ let passportConfig = (passport: PassportStatic) => {
         db.connect.sync().then(() => {
           
             User.findById(jwt_payload.id)
-                .then((user: any) => {
+                .then((user: IUser) => {
                     if (user) {
                         return done(null, user);
                     }

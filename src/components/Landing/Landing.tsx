@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom';
 import { AppState } from 'store';
 
 import { connect } from 'react-redux';
-
+import { AuthState } from './../../store/auth/interfaces';
 
 interface LandingProps {
-  auth: any;
+  auth: AuthState;
   history: any;
 }
 

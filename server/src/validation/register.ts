@@ -1,8 +1,11 @@
 // import { IUser } from './../../Interfaces/IUser';
 import * as Validator from 'validator';
 import { isEmpty } from './is-empty';
+import { UserFieldsToRegister } from './../../Interfaces/IUserFieldsToRegister';
 
-export function validateRegisterInput(data: any): {errors: any, isValid: boolean} {
+
+
+export function validateRegisterInput(data: UserFieldsToRegister): {errors: any, isValid: boolean} {
     let errors: any = {};
 
     data.name = !isEmpty(data.name) ? data.name : '';

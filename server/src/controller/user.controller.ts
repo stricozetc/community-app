@@ -12,6 +12,8 @@ import { validateRegisterInput } from './../validation/register';
 import { validateLoginInput } from './../validation/login';
 
 import * as passport from 'passport';
+import { IUser } from './../../Interfaces/IUser';
+
 
 @controller('/api/users')
 export class UserController {
@@ -19,7 +21,7 @@ export class UserController {
   constructor(@inject(UserAuthenticationRepository) private userAuthenticationRepository: UserAuthenticationRepository) { }
 
   @httpPost('/register')
-  public postRegister(request: Request, response: Response): any {
+  public postRegister(request: Request, response: Response):  Promise<Response | IUser> | Response {
     
 
     const { errors, isValid } = validateRegisterInput(request.body);
@@ -34,7 +36,7 @@ export class UserController {
   }
 
   @httpPost('/login')
-  public postLogin(request: Request, response: Response): any {
+  public postLogin(request: Request, response: Response): Promise<Response | {success: boolean, token: string}> | Response {
     
     const { errors, isValid } = validateLoginInput(request.body);
     if (!isValid) {
@@ -55,7 +57,7 @@ export class UserController {
   }
 
   @httpGet('/current', passport.authenticate('jwt', {session: false}))
-  public getCurrentUser(request: Request, response: Response): any {
+  public getCurrentUser(request: Request, response: Response): Response {
     const { user } = request;
     if (user) {
       return response.json({

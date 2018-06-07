@@ -9,6 +9,7 @@ import {
   UserFieldsToRegister
 } from "./../../interfaces/FrontEndValidation";
 import "./RegistrationForm.css";
+import { AuthState } from './../../store/auth/interfaces';
 
 const emailRegExp: RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const erros: FrontEndValidationErrorsRegister = {
@@ -47,7 +48,7 @@ interface RegistrationFormState {
 
 interface RegistrationFormProps {
   history: any;
-  auth: any;
+  auth: AuthState;
   registerUser(user: UserFieldsToRegister): void;
 }
 

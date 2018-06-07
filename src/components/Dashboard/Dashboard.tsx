@@ -5,8 +5,11 @@ import { connect } from 'react-redux'
 import { LogoutUser } from './../../store/auth/auth.action';
 import { AppState } from './../../store/store.config';
 import BattleRegistration from "./../BattleRegistration/BattleRegistration";
+
+import { AuthState } from './../../store/auth/interfaces';
+
 interface LandingProps {
-  auth: any,
+  auth: AuthState,
   history: any,
   logoutUser(): void
 }
