@@ -8,8 +8,6 @@ export class AxiosWrapper {
    
 
     public static registerUser(userData: UserFieldsToRegister): Promise<any>{
-        console.log('POST TO api/users/register');
-        
         return axios.post('api/users/register', userData)
     }
 

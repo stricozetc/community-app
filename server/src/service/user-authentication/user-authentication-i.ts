@@ -23,7 +23,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             let errors: any = {};
             User.findOne({
                 where: { email: data.email }
-            }).then((user: any) => {
+            }).then((user: IUser) => {
                 if (user) {
                     errors.email = 'Email already exist';
                     reject(errors);
@@ -40,16 +40,16 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                           if (HashErr) { throw HashErr; }
                           newUserDate.password = hash;
                           newUserDate.save().then((savedUser: IUser) => {
-                              Role.findOne({
-                                  where: {name: 'user'}
-                              }).then((role: IRole ) => {
+                                Role.findOne({
+                                    where: {name: 'user'}
+                                }).then((role: IRole ) => {
       
-                                  UserRoles.upsert({
-                                      userId: savedUser.id,
-                                      roleId: role.id
-                                  }).then(() => {
-                                      resolve(savedUser);
-                                  });
+                                UserRoles.upsert({
+                                    userId: savedUser.id,
+                                    roleId: role.id
+                                }).then(() => {
+                                    resolve(savedUser);
+                                });
                               });
                           }).catch((saveErr: any) => reject(saveErr));
                       });
@@ -67,7 +67,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             const password = data.password;
 
             let errors: any = {};
-            User.findOne({ where: {email} }).then((user: any) => {
+            User.findOne({ where: {email} }).then((user: IUser) => {
                 if (!user) {
                     errors.email = 'User with this email is not found';
                     reject(errors);

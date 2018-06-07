@@ -10,9 +10,10 @@ import {
 import "./LoginForm.css";
 
 import { UserFieldsToLogin } from "interfaces/FrontEndValidation";
+import { AuthState } from './../../store/auth/interfaces';
 
 const emailRegExp: RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const erros: FrontEndValidationErrorsLogin = {
+const errors: FrontEndValidationErrorsLogin = {
   email: {
     mustBeCorrect: "Email should be corrent",
     required: "Email Should be required"
@@ -37,7 +38,7 @@ interface RegistrationFormState {
 }
 
 interface RegistrationFormProps {
-  auth: any;
+  auth: AuthState;
   history: any;
   loginUser(user: UserFieldsToLogin): void;
 }
@@ -79,6 +80,7 @@ export class LoginFormComponent extends React.Component<
 
   public handleChange(event: any): void {
     const target = event.target;
+    
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
@@ -101,38 +103,38 @@ export class LoginFormComponent extends React.Component<
     let passwordErrors: string[] = [];
 
     if (!this.state.email) {
-      emailErrors.push(erros.email.required);
+      emailErrors.push(errors.email.required);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        erros.email.required
+        errors.email.required
       );
     }
 
     if (!this.validateEmail(this.state.email)) {
-      emailErrors.push(erros.email.mustBeCorrect);
+      emailErrors.push(errors.email.mustBeCorrect);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        erros.email.mustBeCorrect
+        errors.email.mustBeCorrect
       );
     }
 
     if (!this.state.password) {
-      passwordErrors.push(erros.password.required);
+      passwordErrors.push(errors.password.required);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        erros.password.required
+        errors.password.required
       );
     }
 
     if (this.state.password.length < 6) {
-      passwordErrors.push(erros.password.min);
+      passwordErrors.push(errors.password.min);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        erros.password.min
+        errors.password.min
       );
     }
 
