@@ -8,22 +8,22 @@ import { QuestInfo } from 'typing/quest-info';
 
 import {
     BattleActionTypes,
-    JoinBattleAction,
-    LeaveBattleAction,
-    RedirectToBattleAction,
-    SetWaitBattlePlayersCountAction,
+    JoinBattle,
+    LeaveBattle,
+    RedirectToBattle,
+    SetWaitBattlePlayersCount,
 } from './battle.action';
 
 // tslint:disable-next-line:no-var-requires
 const questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
 
 const socketService = new SocketService();
-socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBattleAction(url)));
+socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBattle(url)));
 socketService.waitBattlePlayersCount.subscribe((waitBattlePlayersCount: number) =>
-    store.dispatch(new SetWaitBattlePlayersCountAction(waitBattlePlayersCount)))
+    store.dispatch(new SetWaitBattlePlayersCount(waitBattlePlayersCount)))
 
-export const joinBattle$ = (actions$: ActionsObservable<JoinBattleAction>) =>
-    actions$.ofType(BattleActionTypes.JOIN_BATTLE).pipe(
+export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
+    actions$.ofType(BattleActionTypes.JoinBattle).pipe(
         map(action => {
             const questInfo: QuestInfo | undefined = questsInfo.find((info: QuestInfo) => info.name === action.payload);
 
@@ -31,8 +31,8 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattleAction>) =>
         })
     );
 
-export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattleAction>) =>
-    actions$.ofType(BattleActionTypes.LEAVE_BATTLE).pipe(
+export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
+    actions$.ofType(BattleActionTypes.LwaveBattle).pipe(
         map(action => {
             const questInfo: QuestInfo | undefined = questsInfo.find((info: QuestInfo) => info.name === action.payload);
 
@@ -41,8 +41,8 @@ export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattleAction>) =>
     );
 
 
-export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattleAction>) =>
-    actions$.ofType(BattleActionTypes.REDIRECT_TO_BATTLE).pipe(
+export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>) =>
+    actions$.ofType(BattleActionTypes.RedirectToBattle).pipe(
         map(action => window.location.replace(action.payload))
     );
 

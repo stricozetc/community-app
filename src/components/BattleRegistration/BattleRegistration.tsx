@@ -4,7 +4,7 @@ import * as  React from 'react';
 import { connect } from 'react-redux'
 
 import { BattleStatus } from "models";
-import { AppState, JoinBattleAction, LeaveBattleAction } from "store";
+import { AppState, JoinBattle, LeaveBattle } from "store";
 
 import { BattleRegistrationProps } from "./BattleRegistration.model";
 
@@ -67,8 +67,8 @@ const mapStateToProps = (state: AppState) => ({
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-    joinBattleAction: (name: string) => dispatch(new JoinBattleAction(name)),
-    leaveBattleAction: (name: string) => dispatch(new LeaveBattleAction(name))
+    joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
+    leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name))
 })
 
 // tslint:disable-next-line:no-default-export

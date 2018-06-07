@@ -5,28 +5,28 @@ import { initialState } from './battle.initial';
 
 export const battleReducer = (state = initialState, action: BattleActions) => {
     switch (action.type) {
-        case BattleActionTypes.JOIN_BATTLE: {
+        case BattleActionTypes.JoinBattle: {
             return {
                 ...state,
                 status: BattleStatus.WAIT,
                 battleName: action.payload
             };
         }
-        case BattleActionTypes.LEAVE_BATTLE: {
+        case BattleActionTypes.LeaveBattle: {
             return {
                 ...state,
                 status: BattleStatus.INIT,
                 battleName: action.payload
             };
         }
-        case BattleActionTypes.REDIRECT_TO_BATTLE: {
+        case BattleActionTypes.RedirectToBattle: {
             return {
                 ...state,
                 roomURL: action.payload,
                 status: BattleStatus.PLAY
             };
         }
-        case BattleActionTypes.SET_WAIT_BATTLE_PLAYERS_COUNT: {
+        case BattleActionTypes.SetWaitBattlePlayersCount: {
             return {
                 ...state,
                 waitBattlePlayersCount: action.payload

@@ -19,7 +19,7 @@ export function mapDispatchToProps<T>(
   return _connect(mapStateToPropsFunc, mapDispatchToPropsFunc);
 }
 
-export function Action(): ClassDecorator {
+export function action(): ClassDecorator {
   return (target: any) => {
     const original = target;
     function construct(constructor: any, args: any): any {
