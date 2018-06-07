@@ -1,5 +1,6 @@
 import { connect as _connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { AppState } from './store.config';
 
 // tslint:disable-next-line:typedef
@@ -18,7 +19,7 @@ export function mapDispatchToProps<T>(
   return _connect(mapStateToPropsFunc, mapDispatchToPropsFunc);
 }
 
-export function Action(): ClassDecorator {
+export function action(): ClassDecorator {
   return (target: any) => {
     const original = target;
     function construct(constructor: any, args: any): any {

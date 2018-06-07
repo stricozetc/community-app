@@ -5,17 +5,15 @@ const nodeExternals = require('webpack-node-externals');
 const { root } = require('./helpers');
 
 let cleanOptions = {
-    allowExternal: true,    
-    beforeEmit: true,    
-    verbose: true
+    verbose: true,
+    beforeEmit: true,
+    allowExternal: true
 };
 
 let webpackConfig = {
     entry: {
         app: path.resolve(__dirname, root('./src/app.ts'))
     },
-    
-    externals: [nodeExternals()],
 
     output: {
         path: path.resolve(__dirname, root('./build/'))
@@ -36,14 +34,15 @@ let webpackConfig = {
     module: {
         rules: [
             {
+                test: /\.ts$/,
                 loader: 'awesome-typescript-loader',
-                test: /\.ts$/
             }]
     },
     plugins: [
         new CleanWebpackPlugin([path.resolve(__dirname, root('./build/'))], cleanOptions)
     ],
-    target: 'node'
+    target: 'node',
+    externals: [nodeExternals()]
 };
 
 module.exports = webpackConfig;
