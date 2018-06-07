@@ -42,16 +42,16 @@ export class QueueServiceImplementation extends QueueService {
         if (this.queues[id].length === this.questsInfo[id].maxRoomPlayer) {
             this.queues[id].forEach((player: SocketIO.Socket) => {
                 player.emit(this.questsInfo[id].getWaitPlayersCountEventName, this.queues[id].length);
-                this.loggerService.log(`Sent count wait players in ${this.questsInfo[id].name}`);
+                this.loggerService.infoLog(`Sent count wait players in ${this.questsInfo[id].name}`);
 
                 player.emit('redirect', this.questsInfo[id].requestUrl);
-                this.loggerService.log(`Redirect players group to ${this.questsInfo[id].name}`);
+                this.loggerService.infoLog(`Redirect players group to ${this.questsInfo[id].name}`);
             });
             this.queues[id] = [];
         } else {
             this.queues[id].forEach((player: SocketIO.Socket) => {
                 player.emit(this.questsInfo[id].getWaitPlayersCountEventName, this.queues[id].length);
-                this.loggerService.log(`Sent count wait players in ${this.questsInfo[id].name}`);
+                this.loggerService.infoLog(`Sent count wait players in ${this.questsInfo[id].name}`);
             });
         }
     }

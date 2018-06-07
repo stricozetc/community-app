@@ -20,21 +20,26 @@ import { CONTAINER } from './service/services-registration';
 
 let server = new InversifyExpressServer(CONTAINER);
 
+// tslint:disable-next-line:no-var-requires
+const config = require('./config/app.config.json');
+
 server.setConfig((app) => {
+    process.env.NODE_ENV !== 'production' ? app.use(morgan('dev')) : app.use(morgan('prod'));
+    
     app.use(bodyParser.urlencoded({
         extended: true
     }));
     app.use(bodyParser.json());
-    app.use(morgan('dev'));
-    app.use(express.static('../build'));
+    app.use(express.static(config.staticUrl));
 });
 
 let logger: LoggerService = new LoggerServiceImplementation();
 let application = server.build();
 
-let serverInstance = application.listen(3030, () => {
-    logger.log(`App is running at http://localhost:3030`);
-    logger.log('Press CTRL+C to stop\n');
+
+let serverInstance = application.listen(config.port, () => {
+    logger.infoLog(`App is running at http://localhost:${config.port}`);
+    logger.infoLog('Press CTRL+C to stop\n');
 });
 
 const socketService: SocketService = new SocketServiceImplementation();

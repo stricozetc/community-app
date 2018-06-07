@@ -16,10 +16,10 @@ export class SocketServiceImplementation extends SocketService {
 
     public setSocket(socketIO: SocketIO.Server): void {
         socketIO.on('connection', (client: SocketIO.Socket) => {
-            this.loggerService.log('Player connection opened');
+            this.loggerService.infoLog('Player connection opened');
 
             client.on('disconnect', () => {
-                this.loggerService.log('Player connection closed');
+                this.loggerService.infoLog('Player connection closed');
                 this.queueService.deletePlayer(client);
             });
 
@@ -27,13 +27,13 @@ export class SocketServiceImplementation extends SocketService {
                 client.on(this.questsInfo[index].registrationEventName,
                     () => {
                         this.queueService.setNewPlayer(this.questsInfo[index].id, client);
-                        this.loggerService.log(`Player registration on ${this.questsInfo[index].name}`);
+                        this.loggerService.infoLog(`Player registration on ${this.questsInfo[index].name}`);
                     });
 
                 client.on(this.questsInfo[index].leaveEventName,
                     () => {
                         this.queueService.deletePlayerFromQueue(this.questsInfo[index].id, client);
-                        this.loggerService.log(`Player leave from ${this.questsInfo[index].name}`);
+                        this.loggerService.infoLog(`Player leave from ${this.questsInfo[index].name}`);
                     });
             }
         });
