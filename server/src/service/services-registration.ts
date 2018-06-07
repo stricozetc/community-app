@@ -6,9 +6,9 @@ import { SocketServiceImplementation, SocketService } from './socket';
 import { QueueServiceImplementation, QueueService } from './queue';
 import { ErrorServiceImplementation, ErrorService } from './error';
 import { ApiService, ApiServiceImplementation } from './api';
-import { 
+import {
     UserAuthenticationRepository,
-    UserAuthenticationRepositoryImplementation     
+    UserAuthenticationRepositoryImplementation
 } from './user-authentication';
 
 
@@ -20,4 +20,5 @@ CONTAINER.bind<SocketService>(SocketService).to(SocketServiceImplementation);
 CONTAINER.bind<QueueService>(QueueService).to(QueueServiceImplementation);
 CONTAINER.bind<ErrorService>(ErrorService).to(ErrorServiceImplementation);
 CONTAINER.bind<ApiService>(ApiService).to(ApiServiceImplementation);
-CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);export const inject = getDecorators(CONTAINER).lazyInject;
+CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);
+export const inject = getDecorators(CONTAINER).lazyInject;

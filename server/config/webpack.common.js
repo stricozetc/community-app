@@ -44,7 +44,6 @@ let webpackConfig = {
     target: 'node',
     target: 'node',
     externals: [nodeExternals()]
-    node: {
 };
 
 module.exports = webpackConfig;

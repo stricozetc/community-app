@@ -41,8 +41,9 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
-	"axios": "^0.18.0",
-	"bcryptjs": "^2.4.3",    "express": "^4.16.2",
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.16.2",
     "inversify": "^4.11.1",
     "inversify-express-utils": "^5.2.1",
     "inversify-inject-decorators": "^3.1.0",
@@ -54,6 +55,9 @@
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.12",
     "socket.io": "^2.1.0",
-	"verror": "^1.10.0",
-    "winston": "^3.0.0-rc6"	"sequelize": "^4.37.10",	"validator": "^10.2.0"  }
+    "verror": "^1.10.0",
+    "winston": "^3.0.0-rc6",
+    "sequelize": "^4.37.10",
+    "validator": "^10.2.0"
+  }
 }

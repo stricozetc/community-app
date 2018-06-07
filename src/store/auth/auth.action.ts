@@ -1,5 +1,5 @@
 import { UserFieldsToLogin, UserFieldsToRegister,  } from 'interfaces/FrontEndValidation';
-import { Action } from 'store/decorators';
+import { action } from 'store/decorators';
 import { FrontEndUser } from './interfaces';
 
 
@@ -12,7 +12,7 @@ export enum AuthTypes {
 }
 
 
-@Action()
+@action()
 export class SetCurrentUser {
     public readonly type = AuthTypes.SET_CURRENT_USER;
 
@@ -20,27 +20,27 @@ export class SetCurrentUser {
 }
 
 
-@Action()
+@action()
 export class RegisterUser {
     public readonly type = AuthTypes.REGISTER_USER;
 
     constructor(public payload: UserFieldsToRegister) {}
 }
 
-@Action()
+@action()
 export class LoginUser {
     public readonly type = AuthTypes.LOGIN_USER;
 
     constructor(public payload: UserFieldsToLogin) { }
 }
 
-@Action()
+@action()
 export class LogoutUser {
     public readonly type = AuthTypes.LOGOUT_USER;
 
 }
 
-@Action()
+@action()
 export class RedirectToLogin {
     public readonly type = AuthTypes.REDIRECT_TO_LOGIN;
 

@@ -32,7 +32,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
     );
 
 export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
-    actions$.ofType(BattleActionTypes.LwaveBattle).pipe(
+    actions$.ofType(BattleActionTypes.LeaveBattle).pipe(
         map(action => {
             const questInfo: QuestInfo | undefined = questsInfo.find((info: QuestInfo) => info.name === action.payload);
 
