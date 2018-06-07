@@ -11,18 +11,20 @@ import { LoggerService } from "./logger.service";
 
 @injectable()
 export class LoggerServiceImplementation implements LoggerService {
-    private config: any = require('../../config/logger.config.json');
+    private loggerConfig: any = require('../../config/logger.config.json');
+    private appConfig: any = require('../../config/app.config.json');
+
     private logger: Logger = createLogger({
-        level: this.config.level,
+        level: this.loggerConfig.level,
         format: format.json(),
         transports: [
-            new transports.File({ filename: this.config.errorLogName, level: 'error' }),
-            new transports.File({ filename: this.config.combinedLogName })
+            new transports.File({ filename: this.loggerConfig.errorLogName, level: this.loggerConfig.errorLevel }),
+            new transports.File({ filename: this.loggerConfig.combinedLogName })
         ]
     });
 
     constructor() {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== this.appConfig.production) {
             this.logger.add(new transports.Console({
                 format: format.simple()
             }));

@@ -24,8 +24,8 @@ let server = new InversifyExpressServer(CONTAINER);
 const config = require('./config/app.config.json');
 
 server.setConfig((app) => {
-    process.env.NODE_ENV !== 'production' ? app.use(morgan('dev')) : app.use(morgan('prod'));
-    
+    process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));
+
     app.use(bodyParser.urlencoded({
         extended: true
     }));
