@@ -1,7 +1,7 @@
 import { VError } from 'verror';
+import { injectable } from 'inversify';
 
 import { ErrorService } from "./error.service";
-import { injectable } from 'inversify';
 
 @injectable()
 export class ErrorServiceImplementation extends ErrorService {

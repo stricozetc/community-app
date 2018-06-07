@@ -1,9 +1,8 @@
 import { injectable, decorate, inject } from "inversify";
 
-import { QuestInfo } from "@community-app/quest-info";
-
 import { QueueService } from "./queue.service";
 import { LoggerService } from "../logger";
+import { QuestInfo } from "../../typing/quest-info";
 
 decorate(injectable(), QueueService);
 @injectable()

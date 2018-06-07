@@ -1,12 +1,11 @@
 import { injectable } from "inversify";
 import * as SocketIO from 'socket.io';
 
-import { QuestInfo } from "@community-app/quest-info";
-
 import { inject } from "../services-registration";
 import { SocketService } from "./socket.service";
 import { QueueService } from "../queue";
 import { LoggerService } from "../logger";
+import { QuestInfo } from "../../typing/quest-info";
 
 @injectable()
 export class SocketServiceImplementation extends SocketService {

@@ -1,4 +1,3 @@
-declare module '@community-app/quest-info' {
     export interface QuestInfo {
         id: number;
         name: string;
@@ -8,4 +7,3 @@ declare module '@community-app/quest-info' {
         maxRoomPlayer: number;
         requestUrl: string;
     }
-}

@@ -2,9 +2,9 @@ import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import { QuestInfo } from '@community-app/quest-info';
 import { SocketService } from 'services';
 import { store } from 'store';
+import { QuestInfo } from 'typing/quest-info';
 
 import {
     BattleActionTypes,

@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs/Subject';
 import * as openSocket from 'socket.io-client';
 
-import { QuestInfo } from '@community-app/quest-info';
+import { QuestInfo } from 'typing/quest-info';
 
 export class SocketService {
     public waitBattlePlayersCount: Subject<number> = new Subject();
