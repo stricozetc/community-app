@@ -3,7 +3,7 @@ import { db } from './SequalizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 
 
-export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
+const UserRoles = db.connect.define(dbConfig.userRolesModel, {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -14,15 +14,18 @@ export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
         allowNull: false,
         validate: {
             notEmpty: true
-        }
+        },
+        primaryKey: true,
     },
     roleId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         validate: {
             notEmpty: true
-        }
+        },
+        primaryKey: true,
     }
+    
 }, {
     freezeTableName: true, // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
     tableName: dbConfig.userRolesTable, //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
@@ -34,7 +37,11 @@ export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
             UserRoles.belongsTo(models.roles, { foreignKey: 'roleId', onDelete: "CASCADE", onUpdate: 'CASCADE'} );
         }
     }
+
 });
 
+UserRoles.removeAttribute('id');
+
+export { UserRoles };
 
 
