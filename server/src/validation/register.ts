@@ -1,7 +1,6 @@
-// import { IUser } from './../../Interfaces/IUser';
 import * as Validator from 'validator';
 import { isEmpty } from './is-empty';
-import { UserFieldsToRegister } from './../../Interfaces/IUserFieldsToRegister';
+import { UserFieldsToRegister } from './../../Interfaces/UserFieldsToRegister';
 
 
 

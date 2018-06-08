@@ -3,7 +3,7 @@ import { db } from './SequalizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 
 
-export const Role = db.connect.define(dbConfig.rolesModel, {
+export const RoleModel = db.connect.define(dbConfig.rolesModel, {
     id: {
         type: Sequeleze.INTEGER,
         primaryKey: true,

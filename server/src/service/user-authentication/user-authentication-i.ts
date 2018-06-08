@@ -1,29 +1,30 @@
 import { injectable } from "inversify";
 import { UserAuthenticationRepository } from './user-authentication';
 
-import { IUser } from './../../../Interfaces/IUser';
+import { User } from './../../../Interfaces/User';
 
 import keys from './../../config/keys';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
-import { User } from "./../../../models/user";
+import { UserModel } from "./../../../models/user";
 import { UserRoles } from "./../../../models/userRoles";
-import { Role } from './../../../models/role';
-import { IRole } from './../../../Interfaces/IRole';
+import { RoleModel } from './../../../models/role';
+import { Role } from './../../../Interfaces/Role';
+
 
 
 @injectable()
 export class UserAuthenticationRepositoryImplementation implements UserAuthenticationRepository {
 
 
-    public registerUser(data: IUser): Promise<IUser> {
+    public registerUser(data: User): Promise<User> {
 
-        return new Promise<IUser>((resolve, reject) => {
+        return new Promise<User>((resolve, reject) => {
 
             let errors: any = {};
-            User.findOne({
+            UserModel.findOne({
                 where: { email: data.email }
-            }).then((user: IUser) => {
+            }).then((user: User) => {
                 if (user) {
                     errors.email = 'Email already exist';
                     reject(errors);
@@ -31,7 +32,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     return;
                 } 
 
-                  const newUserDate = User.build({
+                  const newUserDate = UserModel.build({
                       name: data.name,
                       email: data.email,
                       password: null
@@ -43,10 +44,10 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                             reject(HashErr); 
                           }
                           newUserDate.password = hash;
-                          newUserDate.save().then((savedUser: IUser) => {
-                                Role.findOne({
+                          newUserDate.save().then((savedUser: User) => {
+                            RoleModel.findOne({
                                     where: {name: 'user'}
-                                }).then((role: IRole ) => {
+                                }).then((role: Role ) => {
       
                                 UserRoles.upsert({
                                     userId: savedUser.id,
@@ -62,7 +63,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
         });
     }
 
-    public loginUser(data: IUser): Promise<{success: boolean, token: string}> {
+    public loginUser(data: User): Promise<{success: boolean, token: string}> {
        
         return new Promise<{success: boolean, token: string}>((resolve, reject) => {
 
@@ -70,7 +71,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             const password = data.password;
 
             let errors: any = {};
-            User.findOne({ where: {email} }).then((user: IUser) => {
+            UserModel.findOne({ where: {email} }).then((user: User) => {
                 if (!user) {
                     errors.email = "User with this email is not found";
                 }
@@ -107,7 +108,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
     public getUsers(): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => {
-            User.findAll().then((data: string[]) => {
+            UserModel.findAll().then((data: string[]) => {
                 resolve(data);
             }).catch((err) => {
                 reject(err);

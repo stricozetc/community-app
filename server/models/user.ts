@@ -5,7 +5,7 @@ import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from "sequelize";
 
 
-export const User: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.usersModel, {
+export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.usersModel, {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -35,7 +35,7 @@ export const User: SequelizeStaticAndInstance['Model'] = db.connect.define(dbCon
         associate: (models: any) => {
             // skip associating during working with DB
 
-            User.belongsToMany(
+            UserModel.belongsToMany(
                 models.roles,
                 {
                     through: {
@@ -43,7 +43,7 @@ export const User: SequelizeStaticAndInstance['Model'] = db.connect.define(dbCon
                     }
                 }
             );
-            User.hasMany(
+            UserModel.hasMany(
                 models.userRoles
             );
         }

@@ -1,4 +1,4 @@
-export interface IRole {
+export interface Role {
     id: number;
     name: string;
     createAt: string;

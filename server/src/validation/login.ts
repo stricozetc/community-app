@@ -1,8 +1,8 @@
 import * as Validator from 'validator';
-import { IUser } from './../../Interfaces/IUser';
+import { User } from './../../Interfaces/User';
 import { isEmpty } from './is-empty';
 
-export function validateLoginInput(data: IUser): {errors: any, isValid: boolean} {
+export function validateLoginInput(data: User): {errors: any, isValid: boolean} {
     let errors: any = {};
 
     data.email = !isEmpty(data.email) ? data.email : '';

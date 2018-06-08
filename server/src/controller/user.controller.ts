@@ -12,7 +12,7 @@ import { validateRegisterInput } from './../validation/register';
 import { validateLoginInput } from './../validation/login';
 
 import * as passport from 'passport';
-import { IUser } from './../../Interfaces/IUser';
+import { User } from './../../Interfaces/User';
 
 
 @controller('/api/users')
@@ -21,7 +21,7 @@ export class UserController {
   constructor(@inject(UserAuthenticationRepository) private userAuthenticationRepository: UserAuthenticationRepository) { }
 
   @httpPost('/register')
-  public postRegister(request: Request, response: Response):  Promise<Response | IUser> | Response {
+  public postRegister(request: Request, response: Response):  Promise<Response | User> | Response {
     
 
     const { errors, isValid } = validateRegisterInput(request.body);
