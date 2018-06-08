@@ -40,7 +40,6 @@ const UserRoles = db.connect.define(dbConfig.userRolesModel, {
 
 });
 
-UserRoles.removeAttribute('id');
 
 export { UserRoles };
 
