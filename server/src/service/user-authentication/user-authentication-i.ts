@@ -13,6 +13,7 @@ import { Role } from './../../../Interfaces/Role';
 
 
 
+
 @injectable()
 export class UserAuthenticationRepositoryImplementation implements UserAuthenticationRepository {
 
@@ -102,17 +103,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                         }
                     });
                 }
-            });
+            }).catch(() => reject('user was not found'));
         });
     }
-
-    public getUsers(): Promise<string[]> {
-        return new Promise<string[]>((resolve, reject) => {
-            UserModel.findAll().then((data: string[]) => {
-                resolve(data);
-            }).catch((err) => {
-                reject(err);
-            });
-        });
-    }
+    
 }

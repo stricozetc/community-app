@@ -17,19 +17,21 @@ const options: PassportOptions = {
 
 export let passportConfig = (passport: PassportStatic) => {
     passport.use(new JWTStrategy(options, (jwt_payload, done) => {
-        db.connect.sync().then(() => {
-          
-            UserModel.findById(jwt_payload.id)
-                .then((user: User) => {
-                    if (user) {
-                        return done(null, user);
-                    }
+        db.connect.sync()
+        .then(() => {
+            return UserModel.findById(jwt_payload.id);
+        })
+        .then((user: User) => {
+            if (user) {
+                return done(null, user);
+            }
 
-                    return done(null, 'User is not authorized!');
-                })
-                .catch((err: any) => console.log(err));
-            }).catch((err: any) => console.log(err));
+            return done(null, false, { message: 'User is not found' });
+        })
+        .catch((err: any) => done(err));
     }));
 };
+
+
 
 

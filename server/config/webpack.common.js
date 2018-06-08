@@ -42,7 +42,6 @@ let webpackConfig = {
         new CleanWebpackPlugin([path.resolve(__dirname, root('./build/'))], cleanOptions)
     ],
     target: 'node',
-    target: 'node',
     externals: [nodeExternals()]
 };
 

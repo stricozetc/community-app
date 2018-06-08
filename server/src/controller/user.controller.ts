@@ -49,13 +49,6 @@ export class UserController {
     });
   }
 
-  @httpGet('/')
-  public getUsers(request: Request): Promise<string[]> {
-    let ur = new UserAuthenticationRepositoryImplementation();
-
-    return ur.getUsers();
-  }
-
   @httpGet('/current', passport.authenticate('jwt', {session: false}))
   public getCurrentUser(request: Request, response: Response): Response {
     const { user } = request;

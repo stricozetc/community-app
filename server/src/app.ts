@@ -44,19 +44,25 @@ server.setConfig((app) => {
 
 db.connect.sync({
     logging: console.log
-}).then(() => {
-    RoleModel.upsert({
+  })
+  .then(() => {
+    return RoleModel.upsert({
         name: Roles.admin,
         createAt: Date.now(),
         updatedAt: Date.now()
-    }).then(() => {
-        RoleModel.upsert({
-            name: Roles.user,
-            createAt: Date.now(),
-            updatedAt: Date.now()
-        });
     });
-});
+  })
+  .then(() => {
+    return RoleModel.upsert({
+        name: Roles.user,
+        createAt: Date.now(),
+        updatedAt: Date.now()
+    });
+  })
+  .catch((err) => {
+    console.log('DATABASE `community-app` is not connected');
+  });
+
 
 let logger: LoggerService = new LoggerServiceImplementation();
 let application = server.build();
