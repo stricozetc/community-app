@@ -1,6 +1,3 @@
-
-
-
 import { connect as nativeConnect } from 'react-redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { AuthEffects, authReducer } from './auth';

@@ -40,7 +40,7 @@ export function validateRegisterInput(data: UserFieldsToRegister): {errors: any,
     }
 
     if (!Validator.isLength(data.password, {min: 6, max: 30})) {
-        errors.password = 'Password must be at leat 6 characters';
+        errors.password = 'Password must be at least 6 characters and not more that 30';
     }
 
     if (!Validator.equals(data.password, data.password2)) {

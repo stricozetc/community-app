@@ -9,13 +9,13 @@ import {
 } from "./../../interfaces/FrontEndValidation";
 import "./LoginForm.css";
 
-import { UserFieldsToLogin } from "interfaces/FrontEndValidation";
+import { UserFieldsToLogin } from "./../../interfaces/FrontEndValidation";
 import { AuthState } from './../../store/auth/interfaces';
 
 const emailRegExp: RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const errors: FrontEndValidationErrorsLogin = {
   email: {
-    mustBeCorrect: "Email should be corrent",
+    mustBeCorrect: "Email should be correct",
     required: "Email Should be required"
   },
   password: {
@@ -247,9 +247,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))
 });
 
-const LoginForm = connect(
+export const LoginForm = connect(
   mapStateToProps,
   mapDispatchToProps
 )(LoginFormComponent);
 
-export { LoginForm };

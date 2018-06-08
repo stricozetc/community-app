@@ -20,7 +20,7 @@ import './controller';
 import { CONTAINER } from './service/services-registration'; 
 
 import { db } from './../models/SequalizeConnect';
-import { Role } from './../models/role';
+import { Role, Roles } from './../models/role';
 import { passportConfig } from './config/passport';
 
 let server = new InversifyExpressServer(CONTAINER);
@@ -46,14 +46,12 @@ db.connect.sync({
     logging: console.log
 }).then(() => {
     Role.upsert({
-        id: 1,
-        name: 'admin',
+        name: Roles.admin,
         createAt: Date.now(),
         updatedAt: Date.now()
     }).then(() => {
         Role.upsert({
-            id: 2,
-            name: 'user',
+            name: Roles.user,
             createAt: Date.now(),
             updatedAt: Date.now()
         });

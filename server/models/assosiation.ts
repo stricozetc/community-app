@@ -3,7 +3,7 @@ import { Role } from './role';
 import { UserRoles } from './userRoles';
 
 
-const makeAssosiations = () => {
+export const makeAssosiations = () => {
     UserRoles.hasMany(User, {
         as: 'users',
         foreignKey: 'id',
@@ -17,7 +17,5 @@ const makeAssosiations = () => {
     });
 
 };
-
-export { makeAssosiations };
 
 

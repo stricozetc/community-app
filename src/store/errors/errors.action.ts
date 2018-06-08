@@ -1,12 +1,12 @@
 import { action } from 'store/decorators';
 
 export enum ErrorsTypes {
-    GET_ERRORS = '[errors] GET_ERRORS'
+    GetErrors = '[errors] Get Errors'
 }
 
 @action()
 export class GetErrors {
-    public readonly type = ErrorsTypes.GET_ERRORS;
+    public readonly type = ErrorsTypes.GetErrors;
 
     constructor(public payload: any) { }
 }

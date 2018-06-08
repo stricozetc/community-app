@@ -27,17 +27,21 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                 if (user) {
                     errors.email = 'Email already exist';
                     reject(errors);
-                } else {
+
+                    return;
+                } 
 
                   const newUserDate = User.build({
                       name: data.name,
                       email: data.email,
-                      password: data.password
+                      password: null
                   });
 
                   bcrypt.genSalt(10, (err, salt) => {
                       bcrypt.hash(data.password, salt, (HashErr, hash) => {
-                          if (HashErr) { throw HashErr; }
+                          if (HashErr) {
+                            reject(HashErr); 
+                          }
                           newUserDate.password = hash;
                           newUserDate.save().then((savedUser: IUser) => {
                                 Role.findOne({
@@ -49,13 +53,12 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                                     roleId: role.id
                                 }).then(() => {
                                     resolve(savedUser);
-                                });
-                              });
-                          }).catch((saveErr: any) => reject(saveErr));
+                                }).catch(() => reject('can not upsert role of user'));
+                              }).catch(() => reject('can not find Role'));
+                          });
                       });
                   }); 
-                }
-            });
+            }).catch(() => reject('user was not found'));
         });
     }
 
@@ -69,7 +72,9 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             let errors: any = {};
             User.findOne({ where: {email} }).then((user: IUser) => {
                 if (!user) {
-                    errors.email = 'User with this email is not found';
+                    errors.email = "User with this email is not found";
+                }
+                if (errors.email) {
                     reject(errors);
                 } else {
                     bcrypt.compare(password, user.password)
@@ -102,12 +107,10 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
     public getUsers(): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => {
-            User.findAll({}, (error: any, data: string[]) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(data);
-                }
+            User.findAll().then((data: string[]) => {
+                resolve(data);
+            }).catch((err) => {
+                reject(err);
             });
         });
     }

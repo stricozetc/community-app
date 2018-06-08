@@ -8,15 +8,11 @@ import { Link } from 'react-router-dom';
 import { AppState } from 'store';
 
 import { connect } from 'react-redux';
-import { AuthState } from './../../store/auth/interfaces';
-
-interface LandingProps {
-  auth: AuthState;
-  history: any;
-}
 
 
-class LandingComponent extends React.Component <LandingProps, {}> {
+import {LandingProps} from './LandingProps';
+
+class LandingComponent extends React.Component <LandingProps> {
 
   public componentDidMount(): void {
     if (this.props.auth.isAuthenticated) {
@@ -49,9 +45,7 @@ const mapStateToProps = (state: AppState) => ({
   auth: state.auth
 });
 
-const Landing = connect(
+export const Landing = connect(
   mapStateToProps,
   {}
 )(LandingComponent);
-
-export { Landing }

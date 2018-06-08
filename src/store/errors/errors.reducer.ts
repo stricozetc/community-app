@@ -4,7 +4,7 @@ import { initialState } from './errors.initial';
 
 export const errorsReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case ErrorsTypes.GET_ERRORS: {
+        case ErrorsTypes.GetErrors: {
             return action.payload;
         }
       

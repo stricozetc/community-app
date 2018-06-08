@@ -1,28 +1,30 @@
-import * as Sequeleze from "sequelize";
+import * as Sequelize from "sequelize";
 import { db } from './SequalizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 
+import { SequelizeStaticAndInstance } from "sequelize";
 
-export const User = db.connect.define(dbConfig.usersModel, {
+
+export const User: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.usersModel, {
     id: {
-        type: Sequeleze.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     name: {
-        type: Sequeleze.TEXT,
+        type: Sequelize.STRING(30),
         allowNull: false
     },
     password: {
-        type: Sequeleze.TEXT,
+        type: Sequelize.CHAR(60),
         allowNull: false
     },
     email: {
-        type: Sequeleze.TEXT,
+        type: Sequelize.STRING(255),
         allowNull: false
     },
     isActive: {
-        type: Sequeleze.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
     },

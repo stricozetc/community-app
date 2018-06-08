@@ -1,23 +1,23 @@
-import * as Sequeleze from "sequelize";
+import * as Sequelize from "sequelize";
 import { db } from './SequalizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 
 
 export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
     id: {
-        type: Sequeleze.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     userId: {
-        type: Sequeleze.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         validate: {
             notEmpty: true
         }
     },
     roleId: {
-        type: Sequeleze.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         validate: {
             notEmpty: true
@@ -31,7 +31,7 @@ export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
             // skip associating during working with DB
 
             UserRoles.belongsTo(models.users, { foreignKey: 'userId', onDelete: "CASCADE", onUpdate: 'CASCADE'} );
-            UserRoles.belongsTo(models.roles, { foreignKey: 'roleId', onDelete: "SET NULL", onUpdate: 'CASCADE'} );
+            UserRoles.belongsTo(models.roles, { foreignKey: 'roleId', onDelete: "CASCADE", onUpdate: 'CASCADE'} );
         }
     }
 });

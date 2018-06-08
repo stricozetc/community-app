@@ -9,12 +9,13 @@ import {
   UserFieldsToRegister
 } from "./../../interfaces/FrontEndValidation";
 import "./RegistrationForm.css";
+
 import { AuthState } from './../../store/auth/interfaces';
 
 const emailRegExp: RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const erros: FrontEndValidationErrorsRegister = {
+const errors: FrontEndValidationErrorsRegister = {
   email: {
-    mustBeCorrect: "Email should be corrent",
+    mustBeCorrect: "Email should be correct",
     required: "Email Should be required"
   },
   password: {
@@ -115,50 +116,50 @@ export class RegistrationFormComponent extends React.Component<
     let nameErrors: string[] = [];
 
     if (!this.state.email) {
-      emailErrors.push(erros.email.required);
+      emailErrors.push(errors.email.required);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        erros.email.required
+        errors.email.required
       );
     }
 
     if (!this.validateEmail(this.state.email)) {
-      emailErrors.push(erros.email.mustBeCorrect);
+      emailErrors.push(errors.email.mustBeCorrect);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        erros.email.mustBeCorrect
+        errors.email.mustBeCorrect
       );
     }
 
     if (!this.state.name) {
-      nameErrors.push(erros.name.required);
+      nameErrors.push(errors.name.required);
     } else {
-      nameErrors = this.removeElFromArrByValue(nameErrors, erros.name.required);
+      nameErrors = this.removeElFromArrByValue(nameErrors, errors.name.required);
     }
 
     if (this.state.name.length < 2) {
-      nameErrors.push(erros.name.min);
+      nameErrors.push(errors.name.min);
     } else {
-      nameErrors = this.removeElFromArrByValue(nameErrors, erros.name.min);
+      nameErrors = this.removeElFromArrByValue(nameErrors, errors.name.min);
     }
 
     if (!this.state.password) {
-      passwordErrors.push(erros.password.required);
+      passwordErrors.push(errors.password.required);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        erros.password.required
+        errors.password.required
       );
     }
 
     if (this.state.password.length < 6) {
-      passwordErrors.push(erros.password.min);
+      passwordErrors.push(errors.password.min);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        erros.password.min
+        errors.password.min
       );
     }
 
@@ -340,9 +341,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user))
 });
 
-const RegistrationForm = connect(
+export const RegistrationForm = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RegistrationFormComponent);
 
-export { RegistrationForm };

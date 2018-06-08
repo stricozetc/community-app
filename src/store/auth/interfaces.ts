@@ -1,6 +1,6 @@
 export interface AuthState {
   isAuthenticated: boolean,
-  user: FrontEndUser | {}
+  user: FrontEndUser | undefined
 }
 
 export interface FrontEndUser {

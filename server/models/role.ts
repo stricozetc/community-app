@@ -22,5 +22,10 @@ export const Role = db.connect.define(dbConfig.rolesModel, {
     tableName: dbConfig.rolesTable //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
 });
 
+export enum Roles {
+    admin = "admin",
+    user = "user"
+}
+
 
 

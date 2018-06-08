@@ -15,7 +15,7 @@ const options: PassportOptions = {
 };
 
 
-let passportConfig = (passport: PassportStatic) => {
+export let passportConfig = (passport: PassportStatic) => {
     passport.use(new JWTStrategy(options, (jwt_payload, done) => {
         db.connect.sync().then(() => {
           
@@ -25,12 +25,11 @@ let passportConfig = (passport: PassportStatic) => {
                         return done(null, user);
                     }
 
-                    return done(null, false);
+                    return done(null, 'User is not authorized!');
                 })
                 .catch((err: any) => console.log(err));
-            });
+            }).catch((err: any) => console.log(err));
     }));
 };
 
 
-export { passportConfig };

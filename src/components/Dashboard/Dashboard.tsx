@@ -5,16 +5,9 @@ import { connect } from 'react-redux'
 import { LogoutUser } from './../../store/auth/auth.action';
 import { AppState } from './../../store/store.config';
 import BattleRegistration from "./../BattleRegistration/BattleRegistration";
+import {DashboardProps} from './DashboardProps'
 
-import { AuthState } from './../../store/auth/interfaces';
-
-interface LandingProps {
-  auth: AuthState,
-  history: any,
-  logoutUser(): void
-}
-
-class DashboardComponent extends React.Component<LandingProps, {} > {
+class DashboardComponent extends React.Component<DashboardProps> {
   
   public componentDidMount(): void {
     if(!this.props.auth.isAuthenticated) {
@@ -43,9 +36,8 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 
 
-const Dashboard = connect(
+export const Dashboard = connect(
   mapStateToProps,
   mapDispatchToProps
 )(DashboardComponent);
 
-export { Dashboard }
