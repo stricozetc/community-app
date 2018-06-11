@@ -19,11 +19,11 @@ export function validateRegisterInput(data: UserFieldsToRegister): {errors: any,
     }
 
     if (Validator.isEmpty(data.name)) {
-        errors.name = 'Name field is required';
+        errors.name = 'Name is required';
     }
 
     if (Validator.isEmpty(data.email)) {
-        errors.email = 'Email field is required';
+        errors.email = 'Email is required';
     }
 
     if (!Validator.isEmail(data.email)) {
@@ -31,11 +31,11 @@ export function validateRegisterInput(data: UserFieldsToRegister): {errors: any,
     }
 
     if (Validator.isEmpty(data.password)) {
-        errors.password = 'Password field is required';
+        errors.password = 'Password is required';
     }
 
     if (Validator.isEmpty(data.password2)) {
-        errors.password2 = 'Confirm password field is required';
+        errors.password2 = 'Confirmed password is required';
     }
 
     if (!Validator.isLength(data.password, {min: 6, max: 30})) {

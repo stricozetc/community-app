@@ -28,9 +28,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             }).then((user: User) => {
                 if (user) {
                     errors.email = 'Email already exist';
-                    reject(errors);
 
-                    return;
+                    return reject(errors);
                 } 
 
                   const newUserDate = UserModel.build({
@@ -40,9 +39,12 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                   });
 
                   bcrypt.genSalt(10, (err, salt) => {
+                      if (err) {
+                          return reject(err);
+                      }
                       bcrypt.hash(data.password, salt, (HashErr, hash) => {
                           if (HashErr) {
-                            reject(HashErr); 
+                            return reject(HashErr); 
                           }
                           newUserDate.password = hash;
                           newUserDate.save().then((savedUser: User) => {
@@ -77,7 +79,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     errors.email = "User with this email is not found";
                 }
                 if (errors.email) {
-                    reject(errors);
+                    return reject(errors);
                 } else {
                     bcrypt.compare(password, user.password)
                     .then(isMatch => {
@@ -99,7 +101,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                             });
                         } else {
                             errors.password = `Password incorrect for ${user.email}`;
-                            reject(errors);
+                            
+                            return reject(errors);
                         }
                     });
                 }
