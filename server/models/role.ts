@@ -10,7 +10,7 @@ export const RoleModel = db.connect.define(dbConfig.rolesModel, {
         autoIncrement: true
     },
     name: {
-        type: Sequeleze.STRING,
+        type: Sequeleze.STRING(30),
         allowNull: false,
         unique: true,
         validate: {

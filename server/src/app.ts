@@ -8,6 +8,7 @@ import * as express from 'express';
 import * as morgan from "morgan";
 import * as SocketIO from 'socket.io';
 import * as passport from 'passport';
+import * as Sequelize from 'sequelize';
 
 import {
     LoggerService,
@@ -60,7 +61,7 @@ db.connect.sync({
     });
   })
   .catch((err) => {
-    console.log('DATABASE `community-app` is not connected');
+    console.log(err);
   });
 
 
