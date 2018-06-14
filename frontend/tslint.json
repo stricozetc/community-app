@@ -8,8 +8,7 @@
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
-      "node_modules/**/*.ts",
-      "server/**/*"
+      "node_modules/**/*.ts"
     ]
   },
   "rules": {

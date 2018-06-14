@@ -1,5 +1,5 @@
 {
     "port": 3030,
-    "staticUrl": "../build",
+    "staticUrl": "../frontend/build",
     "production": "production"
 }
