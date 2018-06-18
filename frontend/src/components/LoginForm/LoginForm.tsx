@@ -7,7 +7,7 @@ import {
   FrontEndValidationErrorsLogin,
   UserFieldsToRegister
 } from "./../../interfaces/FrontEndValidation";
-import "./LoginForm.css";
+import "./LoginForm.scss";
 
 import { UserFieldsToLogin } from "./../../interfaces/FrontEndValidation";
 import { AuthState } from './../../store/auth/interfaces';
@@ -46,7 +46,7 @@ interface RegistrationFormProps {
 export class LoginFormComponent extends React.Component<
   RegistrationFormProps,
   RegistrationFormState
-> {
+  > {
   constructor(props: RegistrationFormProps) {
     super(props);
     this.state = {
@@ -80,11 +80,11 @@ export class LoginFormComponent extends React.Component<
 
   public handleChange(event: any): void {
     const target = event.target;
-    
+
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value } as RegistrationFormState);
   }
 
   public handleSubmit(event: any): void {

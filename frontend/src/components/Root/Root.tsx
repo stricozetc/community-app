@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./root.css";
+import "./root.scss";
 
 import logo from "./../../logo.svg";
 

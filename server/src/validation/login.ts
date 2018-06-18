@@ -1,6 +1,8 @@
 import * as Validator from 'validator';
 import { User } from './../../Interfaces/User';
 import { isEmpty } from './is-empty';
+import { loginErr } from './../../errors/loginErr';
+
 
 export function validateLoginInput(data: User): {errors: any, isValid: boolean} {
     let errors: any = {};
@@ -9,16 +11,17 @@ export function validateLoginInput(data: User): {errors: any, isValid: boolean} 
     data.password = !isEmpty(data.password) ? data.password : '';
 
 
-    if (Validator.isEmpty(data.email)) {
-        errors.email = 'Email is required';
+    if (!Validator.isEmail(data.email)) {
+        errors.email = loginErr.emailMustBeValid;
     }
 
-    if (!Validator.isEmail(data.email)) {
-        errors.email = 'Email is Invalid';
+    if (Validator.isEmpty(data.email)) {
+        errors.email = loginErr.emailIsRequired;
     }
+
 
     if (Validator.isEmpty(data.password)) {
-        errors.password = 'Password is required';
+        errors.password = loginErr.passwordIsRequired;
     }
 
 

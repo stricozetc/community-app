@@ -8,7 +8,7 @@ import {
   FrontEndValidationErrorsRegister,
   UserFieldsToRegister
 } from "./../../interfaces/FrontEndValidation";
-import "./RegistrationForm.css";
+import "./RegistrationForm.scss";
 
 import { AuthState } from './../../store/auth/interfaces';
 
@@ -56,7 +56,7 @@ interface RegistrationFormProps {
 export class RegistrationFormComponent extends React.Component<
   RegistrationFormProps,
   RegistrationFormState
-> {
+  > {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -93,7 +93,7 @@ export class RegistrationFormComponent extends React.Component<
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value } as RegistrationFormState);
     this.checkValidation();
   }
 

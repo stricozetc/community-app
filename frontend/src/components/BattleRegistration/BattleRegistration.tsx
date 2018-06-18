@@ -1,4 +1,4 @@
-import './BattleRegistration.component.css';
+import './BattleRegistration.component.scss';
 
 import * as  React from 'react';
 import { connect } from 'react-redux'
