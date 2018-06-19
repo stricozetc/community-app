@@ -1,8 +1,10 @@
+import { AuthStatus } from 'models';
+
 import { AuthState } from './interfaces';
 
 type State = AuthState;
 
 export const initialState: State = {
-    isAuthenticated: false,
+    status: AuthStatus.NOT_AUTHORIZED,
     user: undefined
 };

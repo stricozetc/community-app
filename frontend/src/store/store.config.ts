@@ -1,7 +1,5 @@
 import { connect as nativeConnect } from 'react-redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { AuthEffects, authReducer } from './auth';
-
 
 import {
   applyMiddleware,
@@ -10,14 +8,19 @@ import {
   createStore
 } from 'redux';
 
-import { AuthState } from './auth/interfaces';
+import {
+  AuthEffects,
+  authReducer,
+  AuthState
+} from './auth';
 
-import { BattleEffects, battleReducer } from './battle';
-import { BattleState } from './battle/interfaces';
-
+import {
+  BattleEffects,
+  battleReducer,
+  BattleState
+} from './battle';
 
 import { errorsReducer } from './errors';
-
 
 // (Valiantsin): redux-observable types issue
 type Epic = any;
@@ -43,11 +46,10 @@ export interface AppState {
 
 export const store = createStore(
   rootReducers,
-  compose (
+  compose(
     applyMiddleware(epicMiddleware),
     (<any>window).__REDUX_DEVTOOLS_EXTENSION__ && (<any>window).__REDUX_DEVTOOLS_EXTENSION__()
   )
-  
 );
 
 export const connect = nativeConnect;

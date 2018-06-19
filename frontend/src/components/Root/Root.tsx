@@ -1,34 +1,29 @@
-import * as React from "react";
 import "./root.scss";
+
+import * as Cookies from "js-cookie";
+import * as jwt_decode from "jwt-decode";
+import * as React from "react";
+import { HashRouter as Router, Route } from "react-router-dom";
+
+import { setAuthToken } from "utils";
+
+import {
+  FrontEndUser,
+  SetCurrentUser,
+  store
+} from "store";
+
+import { Dashboard } from "../Dashboard";
+import { Landing } from "../Landing";
+import { LoginForm } from "../LoginForm";
+import { RegistrationForm } from "../RegistrationForm";
 
 import logo from "./../../logo.svg";
 
-import * as jwt_decode from "jwt-decode";
-
-import { HashRouter as Router, Route } from "react-router-dom";
-
-
-import { RegistrationForm } from "./../RegistrationForm/RegistrationForm";
-
-import { store } from "./../../store";
-
-import { LoginForm } from "components/LoginForm/LoginForm";
-import { Landing } from "../Landing/Landing";
-import { SetCurrentUser } from "./../../store/auth/auth.action";
-
-import { setAuthtoken } from "./../../utils/setAuthToken";
-
-import { FrontEndUser } from "store/auth/interfaces";
-import { Dashboard } from "../Dashboard/Dashboard";
-
-import * as Cookies from "js-cookie";
-
 const token = Cookies.get("jwtToken");
 if (token) {
-  setAuthtoken(token);
-  // Decode token and get user info and expiration
+  setAuthToken(token);
   const decoded: FrontEndUser = jwt_decode(token);
-  // Set user and isAuthenticated
   store.dispatch(new SetCurrentUser(decoded));
 }
 

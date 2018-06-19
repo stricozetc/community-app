@@ -1,38 +1,37 @@
-
-
-import * as React from 'react';
 import './landing.scss'
 
 import Button from '@material-ui/core/Button';
+
+import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { AuthStatus } from 'models';
 import { AppState } from 'store';
 
-import { connect } from 'react-redux';
+import { LandingProps } from './Landing.model';
 
-
-import {LandingProps} from './LandingProps';
-
-class LandingComponent extends React.Component <LandingProps> {
+class LandingComponent extends React.Component<LandingProps> {
 
   public componentDidMount(): void {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.status === AuthStatus.AUTHORIZED) {
       this.props.history.push("/dashboard");
     }
   }
 
-  public render():  JSX.Element {
+  public render(): JSX.Element {
     return (
       <div>
         <h2>Landing for Community App</h2>
-        <Link to="/register" className="CA-Landing__register-btn">
-            <Button variant="raised" color="primary" >
-                Register
+        <Link to="/register" className="ca-landing__register-btn">
+          <Button variant="raised" color="primary" >
+            Register
             </Button>
         </Link>
 
         <Link to="/login">
-            <Button variant="raised" color="primary">
-                Login
+          <Button variant="raised" color="primary">
+            Login
             </Button>
         </Link>
       </div>
@@ -40,9 +39,8 @@ class LandingComponent extends React.Component <LandingProps> {
   }
 }
 
-
 const mapStateToProps = (state: AppState) => ({
-  auth: state.auth
+  status: state.auth.status
 });
 
 export const Landing = connect(

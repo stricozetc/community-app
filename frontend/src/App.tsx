@@ -1,14 +1,13 @@
+import './App.scss';
+
 import * as React from 'react';
-import './App.css';
 
-import { Root } from './components/Root/Root';
-
+import { Root } from './components';
 
 export class App extends React.Component {
   public render(): JSX.Element {
     return (
-    < Root />
-
+      < Root />
     );
   }
 }

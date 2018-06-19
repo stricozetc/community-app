@@ -1,77 +1,65 @@
-import {ActionsObservable} from 'redux-observable';
-import {HttpWrapper} from './../../services/axiosWrapper.service';
-
-import {Observable} from 'rxjs/Observable';
-
-import {
-    AuthTypes,
-    LoginUser,
-    LogoutUser,
-    RedirectToLogin, 
-    RegisterUser,
-    SetCurrentUser, 
-    } from './auth.action';
-
-import {deleteAuthToken, setAuthtoken } from './../../utils/setAuthToken';
-
-import * as jwt_decode from 'jwt-decode';
-import {FrontEndUser} from './interfaces';
-
-
-// import 'rxjs/add/operator/mergeMap';
-
-
-
-import {GetErrors} from '../errors';
-
-
 import * as Cookies from 'js-cookie';
-import {fromPromise} from 'rxjs/observable/fromPromise';
+import * as jwt_decode from 'jwt-decode';
 
-
-import {mergeMap} from 'rxjs/operators';
+import { ActionsObservable } from 'redux-observable';
+import { Observable } from 'rxjs/Observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { switchMap } from 'rxjs/operators';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import {
+    deleteAuthToken,
+    history,
+    setAuthToken
+} from 'utils';
 
-export const loginUser$ = (actions$ : ActionsObservable < LoginUser >) => actions$
+import { HttpWrapper } from 'services';
+
+import {
+    AuthTypes,
+    LoginUser,
+    LogoutUser,
+    RegisterUser,
+    SetCurrentUser,
+} from './auth.action';
+
+import { GetErrors } from '../errors';
+import { FrontEndUser } from './interfaces';
+
+export const loginUser$ = (actions$: ActionsObservable<LoginUser>) => actions$
     .ofType(AuthTypes.LoginUser).pipe(
-        mergeMap(action => fromPromise(HttpWrapper.post('api/users/login', action.payload)).map(res => {
-            const {token} = res.data;
-            // Set token to ls
-            Cookies.set('jwtToken', token)
-            // Set token to Auth header
-            setAuthtoken(token);
-            // Decode token to get UserData
-            const decoded : FrontEndUser = jwt_decode(token);
-    
-            return new SetCurrentUser(decoded);
-        }).catch(error => Observable.of(new GetErrors(error.response.data))))
-    )
-    
+        switchMap(action => fromPromise(HttpWrapper.post('api/users/login', action.payload))
+            .map(res => {
+                const { token } = res.data;
+                Cookies.set('jwtToken', token)
+                setAuthToken(token);
+                const decoded: FrontEndUser = jwt_decode(token);
 
-export const registerUser$ = (actions$ : ActionsObservable < RegisterUser >) => actions$
+                return new SetCurrentUser(decoded);
+            }).catch(error => Observable.of(new GetErrors(error.response.data))))
+    )
+
+export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) => actions$
     .ofType(AuthTypes.RegisterUser).pipe(
-        mergeMap(action => fromPromise(HttpWrapper.post('api/users/register', action.payload)).map(res => {
-            return new RedirectToLogin();
-        }).catch((error) => {
-            return Observable.of(new GetErrors(error.response.data));
-        }))
+        switchMap(action => fromPromise(HttpWrapper.post('api/users/register', action.payload))
+            .map(() => history.push('/login'))
+            .catch((error) => {
+                return Observable.of(new GetErrors(error.response.data));
+            }))
     )
-    
 
-export const logoutUser$ = (actions$ : ActionsObservable < LogoutUser >) => actions$
+
+export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) => actions$
     .ofType(AuthTypes.LogoutUser)
-        .map(action => {
+    .map(() => {
+        Cookies.remove('jwtToken');
+        deleteAuthToken();
 
-            Cookies.remove('jwtToken');
-            deleteAuthToken();
-    
-            return new SetCurrentUser(undefined);
-        })
-    
-    
-    
-export const AuthEffects : ((actions$ : ActionsObservable < any >) => Observable < any >)[] = [loginUser$, registerUser$, logoutUser$];
+        return new SetCurrentUser(undefined);
+    })
+
+// tslint:disable-next-line:array-type
+export const AuthEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [loginUser$, registerUser$, logoutUser$];
