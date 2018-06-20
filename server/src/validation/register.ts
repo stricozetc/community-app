@@ -3,9 +3,6 @@ import { isEmpty } from './is-empty';
 import { UserFieldsToRegister } from './../../Interfaces/UserFieldsToRegister';
 import { registerErr } from './../../errors/registerErr';
 
-
-
-
 export function validateRegisterInput(data: UserFieldsToRegister): {errors: any, isValid: boolean} {
     let errors: any = {};
 
@@ -48,8 +45,6 @@ export function validateRegisterInput(data: UserFieldsToRegister): {errors: any,
         errors.password2 = registerErr.passwordsMustMatch;
     }
    
-
-
     return {
         errors,
         isValid: isEmpty(errors)

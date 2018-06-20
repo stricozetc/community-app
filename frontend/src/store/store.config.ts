@@ -48,6 +48,7 @@ export const store = createStore(
   rootReducers,
   compose(
     applyMiddleware(epicMiddleware),
+    // tslint:disable-next-line:no-angle-bracket-type-assertion
     (<any>window).__REDUX_DEVTOOLS_EXTENSION__ && (<any>window).__REDUX_DEVTOOLS_EXTENSION__()
   )
 );

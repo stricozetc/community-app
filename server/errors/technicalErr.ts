@@ -5,7 +5,7 @@ export const technicalErr = {
     return {
       code: technicalErrCodes.saltIsNotGenerated,
       msg: 'Salt was not generated',
-      err    
+      err
     };
   },
 
@@ -13,12 +13,12 @@ export const technicalErr = {
     return {
       code: technicalErrCodes.canNotBcryptString,
       msg: 'String was not bcrypted',
-      err    
+      err
     };
   },
 
   userIsNotFound: (err: any) => {
-    return  {
+    return {
       code: technicalErrCodes.smtIsNotFoundedInDb,
       msg: 'User can not be found in Db',
       err
@@ -26,11 +26,10 @@ export const technicalErr = {
   },
 
   userRoleIsNotFound: (err: any) => {
-    return  {
+    return {
       code: technicalErrCodes.smtIsNotFoundedInDb,
-      msg:  'User Role can not be found in Db',
-      err    
+      msg: 'User Role can not be found in Db',
+      err
     };
   }
-
 };

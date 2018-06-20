@@ -1,22 +1,18 @@
 import { injectable } from "inversify";
-import { UserAuthenticationRepository } from './user-authentication';
 
-import { User } from './../../../Interfaces/User';
-
-import keys from './../../config/keys';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
-import { UserModel } from "./../../../models/user";
-import { UserRoles } from "./../../../models/userRoles";
-import { RoleModel } from './../../../models/role';
-import { Role } from './../../../Interfaces/Role';
-import { registerErr } from './../../../errors/registerErr';
-import { technicalErr } from './../../../errors/technicalErr';
 
-
+import { UserModel } from "../../../models/user";
+import { UserRoles } from "../../../models/userRoles";
+import { RoleModel } from '../../../models/role';
+import { Role } from '../../../Interfaces/Role';
+import { registerErr } from '../../../errors/registerErr';
+import keys from '../../config/keys';
+import { UserAuthenticationRepository } from './user-authentication';
+import { User } from '../../../Interfaces/User';
 @injectable()
 export class UserAuthenticationRepositoryImplementation implements UserAuthenticationRepository {
-
 
     public registerUser(data: User): Promise<User> {
 
@@ -108,5 +104,4 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             }).catch(() => reject('user was not found'));
         });
     }
-
 }

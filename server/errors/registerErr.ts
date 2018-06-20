@@ -38,5 +38,4 @@ export const registerErr = {
     code: errCodes.smtExist,
     msg: 'User is already registered'
   },
-
 };

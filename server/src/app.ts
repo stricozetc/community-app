@@ -1,14 +1,13 @@
 import 'reflect-metadata';
 
 import { InversifyExpressServer } from 'inversify-express-utils';
-import { Container, inject } from 'inversify';
+import { inject } from './service/services-registration';
 
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as morgan from "morgan";
 import * as SocketIO from 'socket.io';
 import * as passport from 'passport';
-import * as Sequelize from 'sequelize';
 
 import {
     LoggerService,
@@ -18,9 +17,9 @@ import {
 } from './service';
 
 import './controller';
-import { CONTAINER } from './service/services-registration'; 
+import { CONTAINER } from './service/services-registration';
 
-import { db } from './../models/SequalizeConnect';
+import { db } from './../models/SequelizeConnect';
 import { RoleModel, Roles } from './../models/role';
 import { passportConfig } from './config/passport';
 
@@ -45,25 +44,24 @@ server.setConfig((app) => {
 
 db.connect.sync({
     logging: console.log
-  })
-  .then(() => {
-    return RoleModel.upsert({
-        name: Roles.admin,
-        createAt: Date.now(),
-        updatedAt: Date.now()
+})
+    .then(() => {
+        return RoleModel.upsert({
+            name: Roles.admin,
+            createAt: Date.now(),
+            updatedAt: Date.now()
+        });
+    })
+    .then(() => {
+        return RoleModel.upsert({
+            name: Roles.user,
+            createAt: Date.now(),
+            updatedAt: Date.now()
+        });
+    })
+    .catch((err) => {
+        console.log(err);
     });
-  })
-  .then(() => {
-    return RoleModel.upsert({
-        name: Roles.user,
-        createAt: Date.now(),
-        updatedAt: Date.now()
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 
 let logger: LoggerService = new LoggerServiceImplementation();
 let application = server.build();
@@ -75,3 +73,4 @@ let serverInstance = application.listen(config.port, () => {
 
 const socketService: SocketService = new SocketServiceImplementation();
 socketService.setSocket(SocketIO(serverInstance));
+

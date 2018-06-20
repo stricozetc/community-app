@@ -12,4 +12,3 @@ export enum technicalErrCodes {
   smtIsNotFoundedInDb = 503,
   smtIsNotUpsertedInDb = 504,
 }
-
