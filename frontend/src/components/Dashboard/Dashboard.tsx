@@ -1,43 +1,45 @@
-
-
 import * as React from 'react';
-import { connect } from 'react-redux'
-import { LogoutUser } from './../../store/auth/auth.action';
-import { AppState } from './../../store/store.config';
-import BattleRegistration from "./../BattleRegistration/BattleRegistration";
-import {DashboardProps} from './DashboardProps'
+import { connect } from 'react-redux';
+
+import { AuthStatus } from 'models';
+import { AppState, LogoutUser } from 'store';
+
+import { BattleRegistration } from "../BattleRegistration";
+import { DashboardProps } from './Dashboard.model';
 
 class DashboardComponent extends React.Component<DashboardProps> {
-  
+
   public componentDidMount(): void {
-    if(!this.props.auth.isAuthenticated) {
-     this.props.history.push('/login');
+    if (this.props.status === AuthStatus.NOT_AUTHORIZED) {
+      this.props.history.push('/login');
     }
- }
- 
-  public render():  JSX.Element {
+  }
+
+  public logoutUser(): void {
+    this.props.logoutUser();
+    this.props.history.push('/');
+  }
+
+  public render(): JSX.Element {
     return (
-      <div>
+      <div className="ca-dashboard">
         <BattleRegistration />
         <h1>Logout</h1>
-        <button onClick = {() => { this.props.logoutUser(); window.location.href = '/'}}>Logout</button>
+        <button onClick={() => this.logoutUser()}>Logout</button>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
-  auth: state.auth
+  status: state.auth.status
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser())
 })
 
-
-
 export const Dashboard = connect(
   mapStateToProps,
   mapDispatchToProps
 )(DashboardComponent);
-

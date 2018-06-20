@@ -5,7 +5,7 @@
             "name": "JsMarathon",
             "registrationEventName": "onJsMarathon",
             "leaveEventName": "onLeaveJsMarathon",
-            "getWaitPlayersCountEventName":"onWaitPlayersJsMarathon",
+            "getWaitPlayersCountEventName": "onWaitPlayersJsMarathon",
             "maxRoomPlayer": 5,
             "requestUrl": "http://localhost:2018"
         }

@@ -9,11 +9,9 @@ decorate(injectable(), QueueService);
 export class QueueServiceImplementation extends QueueService {
     private queues: SocketIO.Socket[][] = [];
     private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
+    @inject(LoggerService) private loggerService: LoggerService;
 
-    constructor(
-        @inject(LoggerService) private loggerService: LoggerService
-    ) {
-        //ToDo: need fix 
+    constructor() {
         super();
 
         for (let index = 0; index < this.questsInfo.length; index++) {

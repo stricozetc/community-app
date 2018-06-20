@@ -13,7 +13,7 @@ describe('QueueServiceImplementation', () => {
     } as SocketIO.Socket;
 
     beforeEach(() => {
-        service = new QueueServiceImplementation(new LoggerServiceImplementation());
+        service = new QueueServiceImplementation();
     });
 
     it('should set new player', async () => {

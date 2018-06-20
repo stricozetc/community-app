@@ -1,8 +1,7 @@
 import * as Validator from 'validator';
 import { isEmpty } from './is-empty';
 import { UserFieldsToRegister } from './../../Interfaces/UserFieldsToRegister';
-
-
+import { registerErr } from './../../errors/registerErr';
 
 export function validateRegisterInput(data: UserFieldsToRegister): {errors: any, isValid: boolean} {
     let errors: any = {};
@@ -15,39 +14,37 @@ export function validateRegisterInput(data: UserFieldsToRegister): {errors: any,
 
  
     if (!Validator.isLength(data.name, {min: 2, max: 30})) {
-        errors.name = 'Name must be between 2 and 30 characters';
+        errors.name = registerErr.nameLength;
     }
 
     if (Validator.isEmpty(data.name)) {
-        errors.name = 'Name is required';
-    }
-
-    if (Validator.isEmpty(data.email)) {
-        errors.email = 'Email is required';
+        errors.name = registerErr.nameIsRequired;
     }
 
     if (!Validator.isEmail(data.email)) {
-        errors.email = 'Email is Invalid';
+        errors.email = registerErr.emailMustBeValid;
+    }
+
+    if (Validator.isEmpty(data.email)) {
+        errors.email = registerErr.emailIsRequired;
     }
 
     if (Validator.isEmpty(data.password)) {
-        errors.password = 'Password is required';
+        errors.password = registerErr.passwordIsRequired;
     }
 
     if (Validator.isEmpty(data.password2)) {
-        errors.password2 = 'Confirmed password is required';
+        errors.password2 = registerErr.confirmedPasswordIsRequired;
     }
 
     if (!Validator.isLength(data.password, {min: 6, max: 30})) {
-        errors.password = 'Password must be at least 6 characters and not more that 30';
+        errors.password = registerErr.passwordLength;
     }
 
     if (!Validator.equals(data.password, data.password2)) {
-        errors.password2 = 'Passwords must match';
+        errors.password2 = registerErr.passwordsMustMatch;
     }
    
-
-
     return {
         errors,
         isValid: isEmpty(errors)

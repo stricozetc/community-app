@@ -1,93 +1,58 @@
+import "./LoginForm.scss";
+
 import { Button, FormGroup, TextField } from "@material-ui/core";
+
 import * as React from "react";
 import { connect } from "react-redux";
-import { AppState } from "store";
-import { LoginUser } from "store/auth";
+
+import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
+import { AppState, LoginUser } from "store";
+
 import {
-  FrontEndValidationErrorsLogin,
+  AuthStatus,
+  UserFieldsToLogin,
   UserFieldsToRegister
-} from "./../../interfaces/FrontEndValidation";
-import "./LoginForm.css";
+} from "models";
 
-import { UserFieldsToLogin } from "./../../interfaces/FrontEndValidation";
-import { AuthState } from './../../store/auth/interfaces';
+import {
+  initLoginFormState,
+  LoginFormProps,
+  LoginFormState
+} from "./LoginForm.model";
 
-const emailRegExp: RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const errors: FrontEndValidationErrorsLogin = {
-  email: {
-    mustBeCorrect: "Email should be correct",
-    required: "Email Should be required"
-  },
-  password: {
-    min: "Password should have at least 6 characters",
-    required: "Password is required"
-  }
-};
-
-interface RegistrationFormState {
-  email: string;
-  password: string;
-  isPasswordValid: boolean;
-  isEmailValid: boolean;
-  touched: {
-    email: boolean;
-    password: boolean;
-  };
-  emailErrors: string[];
-  passwordErrors: string[];
-}
-
-interface RegistrationFormProps {
-  auth: AuthState;
-  history: any;
-  loginUser(user: UserFieldsToLogin): void;
-}
-
-export class LoginFormComponent extends React.Component<
-  RegistrationFormProps,
-  RegistrationFormState
-> {
-  constructor(props: RegistrationFormProps) {
+export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
+  constructor(props: LoginFormProps) {
     super(props);
-    this.state = {
-      email: "",
-      password: "",
-      isPasswordValid: false,
-      isEmailValid: false,
-      touched: {
-        email: false,
-        password: false
-      },
-      emailErrors: [],
-      passwordErrors: []
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.state = initLoginFormState;
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
   }
 
-  public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
-    if (nextProps.auth.isAuthenticated) {
+  public componentWillReceiveProps(nextProps: LoginFormProps): void {
+    if (nextProps.status === AuthStatus.AUTHORIZED) {
       this.props.history.push("/dashboard");
     }
   }
 
   public componentDidMount(): void {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.status === AuthStatus.AUTHORIZED) {
       this.props.history.push("/dashboard");
     }
   }
 
-  public handleChange(event: any): void {
+  public onChange(event: any): void {
     const target = event.target;
-    
+
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value } as LoginFormState);
   }
 
-  public handleSubmit(event: any): void {
+  public onSubmit(event: any): void {
     event.preventDefault();
 
     const user: UserFieldsToLogin = {
@@ -103,38 +68,38 @@ export class LoginFormComponent extends React.Component<
     let passwordErrors: string[] = [];
 
     if (!this.state.email) {
-      emailErrors.push(errors.email.required);
+      emailErrors.push(frontEndValidationErrorsLogin.email.required);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        errors.email.required
+        frontEndValidationErrorsLogin.email.required
       );
     }
 
     if (!this.validateEmail(this.state.email)) {
-      emailErrors.push(errors.email.mustBeCorrect);
+      emailErrors.push(frontEndValidationErrorsLogin.email.mustBeCorrect);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        errors.email.mustBeCorrect
+        frontEndValidationErrorsLogin.email.mustBeCorrect
       );
     }
 
     if (!this.state.password) {
-      passwordErrors.push(errors.password.required);
+      passwordErrors.push(frontEndValidationErrorsLogin.password.required);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        errors.password.required
+        frontEndValidationErrorsLogin.password.required
       );
     }
 
     if (this.state.password.length < 6) {
-      passwordErrors.push(errors.password.min);
+      passwordErrors.push(frontEndValidationErrorsLogin.password.min);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        errors.password.min
+        frontEndValidationErrorsLogin.password.min
       );
     }
 
@@ -153,7 +118,7 @@ export class LoginFormComponent extends React.Component<
     this.setState({ emailErrors, passwordErrors });
   }
 
-  public handleBlur = (field: string) => (evt: any) => {
+  public onBlur = (field: string) => (evt: any) => {
     this.setState({
       touched: {
         ...this.state.touched,
@@ -166,23 +131,23 @@ export class LoginFormComponent extends React.Component<
   public render(): JSX.Element {
     return (
       <div>
-        <form onSubmit={this.handleSubmit} className="CA-Login-form__container">
+        <form onSubmit={this.onSubmit} className="ca-login-form__container">
           <FormGroup>
             <TextField
               id="email"
               label="Email"
               name="email"
               value={this.state.email}
-              onChange={this.handleChange}
+              onChange={this.onChange}
               type="email"
-              onBlur={this.handleBlur("email")}
+              onBlur={this.onBlur("email")}
               error={!this.state.isEmailValid && this.state.touched.email}
             />
             {!this.state.isEmailValid &&
               this.state.touched.email &&
               this.state.emailErrors.map((err, index) => {
                 return (
-                  <div className="CA-Login-form__error" key={index}>
+                  <div className="ca-login-form__error" key={index}>
                     {err}
                   </div>
                 );
@@ -191,14 +156,14 @@ export class LoginFormComponent extends React.Component<
 
           <FormGroup>
             <TextField
-              className="CA-Login-form__password-field"
+              className="ca-login-form__password-field"
               id="password"
               label="Password"
               name="password"
               value={this.state.password}
-              onChange={this.handleChange}
+              onChange={this.onChange}
               type="password"
-              onBlur={this.handleBlur("password")}
+              onBlur={this.onBlur("password")}
               error={!this.state.isPasswordValid && this.state.touched.password}
             />
             {!this.state.isPasswordValid &&
@@ -215,7 +180,7 @@ export class LoginFormComponent extends React.Component<
           <Button
             color="primary"
             type="submit"
-            className="CA-Login-form__login-btn"
+            className="ca-login-form__login-btn"
             disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
           >
             LOGIN
@@ -240,7 +205,7 @@ export class LoginFormComponent extends React.Component<
 }
 
 const mapStateToProps = (state: AppState) => ({
-  auth: state.auth
+  status: state.auth.status
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -251,4 +216,3 @@ export const LoginForm = connect(
   mapStateToProps,
   mapDispatchToProps
 )(LoginFormComponent);
-

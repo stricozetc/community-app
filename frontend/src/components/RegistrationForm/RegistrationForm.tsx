@@ -1,89 +1,40 @@
-// import {     Button,     TextField  } from '@material-ui/core';
-import { Button, FormGroup, TextField } from "@material-ui/core";
+import "./RegistrationForm.scss";
+
+import {
+  Button,
+  FormGroup,
+  TextField
+} from "@material-ui/core";
+
 import * as React from "react";
 import { connect } from "react-redux";
-import { AppState } from "store";
-import { RegisterUser } from "store/auth";
+
+import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
+import { AuthStatus, UserFieldsToRegister } from "models";
+
 import {
-  FrontEndValidationErrorsRegister,
-  UserFieldsToRegister
-} from "./../../interfaces/FrontEndValidation";
-import "./RegistrationForm.css";
+  AppState,
+  RegisterUser
+} from "store";
 
-import { AuthState } from './../../store/auth/interfaces';
-
-const emailRegExp: RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const errors: FrontEndValidationErrorsRegister = {
-  email: {
-    mustBeCorrect: "Email should be correct",
-    required: "Email Should be required"
-  },
-  password: {
-    min: "Password should have at least 6 characters",
-    required: "Password is required"
-  },
-  name: {
-    min: "Name should be at least 2 characters long",
-    required: "name is required"
-  }
-};
-
-interface RegistrationFormState {
-  email: string;
-  name: string;
-  password: string;
-  passwordToRepeat: string;
-  isPasswordValid: boolean;
-  isEmailValid: boolean;
-  isNameValid: boolean;
-  touched: {
-    email: boolean;
-    password: boolean;
-    passwordToRepeat: boolean;
-    name: boolean;
-  };
-  emailErrors: string[];
-  passwordErrors: string[];
-  nameErrors: string[];
-}
-
-interface RegistrationFormProps {
-  history: any;
-  auth: AuthState;
-  registerUser(user: UserFieldsToRegister): void;
-}
-
-export class RegistrationFormComponent extends React.Component<
+import {
+  initRegistrationFormState,
   RegistrationFormProps,
   RegistrationFormState
-> {
+} from "./RegistrationForm.model";
+
+export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      email: "",
-      name: "",
-      password: "",
-      passwordToRepeat: "",
-      isPasswordValid: false,
-      isEmailValid: false,
-      isNameValid: false,
-      touched: {
-        email: false,
-        password: false,
-        passwordToRepeat: false,
-        name: false
-      },
-      emailErrors: [],
-      passwordErrors: [],
-      nameErrors: []
-    };
+    this.state = initRegistrationFormState;
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
   }
 
   public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
-    if (nextProps.auth.isAuthenticated) {
+    if (nextProps.status === AuthStatus.AUTHORIZED) {
       this.props.history.push("/dashboard");
     }
   }
@@ -93,7 +44,7 @@ export class RegistrationFormComponent extends React.Component<
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value } as RegistrationFormState);
     this.checkValidation();
   }
 
@@ -107,6 +58,7 @@ export class RegistrationFormComponent extends React.Component<
       password2: this.state.passwordToRepeat
     };
 
+
     this.props.registerUser(user);
   }
 
@@ -116,50 +68,50 @@ export class RegistrationFormComponent extends React.Component<
     let nameErrors: string[] = [];
 
     if (!this.state.email) {
-      emailErrors.push(errors.email.required);
+      emailErrors.push(frontEndValidationErrorsRegister.email.required);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        errors.email.required
+        frontEndValidationErrorsRegister.email.required
       );
     }
 
     if (!this.validateEmail(this.state.email)) {
-      emailErrors.push(errors.email.mustBeCorrect);
+      emailErrors.push(frontEndValidationErrorsRegister.email.mustBeCorrect);
     } else {
       emailErrors = this.removeElFromArrByValue(
         emailErrors,
-        errors.email.mustBeCorrect
+        frontEndValidationErrorsRegister.email.mustBeCorrect
       );
     }
 
     if (!this.state.name) {
-      nameErrors.push(errors.name.required);
+      nameErrors.push(frontEndValidationErrorsRegister.name.required);
     } else {
-      nameErrors = this.removeElFromArrByValue(nameErrors, errors.name.required);
+      nameErrors = this.removeElFromArrByValue(nameErrors, frontEndValidationErrorsRegister.name.required);
     }
 
     if (this.state.name.length < 2) {
-      nameErrors.push(errors.name.min);
+      nameErrors.push(frontEndValidationErrorsRegister.name.min);
     } else {
-      nameErrors = this.removeElFromArrByValue(nameErrors, errors.name.min);
+      nameErrors = this.removeElFromArrByValue(nameErrors, frontEndValidationErrorsRegister.name.min);
     }
 
     if (!this.state.password) {
-      passwordErrors.push(errors.password.required);
+      passwordErrors.push(frontEndValidationErrorsRegister.password.required);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        errors.password.required
+        frontEndValidationErrorsRegister.password.required
       );
     }
 
     if (this.state.password.length < 6) {
-      passwordErrors.push(errors.password.min);
+      passwordErrors.push(frontEndValidationErrorsRegister.password.min);
     } else {
       passwordErrors = this.removeElFromArrByValue(
         passwordErrors,
-        errors.password.min
+        frontEndValidationErrorsRegister.password.min
       );
     }
 
@@ -334,7 +286,7 @@ export class RegistrationFormComponent extends React.Component<
 }
 
 const mapStateToProps = (state: AppState) => ({
-  auth: state.auth
+  status: state.auth.status
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

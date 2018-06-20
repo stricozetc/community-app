@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const setAuthtoken = (token: string) => {
-    if(token) {
-        // Apply to every request
+export const setAuthToken = (token: string) => {
+    if (token) {
+        // tslint:disable-next-line:no-string-literal
         axios.defaults.headers.common['Authorization'] = token;
     } else {
         throw new Error('Token can not be empty');
@@ -10,7 +10,6 @@ export const setAuthtoken = (token: string) => {
 }
 
 export const deleteAuthToken = () => {
-   
+    // tslint:disable-next-line:no-string-literal
     delete axios.defaults.headers.common['Authorization'];
-    
 }

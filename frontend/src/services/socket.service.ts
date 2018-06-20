@@ -1,15 +1,15 @@
-import { Subject } from 'rxjs/Subject';
 import * as openSocket from 'socket.io-client';
 
-import { QuestInfo } from 'typing/quest-info';
+import { Subject } from 'rxjs/Subject';
+
+import { QuestInfo } from 'models';
 
 export class SocketService {
     public waitBattlePlayersCount: Subject<number> = new Subject();
 
     private socket: SocketIOClient.Socket;
-
     private questsInfo: QuestInfo[] = require('../config/quests.json').quests;
-    
+
     constructor() {
         this.socket = openSocket('http://localhost:3030');
 
@@ -17,7 +17,6 @@ export class SocketService {
             this.socket.on(questInfo.getWaitPlayersCountEventName,
                 (waitBattlePlayersCount: number) => this.waitBattlePlayersCount.next(waitBattlePlayersCount));
         }
-
     }
 
     public emitEvent(eventName: string): void {

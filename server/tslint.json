@@ -220,6 +220,11 @@
         "import-spacing": true,
         "newline-before-return": true,
         "no-string-throw": true,
-        "no-sparse-arrays": true
+        "no-sparse-arrays": true,
+        "linterOptions": {
+            "exclude": [
+                "node_modules/**/*.ts"
+            ]
+        }
     }
 }

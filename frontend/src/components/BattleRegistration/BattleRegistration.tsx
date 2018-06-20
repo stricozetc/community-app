@@ -1,4 +1,4 @@
-import './BattleRegistration.component.css';
+import './BattleRegistration.scss';
 
 import * as  React from 'react';
 import { connect } from 'react-redux'
@@ -8,55 +8,64 @@ import { AppState, JoinBattle, LeaveBattle } from "store";
 
 import { BattleRegistrationProps } from "./BattleRegistration.model";
 
-const goToBattleHelpMassage: string = 'Press on "Go to the battle" page';
-const waitBattleHelpMassage: string = 'Please, wait other users';
-const goToBattleButtonMassage: string = 'Go to the battle';
-const leaveFromBattleButtonMassage: string = 'Leave form the battle';
+class BattleRegistrationComponent extends React.Component<BattleRegistrationProps>  {
+    private goToBattleHelpMassage: string = 'Press on "Go to the battle" page';
+    private waitBattleHelpMassage: string = 'Please, wait other users';
+    private goToBattleButtonMassage: string = 'Go to the battle';
+    private leaveFromBattleButtonMassage: string = 'Leave form the battle';
 
-const BattleRegistration = ({ status, waitBattlePlayersCountAction, joinBattleAction, leaveBattleAction }: BattleRegistrationProps) => (
-    <div className="battle-registration">
-        <div className='battle-registration__registration-button'>
-            {getBattleButton(status, joinBattleAction, leaveBattleAction)}
-        </div>
-        <div className='battle-registration__help-message'>
-            {getHelpMessage(status)} {getWaitPlayersCount(status, waitBattlePlayersCountAction)}
-        </div>
-    </div>
-)
-
-const getBattleButton = (status: BattleStatus, joinBattleAction: any, leaveBattleAction: any): JSX.Element => {
-    if (status === BattleStatus.INIT) {
-        return (
-            <button onClick={() => joinBattleAction('JsMarathon')}>{goToBattleButtonMassage}</button>
-        )
-    } else {
-        return (
-            <button onClick={() => leaveBattleAction('JsMarathon')}>{leaveFromBattleButtonMassage}</button>
-        )
+    constructor(props: BattleRegistrationProps) {
+        super(props);
     }
-}
 
-const getHelpMessage = (status: BattleStatus): JSX.Element => {
-    if (status === BattleStatus.INIT) {
-        return (
-            <span>{goToBattleHelpMassage}</span>
-        )
-    } else {
-        return (
-            <span>{waitBattleHelpMassage}</span>
-        )
+    public getBattleButton(status: BattleStatus, joinBattleAction: any, leaveBattleAction: any): JSX.Element {
+        if (status === BattleStatus.INIT) {
+            return (
+                <button onClick={() => joinBattleAction('JsMarathon')}>{this.goToBattleButtonMassage}</button>
+            )
+        } else {
+            return (
+                <button onClick={() => leaveBattleAction('JsMarathon')}>{this.leaveFromBattleButtonMassage}</button>
+            )
+        }
     }
-}
 
-const getWaitPlayersCount = (status: BattleStatus, waitBattlePlayersCountAction: number): JSX.Element => {
-    if (status === BattleStatus.INIT) {
+    public getHelpMessage(status: BattleStatus): JSX.Element {
+        if (status === BattleStatus.INIT) {
+            return (
+                <span>{this.goToBattleHelpMassage}</span>
+            )
+        } else {
+            return (
+                <span>{this.waitBattleHelpMassage}</span>
+            )
+        }
+    }
+
+    public getWaitPlayersCount(status: BattleStatus, waitBattlePlayersCountAction: number): JSX.Element {
+        if (status === BattleStatus.INIT) {
+            return (
+                <span>&nbsp;</span>
+            )
+        } else {
+            return (
+                <span>({waitBattlePlayersCountAction}/5)</span>
+            )
+        }
+    }
+
+    public render(): JSX.Element {
+        const { status, joinBattleAction, leaveBattleAction, waitBattlePlayersCountAction } = this.props;
+
         return (
-            // tslint:disable-next-line:jsx-self-close
-            <span></span>
-        )
-    } else {
-        return (
-            <span>({waitBattlePlayersCountAction}/5)</span>
+            <div className="ca-battle-registration">
+                <div className='ca-battle-registration__registration-button'>
+                    {this.getBattleButton(status, joinBattleAction, leaveBattleAction)}
+                </div>
+                <div className='ca-battle-registration__help-message'>
+                    {this.getHelpMessage(status)} {this.getWaitPlayersCount(status, waitBattlePlayersCountAction)}
+                </div>
+            </div>
         )
     }
 }
@@ -71,8 +80,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name))
 })
 
-// tslint:disable-next-line:no-default-export
-export default connect(
+export const BattleRegistration = connect(
     mapStateToProps,
     mapDispatchToProps
-)(BattleRegistration)
+)(BattleRegistrationComponent)

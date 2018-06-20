@@ -36,12 +36,24 @@ let webpackConfig = {
             {
                 test: /\.ts$/,
                 loader: 'awesome-typescript-loader',
-            }]
+            },
+        ]
     },
     plugins: [
         new CleanWebpackPlugin([path.resolve(__dirname, root('./build/'))], cleanOptions)
     ],
     target: 'node',
+    // need to work with __dirname and filename
+    node: {
+        __dirname: false,
+        __filename: false,
+        // global: true,
+        // crypto: 'empty',
+        // process: true,
+        // module: false,
+        // clearImmediate: false,
+        // setImmediate: false
+    },
     externals: [nodeExternals()]
 };
 

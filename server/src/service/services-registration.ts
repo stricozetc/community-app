@@ -11,8 +11,6 @@ import {
     UserAuthenticationRepositoryImplementation
 } from './user-authentication';
 
-
-
 export const CONTAINER = new Container();
 
 CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
@@ -21,4 +19,5 @@ CONTAINER.bind<QueueService>(QueueService).to(QueueServiceImplementation);
 CONTAINER.bind<ErrorService>(ErrorService).to(ErrorServiceImplementation);
 CONTAINER.bind<ApiService>(ApiService).to(ApiServiceImplementation);
 CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);
+
 export const inject = getDecorators(CONTAINER).lazyInject;

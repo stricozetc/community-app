@@ -1,10 +1,12 @@
+import { AuthStatus } from "models";
+
 export interface AuthState {
-  isAuthenticated: boolean,
+  status: AuthStatus,
   user: FrontEndUser | undefined
 }
 
 export interface FrontEndUser {
-  id: string, 
+  id: string,
   name: string,
   email: string
 }
