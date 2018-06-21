@@ -1,52 +1,52 @@
-import * as Sequeleze from "sequelize";
-import { db } from './SequalizeConnect';
-import { dbConfig } from './../src/config/dbconfig';
+import * as Sequelize from "sequelize";
+import { db } from './SequelizeConnect';
+import { dbConfig } from '../src/config/dbconfig';
 
+import { SequelizeStaticAndInstance } from "sequelize";
 
-export const User = db.connect.define(dbConfig.usersModel, {
+export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.usersModel, {
     id: {
-        type: Sequeleze.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     name: {
-        type: Sequeleze.TEXT,
+        type: Sequelize.STRING(30),
         allowNull: false
     },
     password: {
-        type: Sequeleze.TEXT,
+        type: Sequelize.CHAR(60),
         allowNull: false
     },
     email: {
-        type: Sequeleze.TEXT,
+        type: Sequelize.STRING(255),
         allowNull: false
     },
     isActive: {
-        type: Sequeleze.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
     },
 }, {
-    freezeTableName: true, // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
-    tableName: dbConfig.usersTable, //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
-    classMethods: {
-        associate: (models: any) => {
-            // skip associating during working with DB
-
-            User.belongsToMany(
-                models.roles,
-                {
-                    through: {
-                        model: models.userRoles,
+        // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
+        freezeTableName: true,
+        //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
+        tableName: dbConfig.usersTable,
+        classMethods: {
+            associate: (models: any) => {
+                // skip associating during working with DB
+                UserModel.belongsToMany(
+                    models.roles,
+                    {
+                        through: {
+                            model: models.userRoles,
+                        }
                     }
-                }
-            );
-            User.hasMany(
-                models.userRoles
-            );
+                );
+                UserModel.hasMany(
+                    models.userRoles
+                );
+            }
         }
     }
-}
 );
-
-

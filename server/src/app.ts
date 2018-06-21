@@ -1,72 +1,76 @@
 import 'reflect-metadata';
+
 import { InversifyExpressServer } from 'inversify-express-utils';
+import { inject } from './service/services-registration';
 
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as morgan from "morgan";
-
-import './controller';
-
-import { CONTAINER } from './service/services-registration';
-
-import {
-    SocketService,
-    SocketServiceImplementation,
-    QueueServiceImplementation
-} from './service';
-
-import { passportConfig } from './config/passport';
-
+import * as SocketIO from 'socket.io';
 import * as passport from 'passport';
 
-import { db } from './../models/SequalizeConnect';
-import { Role } from './../models/role';
+import {
+    LoggerService,
+    LoggerServiceImplementation,
+    SocketService,
+    SocketServiceImplementation
+} from './service';
 
+import './controller';
+import { CONTAINER } from './service/services-registration';
 
+import { db } from './../models/SequelizeConnect';
+import { RoleModel, Roles } from './../models/role';
+import { passportConfig } from './config/passport';
 
-const server = new InversifyExpressServer(CONTAINER);
-const socket: SocketService = new SocketServiceImplementation(new QueueServiceImplementation());
+let server = new InversifyExpressServer(CONTAINER);
 
+// tslint:disable-next-line:no-var-requires
+const config = require('./config/app.config.json');
 
 server.setConfig((app) => {
+    process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));
+
     app.use(bodyParser.urlencoded({
         extended: true
     }));
     app.use(passport.initialize());
     passportConfig(passport);
     app.use(bodyParser.json());
-    app.use(morgan('dev'));
-    app.use(express.static('../build'));
+    app.use(express.static(config.staticUrl));
 });
-
-const application = server.build();
-
 
 // makeAssosiations();
 
 db.connect.sync({
     logging: console.log
-}).then(() => {
-    Role.upsert({
-        id: 1,
-        name: 'admin',
-        createAt: Date.now(),
-        updatedAt: Date.now()
-    }).then(() => {
-        Role.upsert({
-            id: 2,
-            name: 'user',
+})
+    .then(() => {
+        return RoleModel.upsert({
+            name: Roles.admin,
             createAt: Date.now(),
             updatedAt: Date.now()
+        });
+    })
+    .then(() => {
+        return RoleModel.upsert({
+            name: Roles.user,
+            createAt: Date.now(),
+            updatedAt: Date.now()
+        });
+    })
+    .catch((err) => {
+        console.log(err);
     });
-    });
+
+let logger: LoggerService = new LoggerServiceImplementation();
+let application = server.build();
+
+let serverInstance = application.listen(config.port, () => {
+    logger.infoLog(`App is running at http://localhost:${config.port}`);
+    logger.infoLog('Press CTRL+C to stop\n');
 });
 
+const socketService: SocketService = new SocketServiceImplementation();
+socketService.setSocket(SocketIO(serverInstance));
 
-
-const serverInstance = application.listen(3030, () => {
-    console.log(`App is running at http://localhost:3030`);
-    console.log('Press CTRL+C to stop\n');
-});
-
-socket.connection(serverInstance);

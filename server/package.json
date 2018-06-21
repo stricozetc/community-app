@@ -25,6 +25,7 @@
     "@types/sequelize": "^4.27.20",
     "@types/validator": "^9.4.1",
     "@types/supertest": "^2.0.4",
+    "@types/verror": "^1.10.3",
     "awesome-typescript-loader": "^4.0.1",
     "clean-webpack-plugin": "^0.1.19",
     "jest": "^22.4.2",
@@ -40,10 +41,12 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "express": "^4.16.2",
     "inversify": "^4.11.1",
     "inversify-express-utils": "^5.2.1",
+    "inversify-inject-decorators": "^3.1.0",
     "inversify-logger-middleware": "^3.1.0",
     "jsonwebtoken": "^8.2.1",
     "morgan": "^1.9.0",
@@ -51,8 +54,10 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.12",
-    "sequelize": "^4.37.10",
     "socket.io": "^2.1.0",
+    "verror": "^1.10.0",
+    "winston": "^3.0.0-rc6",
+    "sequelize": "^4.37.10",
     "validator": "^10.2.0"
   }
 }

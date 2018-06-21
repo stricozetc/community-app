@@ -13,10 +13,10 @@ let webpackConfig = merge(common, {
         new UglifyJsPlugin({
             sourceMap: true,
             uglifyOptions: {
+                mangle: false,
                 compress: {
                     warnings: false
-                },
-                mangle: false
+                }
             }
         })
     ]

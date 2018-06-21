@@ -1,16 +1,16 @@
-import * as Sequeleze from "sequelize";
-import { db } from './SequalizeConnect';
+import * as Sequelize from "sequelize";
+import { db } from './SequelizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 
 
-export const Role = db.connect.define(dbConfig.rolesModel, {
+export const RoleModel = db.connect.define(dbConfig.rolesModel, {
     id: {
-        type: Sequeleze.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     name: {
-        type: Sequeleze.STRING,
+        type: Sequelize.STRING(30),
         allowNull: false,
         unique: true,
         validate: {
@@ -18,9 +18,16 @@ export const Role = db.connect.define(dbConfig.rolesModel, {
         }
     }
 }, {
-    freezeTableName: true, // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
-    tableName: dbConfig.rolesTable //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
-});
+        // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
+        freezeTableName: true,
+        //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
+        tableName: dbConfig.rolesTable
+    });
+
+export enum Roles {
+    admin = "admin",
+    user = "user"
+}
 
 
 

@@ -1,23 +1,19 @@
-import { User } from "./user";
-import { Role } from './role';
+import { UserModel } from "./user";
+import { RoleModel } from './role';
 import { UserRoles } from './userRoles';
 
 
-const makeAssosiations = () => {
-    UserRoles.hasMany(User, {
+export const makeAssociations = () => {
+    UserRoles.hasMany(UserModel, {
         as: 'users',
         foreignKey: 'id',
         foreignKeyConstraint: true
     });
-    
-    UserRoles.hasMany(Role, {
+
+    UserRoles.hasMany(RoleModel, {
         as: 'roles',
         foreignKey: 'id',
         foreignKeyConstraint: true
     });
 
 };
-
-export { makeAssosiations };
-
-

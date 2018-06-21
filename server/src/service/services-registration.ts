@@ -1,16 +1,23 @@
 import { Container } from 'inversify';
+import getDecorators from 'inversify-inject-decorators';
 
+import { LoggerService, LoggerServiceImplementation } from './logger';
+import { SocketServiceImplementation, SocketService } from './socket';
 import { QueueServiceImplementation, QueueService } from './queue';
-import { SocketService, SocketServiceImplementation } from './socket';
-import { 
+import { ErrorServiceImplementation, ErrorService } from './error';
+import { ApiService, ApiServiceImplementation } from './api';
+import {
     UserAuthenticationRepository,
-    UserAuthenticationRepositoryImplementation     
+    UserAuthenticationRepositoryImplementation
 } from './user-authentication';
-
-
 
 export const CONTAINER = new Container();
 
-CONTAINER.bind<QueueService>(QueueService).to(QueueServiceImplementation);
+CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
 CONTAINER.bind<SocketService>(SocketService).to(SocketServiceImplementation);
+CONTAINER.bind<QueueService>(QueueService).to(QueueServiceImplementation);
+CONTAINER.bind<ErrorService>(ErrorService).to(ErrorServiceImplementation);
+CONTAINER.bind<ApiService>(ApiService).to(ApiServiceImplementation);
 CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);
+
+export const inject = getDecorators(CONTAINER).lazyInject;

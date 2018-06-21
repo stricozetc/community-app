@@ -1,0 +1,5 @@
+{
+    "port": 3030,
+    "staticUrl": "../frontend/build",
+    "production": "production"
+}

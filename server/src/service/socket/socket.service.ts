@@ -1,3 +1,3 @@
 export abstract class SocketService {
-    public abstract connection(serverInstance: any): void;
+    public abstract setSocket(serverInstance: any): void;
 }
