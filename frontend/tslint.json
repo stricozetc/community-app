@@ -20,13 +20,14 @@
       "property-declaration"
     ],
     "no-default-export": true,
-    "newline-before-return": true,
+    "newline-before-return": false,
     "interface-name": [
       true,
       "never-prefix"
     ],
     "jsx-no-lambda": false,
     "object-literal-sort-keys": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "ordered-imports": false
   }
 }

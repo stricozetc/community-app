@@ -149,6 +149,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
   public render(): JSX.Element {
     return (
       <div>
+        {this.props.children}
         <form
           onSubmit={this.handleSubmit}
           className="ca-Registration-form__container"

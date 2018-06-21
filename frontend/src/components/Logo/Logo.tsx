@@ -4,13 +4,11 @@ import * as React from 'react';
 import { LogoProps } from './Logo.model';
 
 export const CaLogo = (props: LogoProps) => {
-  const { text, modificators } = props;
+  const { text } = props;
 
   return (
     <div
-      className={
-        modificators ? ['ca-logo', ...modificators].join(' ') : 'ca-logo'
-      }
+      className='ca-logo'
     >
       {text}
     </div>

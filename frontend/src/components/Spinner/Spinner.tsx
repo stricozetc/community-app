@@ -6,18 +6,12 @@ import { Fragment } from 'react';
 import { SpinnerProps } from './Spinner.model';
 
 export const CaSpinner = (props: SpinnerProps) => {
-  const { isActive, modificators } = props;
+  const { isActive } = props;
 
   return (
     <Fragment>
       {isActive && (
-        <div
-          className={
-            modificators
-              ? ['ca-spinner', ...modificators].join(' ')
-              : 'ca-spinner'
-          }
-        />
+        <div className='ca-spinner'/>
       )}
     </Fragment>
   );

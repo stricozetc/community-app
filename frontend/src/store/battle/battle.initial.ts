@@ -8,5 +8,6 @@ export const initialState: State = {
     status: BattleStatus.INIT,
     waitBattlePlayersCount: 0,
     roomURL: '',
-    battleName: ''
+    battleName: '',
+    countdown: 0
 };

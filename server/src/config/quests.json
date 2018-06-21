@@ -6,8 +6,10 @@
             "registrationEventName": "onJsMarathon",
             "leaveEventName": "onLeaveJsMarathon",
             "getWaitPlayersCountEventName": "onWaitPlayersJsMarathon",
+            "notifyCountdown": "onNotifyCountdown",
             "maxRoomPlayer": 5,
-            "requestUrl": "http://localhost:2018"
+            "requestUrl": "http://localhost:2018",
+            "maxWaitingTime": 3000000
         }
     ]
 }

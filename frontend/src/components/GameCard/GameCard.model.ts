@@ -8,10 +8,12 @@ export interface GameNamePair {
 export interface GameCardProps {
   game: Game;
   status: BattleStatus;
-  modificators?: string[];
-  gameCardFooter?: JSX.Element;
-  joinGame(): any;
-  leaveGame(): any;
+  // conditionalStyles?: string[];
+  // gameCardFooter?: JSX.Element;
+  battleStatus: BattleStatus;
+  waitBattlePlayersCountAction: number;
+  joinGame($event: any): any;
+  leaveGame($event: any): any;
 }
 
 export interface Game {
