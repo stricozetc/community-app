@@ -1,9 +1,22 @@
 @import "../../style/main.scss";
 
-body {
-  background-color: $orange;
+html {
+  font-size: 62.5%;
 }
 
-.App-logo{
-  animation: fadeIn 2s;
+body {
+  font-size: 1.6rem;
+  height: 5000px;
+  background-color: $background-color;
+  margin-top: $nav-height +  $space-between-nav-and-content;
+  box-sizing: border-box;
+  font-family: SourceSansPro;
+}
+
+.ca-global-fadeIn {
+  animation: fadeIn 1s;
+}
+
+.ca-nav-children-container-right {
+  justify-self: right;  
 }

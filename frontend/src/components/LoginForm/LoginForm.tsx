@@ -5,14 +5,10 @@ import { Button, FormGroup, TextField } from "@material-ui/core";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
+import { emailRegExp, frontEndValidationErrorsLogin } from "constes";
 import { AppState, LoginUser } from "store";
 
-import {
-  AuthStatus,
-  UserFieldsToLogin,
-  UserFieldsToRegister
-} from "models";
+import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister } from "models";
 
 import {
   initLoginFormState,
@@ -20,7 +16,10 @@ import {
   LoginFormState
 } from "./LoginForm.model";
 
-export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
+export class LoginFormComponent extends React.Component<
+  LoginFormProps,
+  LoginFormState
+> {
   constructor(props: LoginFormProps) {
     super(props);
 
@@ -33,13 +32,13 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
     if (nextProps.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/homepage");
     }
   }
 
   public componentDidMount(): void {
     if (this.props.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/homepage");
     }
   }
 
@@ -130,7 +129,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div className="ca-login-form">
         <form onSubmit={this.onSubmit} className="ca-login-form__container">
           <FormGroup>
             <TextField

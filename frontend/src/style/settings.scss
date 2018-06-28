@@ -10,14 +10,25 @@ $grey:#d7dde2;
 $green: #d3fbd8;
 $red: #ffa39e;
 $green-light: #35bd9a;
+$grey-2: #556776;
 
 // SPECIFIC
 $locked-game-color: rgba(71, 86, 98, 0.2);
-$unactive-link-color: #ffffff;
+$unlocked-game-color:rgba(71, 86, 98, 0.79);
+$unactive-link-color: #888e93;
+$nav-color: #313c45;
+$btn-font-size: 1.5rem;
+$top-border-unactive-game: #666666;
+
+$unlocked-footer-color: rgba(85, 103, 118, 0.2);
+
+$nav-height: 6rem;
+$space-between-nav-and-content: 1.3rem;
 
 // FONT-SIZE
-$medium-font: 1.6rem;
+$medium-font: 1.4rem;
 $medium-font-2: 2rem;
-$big-font: 2.3rem;
+$big-font: 2.6rem;
 $big-font-2: 4rem;
 $icon-font: 7rem;
+

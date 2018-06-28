@@ -35,7 +35,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
   public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
     if (nextProps.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/homepage");
     }
   }
 
@@ -161,6 +161,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
               value={this.state.email}
               onChange={this.handleChange}
               type="email"
+              className="CA-Registration-form__field"
               onBlur={this.handleBlur("email")}
               error={!this.state.isEmailValid && this.state.touched.email}
             />
@@ -186,6 +187,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
               value={this.state.name}
               onChange={this.handleChange}
               type="text"
+              className="CA-Registration-form__field"
               onBlur={this.handleBlur("name")}
               error={!this.state.isNameValid && this.state.touched.name}
             />
@@ -211,6 +213,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
               value={this.state.password}
               onChange={this.handleChange}
               type="password"
+              className="CA-Registration-form__field"
               onBlur={this.handleBlur("password")}
               error={!this.state.isPasswordValid && this.state.touched.password}
             />
@@ -234,6 +237,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
               value={this.state.passwordToRepeat}
               onChange={this.handleChange}
               type="password"
+              className="CA-Registration-form__field"
               onBlur={this.handleBlur("passwordToRepeat")}
               error={
                 this.state.touched.password &&
@@ -255,8 +259,10 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
             color="primary"
             type="submit"
             style={{
-              marginTop: "20px"
+              marginTop: "20px",
+              fontSize: "1.6rem"
             }}
+            className="CA-Registration-form__field"
             disabled={
               !this.state.isEmailValid ||
               !this.state.isPasswordValid ||

@@ -20,7 +20,22 @@ import {
   BattleState
 } from './battle';
 
+import {
+  GamesEffects,
+  gamesReducer,
+  GamesState
+} from './games';
+
+import {
+  dataReducer,
+  DataState
+} from './data';
+
 import { errorsReducer } from './errors';
+
+
+
+
 
 // (Valiantsin): redux-observable types issue
 type Epic = any;
@@ -28,12 +43,15 @@ type Epic = any;
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
-  errors: errorsReducer
+  errors: errorsReducer,
+  games: gamesReducer,
+  data: dataReducer
 });
 
 const rootEpic: Epic = combineEpics(
   ...BattleEffects,
-  ...AuthEffects
+  ...AuthEffects,
+  ...GamesEffects
 );
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
@@ -41,6 +59,8 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 export interface AppState {
   battle: BattleState,
   auth: AuthState,
+  games: GamesState,
+  data: DataState
   errors: {}
 }
 // tslint:disable-next-line:no-angle-bracket-type-assertion
