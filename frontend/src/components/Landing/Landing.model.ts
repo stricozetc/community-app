@@ -1,6 +1,6 @@
 import { AuthStatus } from 'models';
 
 export interface LandingProps {
-    status: AuthStatus;
-    history: any;
+  status: AuthStatus;
+  history: any;
 }

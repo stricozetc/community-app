@@ -1,4 +1,4 @@
-import { BattleStatus } from '../../models';
+import { BattleStatus } from 'models';
 
 export interface GameNamePair {
   frontName: string;
@@ -9,7 +9,7 @@ export interface GameCardProps {
   game: Game;
   status: BattleStatus;
   modificators?: string[];
-  gameCardFooter?: any;
+  gameCardFooter?: JSX.Element;
   joinGame(): any;
   leaveGame(): any;
 }

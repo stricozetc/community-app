@@ -1,5 +1,5 @@
 
-import { Game } from './../../../../frontend/src/components/GameCard/GameCard.model';
+import { Game } from './../../../Interfaces/Game';
 
 export abstract class MocksRepository {
   public abstract getGames(): Promise<Game[]>;

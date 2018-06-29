@@ -7,7 +7,7 @@ import {
   MocksRepository
 } from '../service/mocks';
 
-import { Game } from './../../../frontend/src/components/GameCard/GameCard.model';
+import { Game } from './../../Interfaces/Game';
 
 @controller('/api/mocks')
 export class MockController {
