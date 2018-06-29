@@ -1,4 +1,4 @@
-import { BattleStatus } from './../../models';
+import { BattleStatus } from '../../models';
 
 export interface GameNamePair {
   frontName: string;

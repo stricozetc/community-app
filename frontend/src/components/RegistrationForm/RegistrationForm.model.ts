@@ -1,4 +1,4 @@
-import { AuthStatus, UserFieldsToRegister } from "models";
+import { AuthStatus, UserFieldsToRegister } from 'models';
 
 export interface RegistrationFormState {
     email: string;
@@ -20,10 +20,10 @@ export interface RegistrationFormState {
 }
 
 export const initRegistrationFormState: RegistrationFormState = {
-    email: "",
-    name: "",
-    password: "",
-    passwordToRepeat: "",
+    email: '',
+    name: '',
+    password: '',
+    passwordToRepeat: '',
     isPasswordValid: false,
     isEmailValid: false,
     isNameValid: false,

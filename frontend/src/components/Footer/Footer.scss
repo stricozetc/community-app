@@ -6,16 +6,16 @@
   left: 0;
   bottom: 0;
 
-  &--flex-row {
+  &--row-align {
     @include flexbox();
   }
 
-  &--background-color-grey {
+  &--unlocked-game-background {
     @include background-color($grey-2);
   }
 
-  &--background-color-black {
-    @include background-color($unlocked-footer-color);
+  &--locked-game-background {
+    @include background-color($locked-footer-color);
   }
 
   &--normal-min-height {

@@ -1,4 +1,4 @@
 export interface LogoProps {
-  modificators?: string[],
-  text: string
+    modificators?: string[];
+    text: string;
 }

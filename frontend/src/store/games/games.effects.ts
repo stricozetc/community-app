@@ -47,14 +47,5 @@ export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
           })
     )
 
-
-
-    // export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
-    // .ofType(GamesTypes.InitGames).pipe(
-    //     switchMap(() => fromPromise(HttpWrapper.get('api/mocks/games'))   
-    //         .map((games: Game[]) => {
-    //             return new GamesInited(games);
-    //         }).catch(error => Observable.of(new GetErrors(error.response.data))))
-    // )
 // tslint:disable-next-line:array-type
 export const GamesEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initGames$];
