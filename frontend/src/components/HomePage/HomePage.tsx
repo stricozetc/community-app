@@ -118,7 +118,7 @@ class CaHomePageComponent extends React.Component<HomePageProps> {
             {games.map((game: Game, index: number) => {
               const backgroundFooterColor = game.isStarted
                 ? 'ca-footer--locked-game-background'
-                : 'ca-footer-unlocked-game-background';
+                : 'ca-footer--unlocked-game-background';
               const secondLineColor = game.isStarted
                 ? 'ca-icon-with-info__second-line--full-players'
                 : '';
@@ -135,7 +135,6 @@ class CaHomePageComponent extends React.Component<HomePageProps> {
                         modificators={[
                           'ca-footer--row-align',
                           'ca-footer--normal-min-height',
-                          'ca-footer--position-absolute',
                           backgroundFooterColor
                         ]}
                       >
