@@ -1,4 +1,4 @@
-import './landing.scss'
+import './landing.scss';
 
 import Button from '@material-ui/core/Button';
 
@@ -12,10 +12,9 @@ import { AppState } from 'store';
 import { LandingProps } from './Landing.model';
 
 class LandingComponent extends React.Component<LandingProps> {
-
   public componentDidMount(): void {
     if (this.props.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+      this.props.history.push('/homepage');
     }
   }
 
@@ -24,18 +23,18 @@ class LandingComponent extends React.Component<LandingProps> {
       <div>
         <h2>Landing for Community App</h2>
         <Link to="/register" className="ca-landing__register-btn">
-          <Button variant="raised" color="primary" >
+          <Button variant="raised" color="primary">
             Register
-            </Button>
+          </Button>
         </Link>
 
         <Link to="/login">
           <Button variant="raised" color="primary">
             Login
-            </Button>
+          </Button>
         </Link>
       </div>
-    )
+    );
   }
 }
 

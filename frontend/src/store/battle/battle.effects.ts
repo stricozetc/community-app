@@ -19,13 +19,17 @@ const questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
 
 const socketService = new SocketService();
 socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBattle(url)));
-socketService.waitBattlePlayersCount.subscribe((waitBattlePlayersCount: number) =>
-    store.dispatch(new SetWaitBattlePlayersCount(waitBattlePlayersCount)))
 
+
+socketService.waitBattlePlayersCount.subscribe((waitBattlePlayersCount: number) => {
+        return store.dispatch(new SetWaitBattlePlayersCount(waitBattlePlayersCount))
+})
+    
 export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
     actions$.ofType(BattleActionTypes.JoinBattle).pipe(
         map(action => {
             const questInfo: QuestInfo | undefined = questsInfo.find((info: QuestInfo) => info.name === action.payload);
+            console.log(questInfo && questInfo.registrationEventName);
 
             return socketService.emitEvent(questInfo ? questInfo.registrationEventName : '');
         })
@@ -47,4 +51,8 @@ export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>)
     );
 
 // tslint:disable-next-line:array-type
-export const BattleEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [joinBattle$, leaveBattle$, redirectToBattle$];
+export const BattleEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [
+    joinBattle$, 
+    leaveBattle$,
+    redirectToBattle$
+];

@@ -1,0 +1,18 @@
+@import "../../style/settings.scss";
+
+.ca-logo{
+
+  &--orange {
+    color: $orange;
+  }
+  &--big-font{
+    font-size: $big-font;
+  }
+  &--uppercase {
+    text-transform: uppercase;
+  }
+  &--bold-font {
+    font-weight: 600;
+  }
+
+}

@@ -1,0 +1,43 @@
+@import "../../style/settings.scss";
+@import "../../style/mixins.scss";
+.ca-footer {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+
+  &--row-align {
+    @include flexbox();
+  }
+
+  &--unlocked-game-background {
+    @include background-color($grey-2);
+  }
+
+  &--locked-game-background {
+    @include background-color($locked-footer-color);
+  }
+
+  &--normal-min-height {
+    min-height: 5.6rem;
+  }
+
+
+  &__container {
+    @include container(80%);
+    @include flexbox();
+    @include flexbox-center-cross-ax();
+    justify-content: space-between;
+  }
+  
+  &__alert {
+    color: $grey;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
+  
+  &__container-item {
+    max-width: 50%;
+  }
+}

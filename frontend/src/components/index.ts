@@ -1,5 +1,5 @@
 export * from './BattleRegistration';
-export * from './Dashboard';
+export * from './HomePage';
 export * from './Landing';
 export * from './LoginForm';
 export * from './RegistrationForm';

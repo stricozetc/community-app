@@ -1,26 +1,25 @@
-import "./LoginForm.scss";
+import './LoginForm.scss';
 
-import { Button, FormGroup, TextField } from "@material-ui/core";
+import { Button, FormGroup, TextField } from '@material-ui/core';
 
-import * as React from "react";
-import { connect } from "react-redux";
+import * as React from 'react';
+import { connect } from 'react-redux';
 
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
-import { AppState, LoginUser } from "store";
+import { AppState, LoginUser } from 'store';
 
-import {
-  AuthStatus,
-  UserFieldsToLogin,
-  UserFieldsToRegister
-} from "models";
+import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister } from 'models';
 
 import {
   initLoginFormState,
   LoginFormProps,
   LoginFormState
-} from "./LoginForm.model";
+} from './LoginForm.model';
 
-export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
+export class LoginFormComponent extends React.Component<
+  LoginFormProps,
+  LoginFormState
+> {
   constructor(props: LoginFormProps) {
     super(props);
 
@@ -33,20 +32,20 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
     if (nextProps.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+      this.props.history.push('/homepage');
     }
   }
 
   public componentDidMount(): void {
     if (this.props.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+      this.props.history.push('/homepage');
     }
   }
 
   public onChange(event: any): void {
     const target = event.target;
 
-    const value = target.type === "checkbox" ? target.checked : target.value;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
     this.setState({ [name]: value } as LoginFormState);
@@ -130,7 +129,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div className="ca-login-form">
         <form onSubmit={this.onSubmit} className="ca-login-form__container">
           <FormGroup>
             <TextField
@@ -140,7 +139,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
               value={this.state.email}
               onChange={this.onChange}
               type="email"
-              onBlur={this.onBlur("email")}
+              onBlur={this.onBlur('email')}
               error={!this.state.isEmailValid && this.state.touched.email}
             />
             {!this.state.isEmailValid &&
@@ -163,7 +162,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
               value={this.state.password}
               onChange={this.onChange}
               type="password"
-              onBlur={this.onBlur("password")}
+              onBlur={this.onBlur('password')}
               error={!this.state.isPasswordValid && this.state.touched.password}
             />
             {!this.state.isPasswordValid &&
