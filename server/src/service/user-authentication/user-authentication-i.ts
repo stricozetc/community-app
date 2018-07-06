@@ -11,6 +11,8 @@ import { registerErr } from '../../../errors/registerErr';
 import keys from '../../config/keys';
 import { UserAuthenticationRepository } from './user-authentication';
 import { User } from '../../../Interfaces/User';
+import { loginErr } from "../../../errors/loginErr";
+
 @injectable()
 export class UserAuthenticationRepositoryImplementation implements UserAuthenticationRepository {
 
@@ -71,7 +73,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             let errors: any = {};
             UserModel.findOne({ where: { email } }).then((user: User) => {
                 if (!user) {
-                    errors.email = "User with this email is not found";
+                    errors.email = loginErr.notFoundUser;
                 }
                 if (errors.email) {
                     return reject(errors);
@@ -95,7 +97,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                                     });
                                 });
                             } else {
-                                errors.password = `Password incorrect for ${user.email}`;
+                                errors.password = loginErr.wrongPassword(user.email);
 
                                 return reject(errors);
                             }

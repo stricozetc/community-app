@@ -10,7 +10,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
-import { AuthStatus, UserFieldsToRegister } from "models";
+import { UserFieldsToRegister } from "models";
 
 import {
   AppState,
@@ -23,6 +23,11 @@ import {
   RegistrationFormState
 } from "./RegistrationForm.model";
 
+import { CaSnackbar } from './../Snackbar/Snackbar';
+
+import Slide from '@material-ui/core/Slide';
+import { isEmpty } from 'utils';
+
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: any) {
     super(props);
@@ -34,8 +39,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
   }
 
   public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
-    if (nextProps.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/homepage");
+    if (!isEmpty(nextProps.errors)) {
+      this.setState({isSnackOpen: true})
     }
   }
 
@@ -46,6 +51,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
     this.setState({ [name]: value } as RegistrationFormState);
     this.checkValidation();
+
   }
 
   public handleSubmit(event: any): void {
@@ -146,9 +152,42 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.checkValidation();
   };
 
+
+  public transitionUp(props: any): JSX.Element {
+    return <Slide {...props} direction="up" />;
+  }
+
+  public closeSnackbar(): void{
+
+    this.setState({
+      isSnackOpen: false
+    })
+  }
+
   public render(): JSX.Element {
+    
+    const { errors } = this.props;
+    const keys = errors && Object.keys(errors);
     return (
       <div>
+        <CaSnackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={ this.state.isSnackOpen }
+          autoHideDuration = {4000}
+          handleClose= {() => this.closeSnackbar()}
+          type="error"
+          TransitionComponent = {this.transitionUp}
+          message={
+            <div>
+              {keys && keys.map((k: string) => 
+                (
+                  <div>* {errors[k].msg} </div>
+                )
+              )}
+            </div>
+          }
+        />
+
         {this.props.children}
         <form
           onSubmit={this.handleSubmit}
@@ -293,7 +332,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status
+  status: state.auth.status,
+  errors: state.errors
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

@@ -1,0 +1,24 @@
+@import "../../style/settings.scss";
+
+.ca-snackbar{
+
+  font-size: $medium-font-2 !important;
+  color: white;
+
+  &--red > * {
+    background-color: #d32f2f !important;
+  }
+
+  &--orange > * {
+    background-color: #ffa000 !important;
+  }
+
+  &--blue > * {
+    background-color: #1976d2 !important;
+  }
+
+  &--green > * {
+    background-color: #43a047 !important;
+  }
+}
+

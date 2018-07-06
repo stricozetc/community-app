@@ -32,10 +32,6 @@ import {
   StatisticState
 } from './statistic';
 
-import {
-  dataReducer,
-  DataState
-} from './data';
 
 import {
   SocketEffects,
@@ -53,7 +49,6 @@ const rootReducers = combineReducers({
   auth: authReducer,
   errors: errorsReducer,
   games: gamesReducer,
-  data: dataReducer,
   statistic: statisticReducer,
   socket: socketReducer
 });
@@ -73,7 +68,6 @@ export interface AppState {
   auth: AuthState,
   games: GamesState,
   statistic: StatisticState,
-  data: DataState,
   errors: {},
   socket: SocketState
 }

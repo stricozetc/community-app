@@ -9,12 +9,16 @@ import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
 import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister } from 'models';
+import { isEmpty } from './../../utils/isEmpty';
 
 import {
   initLoginFormState,
   LoginFormProps,
   LoginFormState
 } from './LoginForm.model';
+import Slide from '@material-ui/core/Slide';
+
+import { CaSnackbar } from './../Snackbar/Snackbar';
 
 export class LoginFormComponent extends React.Component<
   LoginFormProps,
@@ -30,9 +34,14 @@ export class LoginFormComponent extends React.Component<
     this.checkValidation = this.checkValidation.bind(this);
   }
 
+
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
     if (nextProps.status === AuthStatus.AUTHORIZED) {
       this.props.history.push('/homepage');
+    }
+
+    if (!isEmpty(nextProps.errors)) {
+      this.setState({isSnackOpen: true})
     }
   }
 
@@ -127,9 +136,40 @@ export class LoginFormComponent extends React.Component<
     this.checkValidation();
   };
 
+  public transitionUp(props: any): JSX.Element {
+    return <Slide {...props} direction="up" />;
+  }
+
+  public closeSnackbar(): void{
+
+    this.setState({
+      isSnackOpen: false
+    })
+  }
+
   public render(): JSX.Element {
+    const { errors } = this.props;
+    const keys = errors && Object.keys(errors);
     return (
       <div className="ca-login-form">
+      <CaSnackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={ this.state.isSnackOpen }
+          autoHideDuration = {4000}
+          handleClose= {() => this.closeSnackbar()}
+          type="error"
+          TransitionComponent = {this.transitionUp}
+          message={
+            <div>
+              {keys && keys.map((k: string) => 
+                (
+                  <div>* {errors[k].msg} </div>
+                )
+              )}
+            </div>
+          }
+        />
+
       {this.props.children}
         <form onSubmit={this.onSubmit} className="ca-login-form__container">
           <FormGroup>
@@ -205,7 +245,8 @@ export class LoginFormComponent extends React.Component<
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status
+  status: state.auth.status,
+  errors: state.errors
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

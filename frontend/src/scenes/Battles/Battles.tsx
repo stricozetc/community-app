@@ -3,7 +3,7 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, Game } from 'models';
+import { AuthStatus, LoadStatus, Game } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -15,7 +15,31 @@ import { InitGames, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
 
-class CaBattlesComponent extends React.Component<BattleProps> {
+
+import Slide from '@material-ui/core/Slide';
+
+import { CaSnackbar } from './../../components/Snackbar/Snackbar';
+
+
+
+
+
+class CaBattlesComponent extends React.Component<BattleProps, BattleState> {
+
+  constructor(props: any) {
+    super(props);
+    this.state = { isSnackOpen: false };
+  }
+
+  public componentWillReceiveProps(nextProps: BattleProps): void {
+    if(nextProps.gamesStatus === LoadStatus.FAILED  ) {
+      this.setState({
+        isSnackOpen: true
+      })
+    }
+  }
+
+
   public componentWillMount(): void {
     if (isEmpty(this.props.games)) {
       this.props.initGames();
@@ -33,7 +57,17 @@ class CaBattlesComponent extends React.Component<BattleProps> {
       <div className="ca-homepage">
         {this.props.children}
 
-        {!this.props.fetchingData && (
+        <CaSnackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={ this.state.isSnackOpen }
+          autoHideDuration = {4000}
+          handleClose= {() => this.closeSnackbar()}
+          type="error"
+          message={<span> Game fetching Failed! </span>}
+          TransitionComponent = {this.transitionUp}
+        />
+
+        {!isEmpty(this.props.games) && (
           <div className="ca-homepage__container ca-global-fadeIn">
 
             {this.props.games.map((game: Game, index: number) => {
@@ -56,9 +90,9 @@ class CaBattlesComponent extends React.Component<BattleProps> {
             })}
           </div>
         )}
-        {this.props.fetchingData && (
+        {isEmpty(this.props.games) && (
           <div className="ca-homepage__spinner-container">
-            <CaSpinner isActive={this.props.fetchingData}/>
+            <CaSpinner isActive={isEmpty(this.props.games)}/>
           </div>
         )}
       </div>
@@ -70,7 +104,6 @@ const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   battleStatus: state.battle.status,
   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
-  fetchingData: state.data.fetchingData,
   games: state.games.games
 });
 

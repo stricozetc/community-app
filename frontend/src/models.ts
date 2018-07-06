@@ -55,3 +55,10 @@ export interface UserFieldsToLogin {
   email: string,
   password: string,
 }
+
+export enum LoadStatus {
+    INIT,
+    FETCHING,
+    COMPLETED,
+    FAILED
+  }

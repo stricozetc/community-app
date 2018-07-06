@@ -31,12 +31,12 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
         .map((res: any) => {
           const bastUsers: any[] = res.data;
 
-          return new BestUsersInited(bastUsers)
-        }).catch(error => {
-          return Observable.of(new GetErrors(error.response.data));
-        })
-    })
-  );
+              return new BestUsersInited(bastUsers)
+            }).catch(error => {
+              return Observable.of(new GetErrors(error));
+            })  
+          })
+    )
 
 export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) => actions$
   .ofType(StatisticTypes.InitMostPopularGames).pipe(
@@ -46,10 +46,14 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
         .map((res: any) => {
           const popGames: any[] = res.data;
 
-          return new MostPopularGamesInited(popGames)
-        }).catch(error => {
+            return new MostPopularGamesInited(popGames)
+            }).catch(error => {
+              
+              return Observable.of(new GetErrors(error))  
+            })  
+          })
+    )
 
-          return Observable.of(new GetErrors(error.response.data))
         })
     })
   );
@@ -62,13 +66,12 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
         .map((res: any) => {
           const rg: any[] = res.data;
 
-          return new RecentGamesInited(rg)
-        }).catch(error => {
-          return Observable.of(new GetErrors(error.response.data))
-        })
-    })
-  );
-
+              return new RecentGamesInited(rg)
+            }).catch(error => {
+              return Observable.of(new GetErrors(error))  
+            })  
+          })
+    )
 // tslint:disable-next-line:array-type
 export const StatisticEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [
   initBestUsers$,

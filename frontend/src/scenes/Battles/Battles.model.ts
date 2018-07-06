@@ -5,7 +5,6 @@ export interface BattleProps {
   battleStatus: BattleStatus;
   history: any;
   waitBattlePlayersCountAction: number;
-  fetchingData: boolean;
   games: Game[];
   children?: JSX.Element;
 
