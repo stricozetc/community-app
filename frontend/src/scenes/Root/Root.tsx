@@ -7,15 +7,13 @@ import { HashRouter as Router, Redirect, Route } from 'react-router-dom';
 
 import { setAuthToken } from 'utils';
 
-import { FrontEndUser, SetCurrentUser, store } from 'store';
+import { FrontEndUser, SetCurrentUser, AppState, LogoutUser, store } from 'store';
 
 import { Landing } from 'scenes/Landing';
 import { LoginForm } from 'components/LoginForm';
 import { RegistrationForm } from 'components/RegistrationForm';
 
 import { CaBattles } from 'scenes/Battles';
-
-import { AppState, LogoutUser } from 'store';
 
 import { connect } from 'react-redux';
 
@@ -49,7 +47,7 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public getButton(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
     return (
       isAuthorized ?
         <CaButton
@@ -65,7 +63,7 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public getNavbar(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     return (
       <CaNavbar

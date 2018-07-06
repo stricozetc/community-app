@@ -3,20 +3,19 @@ import * as React from 'react';
 import { CaButton } from 'components/form-controls/Button';
 import { Countdown } from 'components/Countdown';
 
-import { Game } from 'components/GameCard';
-
 import './current-battle.scss';
 
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
 import clockImage from 'assets/clock-small.svg';
+import { QuestInfo } from 'models';
 
 interface Props {
   waitBattlePlayersCountAction: number;
   battleName: string;
   countdown: number;
   history: any;
-  games: Game[];
+  quests: QuestInfo[];
 
   leaveBattleAction(payload: string): void;
 
@@ -24,11 +23,6 @@ interface Props {
 }
 
 export class CurrentBattleComponent extends React.Component<Props> {
-  public logoutUser(): void {
-    this.props.logoutUser();
-    this.props.history.push('/');
-  }
-
   public getGameIndex(): number {
     const currentRoute = this.props.history.location.pathname;
     const test = new RegExp(/\d+/);
@@ -38,8 +32,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
   }
 
   public isGameFull(): boolean {
-    const maxRoomPlayers = this.props.games && this.props.games.length ?
-      this.props.games[this.getGameIndex()].maxPlayersInRoom : 0;
+    const maxRoomPlayers = this.props.quests && this.props.quests.length ?
+      this.props.quests[this.getGameIndex()].maxRoomPlayer : 0;
     return this.props.waitBattlePlayersCountAction === maxRoomPlayers;
   }
 
@@ -85,8 +79,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
             </div>
             <span className="ca-current-battle__info-text">Players: </span>
             <span
-              className="ca-current-battle__info-count">{waitBattlePlayersCountAction}/{this.props.games && this.props.games.length ?
-              this.props.games[this.getGameIndex()].maxPlayersInRoom : 0}</span>
+              className="ca-current-battle__info-count">{waitBattlePlayersCountAction}/{this.props.quests && this.props.quests.length ?
+              this.props.quests[this.getGameIndex()].maxRoomPlayer : 0}</span>
           </div>
 
           <div className="ca-current-battle__info">

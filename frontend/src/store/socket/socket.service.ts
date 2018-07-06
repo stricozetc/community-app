@@ -1,7 +1,6 @@
 import * as openSocket from 'socket.io-client';
 
 import { Subject } from 'rxjs/Subject';
-
 import { QuestInfo } from 'models';
 
 export class SocketService {
@@ -9,12 +8,13 @@ export class SocketService {
   public notifyCountdown: Subject<number> = new Subject();
 
   private socket: SocketIOClient.Socket;
-  private questsInfo: QuestInfo[] = require('../config/quests.json').quests;
 
-  constructor() {
+  public constructor() {
     this.socket = openSocket('http://localhost:3030');
+  }
 
-    for (const questInfo of this.questsInfo) {
+  public init(questsInfo: QuestInfo[]): void {
+    for (const questInfo of questsInfo) {
       this.socket.on(questInfo.getWaitPlayersCountEventName,
         (waitBattlePlayersCount: number) => this.waitBattlePlayersCount.next(waitBattlePlayersCount));
       this.socket.on(questInfo.notifyCountdown,

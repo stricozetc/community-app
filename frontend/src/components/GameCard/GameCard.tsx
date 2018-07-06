@@ -6,9 +6,7 @@ import './IconWithInfo.scss';
 
 import { BattleStatus } from 'models';
 
-import { gameNamesDictionary } from './GameNames';
-
-import { GameCardProps, GameNamePair } from './GameCard.model';
+import { GameCardProps } from './GameCard.model';
 
 import { CaButton } from 'components/form-controls/Button';
 
@@ -42,25 +40,22 @@ const getBattleButton = (
 export const CaGameCard = (props: GameCardProps) => {
   const { status, joinGame, leaveGame, waitBattlePlayersCountAction } = props;
 
-  const { name, desc, isStarted, maxPlayersInRoom } = props.game;
+  const { name, desc, maxRoomPlayer } = props.game;
 
-  const gameNamesPair = gameNamesDictionary.filter(
-    (p: GameNamePair) => p.frontName === name
-  )[0] || { backName: '' };
-  const backName = gameNamesPair.backName;
+  const isStarted = false;
 
-  const secondLineColor = props.game.isStarted
+  const secondLineColor = isStarted
     ? 'ca-game-footer__second-line--full-players'
     : '';
 
-  const backgroundFooterColor = props.game.isStarted
+  const backgroundFooterColor = isStarted
     ? 'ca-game-footer--locked-game-background'
     : 'ca-game-footer--unlocked-game-background';
 
-  const topBorderClass: string = props.game.isStarted
+  const topBorderClass: string = isStarted
     ? 'ca-game-card--grey-top'
     : 'ca-game-card--white-top';
-  const backgroundClass: string = props.game.isStarted
+  const backgroundClass: string = isStarted
     ? 'ca-game-card--black-background'
     : 'ca-game-card--grey-background';
   const classes = [topBorderClass, backgroundClass];
@@ -72,7 +67,7 @@ export const CaGameCard = (props: GameCardProps) => {
         <h2 className="ca-game-card__game-desc">{desc}</h2>
 
         <div className="ca-game-card__btn-container">
-          {!isStarted ? getBattleButton(status, joinGame, leaveGame, backName) : <span/>}
+          {!isStarted ? getBattleButton(status, joinGame, leaveGame, name) : <span/>}
         </div>
         <div className={'ca-game-footer ' + backgroundFooterColor}>
           <div className="ca-game-footer__container">
@@ -109,7 +104,7 @@ export const CaGameCard = (props: GameCardProps) => {
                   <div
                     className={'ca-game-footer__second-line ' + secondLineColor}
                   >
-                    {`${waitBattlePlayersCountAction} / ${maxPlayersInRoom}`}
+                    {`${waitBattlePlayersCountAction} / ${maxRoomPlayer}`}
                   </div>
                 </div>
               </div>

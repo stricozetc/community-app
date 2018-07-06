@@ -21,10 +21,10 @@ import {
 } from './battle';
 
 import {
-  GamesEffects,
-  gamesReducer,
-  GamesState
-} from './games';
+  QuestsEffects,
+  questsReducer,
+  QuestsState
+} from './quests';
 
 import {
   StatisticEffects,
@@ -37,12 +37,13 @@ import {
   DataState
 } from './data';
 
+import {
+  SocketEffects,
+  socketReducer,
+  SocketState
+} from './socket';
+
 import { errorsReducer } from './errors';
-
-
-
-
-
 
 // (Valiantsin): redux-observable types issue
 type Epic = any;
@@ -51,16 +52,18 @@ const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
   errors: errorsReducer,
-  games: gamesReducer,
+  quests: questsReducer,
   data: dataReducer,
-  statistic: statisticReducer
+  statistic: statisticReducer,
+  socket: socketReducer
 });
 
 const rootEpic: Epic = combineEpics(
   ...BattleEffects,
   ...AuthEffects,
-  ...GamesEffects,
-  ...StatisticEffects
+  ...QuestsEffects,
+  ...StatisticEffects,
+  ...SocketEffects
 );
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
@@ -68,24 +71,26 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 export interface AppState {
   battle: BattleState,
   auth: AuthState,
-  games: GamesState,
+  quests: QuestsState,
   statistic: StatisticState,
   data: DataState,
-  errors: {}
+  errors: {},
+  socket: SocketState
 }
+
 // tslint:disable-next-line:no-angle-bracket-type-assertion
 const reduxDevTools = (<any>window).__REDUX_DEVTOOLS_EXTENSION__ && (<any>window).__REDUX_DEVTOOLS_EXTENSION__();
 
-const composeForAllBrowsers = (reduxDevTools: any) => {
-  return reduxDevTools ? compose(
+const composeForAllBrowsers = (devTools: any) => {
+  return devTools ? compose(
     applyMiddleware(epicMiddleware),
-    reduxDevTools
-  ) 
-  : compose(
-    applyMiddleware(epicMiddleware)
-  )
+    devTools
+    )
+    : compose(
+      applyMiddleware(epicMiddleware)
+    )
+};
 
-}
 export const store = createStore(
   rootReducers,
   composeForAllBrowsers(reduxDevTools)

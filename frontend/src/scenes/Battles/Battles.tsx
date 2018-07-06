@@ -3,22 +3,21 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus } from 'models';
+import { AuthStatus, QuestInfo } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
 
 import { CaGameCard } from 'components/GameCard';
-import { Game } from 'components/GameCard';
 import { CaSpinner } from 'components/Spinner';
 
-import { InitGames, JoinBattle, LeaveBattle } from 'store';
+import { InitQuests, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
   public componentWillMount(): void {
-    if (isEmpty(this.props.games)) {
+    if (isEmpty(this.props.quests)) {
       this.props.initGames();
     }
   }
@@ -33,41 +32,16 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return (
       <div className="ca-homepage">
         {this.props.children}
-        {/* <CaNavbar
-          linksToRender={[
-            {
-              text: 'Battles',
-              to: '/battles',
-              activeClassName: 'ca-navbar__nav-item--active'
-            },
-            {
-              text: 'Statistics',
-              to: '/statistics',
-              activeClassName: 'ca-navbar__nav-item--active'
-            }
-          ]}
-        >
-          <CaLogo
-            text="battlenet"
-          />
-          <div className="ca-navbar__logout-btn-container">
-            <CaButton
-              clickHandler={() => this.logoutUser()}
-              value="Logout"
-            />
-          </div>
-        </CaNavbar> */}
 
         {!this.props.fetchingData && (
           <div className="ca-homepage__container ca-global-fadeIn">
-            {/* <BattleRegistration /> */}
 
-            {this.props.games.map((game: Game, index: number) => {
+            {this.props.quests.map((quest: QuestInfo, index: number) => {
 
               return (
                 <div className="ca-homepage__container-for-games" key={index}>
                   <CaGameCard
-                    game={game}
+                    game={quest}
                     joinGame={($event) => {
                       this.props.joinBattleAction($event);
                       this.props.history.push(`/battles/${index}`)
@@ -97,14 +71,14 @@ const mapStateToProps = (state: AppState) => ({
   battleStatus: state.battle.status,
   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
   fetchingData: state.data.fetchingData,
-  games: state.games.games
+  quests: state.quests.quests
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new InitGames())
+  initGames: () => dispatch(new InitQuests())
 });
 
 export const CaBattles = connect(

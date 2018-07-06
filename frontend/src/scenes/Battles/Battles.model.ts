@@ -1,6 +1,4 @@
-import { AuthStatus, BattleStatus } from 'models';
-
-import { Game } from 'components/GameCard';
+import { AuthStatus, BattleStatus, QuestInfo } from 'models';
 
 export interface BattleProps {
   status: AuthStatus;
@@ -8,7 +6,7 @@ export interface BattleProps {
   history: any;
   waitBattlePlayersCountAction: number;
   fetchingData: boolean;
-  games: Game[];
+  quests: QuestInfo[];
   children?: JSX.Element;
 
   joinBattleAction(payload: string): any;
