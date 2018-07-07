@@ -1,4 +1,4 @@
-import { Game } from './../../components/GameCard/GameCard.model';
+import { Game } from 'models';
 
 export interface GamesState {
   games: Game[]

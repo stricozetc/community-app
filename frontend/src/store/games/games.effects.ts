@@ -1,7 +1,7 @@
 import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap, ignoreElements } from 'rxjs/operators';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
@@ -22,11 +22,10 @@ import {
 } from './../data/data.action';
 
 import { store } from 'store';
+import { InitEvents } from 'store/socket';
 
 import { GetErrors } from '../errors';
-
-import { Game } from './../../components/GameCard/GameCard.model';
-
+import { Game } from 'models';
 
 export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
   .ofType(GamesTypes.InitGames).pipe(
@@ -47,5 +46,16 @@ export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
     })
   );
 
+export const gamesInited$ = (actions$: ActionsObservable<GamesInited>) => actions$
+  .ofType(GamesTypes.GamesInited).pipe(
+    tap(payload => {
+      /**
+       * @todo unsubscribe events
+       */
+      store.dispatch(new InitEvents(payload.payload));
+    }),
+    ignoreElements()
+  );
+
 // tslint:disable-next-line:array-type
-export const GamesEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initGames$];
+export const GamesEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initGames$, gamesInited$];

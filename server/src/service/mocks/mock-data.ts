@@ -1,21 +1,3 @@
-import { Game } from './../../../Interfaces/Game';
-export const games: Game[] = [
-  {
-    name: 'JS Marathon',
-    desc: 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-    timeToStart: '16:34:48',
-    isStarted: false,
-    maxPlayersInRoom: 5
-  },
-  {
-    name: 'CSS Quick Draw',
-    desc: 'is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-    timeToStart: '12:16:32',
-    isStarted: true,
-    maxPlayersInRoom: 20
-  }
-];
-
 export const bestUsers: any[] = [
   {
     name: 'Username1',

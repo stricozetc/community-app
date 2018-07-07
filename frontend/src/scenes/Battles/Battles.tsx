@@ -3,13 +3,12 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus } from 'models';
+import { AuthStatus, Game } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
 
 import { CaGameCard } from 'components/GameCard';
-import { Game } from 'components/GameCard';
 import { CaSpinner } from 'components/Spinner';
 
 import { InitGames, JoinBattle, LeaveBattle } from 'store';
@@ -33,34 +32,9 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return (
       <div className="ca-homepage">
         {this.props.children}
-        {/* <CaNavbar
-          linksToRender={[
-            {
-              text: 'Battles',
-              to: '/battles',
-              activeClassName: 'ca-navbar__nav-item--active'
-            },
-            {
-              text: 'Statistics',
-              to: '/statistics',
-              activeClassName: 'ca-navbar__nav-item--active'
-            }
-          ]}
-        >
-          <CaLogo
-            text="battlenet"
-          />
-          <div className="ca-navbar__logout-btn-container">
-            <CaButton
-              clickHandler={() => this.logoutUser()}
-              value="Logout"
-            />
-          </div>
-        </CaNavbar> */}
 
         {!this.props.fetchingData && (
           <div className="ca-homepage__container ca-global-fadeIn">
-            {/* <BattleRegistration /> */}
 
             {this.props.games.map((game: Game, index: number) => {
 

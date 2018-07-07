@@ -1,6 +1,4 @@
-import { AuthStatus, BattleStatus } from 'models';
-
-import { Game } from 'components/GameCard';
+import { AuthStatus, BattleStatus, Game } from 'models';
 
 export interface BattleProps {
   status: AuthStatus;
