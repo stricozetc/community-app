@@ -1,0 +1,25 @@
+@import "../../style/settings.scss";
+
+.ca-snackbar-- {
+  &error > * {
+    background-color: #D32F2F !important;
+    color:#fff;
+    font-size: 18px;
+  }
+  &info > *{
+    background-color: #1976D2 !important;
+    color:#fff;
+    font-size: 18px;
+  }
+  &warning > *{
+    background-color: #FFA000 !important;
+    color:#fff;
+    font-size: 18px;
+  }
+  &success > *{
+    background-color: #43A047 !important;
+    color:#fff;  
+    font-size: 18px;
+  }
+
+}

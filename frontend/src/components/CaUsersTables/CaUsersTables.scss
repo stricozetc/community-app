@@ -1,0 +1,79 @@
+@import "../../style/settings.scss";
+
+.ca-users-tables {
+
+    &__title {
+        padding-left: 105px;
+        color: #fff;
+        font-size: 32px;
+        font-weight: 600;
+        margin-top: 60px;
+        margin-bottom: 20px; 
+    }
+
+    &__tabs> * {
+        color: #fff !important;
+        margin-left: 82px !important; 
+    }
+
+    &__tabs-table > div > div > div + span {
+        background-color: #f4b33a !important;
+        height: 4px !important;
+    } 
+
+    &__tab_first-table  * {
+        font-size: 18px !important;
+        text-transform: none !important;
+        margin-bottom: 5px !important;
+    }
+
+    &__tab_second-table  * {
+        font-size: 18px !important;
+        text-transform: none !important;
+        margin-bottom: 5px !important;
+    }
+
+    &__tab_third-table   * {
+        font-size: 18px !important;
+        text-transform: none !important;
+        margin-bottom: 5px !important;
+    }
+}
+
+// .ca-users-tables__title-table {
+//     padding-left: 105px;
+//     color: #fff;
+//     font-size: 32px;
+//     font-weight: 600;
+//     margin-top: 60px;
+//     margin-bottom: 20px;
+// }
+
+// .ca-users-tables__tabs-table > * {
+//     color: #fff !important;
+//     margin-left: 82px !important;
+// }
+
+// .ca-users-tables__tab_first-table  * {
+//     font-size: 18px !important;
+//     text-transform: none !important;
+//     margin-bottom: 5px !important;
+// }
+
+
+// .ca-users-tables__tab_second-table  * {
+//     font-size: 18px !important;
+//     text-transform: none !important;
+//     margin-bottom: 5px !important;
+// }
+
+// .ca-users-tables__tab_third-table   * {
+//     font-size: 18px !important;
+//     text-transform: none !important;
+//     margin-bottom: 5px !important;
+// }
+
+// .ca-users-tables__tabs-table > div > div > div + span {
+//     background-color: #f4b33a !important;
+//     height: 4px !important;
+// } 
