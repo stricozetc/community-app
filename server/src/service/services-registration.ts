@@ -5,6 +5,8 @@ import { LoggerService, LoggerServiceImplementation } from './logger';
 import { SocketServiceImplementation, SocketService } from './socket';
 import { QueueServiceImplementation, QueueService } from './queue';
 import { ErrorServiceImplementation, ErrorService } from './error';
+import { RoomService } from './room';
+import { TimerService } from './timer';
 import { ApiService, ApiServiceImplementation } from './api';
 import {
     UserAuthenticationRepository,
@@ -20,6 +22,8 @@ CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
 CONTAINER.bind<SocketService>(SocketService).to(SocketServiceImplementation);
 CONTAINER.bind<QueueService>(QueueService).to(QueueServiceImplementation);
 CONTAINER.bind<ErrorService>(ErrorService).to(ErrorServiceImplementation);
+CONTAINER.bind<RoomService>(RoomService).to(RoomService);
+CONTAINER.bind<TimerService>(TimerService).to(TimerService);
 CONTAINER.bind<ApiService>(ApiService).to(ApiServiceImplementation);
 CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);
 CONTAINER.bind<MocksRepository>(MocksRepository).to(MocksRepositoryImplementation);

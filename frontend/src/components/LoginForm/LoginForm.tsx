@@ -130,6 +130,7 @@ export class LoginFormComponent extends React.Component<
   public render(): JSX.Element {
     return (
       <div className="ca-login-form">
+      {this.props.children}
         <form onSubmit={this.onSubmit} className="ca-login-form__container">
           <FormGroup>
             <TextField

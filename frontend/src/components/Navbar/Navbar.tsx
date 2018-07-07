@@ -10,18 +10,14 @@ import { Link } from './Navbar.model';
 
 export const CaNavbar = (props: NavbarProps) => {
   return (
-    <div
-      className={
-        props.modificators
-          ? ['ca-navbar', ...props.modificators].join(' ')
-          : 'ca-navbar'
-      }
-    >
-      <ul className="ca-navbar__items-container">
-        {props.children}
-        {props.linksToRender &&
+    <div className='ca-navbar'>
+      <div className="ca-navbar__container">
+        <ul className="ca-navbar__items-container">
+          {props.children}
+          {props.linksToRender &&
           props.linksToRender.map((link: Link, index: number) => {
             return (
+              !link.disabled &&
               <NavLink
                 key={index}
                 to={link.to}
@@ -32,7 +28,8 @@ export const CaNavbar = (props: NavbarProps) => {
               </NavLink>
             );
           })}
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 };

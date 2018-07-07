@@ -8,9 +8,9 @@ import { AppState, JoinBattle, LeaveBattle } from 'store';
 
 import { BattleRegistrationProps } from './BattleRegistration.model';
 
-class BattleRegistrationComponent extends React.Component<
-  BattleRegistrationProps
-> {
+import { Countdown } from 'components/Countdown';
+
+class BattleRegistrationComponent extends React.Component<BattleRegistrationProps> {
   private goToBattleHelpMassage: string = 'Press on "Go to the battle" page';
   private waitBattleHelpMassage: string = 'Please, wait other users';
   private goToBattleButtonMassage: string = 'Go to the battle';
@@ -55,7 +55,23 @@ class BattleRegistrationComponent extends React.Component<
     if (status === BattleStatus.INIT) {
       return <span>&nbsp;</span>;
     } else {
-      return <span>({waitBattlePlayersCountAction}/5)</span>;
+      return (
+        <span>{waitBattlePlayersCountAction}/5</span>
+      )
+    }
+  }
+
+  public getCountdown(status: BattleStatus, countdown: number): JSX.Element {
+    if (status === BattleStatus.INIT) {
+      return (
+        <span>&nbsp;</span>
+      )
+    } else {
+      return (
+        <div className='ca-battle-registration__countdown'>
+          <Countdown time={countdown}/>
+        </div>
+      )
     }
   }
 
@@ -64,7 +80,8 @@ class BattleRegistrationComponent extends React.Component<
       status,
       joinBattleAction,
       leaveBattleAction,
-      waitBattlePlayersCountAction
+      waitBattlePlayersCountAction,
+      countdown
     } = this.props;
 
     return (
@@ -76,6 +93,7 @@ class BattleRegistrationComponent extends React.Component<
           {this.getHelpMessage(status)}{' '}
           {this.getWaitPlayersCount(status, waitBattlePlayersCountAction)}
         </div>
+        {this.getCountdown(status, countdown)}
       </div>
     );
   }
@@ -83,7 +101,8 @@ class BattleRegistrationComponent extends React.Component<
 
 const mapStateToProps = (state: AppState) => ({
   status: state.battle.status,
-  waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount
+  waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
+  countdown: state.battle.countdown
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

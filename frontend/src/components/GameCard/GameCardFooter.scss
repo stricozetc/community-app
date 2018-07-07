@@ -1,0 +1,73 @@
+@import "../../style/settings.scss";
+@import "../../style/mixins.scss";
+.ca-game-footer {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  min-height: 5.6rem;
+  @include flexbox();
+  
+  &--unlocked-game-background {
+    @include background-color($grey-2);
+  }
+
+  &--locked-game-background {
+    @include background-color($locked-footer-color);
+  }
+
+
+
+  &__container {
+    @include container(80%);
+    @include flexbox();
+    @include flexbox-center-cross-ax();
+    justify-content: space-between;
+  }
+  
+  &__alert {
+    color: $grey;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
+  
+  &__container-item {
+    max-width: 50%;
+  }
+
+  &__placeholder {
+    @include flexbox();
+  }
+
+  &__icon {
+    max-width: 30%;
+    margin-right: .5rem;
+    margin-left: auto;
+  }
+
+  &__info {
+    max-width: 70%;
+    @include flexbox();
+  }
+
+  &__first-line {
+    max-width: 100%;
+    font-size: 1.3rem;
+    color: $grey;
+    max-width: 100%;
+    min-width: 51%;
+  }
+
+  &__second-line {
+    max-width: 100%;
+    font-size: 1.8rem;
+    color: $beige;
+    max-width: 100%;
+    min-width: 51%;
+
+    &--full-players {
+      color: $green;
+    }
+  }
+}

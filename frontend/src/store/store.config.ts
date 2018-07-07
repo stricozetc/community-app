@@ -27,11 +27,18 @@ import {
 } from './games';
 
 import {
+  StatisticEffects,
+  statisticReducer,
+  StatisticState
+} from './statistic';
+
+import {
   dataReducer,
   DataState
 } from './data';
 
 import { errorsReducer } from './errors';
+
 
 
 
@@ -45,13 +52,15 @@ const rootReducers = combineReducers({
   auth: authReducer,
   errors: errorsReducer,
   games: gamesReducer,
-  data: dataReducer
+  data: dataReducer,
+  statistic: statisticReducer
 });
 
 const rootEpic: Epic = combineEpics(
   ...BattleEffects,
   ...AuthEffects,
-  ...GamesEffects
+  ...GamesEffects,
+  ...StatisticEffects
 );
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
@@ -60,7 +69,8 @@ export interface AppState {
   battle: BattleState,
   auth: AuthState,
   games: GamesState,
-  data: DataState
+  statistic: StatisticState,
+  data: DataState,
   errors: {}
 }
 // tslint:disable-next-line:no-angle-bracket-type-assertion

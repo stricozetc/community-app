@@ -1,4 +1,4 @@
 export interface SpinnerProps {
   isActive: boolean;
-  modificators?: string[];
+  // modificators?: string[];
 }
