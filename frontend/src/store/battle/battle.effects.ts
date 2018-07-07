@@ -2,7 +2,7 @@ import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs';
 import { ignoreElements, map, tap } from 'rxjs/operators';
 
-import { QuestInfo } from 'models';
+import { Game } from 'models';
 import { store } from 'store';
 import { EmitEvent } from 'store/socket';
 
@@ -16,9 +16,9 @@ import {
 export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
   actions$.ofType(BattleActionTypes.JoinBattle).pipe(
     tap(action => {
-      const questInfo: QuestInfo | undefined = store.getState().quests.quests
-        .find((info: QuestInfo) => info.name === action.payload);
-      store.dispatch(new EmitEvent(questInfo ? questInfo.registrationEventName : ''));
+      const game: Game | undefined = store.getState().games.games
+        .find((info: Game) => info.name === action.payload);
+      store.dispatch(new EmitEvent(game ? game.registrationEventName : ''));
     }),
     ignoreElements()
   );
@@ -26,9 +26,9 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
 export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
   actions$.ofType(BattleActionTypes.LeaveBattle).pipe(
     tap(action => {
-      const questInfo: QuestInfo | undefined = store.getState().quests.quests
-        .find((info: QuestInfo) => info.name === action.payload);
-      store.dispatch(new EmitEvent(questInfo ? questInfo.leaveEventName : ''));
+      const game: Game | undefined = store.getState().games.games
+        .find((info: Game) => info.name === action.payload);
+      store.dispatch(new EmitEvent(game ? game.leaveEventName : ''));
     }),
     ignoreElements()
   );

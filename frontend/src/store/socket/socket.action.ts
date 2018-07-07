@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 
 import { action } from 'store/decorators';
-import { QuestInfo } from 'models';
+import { Game } from 'models';
 
 export enum SocketActionTypes {
   CloseSocket = '[socket] Close Socket',
@@ -18,7 +18,7 @@ export class CloseSocket implements Action {
 export class InitEvents implements Action {
   public readonly type = SocketActionTypes.InitEvents;
 
-  public constructor(public payload: QuestInfo[]) {
+  public constructor(public payload: Game[]) {
   }
 }
 

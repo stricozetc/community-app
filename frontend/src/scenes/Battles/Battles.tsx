@@ -3,7 +3,7 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, QuestInfo } from 'models';
+import { AuthStatus, Game } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -11,13 +11,13 @@ import { BattleProps } from './Battles.model';
 import { CaGameCard } from 'components/GameCard';
 import { CaSpinner } from 'components/Spinner';
 
-import { InitQuests, JoinBattle, LeaveBattle } from 'store';
+import { InitGames, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
   public componentWillMount(): void {
-    if (isEmpty(this.props.quests)) {
+    if (isEmpty(this.props.games)) {
       this.props.initGames();
     }
   }
@@ -36,12 +36,12 @@ class CaBattlesComponent extends React.Component<BattleProps> {
         {!this.props.fetchingData && (
           <div className="ca-homepage__container ca-global-fadeIn">
 
-            {this.props.quests.map((quest: QuestInfo, index: number) => {
+            {this.props.games.map((game: Game, index: number) => {
 
               return (
                 <div className="ca-homepage__container-for-games" key={index}>
                   <CaGameCard
-                    game={quest}
+                    game={game}
                     joinGame={($event) => {
                       this.props.joinBattleAction($event);
                       this.props.history.push(`/battles/${index}`)
@@ -71,14 +71,14 @@ const mapStateToProps = (state: AppState) => ({
   battleStatus: state.battle.status,
   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
   fetchingData: state.data.fetchingData,
-  quests: state.quests.quests
+  games: state.games.games
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new InitQuests())
+  initGames: () => dispatch(new InitGames())
 });
 
 export const CaBattles = connect(

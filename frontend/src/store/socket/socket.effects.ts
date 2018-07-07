@@ -13,8 +13,6 @@ import {
   SetWaitBattlePlayersCount
 } from 'store/battle';
 
-// let countdownSubscription: Subscription;
-
 const socketService = new SocketService();
 
 socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBattle(url)));
@@ -23,29 +21,6 @@ socketService.waitBattlePlayersCount.subscribe((waitBattlePlayersCount: number) 
 socketService.notifyCountdown.subscribe((distance: number) => {
   console.log('Synchronization from server...');
   store.dispatch(new NotifyCountdown(distance));
-
-  /**
-   * uncomment this if interval need to be handled in store
-   */
-  // if (countdownSubscription) {
-  //     countdownSubscription.unsubscribe();
-  // }
-
-  // countdownSubscription = Observable.interval(1000).pipe(
-  //     map(() => {
-  //         /**
-  //          * @todo questsInfo should be taken from API
-  //          * @type {number}
-  //          */
-  //         const currentCountdown = store.getState().battle.countdown <= 0 ? questsInfo[0] ? questsInfo[0].maxWaitingTime : 0 :
-  //             store.getState().battle.countdown;
-  //         return currentCountdown - 1000;
-  //     }),
-  //     takeWhile(() => store.getState().battle.countdown > 0 && store.getState().battle.status === BattleStatus.WAIT)
-  // ).subscribe(countdown => {
-  //     console.log(countdown);
-  //     store.dispatch(new NotifyCountdown(countdown))
-  // });
 });
 
 /**

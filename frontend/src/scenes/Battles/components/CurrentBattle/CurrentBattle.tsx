@@ -8,14 +8,14 @@ import './current-battle.scss';
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
 import clockImage from 'assets/clock-small.svg';
-import { QuestInfo } from 'models';
+import { Game } from 'models';
 
 interface Props {
   waitBattlePlayersCountAction: number;
   battleName: string;
   countdown: number;
   history: any;
-  quests: QuestInfo[];
+  games: Game[];
 
   leaveBattleAction(payload: string): void;
 
@@ -32,8 +32,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
   }
 
   public isGameFull(): boolean {
-    const maxRoomPlayers = this.props.quests && this.props.quests.length ?
-      this.props.quests[this.getGameIndex()].maxRoomPlayer : 0;
+    const maxRoomPlayers = this.props.games && this.props.games.length ?
+      this.props.games[this.getGameIndex()].maxRoomPlayer : 0;
     return this.props.waitBattlePlayersCountAction === maxRoomPlayers;
   }
 
@@ -79,8 +79,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
             </div>
             <span className="ca-current-battle__info-text">Players: </span>
             <span
-              className="ca-current-battle__info-count">{waitBattlePlayersCountAction}/{this.props.quests && this.props.quests.length ?
-              this.props.quests[this.getGameIndex()].maxRoomPlayer : 0}</span>
+              className="ca-current-battle__info-count">{waitBattlePlayersCountAction}/{this.props.games && this.props.games.length ?
+              this.props.games[this.getGameIndex()].maxRoomPlayer : 0}</span>
           </div>
 
           <div className="ca-current-battle__info">

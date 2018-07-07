@@ -1,7 +1,7 @@
 import * as openSocket from 'socket.io-client';
 
 import { Subject } from 'rxjs/Subject';
-import { QuestInfo } from 'models';
+import { Game } from 'models';
 
 export class SocketService {
   public waitBattlePlayersCount: Subject<number> = new Subject();
@@ -13,11 +13,11 @@ export class SocketService {
     this.socket = openSocket('http://localhost:3030');
   }
 
-  public init(questsInfo: QuestInfo[]): void {
-    for (const questInfo of questsInfo) {
-      this.socket.on(questInfo.getWaitPlayersCountEventName,
+  public init(games: Game[]): void {
+    for (const game of games) {
+      this.socket.on(game.getWaitPlayersCountEventName,
         (waitBattlePlayersCount: number) => this.waitBattlePlayersCount.next(waitBattlePlayersCount));
-      this.socket.on(questInfo.notifyCountdown,
+      this.socket.on(game.notifyCountdown,
         (distance: number) => this.notifyCountdown.next(distance));
     }
   }

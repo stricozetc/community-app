@@ -6,7 +6,7 @@ const mapStateToProps = (state: AppState) => ({
   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
   battleName: state.battle.battleName,
   countdown: state.battle.countdown,
-  quests: state.quests.quests
+  games: state.games.games
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

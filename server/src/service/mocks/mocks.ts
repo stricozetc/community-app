@@ -1,7 +1,7 @@
-import { QuestInfo } from '../../typing/quest-info';
+import { Game } from '../../typing/game';
 
 export abstract class MocksRepository {
-    public abstract getGames(): Promise<QuestInfo[]>;
+    public abstract getGames(): Promise<Game[]>;
 
     public abstract getBestUsers(): Promise<any[]>;
 

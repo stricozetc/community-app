@@ -21,10 +21,10 @@ import {
 } from './battle';
 
 import {
-  QuestsEffects,
-  questsReducer,
-  QuestsState
-} from './quests';
+  GamesEffects,
+  gamesReducer,
+  GamesState
+} from './games';
 
 import {
   StatisticEffects,
@@ -52,7 +52,7 @@ const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
   errors: errorsReducer,
-  quests: questsReducer,
+  games: gamesReducer,
   data: dataReducer,
   statistic: statisticReducer,
   socket: socketReducer
@@ -61,7 +61,7 @@ const rootReducers = combineReducers({
 const rootEpic: Epic = combineEpics(
   ...BattleEffects,
   ...AuthEffects,
-  ...QuestsEffects,
+  ...GamesEffects,
   ...StatisticEffects,
   ...SocketEffects
 );
@@ -71,7 +71,7 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 export interface AppState {
   battle: BattleState,
   auth: AuthState,
-  quests: QuestsState,
+  games: GamesState,
   statistic: StatisticState,
   data: DataState,
   errors: {},

@@ -11,10 +11,10 @@ import 'rxjs/add/operator/map';
 import { HttpWrapper } from 'services';
 
 import {
-  QuestsInited,
-  InitQuests,
-  QuestsTypes
-} from './quests.action';
+  GamesInited,
+  InitGames,
+  GamesTypes
+} from './games.action';
 
 import {
   DataIsLoaded,
@@ -25,19 +25,19 @@ import { store } from 'store';
 import { InitEvents } from 'store/socket';
 
 import { GetErrors } from '../errors';
-import { QuestInfo } from 'models';
+import { Game } from 'models';
 
-export const initQuests$ = (actions$: ActionsObservable<InitQuests>) => actions$
-  .ofType(QuestsTypes.InitQuests).pipe(
+export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
+  .ofType(GamesTypes.InitGames).pipe(
     switchMap(() => {
       store.dispatch(new LoadData());
 
-      return fromPromise(HttpWrapper.get('api/mocks/quests'))
+      return fromPromise(HttpWrapper.get('api/mocks/games'))
         .map((res: any) => {
-          const quests: QuestInfo[] = res.data;
+          const games: Game[] = res.data;
           store.dispatch(new DataIsLoaded());
 
-          return new QuestsInited(quests)
+          return new GamesInited(games)
         }).catch(error => {
           store.dispatch(new GetErrors(error.response.data));
 
@@ -46,8 +46,8 @@ export const initQuests$ = (actions$: ActionsObservable<InitQuests>) => actions$
     })
   );
 
-export const questsInited$ = (actions$: ActionsObservable<QuestsInited>) => actions$
-  .ofType(QuestsTypes.QuestsInited).pipe(
+export const gamesInited$ = (actions$: ActionsObservable<GamesInited>) => actions$
+  .ofType(GamesTypes.GamesInited).pipe(
     tap(payload => {
       /**
        * @todo unsubscribe events
@@ -58,4 +58,4 @@ export const questsInited$ = (actions$: ActionsObservable<QuestsInited>) => acti
   );
 
 // tslint:disable-next-line:array-type
-export const QuestsEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initQuests$, questsInited$];
+export const GamesEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initGames$, gamesInited$];

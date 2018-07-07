@@ -2,54 +2,55 @@ import { injectable, decorate, inject } from "inversify";
 
 import { QueueService } from "./queue.service";
 import { LoggerService } from "../logger";
-import { QuestInfo } from "../../typing/quest-info";
+import { Game } from "../../typing/game";
 
 decorate(injectable(), QueueService);
+
 @injectable()
 export class QueueServiceImplementation extends QueueService {
-    private queues: SocketIO.Socket[][] = [];
-    private questsInfo: QuestInfo[] = require('../../config/quests.json').quests;
-    @inject(LoggerService) private loggerService: LoggerService;
+  private queues: SocketIO.Socket[][] = [];
+  private games: Game[] = require('../../config/games.json').games;
+  @inject(LoggerService) private loggerService: LoggerService;
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        for (let index = 0; index < this.questsInfo.length; index++) {
-            this.queues.push([]);
-        }
+    for (let index = 0; index < this.games.length; index++) {
+      this.queues.push([]);
     }
+  }
 
-    public setNewPlayer(id: number, player: SocketIO.Socket): void {
-        this.queues[id].push(player);
-        this.checkWaitPlayersCount(id);
+  public setNewPlayer(id: number, player: SocketIO.Socket): void {
+    this.queues[id].push(player);
+    this.checkWaitPlayersCount(id);
+  }
+
+  public deletePlayer(deletePlayer: SocketIO.Socket): void {
+    this.queues = this.queues.map((queue: SocketIO.Socket[]) => {
+      return queue.filter((player: SocketIO.Socket) => player !== deletePlayer);
+    });
+  }
+
+  public deletePlayerFromQueue(id: number, deletePlayer: SocketIO.Socket): void {
+    this.queues[id] = this.queues[id].filter((player: SocketIO.Socket) => player !== deletePlayer);
+    this.checkWaitPlayersCount(id);
+  }
+
+  private checkWaitPlayersCount(id: number): void {
+    if (this.queues[id].length === this.games[id].maxRoomPlayer) {
+      this.queues[id].forEach((player: SocketIO.Socket) => {
+        player.emit(this.games[id].getWaitPlayersCountEventName, this.queues[id].length);
+        this.loggerService.infoLog(`Sent count wait players in ${this.games[id].name}`);
+
+        player.emit('redirect', this.games[id].requestUrl);
+        this.loggerService.infoLog(`Redirect players group to ${this.games[id].name}`);
+      });
+      this.queues[id] = [];
+    } else {
+      this.queues[id].forEach((player: SocketIO.Socket) => {
+        player.emit(this.games[id].getWaitPlayersCountEventName, this.queues[id].length);
+        this.loggerService.infoLog(`Sent count wait players in ${this.games[id].name}`);
+      });
     }
-
-    public deletePlayer(deletePlayer: SocketIO.Socket): void {
-        this.queues = this.queues.map((queue: SocketIO.Socket[]) => {
-            return queue.filter((player: SocketIO.Socket) => player !== deletePlayer);
-        });
-    }
-
-    public deletePlayerFromQueue(id: number, deletePlayer: SocketIO.Socket): void {
-        this.queues[id] = this.queues[id].filter((player: SocketIO.Socket) => player !== deletePlayer);
-        this.checkWaitPlayersCount(id);
-    }
-
-    private checkWaitPlayersCount(id: number): void {
-        if (this.queues[id].length === this.questsInfo[id].maxRoomPlayer) {
-            this.queues[id].forEach((player: SocketIO.Socket) => {
-                player.emit(this.questsInfo[id].getWaitPlayersCountEventName, this.queues[id].length);
-                this.loggerService.infoLog(`Sent count wait players in ${this.questsInfo[id].name}`);
-
-                player.emit('redirect', this.questsInfo[id].requestUrl);
-                this.loggerService.infoLog(`Redirect players group to ${this.questsInfo[id].name}`);
-            });
-            this.queues[id] = [];
-        } else {
-            this.queues[id].forEach((player: SocketIO.Socket) => {
-                player.emit(this.questsInfo[id].getWaitPlayersCountEventName, this.queues[id].length);
-                this.loggerService.infoLog(`Sent count wait players in ${this.questsInfo[id].name}`);
-            });
-        }
-    }
+  }
 }

@@ -120,12 +120,12 @@ export const CaStatisticPage = connect(
 //   battleStatus: state.battle.status,
 //   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
 //   fetchingData: state.data.fetchingData,
-//   quests: state.quests.quests
+//   games: state.games.games
 // });
 
 // const mapDispatchToProps = (dispatch: any) => ({
 //   logoutUser: () => dispatch(new LogoutUser()),
 //   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
 //   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-//   initGames: () => dispatch(new InitQuests())
+//   initGames: () => dispatch(new InitGames())
 // });
