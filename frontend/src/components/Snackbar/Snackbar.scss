@@ -2,9 +2,12 @@
 
 .ca-snackbar{
 
-  font-size: $medium-font-2 !important;
-  color: white;
 
+  color: white;
+  & > * {
+    font-size: $medium-font-2 !important;
+  }
+ 
   &--red > * {
     background-color: #d32f2f !important;
   }

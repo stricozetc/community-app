@@ -7,10 +7,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 export const CaSnackbar = (props: CaSnackbarProps) => {
 
-  const { info, handleClose } = props;
+  const { type, handleClose } = props;
   const classes: String[] = [];
 
-  switch (info.type) {
+  switch (type) {
     case 'error':
       classes.push('ca-snackbar--red');
       break;
@@ -40,7 +40,7 @@ export const CaSnackbar = (props: CaSnackbarProps) => {
       onClose={handleClose && handleClose}
       TransitionComponent={props.TransitionComponent}
       autoHideDuration={props.autoHideDuration}
-      message={<span>{ info.message }</span>}
+      message={props.message}
       action={props.action}
     />
   );

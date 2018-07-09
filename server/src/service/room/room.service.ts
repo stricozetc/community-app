@@ -23,7 +23,7 @@ export class RoomService {
     return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}).then((response: NewRoomResponse) => {
       let isCreated = false;
 
-      if (response.status === 'OK') {
+      if (response) {
         this.rooms.push({
           id: index,
           maxPlayersCount: this.games[index].maxRoomPlayer,

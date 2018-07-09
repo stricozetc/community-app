@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { AuthStatus, LoadStatus, Game } from 'models';
 import { AppState, LogoutUser } from 'store';
 
-import { BattleProps } from './Battles.model';
+import { BattleProps, BattleState } from './Battles.model';
 
 import { CaGameCard } from 'components/GameCard';
 import { CaSpinner } from 'components/Spinner';
@@ -19,9 +19,6 @@ import { isEmpty } from 'utils/isEmpty';
 import Slide from '@material-ui/core/Slide';
 
 import { CaSnackbar } from './../../components/Snackbar/Snackbar';
-
-
-
 
 
 class CaBattlesComponent extends React.Component<BattleProps, BattleState> {
@@ -51,6 +48,18 @@ class CaBattlesComponent extends React.Component<BattleProps, BattleState> {
       this.props.history.push('/login');
     }
   }
+
+  public transitionUp(props: any): JSX.Element {
+    return <Slide {...props} direction="up" />;
+  }
+
+  public closeSnackbar(): void{
+    this.setState({
+      isSnackOpen: false
+    })
+  }
+
+
 
   public render(): JSX.Element {
     return (
@@ -85,6 +94,7 @@ class CaBattlesComponent extends React.Component<BattleProps, BattleState> {
                     battleStatus={this.props.battleStatus}
                     waitBattlePlayersCountAction={this.props.waitBattlePlayersCountAction}
                   />
+
                 </div>
               );
             })}
@@ -104,7 +114,8 @@ const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   battleStatus: state.battle.status,
   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
-  games: state.games.games
+  games: state.games.games,
+  gamesStatus: state.games.gamesStatus
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

@@ -54,9 +54,6 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
           })
     )
 
-        })
-    })
-  );
 
 export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) => actions$
   .ofType(StatisticTypes.InitRecentGames).pipe(

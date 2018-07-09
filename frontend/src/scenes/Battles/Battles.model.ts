@@ -1,11 +1,17 @@
 import { AuthStatus, BattleStatus, Game } from 'models';
 
-export interface BattleProps {
+export interface BattleState { 
+  isSnackOpen: boolean;
+ }
+
+
+ export interface BattleProps {
   status: AuthStatus;
   battleStatus: BattleStatus;
   history: any;
   waitBattlePlayersCountAction: number;
   games: Game[];
+  gamesStatus: number;
   children?: JSX.Element;
 
   joinBattleAction(payload: string): any;
@@ -16,3 +22,4 @@ export interface BattleProps {
 
   initGames(): void;
 }
+

@@ -1,4 +1,4 @@
-import { QuestsActions, GamesTypes } from './games.action';
+import { GamesActions, GamesTypes } from './games.action';
 
 import { initialState } from './games.initial';
 
@@ -29,7 +29,3 @@ export const gamesReducer = (state = initialState, action: GamesActions) => {
             return state;
     }
 }
-    default:
-      return state;
-  }
-};

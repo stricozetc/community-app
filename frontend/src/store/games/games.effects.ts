@@ -39,8 +39,8 @@ export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
     })
   );
 
-export const gamesInited$ = (actions$: ActionsObservable<GamesInited>) => actions$
-  .ofType(GamesTypes.GamesInited).pipe(
+export const loadGamesCompleted$ = (actions$: ActionsObservable<LoadGamesCompleted>) => actions$
+  .ofType(GamesTypes.LoadGamesCompleted).pipe(
     tap(payload => {
       /**
        * @todo unsubscribe events
@@ -51,4 +51,4 @@ export const gamesInited$ = (actions$: ActionsObservable<GamesInited>) => action
   );
 
 // tslint:disable-next-line:array-type
-export const GamesEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initGames$, gamesInited$];
+export const GamesEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initGames$, loadGamesCompleted$];
