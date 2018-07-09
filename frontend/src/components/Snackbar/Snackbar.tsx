@@ -1,22 +1,22 @@
 import './Snackbar.scss';
 
 import * as React from 'react';
-import { CaSnackbarProps } from './Snackbar.model';
+import {CaSnackbarProps} from './Snackbar.model';
 
 
-import { Snackbar } from '@material-ui/core';
+import {Snackbar} from '@material-ui/core';
 
- import { CaSlide } from './../Slide/Slide';
+import {CaSlide} from './../Slide/Slide';
 
 export class CaSnackbar extends React.Component<CaSnackbarProps> {
- 
+
   public render(): JSX.Element {
-    const { type, handleClose } = this.props;
-    const classes: String[] = [];
+    const {type, handleClose} = this.props;
+    const classes: string[] = [];
 
     const transition = (props: any): JSX.Element => {
-      return <CaSlide {...props} direction={this.props.transitionDirection} />;
-    }
+      return <CaSlide {...props} direction={this.props.transitionDirection}/>;
+    };
 
     switch (type) {
       case 'error':
@@ -39,7 +39,6 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         break;
     }
 
-    
     return (
       <Snackbar
         className={["ca-snackbar", ...classes].join(' ')}
@@ -49,8 +48,8 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         autoHideDuration={this.props.autoHideDuration}
         message={this.props.message}
         action={this.props.action}
-        TransitionComponent = {transition}
+        TransitionComponent={transition}
       />
     );
   }
-};
+}

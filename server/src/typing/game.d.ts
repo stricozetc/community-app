@@ -4,9 +4,11 @@ export interface Game {
   desc: string;
   registrationEventName: string;
   leaveEventName: string;
-  getWaitPlayersCountEventName: string;
+  updateRoomsInfoEventName: string;
   maxRoomPlayer: number;
+  maxRooms: number;
   requestUrl: string;
   maxWaitingTime: number;
   notifyCountdown: string;
+  battleTime: number;
 }

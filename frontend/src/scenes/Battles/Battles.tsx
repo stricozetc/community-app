@@ -3,7 +3,7 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, LoadStatus, Game } from 'models';
+import { AuthStatus, LoadStatus, Game, RoomInfo } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -47,8 +47,23 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     this.props.closeSnackbar();
   }
 
+  public getGameRooms(game: Game): RoomInfo[] {
+    return this.props.roomsInfo.filter(r => r.gameId === game.id)
+  }
 
- 
+  public getNearestCountdown(rooms: RoomInfo[]): number {
+    const mappedRooms = rooms
+      .map(r => r.distance)
+      .filter(d => !!d);
+
+    const sortedRooms = mappedRooms && mappedRooms.length ? mappedRooms
+      .sort((a: any, b: any) => {
+        return a - b;
+      }) as number[] : [];
+
+    return sortedRooms && sortedRooms[0] ? sortedRooms[0] : 0;
+  }
+
   public render(): JSX.Element {
     return (
       <div className="ca-homepage">
@@ -68,6 +83,10 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           <div className="ca-homepage__container ca-global-fadeIn">
 
             {this.props.games.map((game: Game, index: number) => {
+              const gameRooms = this.getGameRooms(game);
+              const waitBattlePlayersCount = gameRooms && gameRooms.length ? gameRooms
+                .map(r => r.playersCount)
+                .reduce((accumulator, currentValue: number) => accumulator + currentValue) : 0;
 
               return (
                 <div className="ca-homepage__container-for-games" key={index}>
@@ -80,7 +99,9 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                     leaveGame={this.props.leaveBattleAction}
                     status={this.props.battleStatus}
                     battleStatus={this.props.battleStatus}
-                    waitBattlePlayersCountAction={this.props.waitBattlePlayersCountAction}
+                    waitBattlePlayersCountAction={waitBattlePlayersCount}
+                    isFull={waitBattlePlayersCount === game.maxRoomPlayer * game.maxRooms}
+                    battleStartTime={new Date((new Date()).getTime() + this.getNearestCountdown(gameRooms))}
                   />
 
                 </div>
@@ -101,7 +122,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
   battleStatus: state.battle.status,
-  waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
+  roomsInfo: state.battle.roomsInfo,
   games: state.games.games,
   status: state.games.gamesStatus,
   isSnackbarOpen: state.snackbarUi.isOpen
