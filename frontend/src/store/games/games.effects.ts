@@ -19,7 +19,7 @@ import {
 
 
 import { store } from 'store';
-import { InitEvents } from 'store/socket';import { GetErrors } from '../errors';
+import { InitEvents } from 'store/socket';
 import { Game } from 'models';
 
 export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
@@ -33,8 +33,7 @@ export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
 
           return new LoadGamesCompleted(games)
         }).catch(error => {
-          store.dispatch(new LoadGamesFailed());
-          return Observable.of(new GetErrors(error));
+          return Observable.of(new LoadGamesFailed());
         })
     })
   );

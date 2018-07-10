@@ -1,26 +1,19 @@
 @import "../../style/settings.scss";
 
 .ca-snackbar{
-
-
-  color: white;
-  & > * {
-    font-size: $medium-font-2 !important;
-  }
- 
-  &--red > * {
+  &--red > .ca-slide > * {
     background-color: #d32f2f !important;
   }
 
-  &--orange > * {
+  &--orange > .ca-slide > * {
     background-color: #ffa000 !important;
   }
 
-  &--blue > * {
+  &--blue > .ca-slide > * {
     background-color: #1976d2 !important;
   }
 
-  &--green > * {
+  &--green > .ca-slide > * {
     background-color: #43a047 !important;
   }
 }

@@ -16,9 +16,13 @@ import {
   LoginFormProps,
   LoginFormState
 } from './LoginForm.model';
-import Slide from '@material-ui/core/Slide';
+
+import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
+
 
 import { CaSnackbar } from './../Snackbar/Snackbar';
+import { isObjectsEqual } from 'utils/isObjectsEqual';
+
 
 export class LoginFormComponent extends React.Component<
   LoginFormProps,
@@ -40,9 +44,10 @@ export class LoginFormComponent extends React.Component<
       this.props.history.push('/homepage');
     }
 
-    if (!isEmpty(nextProps.errors)) {
-      this.setState({isSnackOpen: true})
+    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
+      this.props.openSnackbar();
     }
+
   }
 
   public componentDidMount(): void {
@@ -136,15 +141,8 @@ export class LoginFormComponent extends React.Component<
     this.checkValidation();
   };
 
-  public transitionUp(props: any): JSX.Element {
-    return <Slide {...props} direction="up" />;
-  }
-
   public closeSnackbar(): void{
-
-    this.setState({
-      isSnackOpen: false
-    })
+    this.props.closeSnackbar();
   }
 
   public render(): JSX.Element {
@@ -153,12 +151,13 @@ export class LoginFormComponent extends React.Component<
     return (
       <div className="ca-login-form">
       <CaSnackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          open={ this.state.isSnackOpen }
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
           type="error"
-          TransitionComponent = {this.transitionUp}
+         //  TransitionComponent = {this.transitionUp}
+         transitionDirection="down"
           message={
             <div>
               {keys && keys.map((k: string) => 
@@ -246,11 +245,14 @@ export class LoginFormComponent extends React.Component<
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  errors: state.errors
+  errors: state.errors,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user)),
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
+  openSnackbar: () => dispatch(new OpenSnackbar())
 });
 
 export const LoginForm = connect(

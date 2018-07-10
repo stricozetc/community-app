@@ -62,3 +62,7 @@ export enum LoadStatus {
     COMPLETED,
     FAILED
   }
+
+export interface errorsFromServer {
+  [key:string]: {code: number; msg: string} 
+}

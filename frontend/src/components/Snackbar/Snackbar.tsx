@@ -3,45 +3,54 @@ import './Snackbar.scss';
 import * as React from 'react';
 import { CaSnackbarProps } from './Snackbar.model';
 
-import Snackbar from '@material-ui/core/Snackbar';
 
-export const CaSnackbar = (props: CaSnackbarProps) => {
+import { Snackbar } from '@material-ui/core';
 
-  const { type, handleClose } = props;
-  const classes: String[] = [];
+ import { CaSlide } from './../Slide/Slide';
 
-  switch (type) {
-    case 'error':
-      classes.push('ca-snackbar--red');
-      break;
+export class CaSnackbar extends React.Component<CaSnackbarProps> {
+ 
+  public render(): JSX.Element {
+    const { type, handleClose } = this.props;
+    const classes: String[] = [];
 
-    case 'info':
-      classes.push('ca-snackbar--info');
-      break;
+    const transition = (props: any): JSX.Element => {
+      return <CaSlide {...props} direction={this.props.transitionDirection} />;
+    }
 
-    case 'warning':
-      classes.push('ca-snackbar--warning');
-      break;
+    switch (type) {
+      case 'error':
+        classes.push('ca-snackbar--red');
+        break;
 
-    case 'success':
-      classes.push('ca-snackbar--success');
-      break;
+      case 'info':
+        classes.push('ca-snackbar--info');
+        break;
 
-    default:
-      break;
+      case 'warning':
+        classes.push('ca-snackbar--warning');
+        break;
+
+      case 'success':
+        classes.push('ca-snackbar--success');
+        break;
+
+      default:
+        break;
+    }
+
+    
+    return (
+      <Snackbar
+        className={["ca-snackbar", ...classes].join(' ')}
+        anchorOrigin={this.props.anchorOrigin}
+        open={this.props.open}
+        onClose={handleClose && handleClose}
+        autoHideDuration={this.props.autoHideDuration}
+        message={this.props.message}
+        action={this.props.action}
+        TransitionComponent = {transition}
+      />
+    );
   }
-  
-  return (
-    <Snackbar
-      className={["ca-snackbar", ...classes].join(' ')}
-      // anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      anchorOrigin={props.anchorOrigin}
-      open={props.open}
-      onClose={handleClose && handleClose}
-      TransitionComponent={props.TransitionComponent}
-      autoHideDuration={props.autoHideDuration}
-      message={props.message}
-      action={props.action}
-    />
-  );
 };

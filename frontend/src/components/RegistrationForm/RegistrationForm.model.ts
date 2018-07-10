@@ -17,7 +17,6 @@ export interface RegistrationFormState {
   emailErrors: string[];
   passwordErrors: string[];
   nameErrors: string[];
-  isSnackOpen: boolean;
 }
 
 export const initRegistrationFormState: RegistrationFormState = {
@@ -37,11 +36,13 @@ export const initRegistrationFormState: RegistrationFormState = {
   emailErrors: [],
   passwordErrors: [],
   nameErrors: [],
-  isSnackOpen: false
 };
 export interface RegistrationFormProps {
   history: any;
   status: AuthStatus;
-  errors: any;
+  errors: { [key:string]: {code: number; msg: string} }
+  isSnackbarOpen: boolean;
   registerUser(user: UserFieldsToRegister): void;
+  closeSnackbar(): void;
+  openSnackbar():void;
 }

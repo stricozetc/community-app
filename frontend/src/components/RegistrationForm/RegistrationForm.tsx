@@ -25,8 +25,10 @@ import {
 
 import { CaSnackbar } from './../Snackbar/Snackbar';
 
-import Slide from '@material-ui/core/Slide';
 import { isEmpty } from 'utils';
+import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
+
+import { isObjectsEqual } from "utils/isObjectsEqual";
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: any) {
@@ -39,10 +41,15 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
   }
 
   public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
-    if (!isEmpty(nextProps.errors)) {
-      this.setState({isSnackOpen: true})
+    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
+      this.props.openSnackbar();
     }
   }
+
+  public closeSnackbar(): void{
+    this.props.closeSnackbar();
+  }
+
 
   public handleChange(event: any): void {
     const target = event.target;
@@ -152,18 +159,6 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.checkValidation();
   };
 
-
-  public transitionUp(props: any): JSX.Element {
-    return <Slide {...props} direction="up" />;
-  }
-
-  public closeSnackbar(): void{
-
-    this.setState({
-      isSnackOpen: false
-    })
-  }
-
   public render(): JSX.Element {
     
     const { errors } = this.props;
@@ -171,12 +166,13 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     return (
       <div>
         <CaSnackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          open={ this.state.isSnackOpen }
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
           type="error"
-          TransitionComponent = {this.transitionUp}
+          // TransitionComponent = {this.transitionUp}
+          transitionDirection="down"
           message={
             <div>
               {keys && keys.map((k: string) => 
@@ -333,12 +329,16 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  errors: state.errors
+  errors: state.errors,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user))
+  registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user)),
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
+  openSnackbar: () => dispatch(new OpenSnackbar())
 });
+
 
 export const RegistrationForm = connect(
   mapStateToProps,

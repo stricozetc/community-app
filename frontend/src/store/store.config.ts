@@ -39,6 +39,11 @@ import {
   SocketState
 } from './socket';
 
+import {
+  snackbarUiReducer,
+  SnackbarUiState
+} from './snackbar';
+
 import { errorsReducer } from './errors';
 
 // (Valiantsin): redux-observable types issue
@@ -50,7 +55,8 @@ const rootReducers = combineReducers({
   errors: errorsReducer,
   games: gamesReducer,
   statistic: statisticReducer,
-  socket: socketReducer
+  socket: socketReducer,
+  snackbarUi: snackbarUiReducer
 });
 
 const rootEpic: Epic = combineEpics(
@@ -69,7 +75,8 @@ export interface AppState {
   games: GamesState,
   statistic: StatisticState,
   errors: {},
-  socket: SocketState
+  socket: SocketState,
+  snackbarUi: SnackbarUiState
 }
 
 // tslint:disable-next-line:no-angle-bracket-type-assertion

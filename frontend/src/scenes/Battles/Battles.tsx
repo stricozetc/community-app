@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { AuthStatus, LoadStatus, Game } from 'models';
 import { AppState, LogoutUser } from 'store';
 
-import { BattleProps, BattleState } from './Battles.model';
+import { BattleProps } from './Battles.model';
 
 import { CaGameCard } from 'components/GameCard';
 import { CaSpinner } from 'components/Spinner';
@@ -16,64 +16,52 @@ import { InitGames, JoinBattle, LeaveBattle } from 'store';
 import { isEmpty } from 'utils/isEmpty';
 
 
-import Slide from '@material-ui/core/Slide';
+import { CaSnackbar } from 'components/Snackbar';
 
-import { CaSnackbar } from './../../components/Snackbar/Snackbar';
+import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
 
-class CaBattlesComponent extends React.Component<BattleProps, BattleState> {
-
-  constructor(props: any) {
-    super(props);
-    this.state = { isSnackOpen: false };
-  }
+class CaBattlesComponent extends React.Component<BattleProps> {
 
   public componentWillReceiveProps(nextProps: BattleProps): void {
-    if(nextProps.gamesStatus === LoadStatus.FAILED  ) {
-      this.setState({
-        isSnackOpen: true
-      })
+    if(nextProps.status === LoadStatus.FAILED && nextProps.status !== this.props.status ) {
+      this.props.openSnackbar();
     }
   }
 
-
   public componentWillMount(): void {
+
+    const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+    
+    if (!isAuthenticated) {
+      this.props.history.push('/login');
+    }
+
     if (isEmpty(this.props.games)) {
       this.props.initGames();
     }
-  }
-
-  public componentDidMount(): void {
-    if (this.props.status === AuthStatus.NOT_AUTHORIZED) {
-      this.props.history.push('/login');
-    }
-  }
-
-  public transitionUp(props: any): JSX.Element {
-    return <Slide {...props} direction="up" />;
+    
   }
 
   public closeSnackbar(): void{
-    this.setState({
-      isSnackOpen: false
-    })
+    this.props.closeSnackbar();
   }
 
 
-
+ 
   public render(): JSX.Element {
     return (
       <div className="ca-homepage">
         {this.props.children}
 
         <CaSnackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          open={ this.state.isSnackOpen }
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
           type="error"
           message={<span> Game fetching Failed! </span>}
-          TransitionComponent = {this.transitionUp}
+          transitionDirection="down"
         />
 
         {!isEmpty(this.props.games) && (
@@ -100,9 +88,9 @@ class CaBattlesComponent extends React.Component<BattleProps, BattleState> {
             })}
           </div>
         )}
-        {isEmpty(this.props.games) && (
+        {this.props.status === 1 && (
           <div className="ca-homepage__spinner-container">
-            <CaSpinner isActive={isEmpty(this.props.games)}/>
+            <CaSpinner isActive={this.props.status === 1}/>
           </div>
         )}
       </div>
@@ -111,18 +99,21 @@ class CaBattlesComponent extends React.Component<BattleProps, BattleState> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status,
+  authStatus: state.auth.status,
   battleStatus: state.battle.status,
   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
   games: state.games.games,
-  gamesStatus: state.games.gamesStatus
+  status: state.games.gamesStatus,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new InitGames())
+  initGames: () => dispatch(new InitGames()),
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
+  openSnackbar: () => dispatch(new OpenSnackbar())
 });
 
 export const CaBattles = connect(
