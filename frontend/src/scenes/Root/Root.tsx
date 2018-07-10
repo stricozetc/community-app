@@ -43,8 +43,6 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/');
     
     const userInBattle = !!this.props.battleName;
-    console.log(userInBattle);
-    console.log(this.props.battleName);
 
     if(userInBattle) {
       this.props.leaveBattle(this.props.battleName);
