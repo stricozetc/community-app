@@ -32,16 +32,17 @@ import {
   StatisticState
 } from './statistic';
 
-import {
-  dataReducer,
-  DataState
-} from './data';
 
 import {
   SocketEffects,
   socketReducer,
   SocketState
 } from './socket';
+
+import {
+  snackbarUiReducer,
+  SnackbarUiState
+} from './snackbar';
 
 import { errorsReducer } from './errors';
 
@@ -53,9 +54,9 @@ const rootReducers = combineReducers({
   auth: authReducer,
   errors: errorsReducer,
   games: gamesReducer,
-  data: dataReducer,
   statistic: statisticReducer,
-  socket: socketReducer
+  socket: socketReducer,
+  snackbarUi: snackbarUiReducer
 });
 
 const rootEpic: Epic = combineEpics(
@@ -73,9 +74,9 @@ export interface AppState {
   auth: AuthState,
   games: GamesState,
   statistic: StatisticState,
-  data: DataState,
   errors: {},
-  socket: SocketState
+  socket: SocketState,
+  snackbarUi: SnackbarUiState
 }
 
 // tslint:disable-next-line:no-angle-bracket-type-assertion

@@ -55,3 +55,14 @@ export interface UserFieldsToLogin {
   email: string,
   password: string,
 }
+
+export enum LoadStatus {
+    INIT,
+    FETCHING,
+    COMPLETED,
+    FAILED
+  }
+
+export interface errorsFromServer {
+  [key:string]: {code: number; msg: string} 
+}

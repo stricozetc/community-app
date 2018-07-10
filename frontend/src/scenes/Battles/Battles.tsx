@@ -3,7 +3,7 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, Game } from 'models';
+import { AuthStatus, LoadStatus, Game } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -15,25 +15,56 @@ import { InitGames, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
 
+
+import { CaSnackbar } from 'components/Snackbar';
+
+import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
+
+
 class CaBattlesComponent extends React.Component<BattleProps> {
+
+  public componentWillReceiveProps(nextProps: BattleProps): void {
+    if(nextProps.status === LoadStatus.FAILED && nextProps.status !== this.props.status ) {
+      this.props.openSnackbar();
+    }
+  }
+
   public componentWillMount(): void {
+
+    const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+    
+    if (!isAuthenticated) {
+      this.props.history.push('/login');
+    }
+
     if (isEmpty(this.props.games)) {
       this.props.initGames();
     }
+    
   }
 
-  public componentDidMount(): void {
-    if (this.props.status === AuthStatus.NOT_AUTHORIZED) {
-      this.props.history.push('/login');
-    }
+  public closeSnackbar(): void{
+    this.props.closeSnackbar();
   }
 
+
+ 
   public render(): JSX.Element {
     return (
       <div className="ca-homepage">
         {this.props.children}
 
-        {!this.props.fetchingData && (
+        <CaSnackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={ this.props.isSnackbarOpen }
+          autoHideDuration = {4000}
+          handleClose= {() => this.closeSnackbar()}
+          type="error"
+          message={<span> Game fetching Failed! </span>}
+          transitionDirection="down"
+        />
+
+        {!isEmpty(this.props.games) && (
           <div className="ca-homepage__container ca-global-fadeIn">
 
             {this.props.games.map((game: Game, index: number) => {
@@ -51,14 +82,15 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                     battleStatus={this.props.battleStatus}
                     waitBattlePlayersCountAction={this.props.waitBattlePlayersCountAction}
                   />
+
                 </div>
               );
             })}
           </div>
         )}
-        {this.props.fetchingData && (
+        {this.props.status === 1 && (
           <div className="ca-homepage__spinner-container">
-            <CaSpinner isActive={this.props.fetchingData}/>
+            <CaSpinner isActive={this.props.status === 1}/>
           </div>
         )}
       </div>
@@ -67,18 +99,21 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status,
+  authStatus: state.auth.status,
   battleStatus: state.battle.status,
   waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
-  fetchingData: state.data.fetchingData,
-  games: state.games.games
+  games: state.games.games,
+  status: state.games.gamesStatus,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new InitGames())
+  initGames: () => dispatch(new InitGames()),
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
+  openSnackbar: () => dispatch(new OpenSnackbar())
 });
 
 export const CaBattles = connect(

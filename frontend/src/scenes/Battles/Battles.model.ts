@@ -1,13 +1,16 @@
-import { AuthStatus, BattleStatus, Game } from 'models';
+import { BattleStatus, Game, LoadStatus, AuthStatus } from 'models';
 
-export interface BattleProps {
-  status: AuthStatus;
+
+ export interface BattleProps {
+
+  authStatus:AuthStatus;
   battleStatus: BattleStatus;
   history: any;
   waitBattlePlayersCountAction: number;
-  fetchingData: boolean;
   games: Game[];
+  status: LoadStatus;
   children?: JSX.Element;
+  isSnackbarOpen: boolean;
 
   joinBattleAction(payload: string): any;
 
@@ -16,4 +19,9 @@ export interface BattleProps {
   logoutUser(): void;
 
   initGames(): void;
+
+  closeSnackbar(): void;
+
+  openSnackbar():void;
 }
+

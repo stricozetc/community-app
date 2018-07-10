@@ -35,10 +35,14 @@ export const initRegistrationFormState: RegistrationFormState = {
   },
   emailErrors: [],
   passwordErrors: [],
-  nameErrors: []
+  nameErrors: [],
 };
 export interface RegistrationFormProps {
   history: any;
   status: AuthStatus;
+  errors: { [key:string]: {code: number; msg: string} }
+  isSnackbarOpen: boolean;
   registerUser(user: UserFieldsToRegister): void;
+  closeSnackbar(): void;
+  openSnackbar():void;
 }

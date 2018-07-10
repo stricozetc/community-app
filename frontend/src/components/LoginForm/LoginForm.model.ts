@@ -23,10 +23,17 @@ export const initLoginFormState: LoginFormState = {
     password: false
   },
   emailErrors: [],
-  passwordErrors: []
+  passwordErrors: [],
 };
 export interface LoginFormProps {
   status: AuthStatus;
   history: any;
+  errors: any;
+  isSnackbarOpen: boolean;
+  
   loginUser(user: UserFieldsToLogin): void;
+
+  closeSnackbar(): void;
+
+  openSnackbar():void;
 }

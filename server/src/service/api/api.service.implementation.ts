@@ -15,7 +15,7 @@ export class ApiServiceImplementation extends ApiService {
     return axios.post<boolean>(requestUrl, data, {
       headers: {
         // tslint:disable-next-line
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsIm5hbWUiOiIxMjMiLCJpYXQiOjE1MzA5NTA4ODUsImV4cCI6MTUzMDk3MjQ4NX0.jAZFYuHqmE4nnk5xBkOadR_dJyX3oB5da0IwQ5u1xrs"
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksIm5hbWUiOiJ0MSIsImlhdCI6MTUzMTEzOTk2MywiZXhwIjoxNTMxMTYxNTYzfQ.7K9jcmkfVWG_Ws7fWEYy6jz76gbB_1GTg_1IEwbU7A4"
       }
     }).then((response: AxiosResponse) => {
       return response.data;

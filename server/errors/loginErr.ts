@@ -1,4 +1,4 @@
-import { errCodes } from "./errCodes";
+import { errCodes, technicalErrCodes } from "./errCodes";
 
 export const loginErr = {
   emailIsRequired: {
@@ -13,5 +13,13 @@ export const loginErr = {
     code: errCodes.smtRequired,
     msg: 'Password is required'
   },
+  notFoundUser: {
+    code: technicalErrCodes.smtIsNotFoundedInDb,
+    msg: 'Can not found user with this email'
+  },
+  wrongPassword: (email: string) => ({
+    code: errCodes.smtIsNotEqual,
+    msg: `Password is incorrent for ${email}`
+  })
 };
 

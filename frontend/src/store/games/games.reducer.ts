@@ -1,16 +1,31 @@
-import { QuestsActions, GamesTypes } from './games.action';
+import { GamesActions, GamesTypes } from './games.action';
 
 import { initialState } from './games.initial';
 
-export const gamesReducer = (state = initialState, action: QuestsActions) => {
-  switch (action.type) {
-    case GamesTypes.GamesInited: {
-      return {
-        ...state,
-        games: action.payload
-      }
+import { LoadStatus } from 'models';
+
+export const gamesReducer = (state = initialState, action: GamesActions) => {
+    switch (action.type) {
+        case GamesTypes.InitGames: {
+            return {
+                ...state,
+                gamesStatus: LoadStatus.FETCHING
+            }
+        }
+        case GamesTypes.LoadGamesCompleted: {
+            return {
+                ...state,
+                games: action.payload,
+                gamesStatus: LoadStatus.COMPLETED
+            }
+        }
+        case GamesTypes.LoadGamesFailed: {
+            return {
+                ...state,
+                gamesStatus: LoadStatus.FAILED
+            }
+        }
+        default:
+            return state;
     }
-    default:
-      return state;
-  }
-};
+}

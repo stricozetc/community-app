@@ -8,6 +8,7 @@ import './current-battle.scss';
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
 import clockImage from 'assets/clock-small.svg';
+import { AuthStatus, BattleStatus } from 'models';
 import { Game } from 'models';
 
 interface Props {
@@ -16,6 +17,8 @@ interface Props {
   countdown: number;
   history: any;
   games: Game[];
+  gameStatus: number;
+  authStatus: number;
 
   leaveBattleAction(payload: string): void;
 
@@ -23,6 +26,18 @@ interface Props {
 }
 
 export class CurrentBattleComponent extends React.Component<Props> {
+  public componentWillMount():void {
+    if (this.props.authStatus === AuthStatus.NOT_AUTHORIZED) {
+      this.props.history.push('/battles');
+    }
+
+    if (this.props.gameStatus === BattleStatus.INIT) {
+      this.props.history.push('/login');
+    }
+  }
+  
+    
+
   public getGameIndex(): number {
     const currentRoute = this.props.history.location.pathname;
     const test = new RegExp(/\d+/);
