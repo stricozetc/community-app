@@ -3,7 +3,7 @@
 
 .ca-homepage {
   &__container {
-    @include container(80%);
+    margin: 0 10.6rem;
     @include flexbox();
   }
 

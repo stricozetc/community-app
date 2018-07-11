@@ -1,4 +1,4 @@
-import { BattleStatus, Game, LoadStatus, AuthStatus } from 'models';
+import { BattleStatus, Game, LoadStatus, AuthStatus, RoomInfo } from 'models';
 
 
  export interface BattleProps {
@@ -6,7 +6,7 @@ import { BattleStatus, Game, LoadStatus, AuthStatus } from 'models';
   authStatus:AuthStatus;
   battleStatus: BattleStatus;
   history: any;
-  waitBattlePlayersCountAction: number;
+  roomsInfo: RoomInfo[];
   games: Game[];
   status: LoadStatus;
   children?: JSX.Element;

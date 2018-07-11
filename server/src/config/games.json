@@ -2,15 +2,17 @@
   "games": [
     {
       "id": 0,
-      "name": "JsMarathon",
+      "name": "JS Marathon",
       "desc": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry",
       "registrationEventName": "onJsMarathon",
       "leaveEventName": "onLeaveJsMarathon",
-      "getWaitPlayersCountEventName": "onWaitPlayersJsMarathon",
+      "updateRoomsInfoEventName": "onUpdateRoomsInfoJsMarathon",
       "notifyCountdown": "onNotifyCountdownJsMarathon",
       "maxRoomPlayer": 5,
+      "maxRooms": 5,
       "requestUrl": "http://localhost:2018",
-      "maxWaitingTime": 3000000
+      "maxWaitingTime": 3000000,
+      "battleTime": 300000
     },
     {
       "id": 1,
@@ -18,11 +20,27 @@
       "desc": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry",
       "registrationEventName": "onCssQuickDraw",
       "leaveEventName": "onLeaveCssQuickDraw",
-      "getWaitPlayersCountEventName": "onWaitPlayersCssQuickDraw",
+      "updateRoomsInfoEventName": "onUpdateRoomsInfoCssQuickDraw",
       "notifyCountdown": "onNotifyCountdownCssQuickDraw",
       "maxRoomPlayer": 10,
+      "maxRooms": 7,
       "requestUrl": "http://localhost:1111",
-      "maxWaitingTime": 30
+      "maxWaitingTime": 30,
+      "battleTime": 600000
+    },
+    {
+      "id": 2,
+      "name": "CSS Quick Draw FULL",
+      "desc": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry",
+      "registrationEventName": "onCssQuickDrawFull",
+      "leaveEventName": "onLeaveCssQuickDrawFull",
+      "updateRoomsInfoEventName": "onUpdateRoomsInfoCssQuickDrawFull",
+      "notifyCountdown": "onNotifyCountdownCssQuickDrawFull",
+      "maxRoomPlayer": 0,
+      "maxRooms": 0,
+      "requestUrl": "http://localhost:1111",
+      "maxWaitingTime": 30,
+      "battleTime": 600000
     }
   ]
 }

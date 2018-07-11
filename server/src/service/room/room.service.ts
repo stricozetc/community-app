@@ -5,6 +5,7 @@ import { LoggerService } from '../logger';
 import { TimerService } from './../timer';
 
 import { RoomStatus, Room } from './models';
+import { RoomInfo } from "../../typing/room-info";
 
 @injectable()
 export class RoomService {
@@ -14,6 +15,10 @@ export class RoomService {
   @inject(TimerService) private timerService: TimerService;
 
   private rooms: Room[] = [];
+
+  public getRooms(): Room[] {
+    return this.rooms;
+  }
 
   public getRoomByIndex(index: number): Room | undefined {
     return this.rooms.find(r => r.id === index);
@@ -26,6 +31,7 @@ export class RoomService {
       if (response.status === 'OK') {
         this.rooms.push({
           id: index,
+          gameId: this.games[index].id,
           maxPlayersCount: this.games[index].maxRoomPlayer,
           players: [client],
           token: response.token,
@@ -163,7 +169,7 @@ export class RoomService {
 
   private startGame(room: Room, index: number): void {
     room.players.forEach((player: SocketIO.Socket) => {
-      player.emit(this.games[index].getWaitPlayersCountEventName, room.players.length);
+      player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
       this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
 
       player.emit('redirect', this.games[index].requestUrl);
@@ -175,6 +181,19 @@ export class RoomService {
   private countdown(room: Room, index: number, distance: number): void {
     room.players.forEach((player: SocketIO.Socket) => {
       player.emit(this.games[index].notifyCountdown, distance);
+    });
+  }
+
+  private mapRoomsToRoomsInfo(): RoomInfo[] {
+    return this.rooms.map(r => {
+      return {
+        id: r.id,
+        gameId: r.gameId,
+        distance: r.distance,
+        maxPlayersCount: r.maxPlayersCount,
+        playersCount: r.players.length,
+        status: r.status
+      } as RoomInfo;
     });
   }
 }
