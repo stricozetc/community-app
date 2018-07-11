@@ -1,7 +1,7 @@
 import * as openSocket from 'socket.io-client';
 
-import { Subject } from 'rxjs/Subject';
-import { Game, RoomInfo } from 'models';
+import {Subject} from 'rxjs/Subject';
+import {Game, RoomInfo} from 'models';
 
 export class SocketService {
   public roomsInfo: Subject<RoomInfo[]> = new Subject();
@@ -15,10 +15,14 @@ export class SocketService {
 
   public init(games: Game[]): void {
     for (const game of games) {
-      this.socket.on(game.updateRoomsInfoEventName,
-        (roomsInfo: RoomInfo[]) => this.roomsInfo.next(roomsInfo));
-      this.socket.on(game.notifyCountdown,
-        (distance: number) => this.notifyCountdown.next(distance));
+      this.socket.on(
+        game.updateRoomsInfoEventName,
+        (roomsInfo: RoomInfo[]) => this.roomsInfo.next(roomsInfo)
+      );
+      this.socket.on(
+        game.notifyCountdown,
+        (distance: number) => this.notifyCountdown.next(distance)
+      );
     }
   }
 
@@ -29,6 +33,6 @@ export class SocketService {
   public getRoomUrl(): Promise<string> {
     return new Promise((res, rej) => {
       this.socket.on('redirect', (redirectUrl: string) => res(redirectUrl));
-    })
+    });
   }
 }
