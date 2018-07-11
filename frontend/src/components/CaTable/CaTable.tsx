@@ -9,44 +9,39 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-
-
-
 export const CaTable = (props: CaTableProps) => {
-    const rowData = props.rowData;
-    const columnDef = props.columnDef;
+  const rowData = props.rowData;
+  const columnDef = props.columnDef;
 
-    const kindsOfStatistic = Object.keys(rowData[0]);
+  const kindsOfStatistic = Object.keys(rowData[0]);
 
-    return(
-
-        <Table className={"statistic-table"}>
-            <TableHead className="statistic-table__table-head">
-                <TableRow>
-                    {columnDef.map((nameOfColumn, index) => {
+  return(
+    <Table className={"statistic-table"}>
+        <TableHead className="statistic-table__table-head">
+            <TableRow>
+                {columnDef.map((nameOfColumn, index) => {
+                    const numeric = index === 0 ? false : true;
+                    return (
+                        <TableCell key={nameOfColumn} numeric={numeric} className={`statistic-table__column${index + 1}-cell statistic-table__table-head-cell`}>{nameOfColumn}</TableCell>
+                    )
+                })}
+            </TableRow>
+        </TableHead>
+        <TableBody>
+            {rowData.map((user, index) => {
+            return (
+                <TableRow className="statistic-table__row" key={index}>
+                    {kindsOfStatistic.map((nameOfStatistic, index) => {
                         const numeric = index === 0 ? false : true;
                         return (
-                            <TableCell key={nameOfColumn} numeric={numeric} className={`statistic-table__column${index + 1}-cell statistic-table__table-head-cell`}>{nameOfColumn}</TableCell>
+                            <TableCell numeric={numeric} key={index} className={`statistic-table__column${index + 1}-cell`}>{user[nameOfStatistic]}</TableCell>
                         )
-                    })}
+                    }
+                    )}
                 </TableRow>
-            </TableHead>
-            <TableBody>
-                {rowData.map((user, index) => {
-                return (
-                    <TableRow className="statistic-table__row" key={index}>
-                        {kindsOfStatistic.map((nameOfStatistic, index) => {
-                            const numeric = index === 0 ? false : true;
-                            return (
-                                <TableCell numeric={numeric} key={index} className={`statistic-table__column${index + 1}-cell`}>{user[nameOfStatistic]}</TableCell>
-                            )
-                        }
-                        )}
-                    </TableRow>
-                );
-                })}
-            </TableBody>
-        </Table>
-
-    )
+            );
+            })}
+        </TableBody>
+    </Table>
+  )
 }

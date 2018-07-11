@@ -11,7 +11,7 @@ import './Statistic.scss';
 import { InitBestUsers, InitMostPopularGames, InitRecentGames } from 'store/statistic';
 import { isEmpty } from 'utils';
 import { CaSpinner } from 'components/Spinner/Spinner';
-import { CaUsersTables } from '../../components/CaUsersTables';
+import { CaUsersTables } from 'components/CaUsersTables';
 
 
 
