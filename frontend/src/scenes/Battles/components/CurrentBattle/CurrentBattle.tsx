@@ -3,20 +3,21 @@ import * as React from 'react';
 import { CaButton } from 'components/form-controls/Button';
 import { Countdown } from 'components/Countdown';
 
-import { Game } from 'components/GameCard';
-
 import './current-battle.scss';
 
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
 import clockImage from 'assets/clock-small.svg';
+import { AuthStatus, BattleStatus, Game, RoomInfo } from 'models';
 
 interface Props {
-  waitBattlePlayersCountAction: number;
+  roomsInfo: RoomInfo[];
   battleName: string;
   countdown: number;
   history: any;
   games: Game[];
+  gameStatus: number;
+  authStatus: number;
 
   leaveBattleAction(payload: string): void;
 
@@ -24,10 +25,17 @@ interface Props {
 }
 
 export class CurrentBattleComponent extends React.Component<Props> {
-  public logoutUser(): void {
-    this.props.logoutUser();
-    this.props.history.push('/');
+  public componentWillMount():void {
+    if (this.props.authStatus === AuthStatus.NOT_AUTHORIZED) {
+      this.props.history.push('/battles');
+    }
+
+    if (this.props.gameStatus === BattleStatus.INIT) {
+      this.props.history.push('/login');
+    }
   }
+  
+    
 
   public getGameIndex(): number {
     const currentRoute = this.props.history.location.pathname;
@@ -39,12 +47,26 @@ export class CurrentBattleComponent extends React.Component<Props> {
 
   public isGameFull(): boolean {
     const maxRoomPlayers = this.props.games && this.props.games.length ?
-      this.props.games[this.getGameIndex()].maxPlayersInRoom : 0;
-    return this.props.waitBattlePlayersCountAction === maxRoomPlayers;
+      this.props.games[this.getGameIndex()].maxRoomPlayer : 0;
+    const roomPlayers = this.getPlayersCount();
+
+    return roomPlayers === maxRoomPlayers;
+  }
+
+  public getPlayersCount(): number {
+    /**
+     * @todo need to refactor logic with room id and game indexes
+     * @type {RoomInfo | undefined}
+     */
+    const currentRoom = this.props.roomsInfo.find(r => r.id === this.getGameIndex());
+    return currentRoom ? currentRoom.playersCount : 0;
   }
 
   public render(): JSX.Element {
-    const { battleName, countdown, waitBattlePlayersCountAction, leaveBattleAction } = this.props;
+    const { battleName, countdown, leaveBattleAction } = this.props;
+
+    const currentGame = this.props.games && this.props.games.length ?
+      this.props.games[this.getGameIndex()] : undefined;
 
     return (
       <section className="ca-current-battle">
@@ -59,7 +81,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
                 {battleName}
               </div>
               <div className="ca-current-battle__sub-title">
-                Some description about game
+                {currentGame ?
+                  currentGame.desc : ''}
               </div>
             </div>
           </div>
@@ -85,8 +108,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
             </div>
             <span className="ca-current-battle__info-text">Players: </span>
             <span
-              className="ca-current-battle__info-count">{waitBattlePlayersCountAction}/{this.props.games && this.props.games.length ?
-              this.props.games[this.getGameIndex()].maxPlayersInRoom : 0}</span>
+              className="ca-current-battle__info-count">{this.getPlayersCount()}/{currentGame ?
+              currentGame.maxRoomPlayer : 0}</span>
           </div>
 
           <div className="ca-current-battle__info">
@@ -94,7 +117,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
               <img src={clockImage} alt="Can not found User img"/>
             </div>
             <span className="ca-current-battle__info-text">Battle time: </span>
-            <span className="ca-current-battle__info-count">5 minutes</span>
+            <span
+              className="ca-current-battle__info-count">{currentGame ? currentGame.battleTime / 60000 : 0} minutes</span>
           </div>
 
           <div className="ca-current-battle__invite-button">

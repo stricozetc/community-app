@@ -3,66 +3,90 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus } from 'models';
+import { AuthStatus, LoadStatus, Game, RoomInfo } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
 
 import { CaGameCard } from 'components/GameCard';
-import { Game } from 'components/GameCard';
 import { CaSpinner } from 'components/Spinner';
 
 import { InitGames, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
 
+
+import { CaSnackbar } from 'components/Snackbar';
+
+import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
+
+
 class CaBattlesComponent extends React.Component<BattleProps> {
-  public componentWillMount(): void {
-    if (isEmpty(this.props.games)) {
-      this.props.initGames();
+
+  public componentWillReceiveProps(nextProps: BattleProps): void {
+    if(nextProps.status === LoadStatus.FAILED && nextProps.status !== this.props.status ) {
+      this.props.openSnackbar();
     }
   }
 
-  public componentDidMount(): void {
-    if (this.props.status === AuthStatus.NOT_AUTHORIZED) {
+  public componentWillMount(): void {
+
+    const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+    
+    if (!isAuthenticated) {
       this.props.history.push('/login');
     }
+
+    if (isEmpty(this.props.games)) {
+      this.props.initGames();
+    }
+    
+  }
+
+  public closeSnackbar(): void{
+    this.props.closeSnackbar();
+  }
+
+  public getGameRooms(game: Game): RoomInfo[] {
+    return this.props.roomsInfo.filter(r => r.gameId === game.id)
+  }
+
+  public getNearestCountdown(rooms: RoomInfo[]): number {
+    const mappedRooms = rooms
+      .map(r => r.distance)
+      .filter(d => !!d);
+
+    const sortedRooms = mappedRooms && mappedRooms.length ? mappedRooms
+      .sort((a: any, b: any) => {
+        return a - b;
+      }) as number[] : [];
+
+    return sortedRooms && sortedRooms[0] ? sortedRooms[0] : 0;
   }
 
   public render(): JSX.Element {
     return (
       <div className="ca-homepage">
         {this.props.children}
-        {/* <CaNavbar
-          linksToRender={[
-            {
-              text: 'Battles',
-              to: '/battles',
-              activeClassName: 'ca-navbar__nav-item--active'
-            },
-            {
-              text: 'Statistics',
-              to: '/statistics',
-              activeClassName: 'ca-navbar__nav-item--active'
-            }
-          ]}
-        >
-          <CaLogo
-            text="battlenet"
-          />
-          <div className="ca-navbar__logout-btn-container">
-            <CaButton
-              clickHandler={() => this.logoutUser()}
-              value="Logout"
-            />
-          </div>
-        </CaNavbar> */}
 
-        {!this.props.fetchingData && (
+        <CaSnackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={ this.props.isSnackbarOpen }
+          autoHideDuration = {4000}
+          handleClose= {() => this.closeSnackbar()}
+          type="error"
+          message={<span> Game fetching Failed! </span>}
+          transitionDirection="down"
+        />
+
+        {!isEmpty(this.props.games) && (
           <div className="ca-homepage__container ca-global-fadeIn">
-            {/* <BattleRegistration /> */}
 
             {this.props.games.map((game: Game, index: number) => {
+              const gameRooms = this.getGameRooms(game);
+              const waitBattlePlayersCount = gameRooms && gameRooms.length ? gameRooms
+                .map(r => r.playersCount)
+                .reduce((accumulator, currentValue: number) => accumulator + currentValue) : 0;
 
               return (
                 <div className="ca-homepage__container-for-games" key={index}>
@@ -75,16 +99,19 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                     leaveGame={this.props.leaveBattleAction}
                     status={this.props.battleStatus}
                     battleStatus={this.props.battleStatus}
-                    waitBattlePlayersCountAction={this.props.waitBattlePlayersCountAction}
+                    waitBattlePlayersCountAction={waitBattlePlayersCount}
+                    isFull={waitBattlePlayersCount === game.maxRoomPlayer * game.maxRooms}
+                    battleStartTime={new Date((new Date()).getTime() + this.getNearestCountdown(gameRooms))}
                   />
+
                 </div>
               );
             })}
           </div>
         )}
-        {this.props.fetchingData && (
+        {this.props.status === 1 && (
           <div className="ca-homepage__spinner-container">
-            <CaSpinner isActive={this.props.fetchingData}/>
+            <CaSpinner isActive={this.props.status === 1}/>
           </div>
         )}
       </div>
@@ -93,18 +120,21 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status,
+  authStatus: state.auth.status,
   battleStatus: state.battle.status,
-  waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
-  fetchingData: state.data.fetchingData,
-  games: state.games.games
+  roomsInfo: state.battle.roomsInfo,
+  games: state.games.games,
+  status: state.games.gamesStatus,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new InitGames())
+  initGames: () => dispatch(new InitGames()),
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
+  openSnackbar: () => dispatch(new OpenSnackbar())
 });
 
 export const CaBattles = connect(

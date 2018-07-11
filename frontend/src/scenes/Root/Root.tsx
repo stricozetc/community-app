@@ -7,15 +7,13 @@ import { HashRouter as Router, Redirect, Route } from 'react-router-dom';
 
 import { setAuthToken } from 'utils';
 
-import { FrontEndUser, SetCurrentUser, store } from 'store';
+import { FrontEndUser, SetCurrentUser, AppState, LogoutUser, store, LeaveBattle } from 'store';
 
 import { Landing } from 'scenes/Landing';
 import { LoginForm } from 'components/LoginForm';
 import { RegistrationForm } from 'components/RegistrationForm';
 
 import { CaBattles } from 'scenes/Battles';
-
-import { AppState, LogoutUser } from 'store';
 
 import { connect } from 'react-redux';
 
@@ -29,6 +27,8 @@ import { CaLogo } from 'components/Logo';
 import { CaButton } from 'components/form-controls/Button';
 import { AuthStatus } from 'models';
 
+
+
 const token = Cookies.get('jwtToken');
 if (token) {
   setAuthToken(token);
@@ -41,6 +41,13 @@ export class RootComponent extends React.Component<RootProps> {
   public logoutUser(): void {
     this.props.logoutUser();
     this.props.history.push('/');
+    
+    const userInBattle = !!this.props.battleName;
+
+    if(userInBattle) {
+      this.props.leaveBattle(this.props.battleName);
+    }
+    
   }
 
   public redToLogin(): void {
@@ -49,7 +56,7 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public getButton(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
     return (
       isAuthorized ?
         <CaButton
@@ -65,7 +72,7 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public getNavbar(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     return (
       <CaNavbar
@@ -173,11 +180,13 @@ export class RootComponent extends React.Component<RootProps> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status
+  status: state.auth.status,
+  battleName: state.battle.battleName
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  logoutUser: () => dispatch(new LogoutUser())
+  logoutUser: () => dispatch(new LogoutUser()),
+  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName))
 });
 
 export const Root = connect(

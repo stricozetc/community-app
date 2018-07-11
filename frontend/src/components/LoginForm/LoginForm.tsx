@@ -9,12 +9,20 @@ import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
 import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister } from 'models';
+import { isEmpty } from './../../utils/isEmpty';
 
 import {
   initLoginFormState,
   LoginFormProps,
   LoginFormState
 } from './LoginForm.model';
+
+import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
+
+
+import { CaSnackbar } from './../Snackbar/Snackbar';
+import { isObjectsEqual } from 'utils/isObjectsEqual';
+
 
 export class LoginFormComponent extends React.Component<
   LoginFormProps,
@@ -30,10 +38,16 @@ export class LoginFormComponent extends React.Component<
     this.checkValidation = this.checkValidation.bind(this);
   }
 
+
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
     if (nextProps.status === AuthStatus.AUTHORIZED) {
       this.props.history.push('/homepage');
     }
+
+    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
+      this.props.openSnackbar();
+    }
+
   }
 
   public componentDidMount(): void {
@@ -127,9 +141,34 @@ export class LoginFormComponent extends React.Component<
     this.checkValidation();
   };
 
+  public closeSnackbar(): void{
+    this.props.closeSnackbar();
+  }
+
   public render(): JSX.Element {
+    const { errors } = this.props;
+    const keys = errors && Object.keys(errors);
     return (
       <div className="ca-login-form">
+      <CaSnackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={ this.props.isSnackbarOpen }
+          autoHideDuration = {4000}
+          handleClose= {() => this.closeSnackbar()}
+          type="error"
+         //  TransitionComponent = {this.transitionUp}
+         transitionDirection="down"
+          message={
+            <div>
+              {keys && keys.map((k: string) => 
+                (
+                  <div>* {errors[k].msg} </div>
+                )
+              )}
+            </div>
+          }
+        />
+
       {this.props.children}
         <form onSubmit={this.onSubmit} className="ca-login-form__container">
           <FormGroup>
@@ -205,11 +244,15 @@ export class LoginFormComponent extends React.Component<
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status
+  status: state.auth.status,
+  errors: state.errors,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user)),
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
+  openSnackbar: () => dispatch(new OpenSnackbar())
 });
 
 export const LoginForm = connect(

@@ -1,27 +1,34 @@
 import { action } from '../decorators';
-import { Game } from './../../components/GameCard/GameCard.model';
+import { Game } from "models";
 
 export enum GamesTypes {
     InitGames = '[game] Init Game',
-    GamesInited = '[game] Games Inited',
+    LoadGamesCompleted = '[game] Load Games Completed',
+    LoadGamesFailed = '[game] Load Games Failed',
 }
 
 @action()
 export class InitGames {
-    public readonly type = GamesTypes.InitGames;
-
+  public readonly type = GamesTypes.InitGames;
 }
 
 @action()
-export class GamesInited {
-    public readonly type = GamesTypes.GamesInited;
+export class LoadGamesCompleted {
+    public readonly type = GamesTypes.LoadGamesCompleted;
 
-    constructor(public payload: Game[]) { }
+  public constructor(public payload: Game[]) {
+  }
+}
+
+@action()
+export class LoadGamesFailed {
+    public readonly type = GamesTypes.LoadGamesFailed;
+
 }
 
 
 export type GamesActions = 
-    | GamesInited
-    | InitGames ;
+    | LoadGamesCompleted
+    | InitGames
+    | LoadGamesFailed ;
   
-

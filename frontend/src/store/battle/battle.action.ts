@@ -1,58 +1,59 @@
 import { Action } from 'redux';
 
 import { action } from 'store/decorators';
+import { RoomInfo } from 'models';
 
 export enum BattleActionTypes {
-    JoinBattle = '[battle] Join Battle',
-    RedirectToBattle = '[battle] Redirect To Battle',
-    LeaveBattle = '[battle] Leave Battle',
-    SetWaitBattlePlayersCount = '[battle] Set Wait Battle Players Count',
-    NotifyCountdown = '[battle] Notify Countdown'
+  JoinBattle = '[battle] Join Battle',
+  RedirectToBattle = '[battle] Redirect To Battle',
+  LeaveBattle = '[battle] Leave Battle',
+  SetRoomsInfo = '[battle] Set Rooms Info',
+  NotifyCountdown = '[battle] Notify Countdown'
 }
 
 @action()
 export class JoinBattle implements Action {
-    public readonly type = BattleActionTypes.JoinBattle;
+  public readonly type = BattleActionTypes.JoinBattle;
 
-    constructor(public payload: string) {
-    }
+  constructor(public payload: string) {
+  }
 }
 
 @action()
 export class RedirectToBattle implements Action {
-    public readonly type = BattleActionTypes.RedirectToBattle;
+  public readonly type = BattleActionTypes.RedirectToBattle;
 
-    constructor(public payload: string) {
-    }
+  constructor(public payload: string) {
+  }
 }
 
 @action()
 export class LeaveBattle implements Action {
-    public readonly type = BattleActionTypes.LeaveBattle;
+  public readonly type = BattleActionTypes.LeaveBattle;
 
-    constructor(public payload: string) {
-    }
+  constructor(public payload: string) {
+  }
 }
 
 @action()
-export class SetWaitBattlePlayersCount implements Action {
-    public readonly type = BattleActionTypes.SetWaitBattlePlayersCount;
+export class SetRoomsInfo implements Action {
+  public readonly type = BattleActionTypes.SetRoomsInfo;
 
-    constructor(public payload: number) {
-    }
+  constructor(public payload: RoomInfo[]) {
+  }
 }
 
 @action()
 export class NotifyCountdown implements Action {
-    public readonly type = BattleActionTypes.NotifyCountdown;
+  public readonly type = BattleActionTypes.NotifyCountdown;
 
-    constructor(public payload: number) {
-    }
+  constructor(public payload: number) {
+  }
 }
 
 export type BattleActions =
-    | JoinBattle
-    | RedirectToBattle
-    | LeaveBattle
-    | SetWaitBattlePlayersCount
-    | NotifyCountdown;
+  | JoinBattle
+  | RedirectToBattle
+  | LeaveBattle
+  | SetRoomsInfo
+  | NotifyCountdown;

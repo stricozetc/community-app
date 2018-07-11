@@ -1,0 +1,23 @@
+@import "../../style/settings.scss";
+
+.ca-snackbar{
+
+  top: 75px !important;
+
+  &--red > .ca-slide > * {
+    background-color: #d32f2f !important;
+  }
+
+  &--orange > .ca-slide > * {
+    background-color: #ffa000 !important;
+  }
+
+  &--blue > .ca-slide > * {
+    background-color: #1976d2 !important;
+  }
+
+  &--green > .ca-slide > * {
+    background-color: #43a047 !important;
+  }
+}
+

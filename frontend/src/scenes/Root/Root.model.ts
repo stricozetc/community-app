@@ -1,7 +1,10 @@
 import { AuthStatus } from 'models';
 
+
 export interface RootProps {
   status: AuthStatus;
   history: any;
-  logoutUser(): any;
+  battleName: string;
+  leaveBattle(battleName: string): void;
+  logoutUser(): void;
 }

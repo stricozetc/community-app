@@ -2,11 +2,14 @@ import { connect } from 'react-redux';
 import { AppState, LeaveBattle, LogoutUser } from 'store';
 import { CurrentBattleComponent } from './CurrentBattle';
 
+
 const mapStateToProps = (state: AppState) => ({
-  waitBattlePlayersCountAction: state.battle.waitBattlePlayersCount,
+  roomsInfo: state.battle.roomsInfo,
   battleName: state.battle.battleName,
   countdown: state.battle.countdown,
-  games: state.games.games
+  games: state.games.games,
+  gameStatus: state.battle.status,
+  authStatus: state.auth.status
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
