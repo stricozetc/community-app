@@ -3,10 +3,9 @@ import './Snackbar.scss';
 import * as React from 'react';
 import {CaSnackbarProps} from './Snackbar.model';
 
-
 import {Snackbar} from '@material-ui/core';
 
-import {CaSlide} from './../Slide/Slide';
+import {CaSlide} from 'components/Slide';
 
 export class CaSnackbar extends React.Component<CaSnackbarProps> {
 
@@ -41,7 +40,7 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
 
     return (
       <Snackbar
-        className={["ca-snackbar", ...classes].join(' ')}
+        className={['ca-snackbar', ...classes].join(' ')}
         anchorOrigin={this.props.anchorOrigin}
         open={this.props.open}
         onClose={handleClose && handleClose}
