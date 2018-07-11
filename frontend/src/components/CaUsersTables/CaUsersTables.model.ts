@@ -1,4 +1,4 @@
-import { StatisticState } from './../../store/statistic/interfaces';
+import { StatisticState } from 'store/statistic/interfaces';
 
 export interface CaUsersTablesProps {
   statistic: StatisticState
