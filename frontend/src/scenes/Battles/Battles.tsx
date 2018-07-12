@@ -15,16 +15,14 @@ import { InitGames, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
 
-
 import { CaSnackbar } from 'components/Snackbar';
 
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
-
 class CaBattlesComponent extends React.Component<BattleProps> {
 
   public componentWillReceiveProps(nextProps: BattleProps): void {
-    if(nextProps.status === LoadStatus.FAILED && nextProps.status !== this.props.status ) {
+    if (nextProps.status === LoadStatus.FAILED && nextProps.status !== this.props.status) {
       this.props.openSnackbar();
     }
   }
@@ -32,7 +30,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
   public componentWillMount(): void {
 
     const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
-    
+
     if (!isAuthenticated) {
       this.props.history.push('/login');
     }
@@ -40,15 +38,15 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     if (isEmpty(this.props.games)) {
       this.props.initGames();
     }
-    
+
   }
 
-  public closeSnackbar(): void{
+  public closeSnackbar(): void {
     this.props.closeSnackbar();
   }
 
   public getGameRooms(game: Game): RoomInfo[] {
-    return this.props.roomsInfo.filter(r => r.gameId === game.id)
+    return this.props.roomsInfo.filter(r => r.gameId === game.id);
   }
 
   public getNearestCountdown(rooms: RoomInfo[]): number {
@@ -70,10 +68,10 @@ class CaBattlesComponent extends React.Component<BattleProps> {
         {this.props.children}
 
         <CaSnackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={ this.props.isSnackbarOpen }
-          autoHideDuration = {4000}
-          handleClose= {() => this.closeSnackbar()}
+          anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+          open={this.props.isSnackbarOpen}
+          autoHideDuration={4000}
+          handleClose={() => this.closeSnackbar()}
           type="error"
           message={<span> Game fetching Failed! </span>}
           transitionDirection="down"
@@ -94,7 +92,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                     game={game}
                     joinGame={($event) => {
                       this.props.joinBattleAction($event);
-                      this.props.history.push(`/battles/${index}`)
+                      this.props.history.push(`/battles/${index}`);
                     }}
                     leaveGame={this.props.leaveBattleAction}
                     status={this.props.battleStatus}

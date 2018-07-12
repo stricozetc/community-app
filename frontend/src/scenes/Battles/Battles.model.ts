@@ -1,9 +1,8 @@
 import { BattleStatus, Game, LoadStatus, AuthStatus, RoomInfo } from 'models';
 
+export interface BattleProps {
 
- export interface BattleProps {
-
-  authStatus:AuthStatus;
+  authStatus: AuthStatus;
   battleStatus: BattleStatus;
   history: any;
   roomsInfo: RoomInfo[];
@@ -22,6 +21,5 @@ import { BattleStatus, Game, LoadStatus, AuthStatus, RoomInfo } from 'models';
 
   closeSnackbar(): void;
 
-  openSnackbar():void;
+  openSnackbar(): void;
 }
-

@@ -22,6 +22,7 @@ export enum SocketStatus {
 
 export interface Game {
   id: number;
+  appName: string;
   name: string;
   desc: string;
   registrationEventName: string;

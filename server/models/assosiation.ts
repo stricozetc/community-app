@@ -2,7 +2,6 @@ import { UserModel } from "./user";
 import { RoleModel } from './role';
 import { UserRoles } from './userRoles';
 
-
 export const makeAssociations = () => {
     UserRoles.hasMany(UserModel, {
         as: 'users',

@@ -13,8 +13,7 @@ import {
     UserAuthenticationRepositoryImplementation
 } from './user-authentication';
 import { MocksRepository, MocksRepositoryImplementation } from './mocks';
-
-
+import { AppTokenRepository, AppTokenService } from './app-token';
 
 export const CONTAINER = new Container();
 
@@ -27,5 +26,7 @@ CONTAINER.bind<TimerService>(TimerService).to(TimerService);
 CONTAINER.bind<ApiService>(ApiService).to(ApiServiceImplementation);
 CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(UserAuthenticationRepositoryImplementation);
 CONTAINER.bind<MocksRepository>(MocksRepository).to(MocksRepositoryImplementation);
+CONTAINER.bind<AppTokenService>(AppTokenService).to(AppTokenService);
+CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
 
 export const inject = getDecorators(CONTAINER).lazyInject;

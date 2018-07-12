@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 
 import { InversifyExpressServer } from 'inversify-express-utils';
-import { inject } from './service/services-registration';
 
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
@@ -73,4 +72,3 @@ let serverInstance = application.listen(config.port, () => {
 
 const socketService: SocketService = new SocketServiceImplementation();
 socketService.setSocket(SocketIO(serverInstance));
-
