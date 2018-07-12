@@ -8,6 +8,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { CaChart } from 'components/CaChart/CaChar';
+
 
 export const CaTable = (props: CaTableProps) => {
   const rowData = props.rowData;
@@ -16,11 +18,11 @@ export const CaTable = (props: CaTableProps) => {
   const kindsOfStatistic = Object.keys(rowData[0]);
 
   return(
-    <Table className={"statistic-table"}>
+    <Table className="statistic-table">
         <TableHead className="statistic-table__table-head">
             <TableRow>
                 {columnDef.map((nameOfColumn, index) => {
-                    const numeric = index === 0 ? false : true;
+                    const numeric = index !== 0;
                     return (
                         <TableCell key={nameOfColumn} numeric={numeric} className={`statistic-table__column${index + 1}-cell statistic-table__table-head-cell`}>{nameOfColumn}</TableCell>
                     )
@@ -32,7 +34,7 @@ export const CaTable = (props: CaTableProps) => {
             return (
                 <TableRow className="statistic-table__row" key={index}>
                     {kindsOfStatistic.map((nameOfStatistic, index) => {
-                        const numeric = index === 0 ? false : true;
+                        const numeric = index !== 0;
                         return (
                             <TableCell numeric={numeric} key={index} className={`statistic-table__column${index + 1}-cell`}>{user[nameOfStatistic]}</TableCell>
                         )
@@ -42,6 +44,9 @@ export const CaTable = (props: CaTableProps) => {
             );
             })}
         </TableBody>
+        <div>
+            <CaChart />
+        </div>
     </Table>
   )
 }

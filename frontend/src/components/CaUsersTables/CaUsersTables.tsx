@@ -7,10 +7,24 @@ import './CaUsersTables.scss';
 
 import {Tabs, Tab} from '@material-ui/core';
 
-enum StatTab {
-  BestUsers = 0,
-  TheMostPopularGames = 1,
-  RecentGames = 2
+import {StatTab} from 'models';
+
+enum HeaderNamesBestUsers {
+  name =  'User name',
+  playedTime = 'Played time',
+  Score = 'Score'
+}
+
+enum HeaderNamesTheMostPopularGames {
+  name =  'Game',
+  playedInWeek = 'Played in week',
+  playerAll = 'Played all'
+}
+
+enum HeaderNamesRecentGames {
+  game =  'Game',
+  score = 'Score',
+  result = 'Result'
 }
 
 export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTablesState> {    
@@ -20,10 +34,7 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
     this.state = { 
       value: 0,
       rowData: [
-        {name: 'Username1', playedTime: '30 minutes', Score: 200},
-        {name: 'Username2', playedTime: '30 minutes', Score: 200},
-        {name: 'Username3', playedTime: '30 minutes', Score: 200},
-        {name: 'Username4', playedTime: '30 minutes', Score: 200}
+        ...this.props.statistic.bestUsers
       ],
       columnDef: [
         'User name', 'Played time', 'Score'
@@ -51,7 +62,17 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
 
     switch(value) {
       case StatTab.BestUsers: {
-        const columnDef = ['User name', 'Played time', 'Score'];
+        // const columnDef = ['User name', 'Played time', 'Score'];
+
+        const propertyNames = Object.keys(this.props.statistic.bestUsers[0]);
+        const headersName: string[] = [];
+
+        propertyNames.forEach(property => 
+          headersName.push(HeaderNamesBestUsers[property])
+        );
+
+        const columnDef = [...headersName];
+
         const rowData = this.props.statistic.bestUsers.map(userStatistic => {
           const newUserStatistic = {...userStatistic};
           for (const kindOfStatistic in newUserStatistic) {
@@ -83,7 +104,18 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
       }
 
       case StatTab.TheMostPopularGames: {
-        const columnDef = ['Game', 'Played in week', 'Played all'];
+        // const columnDef = ['Game', 'Played in week', 'Played all'];
+
+        const propertyNames = Object.keys(this.props.statistic.mostPopularGames[0]);
+        const headersName: string[] = [];
+
+        propertyNames.forEach(property => 
+          headersName.push(HeaderNamesTheMostPopularGames[property])
+        );
+
+        const columnDef = [...headersName];
+
+
         const rowData = this.props.statistic.mostPopularGames.map(userStatistic => {
           const newUserStatistic = {...userStatistic};
           for (const kindOfStatistic in newUserStatistic) {
@@ -116,7 +148,18 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
 
       case StatTab.RecentGames: {
 
-        const columnDef = ['Game', 'Score', 'Result'];
+        // const columnDef = ['Game', 'Score', 'Result'];
+        const propertyNames = Object.keys(this.props.statistic.recentGames[0]);
+        const headersName: string[] = [];
+
+        propertyNames.forEach(property => 
+          headersName.push(HeaderNamesRecentGames[property])
+        );
+
+        const columnDef = [...headersName];
+
+
+
         const rowData = this.props.statistic.recentGames.map(userStatistic => {
           const newUserStatistic = {...userStatistic};
           for (const kindOfStatistic in newUserStatistic) {

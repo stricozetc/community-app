@@ -61,7 +61,13 @@ export enum LoadStatus {
     FETCHING,
     COMPLETED,
     FAILED
-  }
+}
+
+export enum StatTab {
+  BestUsers = 0,
+  TheMostPopularGames = 1,
+  RecentGames = 2
+}
 
 export interface errorsFromServer {
   [key:string]: {code: number; msg: string} 

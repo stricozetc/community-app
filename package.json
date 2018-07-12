@@ -7,8 +7,5 @@
     "full-build": "npm install && npm run build",
     "start": "cd server && npm start",
     "full-start": "npm install && npm start"
-  },
-  "dependencies": {
-    "@types/uuid": "^3.4.3"
   }
 }
