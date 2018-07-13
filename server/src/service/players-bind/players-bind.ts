@@ -1,13 +1,12 @@
 import { injectable, inject } from 'inversify';
 import { Room } from '../room/models';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { Game } from '../../typing/game';
 import { AppTokenService } from '../app-token';
 
 @injectable()
 export class PlayersBindService {
   private playersBinds: PlayersBind[] = [];
-
   constructor(
     @inject(AppTokenService) private tokenService: AppTokenService
   ) { }

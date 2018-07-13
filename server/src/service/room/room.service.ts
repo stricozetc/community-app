@@ -26,7 +26,7 @@ export class RoomService {
     return this.rooms.find(r => r.id === index);
   }
 
-  public createNewRoom(index: number, client: SocketIO.Socket): Promise<boolean> {
+  public createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
     return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
       let isCreated = false;
 
@@ -39,6 +39,8 @@ export class RoomService {
           token: roomToken,
           status: RoomStatus.Waiting
         });
+
+        this.playersBindService.bindPlayer(roomToken, playerToken);
 
         this.loggerService.infoLog(`New room was added for ${this.games[index].name}`);
         this.loggerService.infoLog(`Current count of players is 1`);
@@ -67,7 +69,7 @@ export class RoomService {
       this.loggerService.infoLog(`Add player to ${this.games[index].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else {
-      operation$ = this.createNewRoom(index, client).then(result => {
+      operation$ = this.createNewRoom(index, client, playerToken).then(result => {
 
         let newRoom = this.rooms.find(r => r.id === index);
         let timer = this.timerService.start(
