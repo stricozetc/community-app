@@ -1,24 +1,37 @@
 import axios, { AxiosResponse } from 'axios';
-import { decorate, injectable } from 'inversify';
+import { decorate, inject, injectable } from 'inversify';
 
-import { ApiService, NewRoomResponse } from "./api.service";
+import { ApiService } from "./api.service";
+import { Game } from '../../typing/game';
+import { AppTokenService } from '../app-token';
 
 decorate(injectable(), ApiService);
 
 @injectable()
 export class ApiServiceImplementation extends ApiService {
-  public getRoomUrl(requestUrl: string): Promise<any> {
-    return axios.get(requestUrl);
-  }
 
-  public startNewRoom(requestUrl: string, data: any): Promise<NewRoomResponse> {
-    return axios.post<boolean>(requestUrl, data, {
-      headers: {
-        // tslint:disable-next-line
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksIm5hbWUiOiJ0MSIsImlhdCI6MTUzMTEzOTk2MywiZXhwIjoxNTMxMTYxNTYzfQ.7K9jcmkfVWG_Ws7fWEYy6jz76gbB_1GTg_1IEwbU7A4"
-      }
-    }).then((response: AxiosResponse) => {
-      return response.data;
-    });
-  }
+    public constructor(@inject(AppTokenService) private tokenService: AppTokenService) {
+        super();
+    }
+
+    public getRoomUrl(requestUrl: string): Promise<any> {
+        return axios.get(requestUrl);
+    }
+
+    public async startNewRoom(requestUrl: string, data: any, game: Game): Promise<string> {
+        let app = await this.tokenService.getByAppName(game.appName);
+
+        if (app) {
+            return axios.post<boolean>(requestUrl, data, {
+                headers: {
+                    Authorization: "Bearer " + app.token
+                }
+            }).then((response: AxiosResponse) => {
+                return response.data;
+            });
+        } else {
+            return Promise.reject("App is not defined!");
+        }
+    }
+
 }

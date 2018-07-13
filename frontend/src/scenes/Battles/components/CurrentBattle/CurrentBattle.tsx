@@ -25,7 +25,7 @@ interface Props {
 }
 
 export class CurrentBattleComponent extends React.Component<Props> {
-  public componentWillMount():void {
+  public componentWillMount(): void {
     if (this.props.authStatus === AuthStatus.NOT_AUTHORIZED) {
       this.props.history.push('/battles');
     }
@@ -34,8 +34,6 @@ export class CurrentBattleComponent extends React.Component<Props> {
       this.props.history.push('/login');
     }
   }
-  
-    
 
   public getGameIndex(): number {
     const currentRoute = this.props.history.location.pathname;
@@ -63,7 +61,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { battleName, countdown, leaveBattleAction } = this.props;
+    const {battleName, countdown, leaveBattleAction} = this.props;
 
     const currentGame = this.props.games && this.props.games.length ?
       this.props.games[this.getGameIndex()] : undefined;
@@ -132,7 +130,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
             <CaButton
               clickHandler={() => {
                 leaveBattleAction(battleName);
-                this.props.history.push('/battles')
+                this.props.history.push('/battles');
               }}
               value="Leave the room"
             />

@@ -28,7 +28,6 @@ import { CaButton } from 'components/form-controls/Button';
 import { AuthStatus } from 'models';
 
 
-
 const token = Cookies.get('jwtToken');
 if (token) {
   setAuthToken(token);
@@ -41,13 +40,13 @@ export class RootComponent extends React.Component<RootProps> {
   public logoutUser(): void {
     this.props.logoutUser();
     this.props.history.push('/');
-    
+
     const userInBattle = !!this.props.battleName;
 
-    if(userInBattle) {
+    if (userInBattle) {
       this.props.leaveBattle(this.props.battleName);
     }
-    
+
   }
 
   public redToLogin(): void {
@@ -68,7 +67,7 @@ export class RootComponent extends React.Component<RootProps> {
           clickHandler={() => this.redToLogin()}
           value="Login"
         />
-    )
+    );
   }
 
   public getNavbar(authStatus: number): JSX.Element {
@@ -100,7 +99,7 @@ export class RootComponent extends React.Component<RootProps> {
         </div>
 
       </CaNavbar>
-    )
+    );
   }
 
   public render(): JSX.Element {

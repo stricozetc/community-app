@@ -1,5 +1,5 @@
 import { injectable, inject } from 'inversify';
-import { ApiService, NewRoomResponse } from '../api';
+import { ApiService } from '../api';
 import { Game } from '../../typing/game';
 import { LoggerService } from '../logger';
 import { TimerService } from './../timer';
@@ -25,16 +25,16 @@ export class RoomService {
   }
 
   public createNewRoom(index: number, client: SocketIO.Socket): Promise<boolean> {
-    return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}).then((response: NewRoomResponse) => {
+    return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
       let isCreated = false;
 
-      if (response.status === 'OK') {
+      if (roomToken) {
         this.rooms.push({
           id: index,
           gameId: this.games[index].id,
           maxPlayersCount: this.games[index].maxRoomPlayer,
           players: [client],
-          token: response.token,
+          token: roomToken,
           status: RoomStatus.Waiting
         });
 
