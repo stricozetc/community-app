@@ -63,12 +63,11 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
           {headerName: 'Score', field: 'Score'}        
         ];
         const bestUsers = [...this.props.statistic.bestUsers];
-        const exampleOfErrorsData = [{name: 'Denis'}, {name:'Valentin', playedTime: '0', Score: 1000, hello: 2}, {}];
 
         if(!this.isArrayEmpty(bestUsers)) {
           const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);
   
-          const arrayWithoutUnnecessaryProperties = this.deleteUnnecessaryProperty(exampleOfErrorsData, arrayOfNecessaryProperty);
+          const arrayWithoutUnnecessaryProperties = this.deleteUnnecessaryProperty(bestUsers, arrayOfNecessaryProperty);
           const arrayWithCheckedProperties = this.checkPropertyOfObject(arrayWithoutUnnecessaryProperties, arrayOfNecessaryProperty);
 
           const rowData = arrayWithCheckedProperties.map(userStatistic => {
@@ -218,7 +217,7 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
     }
   }
 
-  public isArrayEmpty(arrayOfData: object[]): boolean {
+  public isArrayEmpty(arrayOfData: any[]): boolean {
     return !Array.isArray(arrayOfData) || !arrayOfData.length;
   }
 

@@ -41,11 +41,12 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
 export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) => actions$
   .ofType(StatisticTypes.InitMostPopularGames).pipe(
     switchMap(() => {
-
+      
       return fromPromise(HttpWrapper.get('api/mocks/most-popular-games'))
         .map((res: any) => {
+          
           const popGames: any[] = res.data;
-
+            
             return new MostPopularGamesInited(popGames)
             }).catch(error => {
               

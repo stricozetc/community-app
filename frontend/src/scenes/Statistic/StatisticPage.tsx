@@ -13,10 +13,7 @@ import { isEmpty } from 'utils';
 import { CaSpinner } from 'components/Spinner/Spinner';
 import { CaUsersTables } from 'components/CaUsersTables';
 
-
-
-
-  class CaStatisticPageComponent extends React.Component<StatisticProps> {
+class CaStatisticPageComponent extends React.Component<StatisticProps> {
 
   public componentWillMount(): void {
     if (isEmpty(this.props.statistic.bestUsers)) {

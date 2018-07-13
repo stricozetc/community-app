@@ -69,8 +69,6 @@
     "@types/react-router-dom": "^4.2.6",
     "@types/socket.io-client": "^1.4.32",
     "autoprefixer": "^8.6.2",
-    "echarts": "^4.1.0",
-    "echarts-for-react": "^2.0.13",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.9.0",
