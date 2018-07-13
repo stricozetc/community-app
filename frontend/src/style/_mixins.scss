@@ -39,8 +39,3 @@
   display: flex;
   align-items: center;
 }
-
-@mixin container($percent) {
-  width: $percent;
-  margin-left: (100 - $percent) / 2;
-}

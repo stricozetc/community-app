@@ -1,10 +1,11 @@
 import { injectable, inject } from 'inversify';
-import { ApiService, NewRoomResponse } from '../api';
+import { ApiService } from '../api';
 import { Game } from '../../typing/game';
 import { LoggerService } from '../logger';
 import { TimerService } from './../timer';
 
 import { RoomStatus, Room } from './models';
+import { RoomInfo } from "../../typing/room-info";
 
 @injectable()
 export class RoomService {
@@ -15,20 +16,25 @@ export class RoomService {
 
   private rooms: Room[] = [];
 
+  public getRooms(): Room[] {
+    return this.rooms;
+  }
+
   public getRoomByIndex(index: number): Room | undefined {
     return this.rooms.find(r => r.id === index);
   }
 
   public createNewRoom(index: number, client: SocketIO.Socket): Promise<boolean> {
-    return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}).then((response: NewRoomResponse) => {
+    return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
       let isCreated = false;
 
-      if (response.status === 'OK') {
+      if (roomToken) {
         this.rooms.push({
           id: index,
+          gameId: this.games[index].id,
           maxPlayersCount: this.games[index].maxRoomPlayer,
           players: [client],
-          token: response.token,
+          token: roomToken,
           status: RoomStatus.Waiting
         });
 
@@ -163,7 +169,7 @@ export class RoomService {
 
   private startGame(room: Room, index: number): void {
     room.players.forEach((player: SocketIO.Socket) => {
-      player.emit(this.games[index].getWaitPlayersCountEventName, room.players.length);
+      player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
       this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
 
       player.emit('redirect', this.games[index].requestUrl);
@@ -175,6 +181,19 @@ export class RoomService {
   private countdown(room: Room, index: number, distance: number): void {
     room.players.forEach((player: SocketIO.Socket) => {
       player.emit(this.games[index].notifyCountdown, distance);
+    });
+  }
+
+  private mapRoomsToRoomsInfo(): RoomInfo[] {
+    return this.rooms.map(r => {
+      return {
+        id: r.id,
+        gameId: r.gameId,
+        distance: r.distance,
+        maxPlayersCount: r.maxPlayersCount,
+        playersCount: r.players.length,
+        status: r.status
+      } as RoomInfo;
     });
   }
 }

@@ -22,38 +22,56 @@ export enum SocketStatus {
 
 export interface Game {
   id: number;
+  appName: string;
   name: string;
   desc: string;
   registrationEventName: string;
   leaveEventName: string;
-  getWaitPlayersCountEventName: string;
+  updateRoomsInfoEventName: string;
   maxRoomPlayer: number;
+  maxRooms: number;
   requestUrl: string;
   maxWaitingTime: number;
   notifyCountdown: string;
+  battleTime: number;
+}
+
+export enum RoomStatus {
+  Waiting,
+  InGame,
+  Closed
+}
+
+export interface RoomInfo {
+  id: number;
+  gameId: number;
+  maxPlayersCount: number;
+  playersCount: number;
+  status: RoomStatus;
+  distance?: number;
 }
 
 export interface FrontEndValidationErrorsRegister {
-  email: { mustBeCorrect: string, required: string },
-  password: { min: string, required: string },
-  name: { min: string, required: string },
+  email: { mustBeCorrect: string, required: string };
+  password: { min: string, required: string };
+  name: { min: string, required: string };
 }
 
 export interface FrontEndValidationErrorsLogin {
-  email: { mustBeCorrect: string, required: string },
-  password: { min: string, required: string },
+  email: { mustBeCorrect: string, required: string };
+  password: { min: string, required: string };
 }
 
 export interface UserFieldsToRegister {
-  email: string,
-  name: string,
-  password: string,
-  password2: string
+  email: string;
+  name: string;
+  password: string;
+  password2: string;
 }
 
 export interface UserFieldsToLogin {
-  email: string,
-  password: string,
+  email: string;
+  password: string;
 }
 
 export enum LoadStatus {
@@ -69,6 +87,6 @@ export enum StatTab {
   RecentGames = 2
 }
 
-export interface errorsFromServer {
-  [key:string]: {code: number; msg: string} 
+export interface ErrorsFromServer {
+  [key: string]: { code: number; msg: string };
 }

@@ -1,12 +1,13 @@
 import { Action } from 'redux';
 
 import { action } from 'store/decorators';
+import { RoomInfo } from 'models';
 
 export enum BattleActionTypes {
   JoinBattle = '[battle] Join Battle',
   RedirectToBattle = '[battle] Redirect To Battle',
   LeaveBattle = '[battle] Leave Battle',
-  SetWaitBattlePlayersCount = '[battle] Set Wait Battle Players Count',
+  SetRoomsInfo = '[battle] Set Rooms Info',
   NotifyCountdown = '[battle] Notify Countdown'
 }
 
@@ -35,10 +36,10 @@ export class LeaveBattle implements Action {
 }
 
 @action()
-export class SetWaitBattlePlayersCount implements Action {
-  public readonly type = BattleActionTypes.SetWaitBattlePlayersCount;
+export class SetRoomsInfo implements Action {
+  public readonly type = BattleActionTypes.SetRoomsInfo;
 
-  constructor(public payload: number) {
+  constructor(public payload: RoomInfo[]) {
   }
 }
 
@@ -54,5 +55,5 @@ export type BattleActions =
   | JoinBattle
   | RedirectToBattle
   | LeaveBattle
-  | SetWaitBattlePlayersCount
+  | SetRoomsInfo
   | NotifyCountdown;

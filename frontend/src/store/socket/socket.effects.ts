@@ -10,14 +10,15 @@ import { SocketService } from './socket.service';
 import {
   NotifyCountdown,
   RedirectToBattle,
-  SetWaitBattlePlayersCount
+  SetRoomsInfo
 } from 'store/battle';
+import { RoomInfo } from 'models';
 
 const socketService = new SocketService();
 
 socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBattle(url)));
-socketService.waitBattlePlayersCount.subscribe((waitBattlePlayersCount: number) =>
-  store.dispatch(new SetWaitBattlePlayersCount(waitBattlePlayersCount)));
+socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) =>
+  store.dispatch(new SetRoomsInfo(roomsInfo)));
 socketService.notifyCountdown.subscribe((distance: number) => {
   console.log('Synchronization from server...');
   store.dispatch(new NotifyCountdown(distance));
@@ -31,6 +32,7 @@ export const initEvents$ = (actions$: ActionsObservable<InitEvents>) =>
   actions$.ofType(SocketActionTypes.InitEvents).pipe(
     tap(payload => {
       socketService.init(payload.payload);
+      socketService.emitEvent('onClientInitialized');
     }),
     ignoreElements()
   );

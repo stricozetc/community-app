@@ -52,7 +52,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
         ? 
         (
           <div className="ca-homepage__spinner-container">
-            <CaSpinner isActive={true} />
+            <CaSpinner isActive={true}/>
           </div>
         )
         :

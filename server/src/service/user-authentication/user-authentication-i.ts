@@ -22,10 +22,11 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
             let errors: any = {};
             UserModel.findOne({
-                where: { email: data.email }
+                where: {email: data.email}
             }).then((user: User) => {
                 if (user) {
                     errors.email = registerErr.userIsAlreadyRegistered;
+
 
                     return reject(errors);
                 }
@@ -47,7 +48,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                         newUserDate.password = hash;
                         newUserDate.save().then((savedUser: User) => {
                             RoleModel.findOne({
-                                where: { name: 'user' }
+                                where: {name: 'user'}
                             }).then((role: Role) => {
 
                                 UserRoles.upsert({
@@ -71,7 +72,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             const password = data.password;
 
             let errors: any = {};
-            UserModel.findOne({ where: { email } }).then((user: User) => {
+            UserModel.findOne({where: {email}}).then((user: User) => {
                 if (!user) {
                     errors.email = loginErr.notFoundUser;
                 }
