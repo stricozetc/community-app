@@ -6,6 +6,7 @@ import { TimerService } from './../timer';
 
 import { RoomStatus, Room } from './models';
 import { RoomInfo } from "../../typing/room-info";
+import { PlayersBindService } from '../players-bind';
 
 @injectable()
 export class RoomService {
@@ -13,6 +14,7 @@ export class RoomService {
   @inject(ApiService) private apiService: ApiService;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(TimerService) private timerService: TimerService;
+  @inject(PlayersBindService) private playersBindService: PlayersBindService;
 
   private rooms: Room[] = [];
 
@@ -50,7 +52,7 @@ export class RoomService {
     });
   }
 
-  public addPlayerToRoom(index: number, client: SocketIO.Socket): Promise<[boolean, Room]> {
+  public addPlayerToRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<[boolean, Room]> {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
@@ -59,6 +61,8 @@ export class RoomService {
 
     if (room && room.players.length < room.maxPlayersCount && room.status === RoomStatus.Waiting) {
       room.players.push(client);
+
+      this.playersBindService.bindPlayer(room.token, playerToken);
 
       this.loggerService.infoLog(`Add player to ${this.games[index].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
@@ -79,7 +83,8 @@ export class RoomService {
           },
           () => {
             this.loggerService.infoLog(`Start game by timer -> ${this.games[index].name}`);
-            this.startGame(newRoom, index);
+
+            this.startGame(this.games[index], newRoom, index);
           },
           this.games[index].maxWaitingTime);
 
@@ -163,11 +168,14 @@ export class RoomService {
 
     if (room && room.players.length === this.games[index].maxRoomPlayer) {
       this.timerService.end(room.timer);
-      this.startGame(room, index);
+      this.startGame(this.games[index], room, index);
     }
   }
 
-  private startGame(room: Room, index: number): void {
+  private startGame(game: Game, room: Room, index: number): void {
+
+    this.playersBindService.sendPlayerBind(game, room);
+
     room.players.forEach((player: SocketIO.Socket) => {
       player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
       this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);

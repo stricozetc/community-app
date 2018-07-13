@@ -1,7 +1,7 @@
 import * as openSocket from 'socket.io-client';
 
-import {Subject} from 'rxjs/Subject';
-import {Game, RoomInfo} from 'models';
+import { Subject } from 'rxjs/Subject';
+import { Game, RoomInfo } from 'models';
 
 export class SocketService {
   public roomsInfo: Subject<RoomInfo[]> = new Subject();
@@ -28,6 +28,10 @@ export class SocketService {
 
   public emitEvent(eventName: string): void {
     this.socket.emit(eventName);
+  }
+
+  public emitEventWithOptions(eventName: string, options: any): void {
+    this.socket.emit(eventName, options);
   }
 
   public getRoomUrl(): Promise<string> {

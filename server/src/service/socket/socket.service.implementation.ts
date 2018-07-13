@@ -20,12 +20,14 @@ export class SocketServiceImplementation extends SocketService {
     socketIO.on('connection', (client: SocketIO.Socket) => {
       this.loggerService.infoLog('Player connection opened');
       this.clients.push(client);
-      this.loggerService.infoLog(`Count of clients = ${ this.clients.length}`);
+      this.loggerService.infoLog(`Count of clients = ${this.clients.length}`);
 
       client.on('disconnect', () => this.onDisconnect(client));
 
       for (let index = 0; index < this.games.length; index++) {
-        client.on(this.games[index].registrationEventName, () => this.onRegister(index, client));
+        client.on(this.games[index].registrationEventName, (token) => {
+          this.onRegister(index, client, token);
+        });
         client.on(this.games[index].leaveEventName, () => this.onLeave(index, client));
         client.on('onClientInitialized', () => {
           this.loggerService.infoLog(` -> onClientInitialized`);
@@ -41,8 +43,8 @@ export class SocketServiceImplementation extends SocketService {
     });
   }
 
-  private onRegister(index: number, client: SocketIO.Socket): void {
-    this.roomService.addPlayerToRoom(index, client)
+  private onRegister(index: number, client: SocketIO.Socket, token: string): void {
+    this.roomService.addPlayerToRoom(index, client, token)
       .then(([isAdded, room]) => {
         this.loggerService.infoLog(`isAdded -> ${isAdded}`);
 
@@ -84,7 +86,7 @@ export class SocketServiceImplementation extends SocketService {
   private onDisconnect(client: SocketIO.Socket): void {
     this.loggerService.infoLog('Player connection closed');
     this.clients.splice(this.clients.indexOf(client), 1);
-    this.loggerService.infoLog(`Count of clients = ${ this.clients.length}`);
+    this.loggerService.infoLog(`Count of clients = ${this.clients.length}`);
 
     this.roomService.removePlayer(client)
       .then(([isRemoved, room]) => {
