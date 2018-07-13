@@ -5,7 +5,7 @@ import {
 
 import { initialState } from './statistic.initial';
 
-import { isEmpty } from 'utils/isEmpty';
+// import { isEmpty } from 'utils/isEmpty';
 
 
 
@@ -16,7 +16,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
             return {
                 ...state,
                 bestUsers: action.payload,
-                bestUsersInited: !isEmpty(action.payload)
+                bestUsersInited: true
             }
         }
 
@@ -24,7 +24,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
             return {
                 ...state,
                 mostPopularGames: action.payload,
-                mostPopularGamesInited: !isEmpty(action.payload)
+                mostPopularGamesInited: true
             }
         }
 
@@ -32,7 +32,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
             return {
                 ...state,
                 recentGames: action.payload,
-                recentGamesInited: !isEmpty(action.payload)
+                recentGamesInited: true
             }
         }
 

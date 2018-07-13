@@ -75,10 +75,16 @@ export interface UserFieldsToLogin {
 }
 
 export enum LoadStatus {
-  INIT,
-  FETCHING,
-  COMPLETED,
-  FAILED
+    INIT,
+    FETCHING,
+    COMPLETED,
+    FAILED
+}
+
+export enum StatTab {
+  BestUsers = 0,
+  TheMostPopularGames = 1,
+  RecentGames = 2
 }
 
 export interface ErrorsFromServer {

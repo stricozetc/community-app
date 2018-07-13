@@ -11,7 +11,7 @@ import './Statistic.scss';
 import { InitBestUsers, InitMostPopularGames, InitRecentGames } from 'store/statistic';
 import { isEmpty } from 'utils';
 import { CaSpinner } from 'components/Spinner/Spinner';
-
+import { CaUsersTables } from 'components/CaUsersTables';
 
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
 
@@ -41,18 +41,23 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
   }
 
   public render(): JSX.Element {
+
     return (
       <div className="ca-statistic">
         {this.props.children}
 
-        {!(this.props.statistic.bestUsersInited &&
-          this.props.statistic.recentGamesInited &&
-          this.props.statistic.mostPopularGamesInited) && (
+        {!(this.props.statistic.bestUsersInited && 
+        this.props.statistic.recentGamesInited && 
+        this.props.statistic.mostPopularGamesInited) 
+        ? 
+        (
           <div className="ca-homepage__spinner-container">
             <CaSpinner isActive={true}/>
           </div>
-        )}
-
+        )
+        :
+        <CaUsersTables statistic={this.props.statistic}/>
+      }
       </div>
     );
   }
