@@ -172,7 +172,7 @@ export class RoomService {
       player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
       this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
 
-      player.emit('redirect', this.games[index].requestUrl);
+      player.emit('redirect', this.games[index].redirectUrl);
       this.loggerService.infoLog(`Redirect players group to ${this.games[index].name}`);
     });
     room.status = RoomStatus.InGame;

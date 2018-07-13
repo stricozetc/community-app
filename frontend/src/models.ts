@@ -31,6 +31,7 @@ export interface Game {
   maxRoomPlayer: number;
   maxRooms: number;
   requestUrl: string;
+  redirectUrl: string;
   maxWaitingTime: number;
   notifyCountdown: string;
   battleTime: number;
