@@ -4,11 +4,17 @@ export interface CaUsersTablesProps {
   statistic: StatisticState
 }
 
-interface StatisticOfUser {
-  [key: string]: string | number | boolean,
+export interface StatisticOfUser {
+  [key: string]: string | number | boolean | undefined,
 }
+
+export interface HeaderName {
+  headerName: string,
+  field: string
+}
+
 export interface CaUsersTablesState {
   value: number,
   rowData: StatisticOfUser[],
-  columnDef: string[]
+  columnDef: HeaderName[]
 }

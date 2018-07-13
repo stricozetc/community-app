@@ -1,31 +1,12 @@
 import * as React from 'react';
 
 import { CaTable } from 'components/CaTable';
-import { CaUsersTablesProps, CaUsersTablesState } from './CaUsersTables.model';
+import { CaUsersTablesProps, CaUsersTablesState, StatisticOfUser, HeaderName } from './CaUsersTables.model';
 import './CaUsersTables.scss';
-
 
 import {Tabs, Tab} from '@material-ui/core';
 
 import {StatTab} from 'models';
-
-enum BestUsersHeaderNames {
-  name =  'User name',
-  playedTime = 'Played time',
-  Score = 'Score'
-}
-
-enum TheMostPopularGamesHeaderNames {
-  name =  'Game',
-  playedInWeek = 'Played in week',
-  playerAll = 'Played all'
-}
-
-enum RecentGamesHeaderNames {
-  game =  'Game',
-  score = 'Score',
-  result = 'Result'
-}
 
 export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTablesState> {    
 
@@ -75,226 +56,204 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
 
     switch(value) {
       case StatTab.BestUsers: {
-        // const columnDef = ['User name', 'Played time', 'Score'];
-        // const propertyNames = Object.keys(this.props.statistic.bestUsers[0]);
-        // const headersName: string[] = [];
-
-        // propertyNames.forEach(property => 
-        //   headersName.push(BestUsersHeaderNames[property])
-        // );
-
-        // const columnDef = [...headersName];
-
-        // const rowData = this.props.statistic.bestUsers.map(userStatistic => {
-        //   const newUserStatistic = {...userStatistic};
-        //   for (const kindOfStatistic in newUserStatistic) {
-
-        //     if(newUserStatistic.hasOwnProperty(kindOfStatistic)) {
-        //       if(kindOfStatistic === 'name') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
-        //       }
-
-        //       if(kindOfStatistic === 'playedTime') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
-        //       }
-
-        //       if(kindOfStatistic === 'Score') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
-        //       }
-        //     }
-            
-        //   }
-        //   return newUserStatistic
-        // })
-
-        const exapmleWithMoreProperty = [{
-          name:'Valentin',
-          age: '20',
-          playedTime: '0',
-          Score: 1000
-        }];
-
-        const columnDef = this.getNameOfHeaders(BestUsersHeaderNames, exapmleWithMoreProperty[0]);
         
-        const rowData = exapmleWithMoreProperty.map(userStatistic => {
-          const newUserStatistic = {...userStatistic};
-          for (const kindOfStatistic in newUserStatistic) {
+        const columnDef = [
+          {headerName: 'User name', field: 'name'},
+          {headerName: 'Played time', field: 'playedTime'},
+          {headerName: 'Score', field: 'Score'}        
+        ];
+        const bestUsers = [...this.props.statistic.bestUsers];
+        const exampleOfErrorsData = [{name: 'Denis'}, {name:'Valentin', playedTime: '0', Score: 1000, hello: 2}, {}];
 
-            if(BestUsersHeaderNames[kindOfStatistic]) {
-              if(newUserStatistic.hasOwnProperty(kindOfStatistic)) {
-                if(kindOfStatistic === 'name') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
+        if(!this.isArrayEmpty(bestUsers)) {
+          const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);
+  
+          const arrayWithoutUnnecessaryProperties = this.deleteUnnecessaryProperty(exampleOfErrorsData, arrayOfNecessaryProperty);
+          const arrayWithCheckedProperties = this.checkPropertyOfObject(arrayWithoutUnnecessaryProperties, arrayOfNecessaryProperty);
+
+          const rowData = arrayWithCheckedProperties.map(userStatistic => {
+            const newUserStatistic = {...userStatistic};
+            const arrayOfProperty = Object.keys(newUserStatistic);
+
+            arrayOfProperty.forEach(property => {
+              if(newUserStatistic[property] !== '-') {                
+                if(property === 'name') {
+                  newUserStatistic[property] = newUserStatistic[property];
                 }
   
-                if(kindOfStatistic === 'playedTime') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
+                if(property === 'playedTime') {                      
+                  newUserStatistic[property] = newUserStatistic[property] + ' minutes';                                       
                 }
   
-                if(kindOfStatistic === 'Score') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
+                if(property === 'Score') {
+                  newUserStatistic[property] = newUserStatistic[property];
                 }
               }
-            } else {
-              console.log('error');
-              delete newUserStatistic[kindOfStatistic]
-            }
-          }
-          console.log(newUserStatistic)
-          return newUserStatistic
-        })
+            })
 
-        this.setState({
-          value,
-          rowData,
-          columnDef
-        })
+            return newUserStatistic
+          })
+
+          this.setState({
+            value,
+            rowData,
+            columnDef
+          })
+        } else {
+          this.setState({
+            value,
+            rowData: [],
+            columnDef
+          })
+        }
         break;
       }
 
       case StatTab.TheMostPopularGames: {
-        // const columnDef = ['Game', 'Played in week', 'Played all'];
+        
+        const columnDef = [
+          {headerName: 'Game', field: 'name'},
+          {headerName: 'Played in week', field: 'playedInWeek'},
+          {headerName: 'Played all', field: 'playerAll'}        
+        ];
+        const mostPopularGames = [...this.props.statistic.mostPopularGames];
 
-        // const propertyNames = Object.keys(this.props.statistic.mostPopularGames[0]);
-        // const headersName: string[] = [];
+        if(!this.isArrayEmpty(mostPopularGames)) {
+          const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);
+  
+          const arrayWithoutUnnecessaryProperties = this.deleteUnnecessaryProperty(mostPopularGames, arrayOfNecessaryProperty);
+          const arrayWithCheckedProperties = this.checkPropertyOfObject(arrayWithoutUnnecessaryProperties, arrayOfNecessaryProperty);
 
-        // propertyNames.forEach(property => 
-        //   headersName.push(TheMostPopularGamesHeaderNames[property])
-        // );
+          const rowData = arrayWithCheckedProperties.map(userStatistic => {
+            const newUserStatistic = {...userStatistic};
+            const arrayOfProperty = Object.keys(newUserStatistic);
 
-        // const columnDef = [...headersName];
+            arrayOfProperty.forEach(property => {
+              if(newUserStatistic[property] !== '-') {
 
-        // const rowData = this.props.statistic.mostPopularGames.map(userStatistic => {
-        //   const newUserStatistic = {...userStatistic};
-        //   for (const kindOfStatistic in newUserStatistic) {
-
-        //     if(newUserStatistic.hasOwnProperty(kindOfStatistic)) {
-        //       if(kindOfStatistic === 'name') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
-        //       }
-
-        //       if(kindOfStatistic === 'playedInWeek') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
-        //       }
-
-        //       if(kindOfStatistic === 'playerAll') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
-        //       }
-        //     }
-            
-        //   }
-        //   return newUserStatistic
-        // })
-        const columnDef = this.getNameOfHeaders(TheMostPopularGamesHeaderNames, this.props.statistic.mostPopularGames[0]);
-
-        const rowData = this.props.statistic.mostPopularGames.map(userStatistic => {
-          const newUserStatistic = {...userStatistic};
-          for (const kindOfStatistic in newUserStatistic) {
-
-            if(kindOfStatistic === 'name' || 'playedInWeek' || 'playerAll') {
-              if(newUserStatistic.hasOwnProperty(kindOfStatistic)) {
-                if(kindOfStatistic === 'name') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
+                if(property === 'name') {
+                  newUserStatistic[property] = newUserStatistic[property]
                 }
   
-                if(kindOfStatistic === 'playedInWeek') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
+                if(property === 'playedInWeek') {
+                  newUserStatistic[property] = newUserStatistic[property] + ' minutes'
                 }
   
-                if(kindOfStatistic === 'playerAll') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
+                if(property === 'playerAll') {
+                  newUserStatistic[property] = newUserStatistic[property] + ' minutes'
                 }
               }
-            } else {
-              delete newUserStatistic[kindOfStatistic]
-            }            
-          }
-          return newUserStatistic
-        })
+            })
 
-        this.setState({
-          value,
-          rowData,
-          columnDef
-        })
+            return newUserStatistic
+          })
+
+          this.setState({
+            value,
+            rowData,
+            columnDef
+          })
+        } else {
+          this.setState({
+            value,
+            rowData: [],
+            columnDef
+          })
+        }
         break;
       }
 
       case StatTab.RecentGames: {
+        
+        const columnDef = [
+          {headerName: 'Game', field: 'game'},
+          {headerName: 'Score', field: 'score'},
+          {headerName: 'Result', field: 'result'}        
+        ];
+        const recentGames = [...this.props.statistic.recentGames];
 
-        // const columnDef = ['Game', 'Score', 'Result'];
-        // const propertyNames = Object.keys(this.props.statistic.recentGames[0]);
-        // const headersName: string[] = [];
+        if(!this.isArrayEmpty(recentGames)) {
+          const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);
+  
+          const arrayWithoutUnnecessaryProperties = this.deleteUnnecessaryProperty(recentGames, arrayOfNecessaryProperty);
+          const arrayWithCheckedProperties = this.checkPropertyOfObject(arrayWithoutUnnecessaryProperties, arrayOfNecessaryProperty);
 
-        // propertyNames.forEach(property => 
-        //   headersName.push(RecentGamesHeaderNames[property])
-        // );
+          const rowData = arrayWithCheckedProperties.map(userStatistic => {
+            const newUserStatistic = {...userStatistic};
+            const arrayOfProperty = Object.keys(newUserStatistic);
 
-        // const columnDef = [...headersName];
-
-
-        // const rowData = this.props.statistic.recentGames.map(userStatistic => {
-        //   const newUserStatistic = {...userStatistic};
-        //   for (const kindOfStatistic in newUserStatistic) {
-
-        //     if(newUserStatistic.hasOwnProperty(kindOfStatistic)) {
-        //       if(kindOfStatistic === 'game') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
-        //       }
-
-        //       if(kindOfStatistic === 'Score') {
-        //         newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
-        //       }
-
-        //       if(kindOfStatistic === 'result') {
-        //         if(newUserStatistic[kindOfStatistic] === true) {
-        //           newUserStatistic[kindOfStatistic] = 'W'
-        //         } else {
-        //           newUserStatistic[kindOfStatistic] = 'L'
-        //         }
-        //       }
-        //     }
-            
-        //   }
-        //   return newUserStatistic
-        // })
-        const columnDef = this.getNameOfHeaders(RecentGamesHeaderNames, this.props.statistic.recentGames[0]);
-
-        const rowData = this.props.statistic.recentGames.map(userStatistic => {
-          const newUserStatistic = {...userStatistic};
-          for (const kindOfStatistic in newUserStatistic) {
-            if(kindOfStatistic === 'game' || 'Score' || 'result') {
-
-              if(newUserStatistic.hasOwnProperty(kindOfStatistic)) {
-                if(kindOfStatistic === 'game') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic]
+            arrayOfProperty.forEach(property => {
+              if(newUserStatistic[property] !== '-') {
+                if(property === 'game') {
+                  newUserStatistic[property] = newUserStatistic[property];
                 }
   
-                if(kindOfStatistic === 'Score') {
-                  newUserStatistic[kindOfStatistic] = newUserStatistic[kindOfStatistic] + ' minutes'
+                if(property === 'Score') {
+                  newUserStatistic[property] = newUserStatistic[property] + ' minutes';
                 }
-  
-                if(kindOfStatistic === 'result') {
-                  if(newUserStatistic[kindOfStatistic] === true) {
-                    newUserStatistic[kindOfStatistic] = 'W'
-                  } else {
-                    newUserStatistic[kindOfStatistic] = 'L'
-                  }
+                
+                if(property === 'result') {
+                  newUserStatistic[property] = newUserStatistic[property] ? 'W' : 'L';
                 }
-              }
-            } else {
-              delete newUserStatistic[kindOfStatistic]
-            }  
-          }
-          return newUserStatistic
-        })
+              }              
+            })
+        
+            return newUserStatistic
+          })
 
-        this.setState({
-          value,
-          rowData,
-          columnDef
-        })
+          this.setState({
+            value,
+            rowData,
+            columnDef
+          })
+        } else {
+          this.setState({
+            value,
+            rowData: [],
+            columnDef
+          })
+        }
         break;
       }
     }
+  }
+
+  public isArrayEmpty(arrayOfData: object[]): boolean {
+    return !Array.isArray(arrayOfData) || !arrayOfData.length;
+  }
+
+  public getNecessaryProperty(columnDef: HeaderName[]): string[] {
+    return columnDef.map(column => column.field)
+  }
+
+  public checkPropertyOfObject(arrayOfData: StatisticOfUser[], arrayOfNecessaryProperty: string[]): any[] {
+ 
+    const newArrayOfData = arrayOfData.map(userStatistic => {
+      const newUserStatistic = {...userStatistic};
+      arrayOfNecessaryProperty.forEach(necessaryProperty => {
+        if(newUserStatistic[necessaryProperty] === undefined || newUserStatistic[necessaryProperty] === null) {
+          newUserStatistic[necessaryProperty] = '-';
+        }        
+
+      })
+      return newUserStatistic;
+    });
+
+    return [...newArrayOfData];
+  }
+
+  public deleteUnnecessaryProperty(arrayOfData: StatisticOfUser[], arrayOfNecessaryProperty: string[]): any[] {
+    const newArrayOfData = arrayOfData.map(userStatistic => {
+      const newUserStatistic = {...userStatistic};
+      
+      for (const property in newUserStatistic) {
+        if(!(arrayOfNecessaryProperty.indexOf(property) + 1)) {
+          delete newUserStatistic[property]
+        }
+      }
+      return newUserStatistic;
+    });
+
+    return newArrayOfData;
   }
 } 
