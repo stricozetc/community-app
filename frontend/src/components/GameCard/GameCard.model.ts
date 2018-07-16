@@ -5,6 +5,8 @@ export interface GameCardProps {
   status: BattleStatus;
   battleStatus: BattleStatus;
   waitBattlePlayersCountAction: number;
+  isFull?: boolean;
+  battleStartTime: Date;
 
   joinGame($event: any): any;
 

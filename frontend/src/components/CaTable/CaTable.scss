@@ -1,0 +1,44 @@
+@import "../../style/settings.scss";
+
+.statistic-table {
+     
+  & {
+    background-color: #1C2227;
+  }
+  &  * {                
+    font-size: 18px !important;
+  }
+  &__table-head {      
+    border-top: 2px solid rgb(161, 161, 161) !important;       
+  }
+  &__row > * {        
+    font-size: 16px !important;
+    height: 48px !important;
+    border-bottom: 1px solid rgb(161, 161, 161) !important;
+    color: rgb(219, 219, 219) !important;
+  }
+  &__row:hover * {
+    background-color: #343737 !important;
+    color: #FFFFFF !important;
+  }
+  &__table-head-cell {
+    color: #FFFFFF !important;
+    border-bottom: none !important;
+  }
+  &__column1-cell {
+    padding-left: 105px !important;
+  }
+
+  &__column2-cell {
+    
+  }
+
+  &__column3-cell {
+    padding-right: 107px !important;
+  }
+}
+
+  thead.statistic-table__table-head{
+    background-color: #313c45 !important;
+  }  
+

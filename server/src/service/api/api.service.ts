@@ -1,10 +1,7 @@
-export interface NewRoomResponse {
-    status: string;
-    token: string;
-}
+import { Game } from '../../typing/game';
 
 export abstract class ApiService {
     public abstract getRoomUrl(requestUrl: string): Promise<string>;
 
-    public abstract startNewRoom(requestUrl: string, data: any): Promise<NewRoomResponse>;
+    public abstract startNewRoom(requestUrl: string, data: any, game: Game): Promise<string>;
 }

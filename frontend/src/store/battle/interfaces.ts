@@ -1,9 +1,9 @@
-import { BattleStatus } from 'models';
+import { BattleStatus, RoomInfo } from 'models';
 
 export interface BattleState {
-    status: BattleStatus,
-    waitBattlePlayersCount: number,
-    roomURL: string,
-    battleName: string,
-    countdown: number
+  status: BattleStatus,
+  roomsInfo: RoomInfo[],
+  roomURL: string,
+  battleName: string,
+  countdown: number
 }

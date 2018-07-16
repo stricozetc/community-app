@@ -1,5 +1,6 @@
 @import "../../style/settings.scss";
 @import "../../style/mixins.scss";
+
 .ca-game-footer {
   position: fixed;
   width: 100%;
@@ -8,7 +9,7 @@
   position: absolute;
   min-height: 5.6rem;
   @include flexbox();
-  
+
   &--unlocked-game-background {
     @include background-color($grey-2);
   }
@@ -17,23 +18,19 @@
     @include background-color($locked-footer-color);
   }
 
-
-
   &__container {
-    @include container(80%);
+    margin: 0 2.4rem;
+    width: 100%;
+
     @include flexbox();
     @include flexbox-center-cross-ax();
     justify-content: space-between;
   }
-  
+
   &__alert {
     color: $grey;
     font-size: 1.6rem;
     text-transform: uppercase;
-  }
-  
-  &__container-item {
-    max-width: 50%;
   }
 
   &__placeholder {
@@ -43,7 +40,6 @@
   &__icon {
     max-width: 30%;
     margin-right: .5rem;
-    margin-left: auto;
   }
 
   &__info {

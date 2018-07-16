@@ -8,7 +8,6 @@ export interface Db {
 
 let connect: Sequelize.Sequelize;
 
-
 if (process.env.DATABASE_URL) {
     connect = new Sequelize(process.env.DATABASE_URL);
 } else {
@@ -21,5 +20,3 @@ export const db: Db = {
     dbConfig,
     connect
 };
-
-

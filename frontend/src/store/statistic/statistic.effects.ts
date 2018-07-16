@@ -11,9 +11,11 @@ import 'rxjs/add/operator/map';
 import { HttpWrapper } from 'services';
 
 import {
+
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
+
   LoadMostPopularGamesCompleted,
   LoadRecentGamesCompleted,
   LoadBestUsersCompleted,
@@ -25,6 +27,7 @@ import {
 
 
 
+
 export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => actions$
   .ofType(StatisticTypes.InitBestUsers).pipe(
     switchMap(() => {
@@ -33,8 +36,10 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
         .map((res: any) => {
           const bastUsers: any[] = res.data;
 
+
               return new LoadBestUsersCompleted(bastUsers)
             }).catch(error => {
+;
               return Observable.of(new LoadBestUsersFailed(error));
             })  
           })
@@ -43,14 +48,17 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
 export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) => actions$
   .ofType(StatisticTypes.InitMostPopularGames).pipe(
     switchMap(() => {
-
+      
       return fromPromise(HttpWrapper.get('api/mocks/most-popular-games'))
         .map((res: any) => {
+          
           const popGames: any[] = res.data;
-
+            
+ 
             return new LoadMostPopularGamesCompleted(popGames)
             }).catch(error => {
               
+             
               return Observable.of(new LoadMostPopularGamesFailed(error))  
             })  
           })
@@ -65,8 +73,10 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
         .map((res: any) => {
           const rg: any[] = res.data;
 
+         
               return new LoadRecentGamesCompleted(rg)
             }).catch(error => {
+          
               return Observable.of(new LoadRecentGamesFailed(error))  
             })  
           })

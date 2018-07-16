@@ -5,13 +5,14 @@ import {
 
 import { initialState } from './statistic.initial';
 
-import { LoadStatus } from 'models';
 
+import { LoadStatus } from 'models';
 
 
 
 export const statisticReducer = (state = initialState, action: StatisticAction) => {
     switch (action.type) {
+
         case StatisticTypes.InitBestUsers: {
             return {
                 ...state,
@@ -23,10 +24,11 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
             return {
                 ...state,
                 bestUsers: action.payload,
-                bestUsersStatus: LoadStatus.COMPLETED
-            }
+              
+				bestUsersStatus: LoadStatus.COMPLETED            }
         }
 
+   
         case StatisticTypes.LoadBestUsersFailed: {
             return {
                 ...state,
@@ -45,10 +47,11 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
             return {
                 ...state,
                 mostPopularGames: action.payload,
-                mostPopularGamesStatus: LoadStatus.COMPLETED
-            }
+                
+				mostPopularGamesStatus: LoadStatus.COMPLETED            }
         }
 
+   
         case StatisticTypes.LoadMostPopularGamesFailed: {
             return {
                 ...state,
@@ -67,8 +70,8 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
             return {
                 ...state,
                 recentGames: action.payload,
-                recentGamesStatus: LoadStatus.COMPLETED
-            }
+             
+     			recentGamesStatus: LoadStatus.COMPLETED            }
         }
 
         case StatisticTypes.LoadRecentGamesFailed: {

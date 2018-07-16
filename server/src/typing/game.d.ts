@@ -1,12 +1,15 @@
 export interface Game {
-  id: number;
-  name: string;
-  desc: string;
-  registrationEventName: string;
-  leaveEventName: string;
-  getWaitPlayersCountEventName: string;
-  maxRoomPlayer: number;
-  requestUrl: string;
-  maxWaitingTime: number;
-  notifyCountdown: string;
+    id: number;
+    appName: string;
+    name: string;
+    desc: string;
+    registrationEventName: string;
+    leaveEventName: string;
+    updateRoomsInfoEventName: string;
+    maxRoomPlayer: number;
+    maxRooms: number;
+    requestUrl: string;
+    maxWaitingTime: number;
+    notifyCountdown: string;
+    battleTime: number;
 }

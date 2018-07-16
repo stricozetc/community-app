@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+
 import { AuthStatus, LoadStatus, frontEndSnackbarData } from 'models';
 import { AppState, LogoutUser } from 'store';
 
@@ -10,9 +11,11 @@ import './Statistic.scss';
 
 import { InitBestUsers, InitMostPopularGames, InitRecentGames } from 'store/statistic';
 import { isEmpty } from 'utils';
+
 import { CaSpinner } from 'components/Spinner';
 import { CaSnackbar } from 'components/Snackbar';
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
+import { CaUsersTables } from 'components/CaUsersTables';
 
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
 
@@ -69,6 +72,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
   }
 
   public componentDidMount(): void {
+  
     if (this.props.authStatus === AuthStatus.NOT_AUTHORIZED) {
       this.props.history.push('/login');
     }
@@ -82,7 +86,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
 
 
   public render(): JSX.Element {
-    const errorMessages = this.dataForSnack.filter(d => d.type = "error");
+const errorMessages = this.dataForSnack.filter(d => d.type = "error");
 
     const isDataLoaded = (
       this.props.statistic.bestUsersStatus === LoadStatus.COMPLETED && 
@@ -94,13 +98,11 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
       this.props.statistic.bestUsersStatus === LoadStatus.FAILED && 
       this.props.statistic.recentGamesStatus  === LoadStatus.FAILED && 
       this.props.statistic.mostPopularGamesStatus  === LoadStatus.FAILED
-    );
-
-    return (
+    );    return (
       <div className="ca-statistic">
         {this.props.children}
 
-        <CaSnackbar
+<CaSnackbar
           style={{top: '75px'}}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={ this.props.isSnackbarOpen }
@@ -133,18 +135,21 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
         }
           transitionDirection="up"
         />
-        {!isDataLoaded && !isDataFailed && (
-          <div className="ca-homepage__spinner-container">
-            <CaSpinner isActive={!isDataLoaded} />
-          </div>
-        )}
-
+        {!isDataLoaded && !isDataFailed && (          <div className="ca-homepage__spinner-container">
+           
+ 			<CaSpinner isActive={!isDataLoaded} />          </div>
+   
+        )
+        :
+        <CaUsersTables statistic={this.props.statistic}/>
+      }
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
+statistic
   authStatus: state.auth.status,
   statistic: state.statistic,
   isSnackbarOpen: state.snackbarUi.isOpen
@@ -163,4 +168,5 @@ const mapDispatchToProps = (dispatch: any) => ({
 export const CaStatisticPage = connect(
   mapStateToProps,
   mapDispatchToProps
+
 )(CaStatisticPageComponent);

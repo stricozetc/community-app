@@ -39,7 +39,7 @@ export class QueueServiceImplementation extends QueueService {
   private checkWaitPlayersCount(id: number): void {
     if (this.queues[id].length === this.games[id].maxRoomPlayer) {
       this.queues[id].forEach((player: SocketIO.Socket) => {
-        player.emit(this.games[id].getWaitPlayersCountEventName, this.queues[id].length);
+        player.emit(this.games[id].updateRoomsInfoEventName, this.queues[id].length);
         this.loggerService.infoLog(`Sent count wait players in ${this.games[id].name}`);
 
         player.emit('redirect', this.games[id].requestUrl);
@@ -48,7 +48,7 @@ export class QueueServiceImplementation extends QueueService {
       this.queues[id] = [];
     } else {
       this.queues[id].forEach((player: SocketIO.Socket) => {
-        player.emit(this.games[id].getWaitPlayersCountEventName, this.queues[id].length);
+        player.emit(this.games[id].updateRoomsInfoEventName, this.queues[id].length);
         this.loggerService.infoLog(`Sent count wait players in ${this.games[id].name}`);
       });
     }
