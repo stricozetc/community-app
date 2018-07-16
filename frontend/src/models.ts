@@ -66,3 +66,8 @@ export enum LoadStatus {
 export interface errorsFromServer {
   [key:string]: {code: number; msg: string} 
 }
+
+export interface frontEndSnackbarData {
+  type: 'error' | 'warning' | 'info' | 'success';
+  msg: string;
+}

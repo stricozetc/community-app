@@ -64,6 +64,7 @@ export class SocketServiceImplementation extends SocketService {
             })
             .catch((error: Error) => {
                 this.loggerService.infoLog(error.message);
+                client.emit('onRegisterFailed', error);
             });
     }
 
@@ -85,6 +86,7 @@ export class SocketServiceImplementation extends SocketService {
             })
             .catch((error: Error) => {
                 this.loggerService.infoLog(error.message);
+                client.emit('onLeaveFailed', error);
             });
     }
 

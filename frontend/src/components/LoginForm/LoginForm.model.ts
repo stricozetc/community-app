@@ -1,4 +1,5 @@
 import { AuthStatus, UserFieldsToLogin } from 'models';
+import { errorsFromServer } from 'models';
 
 export interface LoginFormState {
   email: string;
@@ -28,9 +29,9 @@ export const initLoginFormState: LoginFormState = {
 export interface LoginFormProps {
   status: AuthStatus;
   history: any;
-  errors: any;
+  errors: errorsFromServer
   isSnackbarOpen: boolean;
-  
+
   loginUser(user: UserFieldsToLogin): void;
 
   closeSnackbar(): void;

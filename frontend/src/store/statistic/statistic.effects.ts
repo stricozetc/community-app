@@ -11,16 +11,18 @@ import 'rxjs/add/operator/map';
 import { HttpWrapper } from 'services';
 
 import {
-  BestUsersInited,
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
-  MostPopularGamesInited,
-  RecentGamesInited,
+  LoadMostPopularGamesCompleted,
+  LoadRecentGamesCompleted,
+  LoadBestUsersCompleted,
+  LoadMostPopularGamesFailed,
+  LoadBestUsersFailed,
+  LoadRecentGamesFailed,
   StatisticTypes
 } from './statistic.action';
 
-import { GetErrors } from '../errors';
 
 
 export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => actions$
@@ -31,9 +33,9 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
         .map((res: any) => {
           const bastUsers: any[] = res.data;
 
-              return new BestUsersInited(bastUsers)
+              return new LoadBestUsersCompleted(bastUsers)
             }).catch(error => {
-              return Observable.of(new GetErrors(error));
+              return Observable.of(new LoadBestUsersFailed(error));
             })  
           })
     )
@@ -46,10 +48,10 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
         .map((res: any) => {
           const popGames: any[] = res.data;
 
-            return new MostPopularGamesInited(popGames)
+            return new LoadMostPopularGamesCompleted(popGames)
             }).catch(error => {
               
-              return Observable.of(new GetErrors(error))  
+              return Observable.of(new LoadMostPopularGamesFailed(error))  
             })  
           })
     )
@@ -63,9 +65,9 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
         .map((res: any) => {
           const rg: any[] = res.data;
 
-              return new RecentGamesInited(rg)
+              return new LoadRecentGamesCompleted(rg)
             }).catch(error => {
-              return Observable.of(new GetErrors(error))  
+              return Observable.of(new LoadRecentGamesFailed(error))  
             })  
           })
     )

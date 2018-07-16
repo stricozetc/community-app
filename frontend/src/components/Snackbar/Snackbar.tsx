@@ -24,15 +24,15 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         break;
 
       case 'info':
-        classes.push('ca-snackbar--info');
+        classes.push('ca-snackbar--blue');
         break;
 
       case 'warning':
-        classes.push('ca-snackbar--warning');
+        classes.push('ca-snackbar--orange');
         break;
 
       case 'success':
-        classes.push('ca-snackbar--success');
+        classes.push('ca-snackbar--green');
         break;
 
       default:
@@ -50,6 +50,7 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         message={this.props.message}
         action={this.props.action}
         TransitionComponent = {transition}
+        {...this.props}
       />
     );
   }

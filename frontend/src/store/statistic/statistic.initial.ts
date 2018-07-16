@@ -1,4 +1,5 @@
 import { StatisticState } from './interfaces';
+import { LoadStatus } from 'models';
 
 type State = StatisticState;
 
@@ -6,7 +7,7 @@ export const initialState: State = {
   bestUsers: [],
   mostPopularGames: [],
   recentGames: [],
-  bestUsersInited: false,
-  mostPopularGamesInited: false,
-  recentGamesInited: false
+  bestUsersStatus: LoadStatus.INIT,
+  mostPopularGamesStatus: LoadStatus.INIT,
+  recentGamesStatus: LoadStatus.INIT
 };

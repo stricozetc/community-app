@@ -5,34 +5,76 @@ import {
 
 import { initialState } from './statistic.initial';
 
-import { isEmpty } from 'utils/isEmpty';
+import { LoadStatus } from 'models';
 
 
 
 
 export const statisticReducer = (state = initialState, action: StatisticAction) => {
     switch (action.type) {
-        case StatisticTypes.BestUsersInited: {
+        case StatisticTypes.InitBestUsers: {
+            return {
+                ...state,
+                bestUsersStatus: LoadStatus.FETCHING
+            }
+        }
+
+        case StatisticTypes.LoadBestUsersCompleted: {
             return {
                 ...state,
                 bestUsers: action.payload,
-                bestUsersInited: !isEmpty(action.payload)
+                bestUsersStatus: LoadStatus.COMPLETED
             }
         }
 
-        case StatisticTypes.MostPopularGamesInited: {
+        case StatisticTypes.LoadBestUsersFailed: {
+            return {
+                ...state,
+                bestUsersStatus: LoadStatus.FAILED
+            }
+        }
+
+        case StatisticTypes.InitMostPopularGames: {
+            return {
+                ...state,
+                mostPopularGamesStatus: LoadStatus.FETCHING
+            }
+        }
+
+        case StatisticTypes.LoadMostPopularGamesCompleted: {
             return {
                 ...state,
                 mostPopularGames: action.payload,
-                mostPopularGamesInited: !isEmpty(action.payload)
+                mostPopularGamesStatus: LoadStatus.COMPLETED
             }
         }
 
-        case StatisticTypes.RecentGamesInited: {
+        case StatisticTypes.LoadMostPopularGamesFailed: {
+            return {
+                ...state,
+                mostPopularGamesStatus: LoadStatus.FAILED
+            }
+        }
+
+        case StatisticTypes.InitRecentGames: {
+            return {
+                ...state,
+                recentGamesStatus: LoadStatus.FETCHING
+            }
+        }
+
+        case StatisticTypes.LoadRecentGamesCompleted: {
             return {
                 ...state,
                 recentGames: action.payload,
-                recentGamesInited: !isEmpty(action.payload)
+                recentGamesStatus: LoadStatus.COMPLETED
+            }
+        }
+
+        case StatisticTypes.LoadRecentGamesFailed: {
+            return {
+                ...state,
+                recentGamesStatus: LoadStatus.FAILED
             }
         }
 
