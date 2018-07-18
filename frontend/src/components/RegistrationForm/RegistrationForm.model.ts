@@ -1,5 +1,5 @@
 import { AuthStatus, UserFieldsToRegister } from 'models';
-import { errorsFromServer } from 'models';
+import { ErrorsFromServer } from 'models';
 
 export interface RegistrationFormState {
   email: string;
@@ -41,7 +41,7 @@ export const initRegistrationFormState: RegistrationFormState = {
 export interface RegistrationFormProps {
   history: any;
   status: AuthStatus;
-  errors: errorsFromServer
+  errors: ErrorsFromServer;
   isSnackbarOpen: boolean;
   registerUser(user: UserFieldsToRegister): void;
   closeSnackbar(): void;

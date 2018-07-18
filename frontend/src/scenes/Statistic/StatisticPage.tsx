@@ -2,12 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 
-import { AuthStatus, LoadStatus, frontEndSnackbarData } from 'models';
+import { AuthStatus, LoadStatus, FrontEndSnackbarData } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { StatisticProps } from './Statistic.model';
 import './Statistic.scss';
-
 
 import { InitBestUsers, InitMostPopularGames, InitRecentGames } from 'store/statistic';
 import { isEmpty } from 'utils';
@@ -19,35 +18,38 @@ import { CaUsersTables } from 'components/CaUsersTables';
 
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
 
-  public dataForSnack: frontEndSnackbarData[] = [];
+  public dataForSnack: FrontEndSnackbarData[] = [];
   public componentWillReceiveProps(nextProps: StatisticProps): void {
-    
-    const isBestUsersInitFailed = nextProps.statistic.bestUsersStatus === LoadStatus.FAILED && nextProps.statistic.bestUsersStatus !== this.props.statistic.bestUsersStatus;
-    const isRecentGamesInitFailed = nextProps.statistic.recentGamesStatus === LoadStatus.FAILED && nextProps.statistic.recentGamesStatus !== this.props.statistic.recentGamesStatus;
-    const isMostPopularGamesFailed = nextProps.statistic.mostPopularGamesStatus === LoadStatus.FAILED && nextProps.statistic.mostPopularGamesStatus !== this.props.statistic.mostPopularGamesStatus;
+
+    const isBestUsersInitFailed = nextProps.statistic.bestUsersStatus
+    === LoadStatus.FAILED && nextProps.statistic.bestUsersStatus !== this.props.statistic.bestUsersStatus;
+    const isRecentGamesInitFailed = nextProps.statistic.recentGamesStatus
+    === LoadStatus.FAILED && nextProps.statistic.recentGamesStatus !== this.props.statistic.recentGamesStatus;
+    const isMostPopularGamesFailed = nextProps.statistic.mostPopularGamesStatus
+    === LoadStatus.FAILED && nextProps.statistic.mostPopularGamesStatus !== this.props.statistic.mostPopularGamesStatus;
 
     if(isBestUsersInitFailed) {
       this.dataForSnack.push({
         type: 'error',
         msg: 'User Init failed'
-      })
+      });
     }
 
     if(isRecentGamesInitFailed) {
       this.dataForSnack.push({
         type: 'error',
         msg: 'Recent Games Init failed'
-      })
+      });
     }
 
     if(isMostPopularGamesFailed) {
       this.dataForSnack.push({
         type: 'error',
         msg: 'Most Popular Games Init failed'
-      })
+      });
     }
-    
-    if(isBestUsersInitFailed || isRecentGamesInitFailed || isMostPopularGamesFailed) {
+
+    if( isBestUsersInitFailed || isRecentGamesInitFailed || isMostPopularGamesFailed ) {
       this.props.openSnackbar();
     }
 
@@ -111,7 +113,7 @@ const errorMessages = this.dataForSnack.filter(d => d.type = "error");
           type="error"
           message={
           <React.Fragment>
-          {errorMessages.map((err: frontEndSnackbarData, index: number) => 
+          {errorMessages.map((err: FrontEndSnackbarData, index: number) => 
             <div key={index}>* {err.msg}</div>
           )}
           </React.Fragment>
@@ -128,19 +130,18 @@ const errorMessages = this.dataForSnack.filter(d => d.type = "error");
           type="info"
           message={
           <React.Fragment>
-          {errorMessages.map((err: frontEndSnackbarData, index: number) => 
+          {errorMessages.map((err: FrontEndSnackbarData, index: number) => 
             <div key={index}>* {err.msg}</div>
           )}
           </React.Fragment>
         }
           transitionDirection="up"
         />
-        {!isDataLoaded && !isDataFailed && (          <div className="ca-homepage__spinner-container">
-           
- 			<CaSpinner isActive={!isDataLoaded} />          </div>
-   
-        )
-        :
+      {!isDataLoaded && !isDataFailed ?          
+      <div className="ca-homepage__spinner-container">
+ 			  <CaSpinner isActive={!isDataLoaded} />  
+      </div>
+       :
         <CaUsersTables statistic={this.props.statistic}/>
       }
       </div>
@@ -149,7 +150,6 @@ const errorMessages = this.dataForSnack.filter(d => d.type = "error");
 }
 
 const mapStateToProps = (state: AppState) => ({
-statistic
   authStatus: state.auth.status,
   statistic: state.statistic,
   isSnackbarOpen: state.snackbarUi.isOpen

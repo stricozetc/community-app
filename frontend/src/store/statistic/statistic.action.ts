@@ -1,6 +1,6 @@
 import { action } from '../decorators';
 
-import { errorsFromServer } from 'models';
+import { ErrorsFromServer } from 'models';
 
 export enum StatisticTypes {
     InitBestUsers = '[statistic] Init Best Users',
@@ -30,7 +30,7 @@ export class LoadBestUsersCompleted {
 export class LoadBestUsersFailed {
     public readonly type = StatisticTypes.LoadBestUsersFailed;
 
-    constructor(public err: errorsFromServer) { }
+    constructor(public err: ErrorsFromServer) { }
 }
 
 @action()
@@ -49,7 +49,7 @@ export class LoadMostPopularGamesCompleted {
 export class LoadMostPopularGamesFailed {
     public readonly type = StatisticTypes.LoadMostPopularGamesFailed;
 
-    constructor(public err: errorsFromServer) { }
+    constructor(public err: ErrorsFromServer) { }
 }
 
 @action()
@@ -69,18 +69,16 @@ export class LoadRecentGamesCompleted {
 export class LoadRecentGamesFailed {
     public readonly type = StatisticTypes.LoadRecentGamesFailed;
 
-    constructor(public err: errorsFromServer) { }
+    constructor(public err: ErrorsFromServer) { }
 }
 
-export type StatisticAction = 
+export type StatisticAction =
     | InitBestUsers
-    | LoadBestUsersCompleted 
+    | LoadBestUsersCompleted
     | LoadBestUsersFailed
-    | InitMostPopularGames 
+    | InitMostPopularGames
     | LoadMostPopularGamesCompleted
     | LoadMostPopularGamesFailed
-    | InitRecentGames 
+    | InitRecentGames
     | LoadRecentGamesCompleted
     | LoadRecentGamesFailed ;
-  
-

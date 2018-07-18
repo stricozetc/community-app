@@ -87,7 +87,6 @@ export enum LoadStatus {
   
 }
 
-}
 export enum StatTab {
   BestUsers = 0,
   TheMostPopularGames = 1,
@@ -98,7 +97,7 @@ export interface ErrorsFromServer {
   [key: string]: { code: number; msg: string };
 }
 
-export interface frontEndSnackbarData {
+export interface FrontEndSnackbarData {
   type: 'error' | 'warning' | 'info' | 'success';
   msg: string;
 }
