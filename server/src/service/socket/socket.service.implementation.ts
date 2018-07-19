@@ -66,7 +66,7 @@ export class SocketServiceImplementation extends SocketService {
   }
 
   private onLeave(index: number, client: SocketIO.Socket): void {
-      this.roomService.removePlayerFromRoom(index, client, this.getPlayerToken(client))
+    this.roomService.removePlayerFromRoom(index, client, this.getPlayerToken(client))
       .then(([isRemoved, room]) => {
         this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
 
@@ -125,12 +125,20 @@ export class SocketServiceImplementation extends SocketService {
   }
 
   private getPlayerToken(socket: SocketIO.Socket): string {
-    let token: string = this.playersSocketBind
-      .find((playerSocketBind) => playerSocketBind.playerSocketId === socket.id).playerToken;
+    let playerSocketBind = this.playersSocketBind
+      .find((s) => s.playerSocketId === socket.id);
 
-    this.playersSocketBind = this.playersSocketBind
-      .filter((playerSocketBind) => playerSocketBind.playerSocketId !== socket.id);
+    if (playerSocketBind) {
+      let token: string = playerSocketBind.playerToken;
 
-    return token;
+      this.playersSocketBind = this.playersSocketBind
+        .filter((s) => s.playerSocketId !== socket.id);
+
+      return token;
+    } else {
+      this.loggerService.infoLog(`Not find player socket bind`);
+
+      return null;
+    }
   }
 }

@@ -110,7 +110,10 @@ export class RoomService {
     * */
     let room = this.rooms.find(r => r.id === index);
     const operation$ = Promise.resolve(true);
-    this.playersBindService.removePlayers(room.token, token);
+    
+    if (token) {
+      this.playersBindService.removePlayers(room.token, token);
+    }
 
     if (room && room.players.length > 1) {
       room.players = [...room.players.filter(p => p !== client)];
@@ -143,7 +146,9 @@ export class RoomService {
     });
 
     const operation$ = Promise.resolve(true);
-    this.playersBindService.removePlayers(room.token, token);
+    if (token) {
+      this.playersBindService.removePlayers(room.token, token);
+    }
 
     if (room && room.players.length > 1) {
       room.players = [...room.players.filter(p => p !== client)];
