@@ -7,6 +7,7 @@ import { AppTokenService } from '../app-token';
 @injectable()
 export class PlayersBindService {
   private playersBinds: PlayersBind[] = [];
+
   constructor(
     @inject(AppTokenService) private tokenService: AppTokenService
   ) { }
@@ -21,6 +22,7 @@ export class PlayersBindService {
 
   public bindPlayer(room: string, bindPlayer: string): void {
     let playersBindIndex = this.playersBinds.findIndex((playersBind: PlayersBind) => playersBind.room === room);
+
     if (playersBindIndex === -1) {
       this.playersBinds.push({ room: room, players: [bindPlayer] });
     } else {
@@ -29,8 +31,11 @@ export class PlayersBindService {
   }
 
   public removePlayers(room: string, removePlayer: string): void {
-    let playersBindIndex = this.playersBinds.findIndex((playersBind: PlayersBind) => playersBind.room === room);
-    this.playersBinds[playersBindIndex].players = this.playersBinds[playersBindIndex].players.filter((player) => player !== removePlayer);
+    let playersBindIndex = this.playersBinds
+      .findIndex((playersBind: PlayersBind) => playersBind.room === room);
+
+    this.playersBinds[playersBindIndex].players = this.playersBinds[playersBindIndex].players
+      .filter((player) => player !== removePlayer);
   }
 
   public async sendPlayerBind(game: Game, room: Room): Promise<boolean> {

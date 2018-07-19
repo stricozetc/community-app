@@ -15,6 +15,7 @@ export class SocketServiceImplementation extends SocketService {
   @inject(RoomService) private roomService: RoomService;
 
   private clients: SocketIO.Socket[] = [];
+  private playersSocketBind: { playerToken: string, playerSocketId: string }[] = [];
 
   public setSocket(socketIO: SocketIO.Server): void {
     socketIO.on('connection', (client: SocketIO.Socket) => {
@@ -25,7 +26,8 @@ export class SocketServiceImplementation extends SocketService {
       client.on('disconnect', () => this.onDisconnect(client));
 
       for (let index = 0; index < this.games.length; index++) {
-        client.on(this.games[index].registrationEventName, (token) => {
+        client.on(this.games[index].registrationEventName, (token: string) => {
+          this.addNewPlayer(client, token);
           this.onRegister(index, client, token);
         });
         client.on(this.games[index].leaveEventName, () => this.onLeave(index, client));
@@ -64,7 +66,7 @@ export class SocketServiceImplementation extends SocketService {
   }
 
   private onLeave(index: number, client: SocketIO.Socket): void {
-    this.roomService.removePlayerFromRoom(index, client)
+      this.roomService.removePlayerFromRoom(index, client, this.getPlayerToken(client))
       .then(([isRemoved, room]) => {
         this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
 
@@ -88,7 +90,7 @@ export class SocketServiceImplementation extends SocketService {
     this.clients.splice(this.clients.indexOf(client), 1);
     this.loggerService.infoLog(`Count of clients = ${this.clients.length}`);
 
-    this.roomService.removePlayer(client)
+    this.roomService.removePlayer(client, this.getPlayerToken(client))
       .then(([isRemoved, room]) => {
         this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
 
@@ -115,5 +117,20 @@ export class SocketServiceImplementation extends SocketService {
         status: r.status
       } as RoomInfo;
     });
+  }
+
+
+  private addNewPlayer(socket: SocketIO.Socket, playerToken: string): void {
+    this.playersSocketBind.push({ playerToken: playerToken, playerSocketId: socket.id });
+  }
+
+  private getPlayerToken(socket: SocketIO.Socket): string {
+    let token: string = this.playersSocketBind
+      .find((playerSocketBind) => playerSocketBind.playerSocketId === socket.id).playerToken;
+
+    this.playersSocketBind = this.playersSocketBind
+      .filter((playerSocketBind) => playerSocketBind.playerSocketId !== socket.id);
+
+    return token;
   }
 }

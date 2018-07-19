@@ -38,6 +38,7 @@ export class EmitEventWithOptions implements Action {
   public constructor(public payload: {eventName: string, options: any}) {
   }
 }
+
 export type SocketActions =
   | CloseSocket
   | InitEvents
