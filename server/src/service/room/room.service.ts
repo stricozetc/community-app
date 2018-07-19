@@ -6,6 +6,7 @@ import { TimerService } from './../timer';
 
 import { RoomStatus, Room } from './models';
 import { RoomInfo } from "../../typing/room-info";
+import { PlayersBindService } from '../players-bind';
 
 @injectable()
 export class RoomService {
@@ -13,6 +14,7 @@ export class RoomService {
   @inject(ApiService) private apiService: ApiService;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(TimerService) private timerService: TimerService;
+  @inject(PlayersBindService) private playersBindService: PlayersBindService;
 
   private rooms: Room[] = [];
 
@@ -24,7 +26,7 @@ export class RoomService {
     return this.rooms.find(r => r.id === index);
   }
 
-  public createNewRoom(index: number, client: SocketIO.Socket): Promise<boolean> {
+  public createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
     return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
       let isCreated = false;
 
@@ -38,6 +40,8 @@ export class RoomService {
           status: RoomStatus.Waiting
         });
 
+        this.playersBindService.bindPlayer(roomToken, playerToken);
+
         this.loggerService.infoLog(`New room was added for ${this.games[index].name}`);
         this.loggerService.infoLog(`Current count of players is 1`);
 
@@ -50,7 +54,7 @@ export class RoomService {
     });
   }
 
-  public addPlayerToRoom(index: number, client: SocketIO.Socket): Promise<[boolean, Room]> {
+  public addPlayerToRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<[boolean, Room]> {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
@@ -60,10 +64,12 @@ export class RoomService {
     if (room && room.players.length < room.maxPlayersCount && room.status === RoomStatus.Waiting) {
       room.players.push(client);
 
+      this.playersBindService.bindPlayer(room.token, playerToken);
+
       this.loggerService.infoLog(`Add player to ${this.games[index].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else {
-      operation$ = this.createNewRoom(index, client).then(result => {
+      operation$ = this.createNewRoom(index, client, playerToken).then(result => {
 
         let newRoom = this.rooms.find(r => r.id === index);
         let timer = this.timerService.start(
@@ -79,7 +85,8 @@ export class RoomService {
           },
           () => {
             this.loggerService.infoLog(`Start game by timer -> ${this.games[index].name}`);
-            this.startGame(newRoom, index);
+
+            this.startGame(this.games[index], newRoom, index);
           },
           this.games[index].maxWaitingTime);
 
@@ -97,12 +104,16 @@ export class RoomService {
     });
   }
 
-  public removePlayerFromRoom(index: number, client: SocketIO.Socket): Promise<[boolean, Room]> {
+  public removePlayerFromRoom(index: number, client: SocketIO.Socket, token: string): Promise<[boolean, Room]> {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
     let room = this.rooms.find(r => r.id === index);
     const operation$ = Promise.resolve(true);
+    
+    if (token) {
+      this.playersBindService.removePlayers(room.token, token);
+    }
 
     if (room && room.players.length > 1) {
       room.players = [...room.players.filter(p => p !== client)];
@@ -126,7 +137,7 @@ export class RoomService {
     });
   }
 
-  public removePlayer(client: SocketIO.Socket): Promise<[boolean, Room]> {
+  public removePlayer(client: SocketIO.Socket, token: string): Promise<[boolean, Room]> {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
@@ -135,6 +146,9 @@ export class RoomService {
     });
 
     const operation$ = Promise.resolve(true);
+    if (token) {
+      this.playersBindService.removePlayers(room.token, token);
+    }
 
     if (room && room.players.length > 1) {
       room.players = [...room.players.filter(p => p !== client)];
@@ -163,16 +177,19 @@ export class RoomService {
 
     if (room && room.players.length === this.games[index].maxRoomPlayer) {
       this.timerService.end(room.timer);
-      this.startGame(room, index);
+      this.startGame(this.games[index], room, index);
     }
   }
 
-  private startGame(room: Room, index: number): void {
+  private startGame(game: Game, room: Room, index: number): void {
+
+    this.playersBindService.sendPlayerBind(game, room);
+
     room.players.forEach((player: SocketIO.Socket) => {
       player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
       this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
 
-      player.emit('redirect', this.games[index].requestUrl);
+      player.emit('redirect', this.games[index].redirectUrl);
       this.loggerService.infoLog(`Redirect players group to ${this.games[index].name}`);
     });
     room.status = RoomStatus.InGame;
