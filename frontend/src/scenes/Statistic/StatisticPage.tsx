@@ -69,7 +69,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     }
 
     if (isEmpty(this.props.statistic.recentGames)) {
-      this.props.initRecentGames();
+      this.props.initRecentGames(this.props.user.id);
     }
   }
 
@@ -151,6 +151,7 @@ const errorMessages = this.dataForSnack.filter(d => d.type = "error");
 
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
+  user: state.auth.user,
   statistic: state.statistic,
   isSnackbarOpen: state.snackbarUi.isOpen
 });
@@ -159,7 +160,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   initBestUsers: () => dispatch(new InitBestUsers()),
   initMostPopularGames: () => dispatch(new InitMostPopularGames()),
-  initRecentGames: () => dispatch(new InitRecentGames()),
+  initRecentGames: (userId: number) => dispatch(new InitRecentGames(userId)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   openSnackbar: () => dispatch(new OpenSnackbar())
 });

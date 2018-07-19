@@ -1,10 +1,12 @@
 import { AuthStatus } from 'models';
 import { StatisticState } from './../../store/statistic/interfaces';
 
+import {FrontEndUser} from 'store';
 
 export interface StatisticProps {
   authStatus: AuthStatus;
   history: any;
+  user: FrontEndUser;
   // bestUsersStatus: LoadStatus;
   // recentGamesStatus: LoadStatus;
   // mostPopularGamesStatus: LoadStatus;
@@ -13,7 +15,7 @@ export interface StatisticProps {
   logoutUser(): void;
   initBestUsers(): void;
   initMostPopularGames(): void;
-  initRecentGames(): void;
+  initRecentGames(userId: number): void;
   closeSnackbar(): void;
   openSnackbar(): void;
 }

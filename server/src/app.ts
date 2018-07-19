@@ -42,7 +42,7 @@ server.setConfig((app) => {
 // makeAssosiations();
 
 db.connect.sync({
-    logging: console.log
+    // logging: console.log
 })
     .then(() => {
         return RoleModel.upsert({

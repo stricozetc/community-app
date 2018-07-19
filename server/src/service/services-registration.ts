@@ -14,6 +14,8 @@ import {
 } from './user-authentication';
 import { MocksRepository, MocksRepositoryImplementation } from './mocks';
 import { AppTokenRepository, AppTokenService } from './app-token';
+import { HistoryRepository, HistoryRepositoryImplementation } from './history';
+
 
 export const CONTAINER = new Container();
 
@@ -28,5 +30,6 @@ CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(Us
 CONTAINER.bind<MocksRepository>(MocksRepository).to(MocksRepositoryImplementation);
 CONTAINER.bind<AppTokenService>(AppTokenService).to(AppTokenService);
 CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
+CONTAINER.bind<HistoryRepository>(HistoryRepository).to(HistoryRepositoryImplementation);
 
 export const inject = getDecorators(CONTAINER).lazyInject;
