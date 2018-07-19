@@ -1,2 +1,2 @@
-export * from './history-i';
-export * from './history';
+export * from './history.repository.implementation';
+export * from './history.repository';

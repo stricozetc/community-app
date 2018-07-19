@@ -11,7 +11,7 @@ import {
 import { Game } from '../typing/game';
 
 export interface DataFromGame { 
-  statistic: any;
+  statistic: any; // Temporary. Before test with real API, not with postman
 }
 
 export interface Statistic {
