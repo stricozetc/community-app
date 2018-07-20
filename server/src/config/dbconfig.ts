@@ -22,5 +22,7 @@ export const dbConfig = {
     appTokensModel: "appTokens",
     appTokensTable: "app_tokens",
     userRolesModel: "userRoles",
-    userRolesTable: "user_roles"
+    userRolesTable: "user_roles",
+    statisticModel: "statistic",
+    statisticTable: "statistic"
 };
