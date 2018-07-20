@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { CaButton } from 'components/form-controls/Button';
-import { Countdown } from 'components/Countdown';
+import { CaButton, Countdown } from 'components';
 
 import './current-battle.scss';
 

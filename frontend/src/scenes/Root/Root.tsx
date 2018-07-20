@@ -10,8 +10,6 @@ import { setAuthToken } from 'utils';
 import { FrontEndUser, SetCurrentUser, AppState, LogoutUser, store, LeaveBattle } from 'store';
 
 import { Landing } from 'scenes/Landing';
-import { LoginForm } from 'components/LoginForm';
-import { RegistrationForm } from 'components/RegistrationForm';
 
 import { CaBattles } from 'scenes/Battles';
 
@@ -22,9 +20,15 @@ import { CaStatisticPage } from 'scenes/Statistic';
 import { RootProps } from './Root.model';
 
 import { CurrentBattle } from 'scenes/Battles';
-import { CaNavbar } from 'components/Navbar';
-import { CaLogo } from 'components/Logo';
-import { CaButton } from 'components/form-controls/Button';
+
+import {
+  CaButton,
+  CaLogo,
+  CaNavbar,
+  LoginForm,
+  RegistrationForm
+} from 'components';
+
 import { AuthStatus } from 'models';
 import { PageNotFound } from '../PageNotFound';
 

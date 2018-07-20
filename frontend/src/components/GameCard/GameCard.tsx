@@ -6,9 +6,7 @@ import './IconWithInfo.scss';
 
 import {BattleStatus} from 'models';
 
-import {GameCardProps} from './GameCard.model';
-
-import {CaButton} from 'components/form-controls/Button';
+import {CaButton, GameCardProps} from 'components';
 
 import userImage from 'assets/user.svg';
 

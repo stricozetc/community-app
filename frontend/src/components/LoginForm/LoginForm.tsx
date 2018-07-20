@@ -20,10 +20,8 @@ import {
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
 
-import { CaSnackbar } from './../Snackbar/Snackbar';
+import { CaButton, CaSnackbar } from 'components';
 import { isObjectsEqual } from 'utils/isObjectsEqual';
-import { CaButton } from 'components/form-controls/Button';
-
 
 export class LoginFormComponent extends React.Component<
   LoginFormProps,

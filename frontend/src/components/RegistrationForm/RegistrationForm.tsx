@@ -22,13 +22,12 @@ import {
   RegistrationFormState
 } from "./RegistrationForm.model";
 
-import {CaSnackbar} from './../Snackbar/Snackbar';
+import {CaButton, CaSnackbar} from 'components';
 
 import {isEmpty} from 'utils';
 import {CloseSnackbar, OpenSnackbar} from 'store/snackbar';
 
 import {isObjectsEqual} from "utils/isObjectsEqual";
-import { CaButton } from "components/form-controls/Button";
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: any) {
