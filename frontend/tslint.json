@@ -167,6 +167,8 @@
       "never-prefix"
     ],
     "jsx-no-lambda": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "max-classes-per-file": false,
+    "prefer-for-of": false
   }
 }

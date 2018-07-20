@@ -4,7 +4,7 @@ import { StatisticState } from './../../store/statistic/interfaces';
 export interface StatisticProps {
   status: AuthStatus;
   history: any;
-  statistic: StatisticState
+  statistic: StatisticState;
   logoutUser(): void;
   initBestUsers(): void;
   initMostPopularGames(): void;

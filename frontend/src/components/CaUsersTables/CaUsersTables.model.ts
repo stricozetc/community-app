@@ -1,20 +1,20 @@
 import { StatisticState } from 'store/statistic/interfaces';
 
 export interface CaUsersTablesProps {
-  statistic: StatisticState
+  statistic: StatisticState;
 }
 
 export interface StatisticOfUser {
-  [key: string]: string | number | boolean | undefined,
+  [key: string]: string | number | boolean | undefined;
 }
 
 export interface HeaderName {
-  headerName: string,
-  field: string
+  headerName: string;
+  field: string;
 }
 
 export interface CaUsersTablesState {
-  value: number,
-  rowData: StatisticOfUser[],
-  columnDef: HeaderName[]
+  value: number;
+  rowData: StatisticOfUser[];
+  columnDef: HeaderName[];
 }

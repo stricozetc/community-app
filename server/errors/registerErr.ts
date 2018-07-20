@@ -1,4 +1,4 @@
-import { errCodes } from "./errCodes";
+import { errCodes } from './errCodes';
 
 export const registerErr = {
   nameLength: {

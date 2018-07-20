@@ -30,10 +30,10 @@ export interface LoginFormProps {
   history: any;
   errors: any;
   isSnackbarOpen: boolean;
-  
+
   loginUser(user: UserFieldsToLogin): void;
 
   closeSnackbar(): void;
 
-  openSnackbar():void;
+  openSnackbar(): void;
 }

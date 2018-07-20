@@ -1,14 +1,11 @@
-import { 
-    StatisticAction, 
+import {
+    StatisticAction,
     StatisticTypes,
 } from './statistic.action';
 
 import { initialState } from './statistic.initial';
 
 // import { isEmpty } from 'utils/isEmpty';
-
-
-
 
 export const statisticReducer = (state = initialState, action: StatisticAction) => {
     switch (action.type) {
@@ -17,7 +14,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
                 ...state,
                 bestUsers: action.payload,
                 bestUsersInited: true
-            }
+            };
         }
 
         case StatisticTypes.MostPopularGamesInited: {
@@ -25,7 +22,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
                 ...state,
                 mostPopularGames: action.payload,
                 mostPopularGamesInited: true
-            }
+            };
         }
 
         case StatisticTypes.RecentGamesInited: {
@@ -33,10 +30,10 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
                 ...state,
                 recentGames: action.payload,
                 recentGamesInited: true
-            }
+            };
         }
 
         default:
             return state;
     }
-}
+};

@@ -10,6 +10,6 @@ export const CaSlide = (props: CaSlideProps) => {
   return (
     <div className='ca-slide'>
       <Slide {...props} />
-    </div>  
+    </div>
   );
 };

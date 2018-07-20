@@ -1,5 +1,5 @@
 import { action } from '../decorators';
-import { Game } from "models";
+import { Game } from 'models';
 
 export enum GamesTypes {
     InitGames = '[game] Init Game',
@@ -26,9 +26,7 @@ export class LoadGamesFailed {
 
 }
 
-
-export type GamesActions = 
+export type GamesActions =
     | LoadGamesCompleted
     | InitGames
     | LoadGamesFailed ;
-  

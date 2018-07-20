@@ -19,10 +19,8 @@ import {
 
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
-
 import { CaSnackbar } from './../Snackbar/Snackbar';
 import { isObjectsEqual } from 'utils/isObjectsEqual';
-
 
 export class LoginFormComponent extends React.Component<
   LoginFormProps,
@@ -37,7 +35,6 @@ export class LoginFormComponent extends React.Component<
     this.onSubmit = this.onSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
   }
-
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
     if (nextProps.status === AuthStatus.AUTHORIZED) {
@@ -139,9 +136,9 @@ export class LoginFormComponent extends React.Component<
       }
     });
     this.checkValidation();
-  };
+  }
 
-  public closeSnackbar(): void{
+  public closeSnackbar(): void {
     this.props.closeSnackbar();
   }
 
@@ -149,18 +146,18 @@ export class LoginFormComponent extends React.Component<
     const { errors } = this.props;
     const keys = errors && Object.keys(errors);
     return (
-      <div className="ca-login-form">
+      <div className='ca-login-form'>
       <CaSnackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
-          type="error"
-         //  TransitionComponent = {this.transitionUp}
-         transitionDirection="down"
+          type='error'
+         //  transitionComponent = {this.transitionUp}
+         transitionDirection='down'
           message={
             <div>
-              {keys && keys.map((k: string) => 
+              {keys && keys.map((k: string) =>
                 (
                   <div>* {errors[k].msg} </div>
                 )
@@ -170,15 +167,15 @@ export class LoginFormComponent extends React.Component<
         />
 
       {this.props.children}
-        <form onSubmit={this.onSubmit} className="ca-login-form__container">
+        <form onSubmit={this.onSubmit} className='ca-login-form__container'>
           <FormGroup>
             <TextField
-              id="email"
-              label="Email"
-              name="email"
+              id='email'
+              label='Email'
+              name='email'
               value={this.state.email}
               onChange={this.onChange}
-              type="email"
+              type='email'
               onBlur={this.onBlur('email')}
               error={!this.state.isEmailValid && this.state.touched.email}
             />
@@ -186,7 +183,7 @@ export class LoginFormComponent extends React.Component<
               this.state.touched.email &&
               this.state.emailErrors.map((err, index) => {
                 return (
-                  <div className="ca-login-form__error" key={index}>
+                  <div className='ca-login-form__error' key={index}>
                     {err}
                   </div>
                 );
@@ -195,13 +192,13 @@ export class LoginFormComponent extends React.Component<
 
           <FormGroup>
             <TextField
-              className="ca-login-form__password-field"
-              id="password"
-              label="Password"
-              name="password"
+              className='ca-login-form__password-field'
+              id='password'
+              label='Password'
+              name='password'
               value={this.state.password}
               onChange={this.onChange}
-              type="password"
+              type='password'
               onBlur={this.onBlur('password')}
               error={!this.state.isPasswordValid && this.state.touched.password}
             />
@@ -209,7 +206,7 @@ export class LoginFormComponent extends React.Component<
               this.state.touched.password &&
               this.state.passwordErrors.map((err, index) => {
                 return (
-                  <div className="CA-Registration-form__error" key={index}>
+                  <div className='CA-Registration-form__error' key={index}>
                     {err}
                   </div>
                 );
@@ -217,9 +214,9 @@ export class LoginFormComponent extends React.Component<
           </FormGroup>
 
           <Button
-            color="primary"
-            type="submit"
-            className="ca-login-form__login-btn"
+            color='primary'
+            type='submit'
+            className='ca-login-form__login-btn'
             disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
           >
             LOGIN

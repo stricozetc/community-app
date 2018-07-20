@@ -64,7 +64,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
   public render(): JSX.Element {
     return (
-      <div className="ca-homepage">
+      <div className='ca-homepage'>
         {this.props.children}
 
         <CaSnackbar
@@ -72,13 +72,13 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type="error"
+          type='error'
           message={<span> Game fetching Failed! </span>}
-          transitionDirection="down"
+          transitionDirection='down'
         />
 
         {!isEmpty(this.props.games) && (
-          <div className="ca-homepage__container ca-global-fadeIn">
+          <div className='ca-homepage__container ca-global-fadeIn'>
 
             {this.props.games.map((game: Game, index: number) => {
               const gameRooms = this.getGameRooms(game);
@@ -87,7 +87,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                 .reduce((accumulator, currentValue: number) => accumulator + currentValue) : 0;
 
               return (
-                <div className="ca-homepage__container-for-games" key={index}>
+                <div className='ca-homepage__container-for-games' key={index}>
                   <CaGameCard
                     game={game}
                     joinGame={($event) => {
@@ -108,7 +108,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           </div>
         )}
         {this.props.status === 1 && (
-          <div className="ca-homepage__spinner-container">
+          <div className='ca-homepage__spinner-container'>
             <CaSpinner isActive={this.props.status === 1}/>
           </div>
         )}

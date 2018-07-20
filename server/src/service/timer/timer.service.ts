@@ -8,16 +8,16 @@ export class TimerService {
         ms: number,
         interval: number = 1000
     ): number {
-        let countDownDate = new Date((new Date()).getTime() + ms).getTime();
+        const countDownDate = new Date((new Date()).getTime() + ms).getTime();
 
         onInterval(ms);
 
-        let newInterval = setInterval(() => {
-            // Get todays date and time
-            let now = new Date().getTime();
+        const newInterval = setInterval(() => {
+            // get todays date and time
+            const now = new Date().getTime();
 
-            // Find the distance between now an the count down date
-            let distance = countDownDate - now;
+            // find the distance between now an the count down date
+            const distance = countDownDate - now;
 
             onInterval(distance);
 
@@ -25,7 +25,7 @@ export class TimerService {
                 clearInterval(newInterval);
                 onComplete();
             }
-        }, interval);
+        },                              interval);
 
         return newInterval;
     }

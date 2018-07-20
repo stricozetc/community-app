@@ -2,7 +2,7 @@ import * as jwt from 'passport-jwt';
 
 const JWTStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
-import keys from './keys';
+import { keys } from './keys';
 import { db } from './../../models/SequelizeConnect';
 import { UserModel } from './../../models/user';
 import { PassportStatic } from 'passport';

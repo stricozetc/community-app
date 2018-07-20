@@ -7,7 +7,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-
 import { HttpWrapper } from 'services';
 
 import {
@@ -22,7 +21,6 @@ import {
 
 import { GetErrors } from '../errors';
 
-
 export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => actions$
   .ofType(StatisticTypes.InitBestUsers).pipe(
     switchMap(() => {
@@ -31,30 +29,29 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
         .map((res: any) => {
           const bastUsers: any[] = res.data;
 
-              return new BestUsersInited(bastUsers)
+          return new BestUsersInited(bastUsers);
             }).catch(error => {
               return Observable.of(new GetErrors(error));
-            })  
+            });
           })
-    )
+    );
 
 export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) => actions$
   .ofType(StatisticTypes.InitMostPopularGames).pipe(
     switchMap(() => {
-      
+
       return fromPromise(HttpWrapper.get('api/mocks/most-popular-games'))
         .map((res: any) => {
-          
-          const popGames: any[] = res.data;
-            
-            return new MostPopularGamesInited(popGames)
-            }).catch(error => {
-              
-              return Observable.of(new GetErrors(error))  
-            })  
-          })
-    )
 
+          const popGames: any[] = res.data;
+
+          return new MostPopularGamesInited(popGames);
+            }).catch(error => {
+
+              return Observable.of(new GetErrors(error));
+            });
+          })
+    );
 
 export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) => actions$
   .ofType(StatisticTypes.InitRecentGames).pipe(
@@ -64,12 +61,12 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
         .map((res: any) => {
           const rg: any[] = res.data;
 
-              return new RecentGamesInited(rg)
+          return new RecentGamesInited(rg);
             }).catch(error => {
-              return Observable.of(new GetErrors(error))  
-            })  
+              return Observable.of(new GetErrors(error));
+            });
           })
-    )
+    );
 // tslint:disable-next-line:array-type
 export const StatisticEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [
   initBestUsers$,

@@ -11,8 +11,8 @@ export class RegisterAppController {
 
     @httpGet('/app-token')
     public async getAppToken(request: Request, response: Response): Promise<Response> {
-        console.log('get app-token -> ');
-        console.log(request.query);
+        console.dir('get app-token -> ');
+        console.dir(request.query);
 
         const newToken = await this.tokenService.create(request.query);
 

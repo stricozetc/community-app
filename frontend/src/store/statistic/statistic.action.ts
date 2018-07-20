@@ -47,13 +47,10 @@ export class RecentGamesInited {
     constructor(public payload: any[]) { }
 }
 
-
-export type StatisticAction = 
+export type StatisticAction =
     | InitBestUsers
-    | BestUsersInited 
-    | InitMostPopularGames 
-    | MostPopularGamesInited 
-    | InitRecentGames 
+    | BestUsersInited
+    | InitMostPopularGames
+    | MostPopularGamesInited
+    | InitRecentGames
     | RecentGamesInited ;
-  
-
