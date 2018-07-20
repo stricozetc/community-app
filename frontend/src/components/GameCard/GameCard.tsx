@@ -23,16 +23,18 @@ const getBattleButton = (
   if (status === BattleStatus.INIT) {
     return (
       <CaButton
-        clickHandler={() => joinBattleAction(gameName)}
-        value="Join The Battle"
-      />
+        onClick={() => joinBattleAction(gameName)}
+      >
+      Join The Battle
+      </CaButton>
     );
   } else {
     return (
       <CaButton
-        clickHandler={() => leaveBattleAction(gameName)}
-        value="Leave The Battle"
-      />
+        onClick={() => leaveBattleAction(gameName)}
+      >
+      Leave The Battle
+      </CaButton>
     );
   }
 };

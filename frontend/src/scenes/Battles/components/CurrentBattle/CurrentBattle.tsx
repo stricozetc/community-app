@@ -93,9 +93,10 @@ export class CurrentBattleComponent extends React.Component<Props> {
             <div className="ca-current-battle__start-button">
 
               <CaButton
-                value="Start the battle"
                 disabled={!this.isGameFull()}
-              />
+              >
+              Start the battle
+              </CaButton>
 
             </div>
           </div>
@@ -121,19 +122,21 @@ export class CurrentBattleComponent extends React.Component<Props> {
 
           <div className="ca-current-battle__invite-button">
             <CaButton
-              value="Invite friend"
               disabled={true}
-            />
+            >
+            Invite friend
+            </CaButton>
           </div>
 
           <div className="ca-current-battle__leave-button">
             <CaButton
-              clickHandler={() => {
+              onClick={() => {
                 leaveBattleAction(battleName);
                 this.props.history.push('/battles');
               }}
-              value="Leave the room"
-            />
+            >
+            Leave the room
+            </CaButton>
           </div>
 
         </div>

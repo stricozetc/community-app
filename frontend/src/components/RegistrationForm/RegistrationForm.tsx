@@ -1,7 +1,6 @@
 import "./RegistrationForm.scss";
 
 import {
-  Button,
   FormGroup,
   TextField
 } from "@material-ui/core";
@@ -29,6 +28,7 @@ import {isEmpty} from 'utils';
 import {CloseSnackbar, OpenSnackbar} from 'store/snackbar';
 
 import {isObjectsEqual} from "utils/isObjectsEqual";
+import { CaButton } from "components/form-controls/Button";
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: any) {
@@ -291,14 +291,10 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
             )}
           </FormGroup>
 
-          <Button
+          <CaButton
             color="primary"
             type="submit"
-            style={{
-              marginTop: "20px",
-              fontSize: "1.6rem"
-            }}
-            className="ca-Registration-form__field"
+            className="ca-Registration-form__registration-btn"
             disabled={
               !this.state.isEmailValid ||
               !this.state.isPasswordValid ||
@@ -307,7 +303,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
             }
           >
             REGISTER
-          </Button>
+          </CaButton>
         </form>
       </div>
     );

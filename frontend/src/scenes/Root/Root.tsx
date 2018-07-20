@@ -60,14 +60,16 @@ export class RootComponent extends React.Component<RootProps> {
     return (
       isAuthorized ?
         <CaButton
-          clickHandler={() => this.logoutUser()}
-          value="Logout"
-        />
+          onClick={() => this.logoutUser()}
+        >
+        Logout
+        </CaButton>
         :
         <CaButton
-          clickHandler={() => this.redToLogin()}
-          value="Login"
-        />
+          onClick={() => this.redToLogin()}
+        >
+        Login
+        </CaButton>
     );
   }
 
