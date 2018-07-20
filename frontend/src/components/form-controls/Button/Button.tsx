@@ -1,22 +1,16 @@
+import Button, { ButtonProps } from '@material-ui/core/Button';
+import * as classNames from 'classnames';
 import * as React from 'react';
-
 import './Button.scss';
 
-import Button from '@material-ui/core/Button';
-import { ButtonProps } from './Button.model';
-
 export const CaButton = (props: ButtonProps) => {
-  const { clickHandler, value, children, disabled } = props;
+  const { children, className, ...otherProps } = props;
 
   return (
-    <Button
-      className={`ca-button ${disabled ? 'ca-button--disabled' : ''}`}
-      onClick={clickHandler}
-      value={value}
-      disabled={disabled}
-    >
-      {value}
-      {children}
-    </Button>
+    <div className={classNames('ca-button', className)}>
+      <Button {...otherProps}>
+        {children}
+      </Button>
+    </div>
   );
 };
