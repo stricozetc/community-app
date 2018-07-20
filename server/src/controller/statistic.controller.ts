@@ -22,7 +22,7 @@ export class StatisticController {
   }
 
   @httpPost('/set-game-result')
-  public collectStatistic(request: Request, response: Response): Promise<void | Response> | Response {
+  public setGameResult(request: Request, response: Response): Promise<void | Response> | Response {
       const data: DataFromGame  = request.body;
       const appToken: string = request.headers.authorization;
 
