@@ -28,7 +28,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
   .ofType(StatisticTypes.InitBestUsers).pipe(
     switchMap(() => {
 
-      return fromPromise(HttpWrapper.get('api/v1/statistic/get-best-users'))
+      return fromPromise(HttpWrapper.get('api/v1/statistic/best-users'))
         .map((res: any) => {
           const bestUsers: any[] = res.data;
 
@@ -43,7 +43,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
 export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) => actions$
   .ofType(StatisticTypes.InitMostPopularGames).pipe(
     switchMap(() => {
-      return fromPromise(HttpWrapper.get('api/v1/statistic/get-most-popular-games'))
+      return fromPromise(HttpWrapper.get('api/v1/statistic/most-popular-games'))
         .map((res: any) => {
           const popGames: any[] = res.data;
 
@@ -59,7 +59,7 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
   .ofType(StatisticTypes.InitRecentGames).pipe(
     switchMap((action) => {
 
-      return fromPromise(HttpWrapper.get(`api/v1/statistic/get-recent-games?userId=${action.userId}`))
+      return fromPromise(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userId}`))
         .map((res: any) => {
           const rg: any[] = res.data;
 

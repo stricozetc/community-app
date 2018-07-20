@@ -10,7 +10,7 @@ export enum StatisticTypes {
     LoadMostPopularGamesCompleted = '[statistic] Load Most Popular Games Completed',
     LoadMostPopularGamesFailed = '[statistics] Load Most Popular Games Failed',
     InitRecentGames = '[statistic] Init Recent Games',
-    LoadRecentGamesCompleted = '[statistic] Load Recent Games Complated',
+    LoadRecentGamesCompleted = '[statistic] Load Recent Games Completed',
     LoadRecentGamesFailed = '[statistic] Load Recent Games Failed'
 }
 

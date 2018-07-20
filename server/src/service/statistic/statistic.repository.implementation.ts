@@ -1,9 +1,18 @@
-import { HistoryRepository } from './history.repository';
+import { StatisticRepository } from './statistic.repository';
 import { injectable } from 'inversify';
 import { Game } from '../../typing/game';
 
-import { HistoryModel, AppTokenModel, UserModel } from './../../../models';
-import { Statistic } from '../../controller';
+import {
+  StatisticModel,
+  AppTokenModel,
+  UserModel,
+  Statistic,
+  TokenFromDb,
+  RecentGameFromServer,
+  PopularGamesFromServer,
+  BestUsersFromServer
+} from './../../../models';
+
 import { Sequelize } from 'sequelize';
 import { DataFromGame } from './../../controller/statistic.controller';
 
@@ -13,46 +22,16 @@ import { resolve } from 'url';
 
 import { AppTokenRepository } from './../app-token/app-token.repository';
 import { inject } from 'inversify';
-import { HistoryService } from './history.service';
-
-
-export interface TokenFromDb {
-  token: string;
-  appName: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface RecentGameFromServer {
-  game: string;
-  playedTime: number;
-  scores: number;
-  result: boolean;
-}
-
-export interface PopularGamesFromServer {
-  name: string; 
-  playedTime: number;
-  playedInWeek: number;
-}
-export interface BestUsersFromServer {
-  id: number;
-  name: number;
-  playedTime: number;
-  scores: number;
-}
+import { StatisticService } from './statistic.service';
 
 
 @injectable()
-export class HistoryRepositoryImplementation implements HistoryRepository {
+export class StatisticRepositoryImplementation implements StatisticRepository {
   public constructor(
-    @inject(HistoryService) private historyService: HistoryService
+    @inject(StatisticService) private historyService: StatisticService
   ) {}
 
-  public collectStatistic(
-    data: DataFromGame,
-    appToken: string
-  ): Promise<boolean> {
+  public setGameResult(data: DataFromGame, appToken: string): Promise<boolean> {
     let { statistic } = data;
 
     return AppTokenModel.findOne({
@@ -80,7 +59,7 @@ export class HistoryRepositoryImplementation implements HistoryRepository {
   }
 
   public getRecentGames(userId: number): Promise<RecentGameFromServer[]> {
-    return HistoryModel.findAll({
+    return StatisticModel.findAll({
       where: { userId },
       order: [['createdAt', 'DESC']]
       // attributes: ['id', 'playedTime', 'scores', 'isWin']
@@ -94,19 +73,20 @@ export class HistoryRepositoryImplementation implements HistoryRepository {
 
         return Promise.all(promises)
           .then(appNames => {
-            console.log('APP NAMES', appNames);
-            recentGames = recentGames.reduce((accumulator, game, index) => {
-              const gameName = appNames[index];
-
-              let result = {
-                game: gameName,
-                playedTime: game.playedTime,
-                scores: game.scores,
-                result: game.isWin
-              };
-
-              return accumulator.concat(result);
-            }, []);
+            if (!isEmpty(recentGames)) {
+              recentGames = recentGames.reduce((accumulator, game, index) => {
+                const gameName = appNames[index];
+  
+                let result = {
+                  game: gameName,
+                  playedTime: game.playedTime,
+                  scores: game.scores,
+                  result: game.isWin
+                };
+  
+                return accumulator.concat(result);
+              }, []);
+            }
 
             return recentGames;
           })
@@ -116,64 +96,76 @@ export class HistoryRepositoryImplementation implements HistoryRepository {
   }
 
   public getMostPopularGames(): Promise<PopularGamesFromServer[]> {
-    return new Promise<PopularGamesFromServer[]>((resolvePopularGames, reject) => {
-      AppTokenModel.findAll({ attributes: ['token', 'appName'] })
-        .then((gamesAndTokens: {token: string, appName: string}[]) => {
-          const tokens = gamesAndTokens.map(row => row.token);
+    return new Promise<PopularGamesFromServer[]>(
+      (resolvePopularGames, reject) => {
+        AppTokenModel.findAll({ attributes: ['token', 'appName'] })
+          .then((gamesAndTokens: { token: string; appName: string }[]) => {
+            const tokens = gamesAndTokens.map(row => row.token);
 
-          const promises = tokens.map(currentToken => {
-            return HistoryModel.findAll({
-              where: { appToken: currentToken }
-            })
-              .then(historyRows => {
-                const playedTime = historyRows
-                  .map(row => row.playedTime)
-                  .reduce((a, b) => a + b);
-
-                const playedInWeek = this.historyService.calculatePlayedInWeek(
-                  historyRows
-                );
-
-                let result = {
-                  token: currentToken,
-                  playedTime,
-                  playedInWeek
-                };
-        
-                return result;
+            const promises = tokens.map(currentToken => {
+              return StatisticModel.findAll({
+                where: { appToken: currentToken }
               })
-              .catch(err => reject(err));
-          });
+                .then(historyRows => {
+                  let playedTimeArr = historyRows.map(row => row.playedTime);
+                  let playedTime = 0;
+                  if (!isEmpty(playedTimeArr)) {
+                    playedTime = playedTimeArr.reduce((a, b) => a + b);
+                  }
 
-          return Promise.all(promises)
-            .then((allGamesAndItsPlayedTime: { token: string; playedTime: number; playedInWeek: number; }[]) => {
-              let mostPopularGames = allGamesAndItsPlayedTime.reduce(
-                (accumulator, game) => {
-                  const gameName = gamesAndTokens.find(
-                    el => el.token === game.token
-                  ).appName;
+                  const playedInWeek = this.historyService.calculatePlayedInWeek(
+                    historyRows
+                  );
 
                   let result = {
-                    name: gameName,
-                    playedTime: game.playedTime,
-                    playedInWeek: game.playedInWeek
+                    token: currentToken,
+                    playedTime,
+                    playedInWeek
                   };
 
-                  return accumulator.concat(result);
-                },
-                []
-              );
-              mostPopularGames = this.historyService.sortBy(
-                mostPopularGames,
-                'playedTime'
-              );
+                  return result;
+                })
+                .catch(err => reject(err));
+            });
 
-              return resolvePopularGames(mostPopularGames);
-            })
-            .catch(err => reject(err));
-        })
-        .catch(err => reject(err));
-    });
+            return Promise.all(promises)
+              .then(
+                (
+                  allGamesAndItsPlayedTime: {
+                    token: string;
+                    playedTime: number;
+                    playedInWeek: number;
+                  }[]
+                ) => {
+                  let mostPopularGames = allGamesAndItsPlayedTime.reduce(
+                    (accumulator, game) => {
+                      const gameName = gamesAndTokens.find(
+                        el => el.token === game.token
+                      ).appName;
+
+                      let result = {
+                        name: gameName,
+                        playedTime: game.playedTime,
+                        playedInWeek: game.playedInWeek
+                      };
+
+                      return accumulator.concat(result);
+                    },
+                    []
+                  );
+                  mostPopularGames = this.historyService.sortBy(
+                    mostPopularGames,
+                    'playedTime'
+                  );
+
+                  return resolvePopularGames(mostPopularGames);
+                }
+              )
+              .catch(err => reject(err));
+          })
+          .catch(err => reject(err));
+      }
+    );
   }
 
   public getBestUsers(): Promise<BestUsersFromServer[]> {
@@ -182,7 +174,7 @@ export class HistoryRepositoryImplementation implements HistoryRepository {
         .then(users => {
           const promises = users.map(currentUser => {
             if (currentUser.isActive) {
-              return HistoryModel.findAll({
+              return StatisticModel.findAll({
                 where: { userId: currentUser.id }
               })
 
@@ -209,7 +201,7 @@ export class HistoryRepositoryImplementation implements HistoryRepository {
                     playedTime,
                     scores
                   };
-    
+
                   return result;
                 })
                 .catch(err => reject(err));
@@ -223,7 +215,6 @@ export class HistoryRepositoryImplementation implements HistoryRepository {
               let bestUsers = this.historyService
                 .sortBy(allUsersStatistic, 'scores')
                 .filter(user => user.scores > 0);
-              console.log('BEST USERS', bestUsers);
 
               return resolveBestUsers(bestUsers);
             })
@@ -234,7 +225,7 @@ export class HistoryRepositoryImplementation implements HistoryRepository {
   }
 
   private saveStatistic(token: string, stat: Statistic): Promise<boolean> {
-    const newHistory = HistoryModel.build({
+    const newHistory = StatisticModel.build({
       appToken: token,
       userId: stat.userId,
       playedTime: stat.playedTime,
