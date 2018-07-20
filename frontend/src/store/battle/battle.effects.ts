@@ -10,7 +10,8 @@ import {
   BattleActionTypes,
   JoinBattle,
   LeaveBattle,
-  RedirectToBattle
+  RedirectToBattle,
+  ErrorBattle
 } from './battle.action';
 
 import { FrontEndUser } from '../auth';
@@ -53,8 +54,11 @@ export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>)
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
         userToken = user.iat;
+
+        return window.location.replace(`${action.payload}/${userToken}`);
+      } else {
+        return store.dispatch(new ErrorBattle());
       }
-      return window.location.replace(`${action.payload}/${userToken}`);
     })
   );
 

@@ -110,13 +110,13 @@ export class RoomService {
     * */
     let room = this.rooms.find(r => r.id === index);
     const operation$ = Promise.resolve(true);
-    
+
     if (token) {
       this.playersBindService.removePlayers(room.token, token);
     }
 
     if (room && room.players.length > 1) {
-      room.players = [...room.players.filter(p => p !== client)];
+      room.players = room.players.filter(p => p !== client);
 
       this.loggerService.infoLog(`Remove player from ${this.games[index].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
@@ -183,16 +183,18 @@ export class RoomService {
 
   private startGame(game: Game, room: Room, index: number): void {
 
-    this.playersBindService.sendPlayerBind(game, room);
+    this.playersBindService.sendPlayerBind(game, room)
+      .then(() => {
+        room.players.forEach((player: SocketIO.Socket) => {
+          player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
+          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
 
-    room.players.forEach((player: SocketIO.Socket) => {
-      player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
-      this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
-
-      player.emit('redirect', this.games[index].redirectUrl);
-      this.loggerService.infoLog(`Redirect players group to ${this.games[index].name}`);
-    });
-    room.status = RoomStatus.InGame;
+          player.emit('redirect', this.games[index].redirectUrl);
+          this.loggerService.infoLog(`Redirect players group to ${this.games[index].name}`);
+        });
+        room.status = RoomStatus.InGame;
+      })
+      .catch((error) => console.log(error));
   }
 
   private countdown(room: Room, index: number, distance: number): void {
