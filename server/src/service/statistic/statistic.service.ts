@@ -35,4 +35,14 @@ export class StatisticService {
       return 0;
     });
   }
+
+  public calculatePlayedTime(array: {playedTime: number}[]): number {
+    let playedTimeArr = array.map(el => el.playedTime);
+    let playedTime = 0;
+    if (!isEmpty(playedTimeArr)) {
+      playedTime = playedTimeArr.reduce((a, b) => a + b);
+    }
+
+    return playedTime;
+  }
 }

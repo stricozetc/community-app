@@ -28,7 +28,7 @@ import { StatisticService } from './statistic.service';
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
   public constructor(
-    @inject(StatisticService) private historyService: StatisticService
+    @inject(StatisticService) private statisticService: StatisticService
   ) {}
 
   public setGameResult(data: DataFromGame, appToken: string): Promise<boolean> {
@@ -58,6 +58,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       .catch((err: any) => err);
   }
 
+
   public getRecentGames(userId: number): Promise<RecentGameFromServer[]> {
     return StatisticModel.findAll({
       where: { userId },
@@ -80,14 +81,12 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 let result = {
                   game: gameName,
                   playedTime: game.playedTime,
-                  scores: game.scores,
                   result: game.isWin
                 };
   
                 return accumulator.concat(result);
               }, []);
             }
-
             return recentGames;
           })
           .catch(err => err);
@@ -95,25 +94,23 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       .catch(err => err);
   }
 
+
   public getMostPopularGames(): Promise<PopularGamesFromServer[]> {
     return new Promise<PopularGamesFromServer[]>(
       (resolvePopularGames, reject) => {
         AppTokenModel.findAll({ attributes: ['token', 'appName'] })
           .then((gamesAndTokens: { token: string; appName: string }[]) => {
             const tokens = gamesAndTokens.map(row => row.token);
-
+            
             const promises = tokens.map(currentToken => {
               return StatisticModel.findAll({
                 where: { appToken: currentToken }
               })
                 .then(historyRows => {
-                  let playedTimeArr = historyRows.map(row => row.playedTime);
-                  let playedTime = 0;
-                  if (!isEmpty(playedTimeArr)) {
-                    playedTime = playedTimeArr.reduce((a, b) => a + b);
-                  }
 
-                  const playedInWeek = this.historyService.calculatePlayedInWeek(
+                  let playedTime =  this.statisticService.calculatePlayedTime(historyRows);
+
+                  const playedInWeek = this.statisticService.calculatePlayedInWeek(
                     historyRows
                   );
 
@@ -153,7 +150,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                     },
                     []
                   );
-                  mostPopularGames = this.historyService.sortBy(
+                  mostPopularGames = this.statisticService.sortBy(
                     mostPopularGames,
                     'playedTime'
                   );
@@ -179,11 +176,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
               })
 
                 .then(historyRows => {
-                  let playedTimeArr = historyRows.map(row => row.playedTime);
-                  let playedTime = 0;
-                  if (!isEmpty(playedTimeArr)) {
-                    playedTime = playedTimeArr.reduce((a, b) => a + b);
-                  }
+                  let playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
                   let scoresArray = historyRows.map(row => {
                     if (row.playedTime) {
@@ -212,7 +205,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
           return Promise.all(promises)
             .then(allUsersStatistic => {
-              let bestUsers = this.historyService
+              let bestUsers = this.statisticService
                 .sortBy(allUsersStatistic, 'scores')
                 .filter(user => user.scores > 0);
 
