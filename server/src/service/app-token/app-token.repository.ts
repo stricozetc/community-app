@@ -4,7 +4,6 @@ import { AppData } from '../../../Interfaces/AppData';
 import { AppTokenModel } from '../../../models/appToken';
 import { AppToken } from '../../../Interfaces/AppToken';
 
-
 @injectable()
 export class AppTokenRepository {
     public create(app: AppData): Promise<string> {
@@ -20,16 +19,16 @@ export class AppTokenRepository {
                 if (isUpsert) {
                     resolve(newToken);
                 } else {
-                    reject("Error in token creation!");
+                    reject('Error in token creation!');
                 }
-            }).catch(e => {
+            }).catch((e) => {
                 reject(e);
             });
         });
     }
 
     public async getByName(gameName: string): Promise<AppToken> {
-        let app = await AppTokenModel.findOne({
+        const app = await AppTokenModel.findOne({
             where: {appName: gameName}
         });
 
@@ -37,7 +36,7 @@ export class AppTokenRepository {
     }
 
     public async getByToken(tokenName: string): Promise<AppToken> {
-        let app = await AppTokenModel.findOne({
+        const app = await AppTokenModel.findOne({
             where: {token: tokenName}
         });
 

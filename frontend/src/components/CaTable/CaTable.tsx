@@ -17,33 +17,40 @@ export const CaTable = (props: CaTableProps) => {
   const arrayOfPropertyName = columnDef.map(column => column.field);
 
   return(
-    <Table className="statistic-table">
-        <TableHead className="statistic-table__table-head">
+    <Table className='statistic-table'>
+        <TableHead className='statistic-table__table-head'>
             <TableRow>
                 {arrayOfColumnName.map((nameOfColumn, index) => {
                     const numeric = index !== 0;
                     return (
-                        <TableCell key={nameOfColumn} numeric={numeric} className={`statistic-table__column${index + 1}-cell statistic-table__table-head-cell`}>{nameOfColumn}</TableCell>
-                    )
+                        <TableCell key={nameOfColumn}
+                                    numeric={numeric}
+                                    className={`statistic-table__column${index + 1}-cell statistic-table__table-head-cell`}
+                        >
+                            {nameOfColumn}
+                        </TableCell>
+                    );
                 })}
             </TableRow>
         </TableHead>
         <TableBody>
             {rowData.map((user, index) => {
             return (
-                <TableRow className="statistic-table__row" key={index}>
-                    {arrayOfPropertyName.map((property, index) => {
-                        const numeric = index !== 0;
+                <TableRow className='statistic-table__row' key={index}>
+                    {arrayOfPropertyName.map((property, ind) => {
+                        const numeric = ind !== 0;
                         return (
-                            <TableCell numeric={numeric} key={index} className={`statistic-table__column${index + 1}-cell`}>{user[property]}</TableCell>
-                        )
+                            <TableCell numeric={numeric} key={ind} className={`statistic-table__column${ind + 1}-cell`}>
+                                {user[property]}
+                            </TableCell>
+                        );
                     }
                     )}
                 </TableRow>
             );
             })}
         </TableBody>
-   
+
     </Table>
-  )
-}
+  );
+};

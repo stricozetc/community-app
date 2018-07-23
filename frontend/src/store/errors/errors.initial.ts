@@ -1,1 +1,1 @@
-export const initialState:any = {}
+export const initialState: any = {};

@@ -1,4 +1,4 @@
-import * as Sequelize from "sequelize";
+import * as Sequelize from 'sequelize';
 import { dbConfig } from './../src/config/dbconfig';
 
 export interface Db {

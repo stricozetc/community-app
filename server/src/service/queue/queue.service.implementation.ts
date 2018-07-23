@@ -1,8 +1,8 @@
-import { injectable, decorate, inject } from "inversify";
+import { injectable, decorate, inject } from 'inversify';
 
-import { QueueService } from "./queue.service";
-import { LoggerService } from "../logger";
-import { Game } from "../../typing/game";
+import { QueueService } from './queue.service';
+import { LoggerService } from '../logger';
+import { Game } from '../../typing/game';
 
 decorate(injectable(), QueueService);
 

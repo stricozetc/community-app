@@ -5,7 +5,7 @@ import { LoggerService } from '../logger';
 import { TimerService } from './../timer';
 
 import { RoomStatus, Room } from './models';
-import { RoomInfo } from "../../typing/room-info";
+import { RoomInfo } from '../../typing/room-info';
 
 @injectable()
 export class RoomService {
@@ -21,11 +21,12 @@ export class RoomService {
   }
 
   public getRoomByIndex(index: number): Room | undefined {
-    return this.rooms.find(r => r.id === index);
+    return this.rooms.find((r) => r.id === index);
   }
 
   public createNewRoom(index: number, client: SocketIO.Socket): Promise<boolean> {
-    return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
+    return this.apiService.startNewRoom(
+      `${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
       let isCreated = false;
 
       if (roomToken) {
@@ -54,7 +55,7 @@ export class RoomService {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
-    const room: Room | undefined = this.rooms.find(r => r.id === index);
+    const room: Room | undefined = this.rooms.find((r) => r.id === index);
     let operation$ = Promise.resolve(true);
 
     if (room && room.players.length < room.maxPlayersCount && room.status === RoomStatus.Waiting) {
@@ -63,15 +64,15 @@ export class RoomService {
       this.loggerService.infoLog(`Add player to ${this.games[index].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else {
-      operation$ = this.createNewRoom(index, client).then(result => {
+      operation$ = this.createNewRoom(index, client).then((result) => {
 
-        let newRoom = this.rooms.find(r => r.id === index);
-        let timer = this.timerService.start(
+        const newRoom = this.rooms.find((r) => r.id === index);
+        const timer = this.timerService.start(
           (distance: number) => {
             this.loggerService.infoLog(`Countdown ${distance} -> ${this.games[index].name}`);
             newRoom.distance = distance;
 
-            let roundDistance = Math.round(distance / 1000);
+            const roundDistance = Math.round(distance / 1000);
 
             if (roundDistance % 30 === 0 || roundDistance === 15 || roundDistance === 10 || roundDistance === 5) {
               this.countdown(newRoom, index, distance);
@@ -91,7 +92,7 @@ export class RoomService {
 
     return operation$.then((isAdded: boolean) => {
       this.checkWaitPlayersCount(index);
-      let updatedRoom = this.rooms.find(r => r.id === index);
+      const updatedRoom = this.rooms.find((r) => r.id === index);
 
       return [isAdded, updatedRoom] as [boolean, Room];
     });
@@ -101,23 +102,23 @@ export class RoomService {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
-    let room = this.rooms.find(r => r.id === index);
+    const room = this.rooms.find((r) => r.id === index);
     const operation$ = Promise.resolve(true);
 
     if (room && room.players.length > 1) {
-      room.players = [...room.players.filter(p => p !== client)];
+      room.players = [...room.players.filter((p) => p !== client)];
 
       this.loggerService.infoLog(`Remove player from ${this.games[index].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else if (room) {
       this.timerService.end(room.timer);
-      this.rooms = [...this.rooms.filter(r => r.id !== index)];
+      this.rooms = [...this.rooms.filter((r) => r.id !== index)];
       room.players = [];
 
       this.loggerService.infoLog(`Remove ${this.games[index].name} room`);
     }
 
-    return operation$.then(result => {
+    return operation$.then((result) => {
       if (room) {
         this.checkWaitPlayersCount(room.id);
       }
@@ -130,26 +131,26 @@ export class RoomService {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
-    let room = this.rooms.find(r => {
-      return !!r.players.find(p => p === client);
+    const room = this.rooms.find((r) => {
+      return !!r.players.find((p) => p === client);
     });
 
     const operation$ = Promise.resolve(true);
 
     if (room && room.players.length > 1) {
-      room.players = [...room.players.filter(p => p !== client)];
+      room.players = [...room.players.filter((p) => p !== client)];
 
       this.loggerService.infoLog(`Remove player from ${this.games[room.id].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else if (room) {
       this.timerService.end(room.timer);
-      this.rooms = [...this.rooms.filter(r => r.id !== room.id)];
+      this.rooms = [...this.rooms.filter((r) => r.id !== room.id)];
       room.players = [];
 
       this.loggerService.infoLog(`Remove ${this.games[room.id].name} room`);
     }
 
-    return operation$.then(result => {
+    return operation$.then((result) => {
       if (room) {
         this.checkWaitPlayersCount(room.id);
       }
@@ -159,7 +160,7 @@ export class RoomService {
   }
 
   private checkWaitPlayersCount(index: number): void {
-    let room = this.rooms.find(r => r.id === index);
+    const room = this.rooms.find((r) => r.id === index);
 
     if (room && room.players.length === this.games[index].maxRoomPlayer) {
       this.timerService.end(room.timer);
@@ -185,7 +186,7 @@ export class RoomService {
   }
 
   private mapRoomsToRoomsInfo(): RoomInfo[] {
-    return this.rooms.map(r => {
+    return this.rooms.map((r) => {
       return {
         id: r.id,
         gameId: r.gameId,

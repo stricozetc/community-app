@@ -54,9 +54,8 @@ export class MockController {
       });
   }
 
-
   @httpGet('/')
   public getCurrentUser(request: Request, response: Response): any {
-    console.log('Mock');
+    console.dir('Mock');
   }
 }

@@ -1,6 +1,6 @@
 import { Game } from '../../typing/game';
 import { DataFromGame } from './../../controller/statistic.controller';
-import Promise = require("bluebird");
+import Promise = require('bluebird');
 export abstract class StatisticRepository {
 
     public abstract getMostPopularGames(): Promise<any[]>;

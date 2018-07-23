@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { injectable } from 'inversify';
 
 import {
     createLogger,
@@ -7,7 +7,7 @@ import {
     transports
 } from 'winston';
 
-import { LoggerService } from "./logger.service";
+import { LoggerService } from './logger.service';
 
 @injectable()
 export class LoggerServiceImplementation implements LoggerService {

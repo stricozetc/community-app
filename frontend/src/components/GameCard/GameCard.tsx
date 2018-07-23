@@ -60,25 +60,25 @@ export const CaGameCard = (props: GameCardProps) => {
 
   return (
     <div className={['ca-game-card', ...classes].join(' ')}>
-      <div className="ca-game-card__container">
-        <h1 className="ca-game-card__game-title">{name}</h1>
-        <h2 className="ca-game-card__game-desc">{desc}</h2>
+      <div className='ca-game-card__container'>
+        <h1 className='ca-game-card__game-title'>{name}</h1>
+        <h2 className='ca-game-card__game-desc'>{desc}</h2>
 
-        <div className="ca-game-card__btn-container">
+        <div className='ca-game-card__btn-container'>
           {!isFull ? getBattleButton(status, joinGame, leaveGame, name) : <span/>}
         </div>
         <div className={'ca-game-footer ' + backgroundFooterColor}>
-          <div className="ca-game-footer__container">
-            <div className="ca-game-footer__container-item">
+          <div className='ca-game-footer__container'>
+            <div className='ca-game-footer__container-item'>
               {isFull ? (
-                <span className="ca-game-footer__alert"> All rooms are full  </span>
+                <span className='ca-game-footer__alert'> All rooms are full  </span>
               ) : (
-                <div className="ca-game-footer__placeholder">
-                  <div className="ca-game-footer__icon">
-                    <img src={clockImage} alt="Can not found clock img"/>
+                <div className='ca-game-footer__placeholder'>
+                  <div className='ca-game-footer__icon'>
+                    <img src={clockImage} alt='Can not found clock img'/>
                   </div>
-                  <div className="ca-game-footer__info">
-                    <div className="ca-game-footer__first-line">
+                  <div className='ca-game-footer__info'>
+                    <div className='ca-game-footer__first-line'>
                       Starting in:
                     </div>
                     <div
@@ -92,13 +92,13 @@ export const CaGameCard = (props: GameCardProps) => {
                 </div>
               )}
             </div>
-            <div className="ca-game-footer__container-item">
-              <div className="ca-game-footer__placeholder">
-                <div className="ca-game-footer__icon">
-                  <img src={userImage} alt="Can not found User img"/>
+            <div className='ca-game-footer__container-item'>
+              <div className='ca-game-footer__placeholder'>
+                <div className='ca-game-footer__icon'>
+                  <img src={userImage} alt='Can not found User img'/>
                 </div>
-                <div className="ca-game-footer__info">
-                  <div className="ca-game-footer__first-line">Players:</div>
+                <div className='ca-game-footer__info'>
+                  <div className='ca-game-footer__first-line'>Players:</div>
                   <div
                     className={'ca-game-footer__second-line ' + secondLineColor}
                   >

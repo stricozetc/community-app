@@ -34,7 +34,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) => actions$
     switchMap(action => fromPromise(HttpWrapper.post('api/users/login', action.payload))
       .map(res => {
         const { token } = res.data;
-        Cookies.set('jwtToken', token)
+        Cookies.set('jwtToken', token);
         setAuthToken(token);
         const decoded: FrontEndUser = jwt_decode(token);
 
@@ -50,7 +50,6 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) => acti
         return Observable.of(new GetErrors(error.response.data));
       }))
   );
-
 
 export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) => actions$
   .ofType(AuthTypes.LogoutUser)

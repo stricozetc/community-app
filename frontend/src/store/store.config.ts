@@ -32,7 +32,6 @@ import {
   StatisticState
 } from './statistic';
 
-
 import {
   SocketEffects,
   socketReducer,
@@ -70,13 +69,13 @@ const rootEpic: Epic = combineEpics(
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
 export interface AppState {
-  battle: BattleState,
-  auth: AuthState,
-  games: GamesState,
-  statistic: StatisticState,
-  errors: {},
-  socket: SocketState,
-  snackbarUi: SnackbarUiState
+  battle: BattleState;
+  auth: AuthState;
+  games: GamesState;
+  statistic: StatisticState;
+  errors: {};
+  socket: SocketState;
+  snackbarUi: SnackbarUiState;
 }
 
 // tslint:disable-next-line:no-angle-bracket-type-assertion
@@ -89,7 +88,7 @@ const composeForAllBrowsers = (devTools: any) => {
     )
     : compose(
       applyMiddleware(epicMiddleware)
-    )
+    );
 };
 
 export const store = createStore(

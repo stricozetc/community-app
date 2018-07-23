@@ -32,7 +32,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
         .map((res: any) => {
           const bestUsers: any[] = res.data;
 
-              return new LoadBestUsersCompleted(bestUsers)
+          return new LoadBestUsersCompleted(bestUsers);
             }).catch(error => {
 
               return Observable.of(new LoadBestUsersFailed(error));
@@ -47,7 +47,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
         .map((res: any) => {
           const popGames: any[] = res.data;
 
-            return new LoadMostPopularGamesCompleted(popGames);
+          return new LoadMostPopularGamesCompleted(popGames);
             }).catch(error => {
 
               return Observable.of(new LoadMostPopularGamesFailed(error));
@@ -63,7 +63,7 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
         .map((res: any) => {
           const rg: any[] = res.data;
 
-              return new LoadRecentGamesCompleted(rg);
+          return new LoadRecentGamesCompleted(rg);
             }).catch(error => {
 
               return Observable.of(new LoadRecentGamesFailed(error));

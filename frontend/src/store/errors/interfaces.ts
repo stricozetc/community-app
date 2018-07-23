@@ -1,5 +1,4 @@
 
 export interface ErrorsState {
-    errors: {}
+    errors: {};
   }
-  

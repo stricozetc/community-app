@@ -1,17 +1,17 @@
-import { injectable } from "inversify";
+import { injectable } from 'inversify';
 
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
-import { UserModel } from "../../../models/user";
-import { UserRoles } from "../../../models/userRoles";
+import { UserModel } from '../../../models/user';
+import { UserRoles } from '../../../models/userRoles';
 import { RoleModel } from '../../../models/role';
 import { Role } from '../../../Interfaces/Role';
 import { registerErr } from '../../../errors/registerErr';
-import keys from '../../config/keys';
+import { keys } from '../../config/keys';
 import { UserAuthenticationRepository } from './user-authentication';
 import { User } from '../../../Interfaces/User';
-import { loginErr } from "../../../errors/loginErr";
+import { loginErr } from '../../../errors/loginErr';
 
 @injectable()
 export class UserAuthenticationRepositoryImplementation implements UserAuthenticationRepository {
@@ -20,13 +20,12 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
         return new Promise<User>((resolve, reject) => {
 
-            let errors: any = {};
+            const errors: any = {};
             UserModel.findOne({
                 where: {email: data.email}
             }).then((user: User) => {
                 if (user) {
                     errors.email = registerErr.userIsAlreadyRegistered;
-
 
                     return reject(errors);
                 }
@@ -39,7 +38,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
                 bcrypt.genSalt(10, (err, salt) => {
                     if (err) {
-                        return reject(err); // Technical Err
+                        return reject(err); // technical Err
                     }
                     bcrypt.hash(data.password, salt, (hashErr, hash) => {
                         if (hashErr) {
@@ -71,7 +70,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             const email = data.email;
             const password = data.password;
 
-            let errors: any = {};
+            const errors: any = {};
             UserModel.findOne({where: {email}}).then((user: User) => {
                 if (!user) {
                     errors.email = loginErr.notFoundUser;
@@ -80,7 +79,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     return reject(errors);
                 } else {
                     bcrypt.compare(password, user.password)
-                        .then(isMatch => {
+                        .then((isMatch) => {
                             if (isMatch) {
                                 const payload = {
                                     id: user.id,
