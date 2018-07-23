@@ -1,6 +1,6 @@
 import './LoginForm.scss';
 
-import { Button, FormGroup, TextField } from '@material-ui/core';
+import { FormGroup, TextField } from '@material-ui/core';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -20,9 +20,8 @@ import {
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
 
-import { CaSnackbar } from './../Snackbar/Snackbar';
+import { CaButton, CaSnackbar } from 'components';
 import { isObjectsEqual } from 'utils/isObjectsEqual';
-
 
 export class LoginFormComponent extends React.Component<
   LoginFormProps,
@@ -160,7 +159,7 @@ export class LoginFormComponent extends React.Component<
          transitionDirection="down"
           message={
             <div>
-              {keys && keys.map((k: string) => 
+              {keys && keys.map((k: string) =>
                 (
                   <div>* {errors[k].msg} </div>
                 )
@@ -216,14 +215,14 @@ export class LoginFormComponent extends React.Component<
               })}
           </FormGroup>
 
-          <Button
+          <CaButton
             color="primary"
             type="submit"
             className="ca-login-form__login-btn"
             disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
           >
             LOGIN
-          </Button>
+          </CaButton>
         </form>
       </div>
     );
