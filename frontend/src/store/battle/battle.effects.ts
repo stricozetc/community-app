@@ -24,7 +24,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
       let options: number = 0;
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
-        options = user.iat;
+        options = +user.id;
       }
       let eventName = '';
       if (game) {
@@ -52,7 +52,7 @@ export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>)
       let userToken: number = 0;
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
-        userToken = user.iat;
+        userToken = +user.id;
       }
       return window.location.replace(`${action.payload}/${userToken}`);
     })
