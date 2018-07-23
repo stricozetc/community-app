@@ -19,7 +19,6 @@ import {
 
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
-
 import { CaButton, CaSnackbar } from 'components';
 import { isObjectsEqual } from 'utils/isObjectsEqual';
 
@@ -215,9 +214,9 @@ export class LoginFormComponent extends React.Component<
           </FormGroup>
 
           <CaButton
-            color="primary"
-            type="submit"
-            className="ca-login-form__login-btn"
+            color='primary'
+            type='submit'
+            className='ca-login-form__login-btn'
             disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
           >
             LOGIN

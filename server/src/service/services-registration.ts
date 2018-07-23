@@ -16,7 +16,6 @@ import { MocksRepository, MocksRepositoryImplementation } from './mocks';
 import { AppTokenRepository, AppTokenService } from './app-token';
 import { StatisticService, StatisticRepositoryImplementation, StatisticRepository } from './statistic';
 
-
 export const CONTAINER = new Container();
 
 CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);

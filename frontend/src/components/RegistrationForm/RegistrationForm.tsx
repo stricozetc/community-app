@@ -289,9 +289,9 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           </FormGroup>
 
           <CaButton
-            color="primary"
-            type="submit"
-            className="ca-Registration-form__registration-btn"
+            color='primary'
+            type='submit'
+            className='ca-Registration-form__registration-btn'
             disabled={
               !this.state.isEmailValid ||
               !this.state.isPasswordValid ||

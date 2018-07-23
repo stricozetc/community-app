@@ -6,13 +6,9 @@ import {CaSnackbarProps} from './Snackbar.model';
 
 import {Snackbar} from '@material-ui/core';
 
-
 import {CaSlide} from 'components/Slide';
 
-
 export class CaSnackbar extends React.Component<CaSnackbarProps> {
-
-
 
   public render(): JSX.Element {
 
@@ -40,7 +36,7 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         break;
 
       case 'success':
- 
+
         classes.push('ca-snackbar--green');
         break;
 
@@ -48,10 +44,9 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         break;
     }
 
-
     return (
       <Snackbar
-    
+
         className={['ca-snackbar', ...classes].join(' ')}
         anchorOrigin={this.props.anchorOrigin}
         open={this.props.open}
@@ -59,7 +54,7 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         autoHideDuration={this.props.autoHideDuration}
         message={this.props.message}
         action={this.props.action}
-  
+
         TransitionComponent={transition}
         {...this.props}
       />

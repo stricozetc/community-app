@@ -2,18 +2,17 @@ import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import * as passport from 'passport';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import Promise = require("bluebird");
+import Promise = require('bluebird');
 
-import { 
-  StatisticRepository 
+import {
+  StatisticRepository
 } from './../service/statistic';
 
 import { Game } from '../typing/game';
 
-export interface DataFromGame { 
-  statistic: any; // Temporary. Before test with real API, not with postman
+export interface DataFromGame {
+  statistic: any; // temporary. Before test with real API, not with postman
 }
-
 
 @controller('/api/v1/statistic')
 export class StatisticController {
@@ -31,7 +30,7 @@ export class StatisticController {
 
         return response.status(400).send(err);
       });
-   
+
   }
 
   @httpGet('/recent-games', passport.authenticate('jwt', {session: false}))
@@ -64,8 +63,6 @@ export class StatisticController {
         return response.status(400).json(err);
       });
   }
-
-  
 
   @httpGet('/statistic', passport.authenticate('jwt', {session: false}))
   public getStatistic(request: Request, response: Response): Promise<void | Response> {

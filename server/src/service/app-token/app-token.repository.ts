@@ -4,7 +4,6 @@ import { AppData } from '../../../Interfaces/AppData';
 import { AppTokenModel } from '../../../models/appToken';
 import { AppToken } from '../../../Interfaces/AppToken';
 
-
 @injectable()
 export class AppTokenRepository {
     public create(app: AppData): Promise<string> {
@@ -37,7 +36,7 @@ export class AppTokenRepository {
     }
 
     public async getByToken(tokenName: string): Promise<AppToken> {
-        let app = await AppTokenModel.findOne({
+        const app = await AppTokenModel.findOne({
             where: {token: tokenName}
         });
 

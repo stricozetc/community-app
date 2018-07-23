@@ -64,7 +64,7 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
         const columnDef = [
           {headerName: 'User name', field: 'name'},
           {headerName: 'Played time', field: 'playedTime'},
-          {headerName: 'Score', field: 'scores'}        
+          {headerName: 'Score', field: 'scores'}
         ];
         const bestUsers = [...this.props.statistic.bestUsers];
 
@@ -87,8 +87,8 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
                 if (property === 'playedTime') {
                   newUserStatistic[property] = newUserStatistic[property] + ' minutes';
                 }
-  
-                if(property === 'scores') {
+
+                if (property === 'scores') {
                   newUserStatistic[property] = newUserStatistic[property];
                 }
               }
@@ -117,7 +117,7 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
         const columnDef = [
           {headerName: 'Game', field: 'name'},
           {headerName: 'Played in week', field: 'playedInWeek'},
-          {headerName: 'Played all', field: 'playedTime'}        
+          {headerName: 'Played all', field: 'playedTime'}
         ];
         const mostPopularGames = [...this.props.statistic.mostPopularGames];
 
@@ -141,9 +141,9 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
                 if (property === 'playedInWeek') {
                   newUserStatistic[property] = newUserStatistic[property] + ' minutes';
                 }
-  
-                if(property === 'playedTime') {
-                  newUserStatistic[property] = newUserStatistic[property] + ' minutes'
+
+                if (property === 'playedTime') {
+                  newUserStatistic[property] = newUserStatistic[property] + ' minutes';
                 }
               }
             });
@@ -171,7 +171,7 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
         const columnDef = [
           {headerName: 'Game', field: 'game'},
           {headerName: 'Score', field: 'scores'},
-          {headerName: 'Result', field: 'result'}        
+          {headerName: 'Result', field: 'result'}
         ];
         const recentGames = [...this.props.statistic.recentGames];
 
@@ -190,8 +190,8 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
                 if (property === 'game') {
                   newUserStatistic[property] = newUserStatistic[property];
                 }
-  
-                if(property === 'scores') {
+
+                if (property === 'scores') {
                   newUserStatistic[property] = newUserStatistic[property];
                 }
 

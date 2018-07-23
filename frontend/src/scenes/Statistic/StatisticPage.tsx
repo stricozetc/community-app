@@ -116,7 +116,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type="error"
+          type='error'
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (
@@ -124,7 +124,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection="down"
+          transitionDirection='down'
         />
 
         <CaSnackbar
@@ -133,7 +133,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type="info"
+          type='info'
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (
@@ -141,10 +141,10 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection="up"
+          transitionDirection='up'
         />
         {!isDataLoaded && !isDataFailed ? (
-          <div className="ca-homepage__spinner-container">
+          <div className='ca-homepage__spinner-container'>
             <CaSpinner isActive={!isDataLoaded} />
           </div>
         ) : (

@@ -66,7 +66,6 @@ export interface FrontEndValidationErrorsLogin {
 
 export interface UserFieldsToRegister {
 
-
   email: string;
   name: string;
   password: string;
@@ -84,7 +83,7 @@ export enum LoadStatus {
     FETCHING,
     COMPLETED,
     FAILED
-  
+
 }
 
 export enum StatTab {
