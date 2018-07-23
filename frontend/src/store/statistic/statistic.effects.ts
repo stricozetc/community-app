@@ -1,20 +1,13 @@
-import { ActionsObservable } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { switchMap } from 'rxjs/operators';
-
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import { ActionsObservable, ofType } from 'redux-observable';
+import { from, of } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
 
 import { HttpWrapper } from 'services';
 
 import {
-
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
-
   LoadMostPopularGamesCompleted,
   LoadRecentGamesCompleted,
   LoadBestUsersCompleted,
@@ -24,54 +17,51 @@ import {
   StatisticTypes
 } from './statistic.action';
 
-export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => actions$
-  .ofType(StatisticTypes.InitBestUsers).pipe(
-    switchMap(() => {
-
-      return fromPromise(HttpWrapper.get('api/v1/statistic/best-users'))
-        .map((res: any) => {
+export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
+  actions$.pipe(
+    ofType(StatisticTypes.InitBestUsers),
+    switchMap(() =>
+      from(HttpWrapper.get('api/v1/statistic/best-users')).pipe(
+        map((res: any) => {
           const bestUsers: any[] = res.data;
 
           return new LoadBestUsersCompleted(bestUsers);
-            }).catch(error => {
+        }),
+        catchError(error => of(new LoadBestUsersFailed(error)))
+      )
+    )
+  );
 
-              return Observable.of(new LoadBestUsersFailed(error));
-            });
-          })
-    );
-
-export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) => actions$
-  .ofType(StatisticTypes.InitMostPopularGames).pipe(
-    switchMap(() => {
-      return fromPromise(HttpWrapper.get('api/v1/statistic/most-popular-games'))
-        .map((res: any) => {
+export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) =>
+  actions$.pipe(
+    ofType(StatisticTypes.InitMostPopularGames),
+    switchMap(() =>
+      from(HttpWrapper.get('api/v1/statistic/most-popular-games')).pipe(
+        map((res: any) => {
           const popGames: any[] = res.data;
 
           return new LoadMostPopularGamesCompleted(popGames);
-            }).catch(error => {
+        }),
+        catchError(error => of(new LoadMostPopularGamesFailed(error)))
+      )
+    )
+  );
 
-              return Observable.of(new LoadMostPopularGamesFailed(error));
-            });
-          })
-    );
-
-export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) => actions$
-  .ofType(StatisticTypes.InitRecentGames).pipe(
-    switchMap((action) => {
-
-      return fromPromise(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userId}`))
-        .map((res: any) => {
+export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =>
+  actions$.ofType(StatisticTypes.InitRecentGames).pipe(
+    switchMap((action) =>
+      from(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userId}`)).pipe(
+        map((res: any) => {
           const rg: any[] = res.data;
 
           return new LoadRecentGamesCompleted(rg);
-            }).catch(error => {
+        }),
+        catchError(error => of(new LoadRecentGamesFailed(error)))
+      )
+    )
+  );
 
-              return Observable.of(new LoadRecentGamesFailed(error));
-            });
-          })
-    );
-// tslint:disable-next-line:array-type
-export const StatisticEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [
+export const StatisticEffects = [
   initBestUsers$,
   initMostPopularGames$,
   initRecentGames$,
