@@ -6,7 +6,8 @@ export interface Item {
 export enum BattleStatus {
   INIT,
   WAIT,
-  PLAY
+  PLAY,
+  ERROR
 }
 
 export enum AuthStatus {

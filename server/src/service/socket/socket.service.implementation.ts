@@ -125,18 +125,18 @@ export class SocketServiceImplementation extends SocketService {
   }
 
   private getPlayerToken(socket: SocketIO.Socket): string {
-    let playerSocketBind = this.playersSocketBind
+    const playerSocketBind = this.playersSocketBind
       .find((s) => s.playerSocketId === socket.id);
 
     if (playerSocketBind) {
-      let token: string = playerSocketBind.playerToken;
+      const token: string = playerSocketBind.playerToken;
 
       this.playersSocketBind = this.playersSocketBind
         .filter((s) => s.playerSocketId !== socket.id);
 
       return token;
     } else {
-      this.loggerService.infoLog(`Not find player socket bind`);
+      this.loggerService.infoLog(`Couldn't find player's socket bind`);
 
       return null;
     }

@@ -4,13 +4,14 @@ import { ignoreElements, map, tap } from 'rxjs/operators';
 
 import { Game } from 'models';
 import { store } from 'store';
-import { EmitEvent, EmitEventWithOptions } from 'store/socket';
+
 
 import {
   BattleActionTypes,
   JoinBattle,
   LeaveBattle,
-  RedirectToBattle
+
+  ErrorBattle
 } from './battle.action';
 
 import { FrontEndUser } from '../auth';
@@ -24,6 +25,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
       let options: number = 0;
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
+
         options = +user.id;
       }
       let eventName = '';
@@ -31,7 +33,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
         eventName = game.registrationEventName;
       }
 
-      store.dispatch(new EmitEventWithOptions({ eventName, options }));
+      // store.dispatch(new EmitEvent({ eventName, options }));
     }),
     ignoreElements()
   );
@@ -41,7 +43,7 @@ export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
     tap(action => {
       const game: Game | undefined = store.getState().games.games
         .find((info: Game) => info.name === action.payload);
-      store.dispatch(new EmitEvent(game ? game.leaveEventName : ''));
+      // store.dispatch(new EmitEvent({ eventName: game ? game.leaveEventName : '' }));
     }),
     ignoreElements()
   );
@@ -52,9 +54,13 @@ export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>)
       let userToken: number = 0;
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
+        // userToken = user.iat;
         userToken = +user.id;
+
+        return window.location.replace(`${action.payload}/${userToken}`);
+      } else {
+        return store.dispatch(new ErrorBattle());
       }
-      return window.location.replace(`${action.payload}/${userToken}`);
     })
   );
 
