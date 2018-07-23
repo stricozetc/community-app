@@ -36,7 +36,7 @@ export class Countdown extends React.Component<CountdownProps, CountdownState> {
         this.setState({
           currentTime: this.state.currentTime - 1000
         });
-      }, 1000);
+      },                       1000);
     }
   }
 

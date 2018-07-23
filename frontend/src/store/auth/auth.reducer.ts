@@ -11,9 +11,9 @@ export const authReducer = (state = initialState, action: AuthActions) => {
                 ...state,
                 status: !isEmpty(action.payload) ? AuthStatus.AUTHORIZED : AuthStatus.NOT_AUTHORIZED,
                 user: action.payload
-            }
+            };
         }
         default:
             return state;
     }
-}
+};

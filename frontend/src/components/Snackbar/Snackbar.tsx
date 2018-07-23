@@ -1,6 +1,7 @@
 import './Snackbar.scss';
 
 import * as React from 'react';
+
 import {CaSnackbarProps} from './Snackbar.model';
 
 import {Snackbar} from '@material-ui/core';
@@ -10,10 +11,12 @@ import {CaSlide} from 'components/Slide';
 export class CaSnackbar extends React.Component<CaSnackbarProps> {
 
   public render(): JSX.Element {
+
     const {type, handleClose} = this.props;
     const classes: string[] = [];
 
     const transition = (props: any): JSX.Element => {
+
       return <CaSlide {...props} direction={this.props.transitionDirection}/>;
     };
 
@@ -23,15 +26,18 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         break;
 
       case 'info':
-        classes.push('ca-snackbar--info');
+
+        classes.push('ca-snackbar--blue');
         break;
 
       case 'warning':
-        classes.push('ca-snackbar--warning');
+
+        classes.push('ca-snackbar--orange');
         break;
 
       case 'success':
-        classes.push('ca-snackbar--success');
+
+        classes.push('ca-snackbar--green');
         break;
 
       default:
@@ -40,6 +46,7 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
 
     return (
       <Snackbar
+
         className={['ca-snackbar', ...classes].join(' ')}
         anchorOrigin={this.props.anchorOrigin}
         open={this.props.open}
@@ -47,8 +54,11 @@ export class CaSnackbar extends React.Component<CaSnackbarProps> {
         autoHideDuration={this.props.autoHideDuration}
         message={this.props.message}
         action={this.props.action}
+
         TransitionComponent={transition}
+        {...this.props}
       />
     );
   }
+
 }

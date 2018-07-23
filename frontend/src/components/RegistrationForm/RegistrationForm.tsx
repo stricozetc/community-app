@@ -1,33 +1,33 @@
-import "./RegistrationForm.scss";
+import './RegistrationForm.scss';
 
 import {
   FormGroup,
   TextField
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import * as React from "react";
-import {connect} from "react-redux";
+import * as React from 'react';
+import {connect} from 'react-redux';
 
 import {emailRegExp, frontEndValidationErrorsRegister} from 'constes';
-import {UserFieldsToRegister} from "models";
+import {UserFieldsToRegister} from 'models';
 
 import {
   AppState,
   RegisterUser
-} from "store";
+} from 'store';
 
 import {
   initRegistrationFormState,
   RegistrationFormProps,
   RegistrationFormState
-} from "./RegistrationForm.model";
+} from './RegistrationForm.model';
 
 import {CaButton, CaSnackbar} from 'components';
 
 import {isEmpty} from 'utils';
 import {CloseSnackbar, OpenSnackbar} from 'store/snackbar';
 
-import {isObjectsEqual} from "utils/isObjectsEqual";
+import {isObjectsEqual} from 'utils/isObjectsEqual';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: any) {
@@ -49,10 +49,9 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.props.closeSnackbar();
   }
 
-
   public handleChange(event: any): void {
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
     this.setState({[name]: value} as RegistrationFormState);
@@ -69,7 +68,6 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
       password: this.state.password,
       password2: this.state.passwordToRepeat
     };
-
 
     this.props.registerUser(user);
   }
@@ -156,7 +154,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
       }
     });
     this.checkValidation();
-  };
+  }
 
   public render(): JSX.Element {
 
@@ -169,9 +167,9 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type="error"
-          // TransitionComponent = {this.transitionUp}
-          transitionDirection="down"
+          type='error'
+          // transitionComponent = {this.transitionUp}
+          transitionDirection='down'
           message={
             <div>
               {keys && keys.map((k: string) =>
@@ -186,25 +184,25 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
         {this.props.children}
         <form
           onSubmit={this.handleSubmit}
-          className="ca-Registration-form__container"
+          className='ca-Registration-form__container'
         >
           <FormGroup>
             <TextField
-              id="email"
-              label="Email"
-              name="email"
+              id='email'
+              label='Email'
+              name='email'
               value={this.state.email}
               onChange={this.handleChange}
-              type="email"
-              className="ca-Registration-form__field"
-              onBlur={this.handleBlur("email")}
+              type='email'
+              className='ca-Registration-form__field'
+              onBlur={this.handleBlur('email')}
               error={!this.state.isEmailValid && this.state.touched.email}
             />
             {!this.state.isEmailValid &&
             this.state.touched.email &&
             this.state.emailErrors.map((err, index) => {
               return (
-                <div className="ca-Registration-form__error" key={index}>
+                <div className='ca-Registration-form__error' key={index}>
                   {err}
                 </div>
               );
@@ -214,23 +212,23 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           <FormGroup>
             <TextField
               style={{
-                marginTop: "20px"
+                marginTop: '20px'
               }}
-              id="name"
-              label="Name"
-              name="name"
+              id='name'
+              label='Name'
+              name='name'
               value={this.state.name}
               onChange={this.handleChange}
-              type="text"
-              className="ca-Registration-form__field"
-              onBlur={this.handleBlur("name")}
+              type='text'
+              className='ca-Registration-form__field'
+              onBlur={this.handleBlur('name')}
               error={!this.state.isNameValid && this.state.touched.name}
             />
             {!this.state.isNameValid &&
             this.state.touched.name &&
             this.state.nameErrors.map((err, index) => {
               return (
-                <div className="ca-Registration-form__error" key={index}>
+                <div className='ca-Registration-form__error' key={index}>
                   {err}
                 </div>
               );
@@ -240,23 +238,23 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           <FormGroup>
             <TextField
               style={{
-                marginTop: "20px"
+                marginTop: '20px'
               }}
-              id="password"
-              label="Password"
-              name="password"
+              id='password'
+              label='Password'
+              name='password'
               value={this.state.password}
               onChange={this.handleChange}
-              type="password"
-              className="ca-Registration-form__field"
-              onBlur={this.handleBlur("password")}
+              type='password'
+              className='ca-Registration-form__field'
+              onBlur={this.handleBlur('password')}
               error={!this.state.isPasswordValid && this.state.touched.password}
             />
             {!this.state.isPasswordValid &&
             this.state.touched.password &&
             this.state.passwordErrors.map((err, index) => {
               return (
-                <div className="ca-Registration-form__error" key={index}>
+                <div className='ca-Registration-form__error' key={index}>
                   {err}
                 </div>
               );
@@ -265,15 +263,15 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
           <FormGroup>
             <TextField
-              style={{marginTop: "20px"}}
-              id="passwordToRepeat"
-              label="Repeat password"
-              name="passwordToRepeat"
+              style={{marginTop: '20px'}}
+              id='passwordToRepeat'
+              label='Repeat password'
+              name='passwordToRepeat'
               value={this.state.passwordToRepeat}
               onChange={this.handleChange}
-              type="password"
-              className="ca-Registration-form__field"
-              onBlur={this.handleBlur("passwordToRepeat")}
+              type='password'
+              className='ca-Registration-form__field'
+              onBlur={this.handleBlur('passwordToRepeat')}
               error={
                 this.state.touched.password &&
                 this.state.touched.passwordToRepeat &&
@@ -284,16 +282,16 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
             {this.state.touched.password &&
             this.state.touched.passwordToRepeat &&
             this.state.password !== this.state.passwordToRepeat && (
-              <div className="ca-Registration-form__error">
+              <div className='ca-Registration-form__error'>
                 Passwords must match!
               </div>
             )}
           </FormGroup>
 
           <CaButton
-            color="primary"
-            type="submit"
-            className="ca-Registration-form__registration-btn"
+            color='primary'
+            type='submit'
+            className='ca-Registration-form__registration-btn'
             disabled={
               !this.state.isEmailValid ||
               !this.state.isPasswordValid ||

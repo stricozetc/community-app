@@ -4,7 +4,7 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import * as morgan from "morgan";
+import * as morgan from 'morgan';
 import * as SocketIO from 'socket.io';
 import * as passport from 'passport';
 
@@ -22,7 +22,7 @@ import { db } from './../models/SequelizeConnect';
 import { RoleModel, Roles } from './../models/role';
 import { passportConfig } from './config/passport';
 
-let server = new InversifyExpressServer(CONTAINER);
+const server = new InversifyExpressServer(CONTAINER);
 
 // tslint:disable-next-line:no-var-requires
 const config = require('./config/app.config.json');
@@ -59,13 +59,13 @@ db.connect.sync({
         });
     })
     .catch((err) => {
-        console.log(err);
+        console.dir(err);
     });
 
-let logger: LoggerService = new LoggerServiceImplementation();
-let application = server.build();
+const logger: LoggerService = new LoggerServiceImplementation();
+const application = server.build();
 
-let serverInstance = application.listen(config.port, () => {
+const serverInstance = application.listen(config.port, () => {
     logger.infoLog(`App is running at http://localhost:${config.port}`);
     logger.infoLog('Press CTRL+C to stop\n');
 });

@@ -20,7 +20,7 @@ socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBa
 socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) =>
   store.dispatch(new SetRoomsInfo(roomsInfo)));
 socketService.notifyCountdown.subscribe((distance: number) => {
-  console.log('Synchronization from server...');
+  console.dir('Synchronization from server...');
   store.dispatch(new NotifyCountdown(distance));
 });
 

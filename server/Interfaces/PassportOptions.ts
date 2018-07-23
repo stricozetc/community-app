@@ -1,4 +1,4 @@
-import { JwtFromRequestFunction } from "passport-jwt";
+import { JwtFromRequestFunction } from 'passport-jwt';
 
 export interface PassportOptions {
     jwtFromRequest: JwtFromRequestFunction;

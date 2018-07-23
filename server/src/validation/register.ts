@@ -4,15 +4,13 @@ import { UserFieldsToRegister } from './../../Interfaces/UserFieldsToRegister';
 import { registerErr } from './../../errors/registerErr';
 
 export function validateRegisterInput(data: UserFieldsToRegister): {errors: any, isValid: boolean} {
-    let errors: any = {};
+    const errors: any = {};
 
     data.name = !isEmpty(data.name) ? data.name : '';
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';
     data.password2 = !isEmpty(data.password2) ? data.password2 : '';
 
-
- 
     if (!Validator.isLength(data.name, {min: 2, max: 30})) {
         errors.name = registerErr.nameLength;
     }
@@ -44,7 +42,7 @@ export function validateRegisterInput(data: UserFieldsToRegister): {errors: any,
     if (!Validator.equals(data.password, data.password2)) {
         errors.password2 = registerErr.passwordsMustMatch;
     }
-   
+
     return {
         errors,
         isValid: isEmpty(errors)
