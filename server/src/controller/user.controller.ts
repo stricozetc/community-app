@@ -21,7 +21,7 @@ export class UserController {
 
     @httpPost('/register')
     public postRegister(request: Request, response: Response): Promise<Response | User> | Response {
-        const {errors, isValid} = validateRegisterInput(request.body);
+        const { errors, isValid } = validateRegisterInput(request.body);
 
         if (!isValid) {
             return response.status(400).json(errors);
@@ -35,7 +35,7 @@ export class UserController {
 
     @httpPost('/login')
     public postLogin(request: Request, response: Response): Promise<Response | { success: boolean, token: string }> | Response {
-        const {errors, isValid} = validateLoginInput(request.body);
+        const { errors, isValid } = validateLoginInput(request.body);
 
         if (!isValid) {
             return response.status(400).json(errors);
@@ -47,18 +47,19 @@ export class UserController {
             });
     }
 
-    @httpGet('/current', passport.authenticate('jwt', {session: false}))
+    @httpGet('/current', passport.authenticate('jwt', { session: false }))
     public getCurrentUser(request: Request, response: Response): Response {
-        const {user} = request;
+        const { user } = request;
 
         if (user) {
             return response.json({
                 id: user.id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                token: user.token
             });
         } else {
-            return response.json({error: true});
+            return response.json({ error: true });
         }
     }
 }
