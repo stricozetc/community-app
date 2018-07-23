@@ -3,7 +3,7 @@ import './root.scss';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
 import * as React from 'react';
-import { HashRouter as Router, Redirect, Route } from 'react-router-dom';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import { setAuthToken } from 'utils';
 
@@ -26,6 +26,7 @@ import { CaNavbar } from 'components/Navbar';
 import { CaLogo } from 'components/Logo';
 import { CaButton } from 'components/form-controls/Button';
 import { AuthStatus } from 'models';
+import { PageNotFound } from '../PageNotFound';
 
 
 const token = Cookies.get('jwtToken');
@@ -106,16 +107,17 @@ export class RootComponent extends React.Component<RootProps> {
     return (
       <Router>
         <div className="App">
-          <Route
-            exact={true}
-            path="/"
-            render={props =>
-              <Landing {...props} >
-                {this.getNavbar(this.props.status)}
-              </Landing>
-            }
-          />
-          <div className="container">
+          <Switch>
+            <Route
+              exact={true}
+              path="/"
+              render={props =>
+                <Landing {...props} >
+                  {this.getNavbar(this.props.status)}
+                </Landing>
+              }
+            />
+
             <Route
               exact={true}
               path="/register"
@@ -171,7 +173,16 @@ export class RootComponent extends React.Component<RootProps> {
                 </CurrentBattle>
               }
             />
-          </div>
+
+            <Route
+              path="/*"
+              render={() =>
+                <PageNotFound>
+                  {this.getNavbar(this.props.status)}
+                </PageNotFound>
+              }
+            />
+          </Switch>
         </div>
       </Router>
     );

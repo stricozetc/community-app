@@ -23,6 +23,6 @@ export const dbConfig = {
     appTokensTable: "app_tokens",
     userRolesModel: "userRoles",
     userRolesTable: "user_roles",
-    historyModel: "history",
-    historyTable: "history"
+    statisticModel: "statistic",
+    statisticTable: "statistic"
 };

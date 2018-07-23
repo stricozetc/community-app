@@ -24,7 +24,7 @@ export class MockController {
       });
   }
 
-  @httpGet('/get-best-users', passport.authenticate('jwt', {session: false}))
+  @httpGet('/best-users', passport.authenticate('jwt', {session: false}))
   public getBestUsers(request: Request, response: Response): Promise<void | Response> {
     return this.mocksRepository.getBestUsers()
       .then((bu: any[]) => {

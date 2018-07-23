@@ -13,9 +13,7 @@ import {
 } from './user-authentication';
 import { MocksRepository, MocksRepositoryImplementation } from './mocks';
 import { AppTokenRepository, AppTokenService } from './app-token';
-import { PlayersBindService } from './players-bind';
-import { HistoryRepository, HistoryRepositoryImplementation } from './history';
-
+import { PlayersBindService } from './players-bind';import { StatisticService, StatisticRepositoryImplementation, StatisticRepository } from './statistic';
 export const CONTAINER = new Container();
 
 CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
@@ -28,6 +26,6 @@ CONTAINER.bind<UserAuthenticationRepository>(UserAuthenticationRepository).to(Us
 CONTAINER.bind<MocksRepository>(MocksRepository).to(MocksRepositoryImplementation);
 CONTAINER.bind<AppTokenService>(AppTokenService).to(AppTokenService);
 CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
-CONTAINER.bind<HistoryRepository>(HistoryRepository).to(HistoryRepositoryImplementation);
-CONTAINER.bind<PlayersBindService>(PlayersBindService).to(PlayersBindService);
-export const inject = getDecorators(CONTAINER).lazyInject;
+
+CONTAINER.bind<StatisticRepository>(StatisticRepository).to(StatisticRepositoryImplementation);
+CONTAINER.bind<StatisticService>(StatisticService).to(StatisticService);export const inject = getDecorators(CONTAINER).lazyInject;

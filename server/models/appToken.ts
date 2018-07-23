@@ -3,6 +3,16 @@ import { db } from './SequelizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
+
+
+export interface TokenFromDb {
+    token: string;
+    appName: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+  
+
 export const AppTokenModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.appTokensModel, {
     token: {
         type: Sequelize.STRING(50),
