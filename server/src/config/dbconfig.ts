@@ -14,13 +14,15 @@ export const dbConfig = {
         userPassword: 'admin',
         userRole: 'admin'
     },
-    database: 'community-app',
-    usersModel: 'users',
-    usersTable: 'users',
-    rolesModel: 'roles',
-    rolesTable: 'roles',
-    appTokensModel: 'appTokens',
-    appTokensTable: 'app_tokens',
-    userRolesModel: 'userRoles',
-    userRolesTable: 'user_roles'
+    database: "community-app",
+    usersModel: "users",
+    usersTable: "users",
+    rolesModel: "roles",
+    rolesTable: "roles",
+    appTokensModel: "appTokens",
+    appTokensTable: "app_tokens",
+    userRolesModel: "userRoles",
+    userRolesTable: "user_roles",
+    statisticModel: "statistic",
+    statisticTable: "statistic"
 };

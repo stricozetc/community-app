@@ -10,28 +10,32 @@ import 'rxjs/add/operator/map';
 import { HttpWrapper } from 'services';
 
 import {
-  BestUsersInited,
+
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
-  MostPopularGamesInited,
-  RecentGamesInited,
+
+  LoadMostPopularGamesCompleted,
+  LoadRecentGamesCompleted,
+  LoadBestUsersCompleted,
+  LoadMostPopularGamesFailed,
+  LoadBestUsersFailed,
+  LoadRecentGamesFailed,
   StatisticTypes
 } from './statistic.action';
-
-import { GetErrors } from '../errors';
 
 export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => actions$
   .ofType(StatisticTypes.InitBestUsers).pipe(
     switchMap(() => {
 
-      return fromPromise(HttpWrapper.get('api/mocks/best-users'))
+      return fromPromise(HttpWrapper.get('api/v1/statistic/best-users'))
         .map((res: any) => {
-          const bastUsers: any[] = res.data;
+          const bestUsers: any[] = res.data;
 
-          return new BestUsersInited(bastUsers);
+              return new LoadBestUsersCompleted(bestUsers)
             }).catch(error => {
-              return Observable.of(new GetErrors(error));
+
+              return Observable.of(new LoadBestUsersFailed(error));
             });
           })
     );
@@ -39,31 +43,30 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) => ac
 export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopularGames>) => actions$
   .ofType(StatisticTypes.InitMostPopularGames).pipe(
     switchMap(() => {
-
-      return fromPromise(HttpWrapper.get('api/mocks/most-popular-games'))
+      return fromPromise(HttpWrapper.get('api/v1/statistic/most-popular-games'))
         .map((res: any) => {
-
           const popGames: any[] = res.data;
 
-          return new MostPopularGamesInited(popGames);
+            return new LoadMostPopularGamesCompleted(popGames);
             }).catch(error => {
 
-              return Observable.of(new GetErrors(error));
+              return Observable.of(new LoadMostPopularGamesFailed(error));
             });
           })
     );
 
 export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) => actions$
   .ofType(StatisticTypes.InitRecentGames).pipe(
-    switchMap(() => {
+    switchMap((action) => {
 
-      return fromPromise(HttpWrapper.get('api/mocks/recent-games'))
+      return fromPromise(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userId}`))
         .map((res: any) => {
           const rg: any[] = res.data;
 
-          return new RecentGamesInited(rg);
+              return new LoadRecentGamesCompleted(rg);
             }).catch(error => {
-              return Observable.of(new GetErrors(error));
+
+              return Observable.of(new LoadRecentGamesFailed(error));
             });
           })
     );

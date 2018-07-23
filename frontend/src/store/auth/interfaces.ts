@@ -6,7 +6,7 @@ export interface AuthState {
 }
 
 export interface FrontEndUser {
-  id: string;
-  name: string;
-  email: string;
+  id: number,
+  name: string,
+  email: string
 }
