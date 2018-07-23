@@ -10,15 +10,29 @@ import {
   BattleActionTypes,
   JoinBattle,
   LeaveBattle,
-  RedirectToBattle
+  RedirectToBattle,
+  ErrorBattle
 } from './battle.action';
+
+import { FrontEndUser } from '../auth';
 
 export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
   actions$.ofType(BattleActionTypes.JoinBattle).pipe(
     tap(action => {
       const game: Game | undefined = store.getState().games.games
         .find((info: Game) => info.name === action.payload);
-      store.dispatch(new EmitEvent(game ? game.registrationEventName : ''));
+
+      let options: number = 0;
+      const user: FrontEndUser | undefined = store.getState().auth.user;
+      if (user) {
+        options = user.iat;
+      }
+      let eventName = '';
+      if (game) {
+        eventName = game.registrationEventName;
+      }
+
+      store.dispatch(new EmitEvent({ eventName, options }));
     }),
     ignoreElements()
   );
@@ -28,14 +42,24 @@ export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
     tap(action => {
       const game: Game | undefined = store.getState().games.games
         .find((info: Game) => info.name === action.payload);
-      store.dispatch(new EmitEvent(game ? game.leaveEventName : ''));
+      store.dispatch(new EmitEvent({ eventName: game ? game.leaveEventName : '' }));
     }),
     ignoreElements()
   );
 
 export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>) =>
   actions$.ofType(BattleActionTypes.RedirectToBattle).pipe(
-    map(action => window.location.replace(action.payload))
+    map(action => {
+      let userToken: number = 0;
+      const user: FrontEndUser | undefined = store.getState().auth.user;
+      if (user) {
+        userToken = user.iat;
+
+        return window.location.replace(`${action.payload}/${userToken}`);
+      } else {
+        return store.dispatch(new ErrorBattle());
+      }
+    })
   );
 
 // tslint:disable-next-line:array-type

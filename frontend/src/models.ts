@@ -6,7 +6,8 @@ export interface Item {
 export enum BattleStatus {
   INIT,
   WAIT,
-  PLAY
+  PLAY,
+  ERROR
 }
 
 export enum AuthStatus {
@@ -31,6 +32,7 @@ export interface Game {
   maxRoomPlayer: number;
   maxRooms: number;
   requestUrl: string;
+  redirectUrl: string;
   maxWaitingTime: number;
   notifyCountdown: string;
   battleTime: number;
