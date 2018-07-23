@@ -4,7 +4,7 @@ import { ignoreElements, map, tap } from 'rxjs/operators';
 
 import { Game } from 'models';
 import { store } from 'store';
-import { EmitEvent, EmitEventWithOptions } from 'store/socket';
+import { EmitEvent } from 'store/socket';
 
 import {
   BattleActionTypes,
@@ -32,7 +32,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
         eventName = game.registrationEventName;
       }
 
-      store.dispatch(new EmitEventWithOptions({ eventName, options }));
+      store.dispatch(new EmitEvent({ eventName, options }));
     }),
     ignoreElements()
   );
@@ -42,7 +42,7 @@ export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
     tap(action => {
       const game: Game | undefined = store.getState().games.games
         .find((info: Game) => info.name === action.payload);
-      store.dispatch(new EmitEvent(game ? game.leaveEventName : ''));
+      store.dispatch(new EmitEvent({ eventName: game ? game.leaveEventName : '' }));
     }),
     ignoreElements()
   );

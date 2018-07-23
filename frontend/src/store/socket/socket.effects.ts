@@ -6,7 +6,6 @@ import {
   InitEvents,
   EmitEvent,
   SocketActionTypes,
-  EmitEventWithOptions
 } from './socket.action';
 
 import { store } from 'store';
@@ -49,18 +48,10 @@ export const initEvents$ = (actions$: ActionsObservable<InitEvents>) =>
 export const emitEvent$ = (actions$: ActionsObservable<EmitEvent>) =>
   actions$.ofType(SocketActionTypes.EmitEvent).pipe(
     tap(payload => {
-      socketService.emitEvent(payload.payload);
-    }),
-    ignoreElements()
-  );
-
-export const emitEventWithOptions$ = (actions$: ActionsObservable<EmitEventWithOptions>) =>
-  actions$.ofType(SocketActionTypes.EmitEventWithOptions).pipe(
-    tap(payload => {
       socketService.emitEventWithOptions(payload.payload.eventName, payload.payload.options);
     }),
     ignoreElements()
   );
 
 // tslint:disable-next-line:array-type
-export const SocketEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initEvents$, emitEvent$, emitEventWithOptions$];
+export const SocketEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initEvents$, emitEvent$];
