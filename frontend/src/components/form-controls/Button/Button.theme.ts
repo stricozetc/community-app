@@ -1,11 +1,12 @@
-import { createStyles } from '@material-ui/core';
 import {
   defaultTextColor,
   primaryTextColor,
   secondaryTextColor
 } from 'style/muiTheme.colors';
+import { StyleRules } from '@material-ui/core/styles';
+import { ButtonClassKey } from '@material-ui/core/Button';
 
-export const MuiButton = createStyles({
+export const MuiButton: Partial<StyleRules<ButtonClassKey>> = {
   root: {
     width: '184px',
     height: '35px',
@@ -34,4 +35,4 @@ export const MuiButton = createStyles({
   containedSecondary: {
     color: secondaryTextColor
   }
-});
+};
