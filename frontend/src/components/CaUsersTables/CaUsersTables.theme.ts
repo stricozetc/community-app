@@ -1,7 +1,9 @@
-import { createStyles } from '@material-ui/core';
 import { defaultIndicatorBgColor, defaultTabsTextColor } from 'style/muiTheme.colors';
+import { StyleRules } from '@material-ui/core/styles';
+import { TabsClassKey } from '@material-ui/core/Tabs';
+import { TabClassKey } from '@material-ui/core/Tab';
 
-export const MuiTabs = createStyles({
+export const MuiTabs: Partial<StyleRules<TabsClassKey>> = {
   root: {
     color: defaultTabsTextColor,
     marginLeft: '82px'
@@ -10,9 +12,9 @@ export const MuiTabs = createStyles({
     backgroundColor: defaultIndicatorBgColor,
     height: '4px'
   }
-});
+};
 
-export const MuiTab = createStyles({
+export const MuiTab: Partial<StyleRules<TabClassKey>> = {
   root: {
     textTransform: 'none',
     marginBottom: '5px'
@@ -20,4 +22,4 @@ export const MuiTab = createStyles({
   label: {
     fontSize: '16px'
   }
-});
+};
