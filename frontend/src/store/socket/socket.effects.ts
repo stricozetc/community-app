@@ -1,5 +1,4 @@
-import { ActionsObservable } from 'redux-observable';
-import { Observable } from 'rxjs';
+import { ActionsObservable, ofType } from 'redux-observable';
 import { tap, ignoreElements } from 'rxjs/operators';
 
 import { InitEvents, EmitEvent, SocketActionTypes } from './socket.action';
@@ -17,8 +16,10 @@ import { RoomInfo } from 'models';
 const socketService = new SocketService();
 
 socketService.getRoomUrl().then((url: string) => store.dispatch(new RedirectToBattle(url)));
+
 socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) =>
   store.dispatch(new SetRoomsInfo(roomsInfo)));
+
 socketService.notifyCountdown.subscribe((distance: number) => {
   console.dir('Synchronization from server...');
   store.dispatch(new NotifyCountdown(distance));
@@ -29,7 +30,8 @@ socketService.notifyCountdown.subscribe((distance: number) => {
  */
 
 export const initEvents$ = (actions$: ActionsObservable<InitEvents>) =>
-  actions$.ofType(SocketActionTypes.InitEvents).pipe(
+  actions$.pipe(
+    ofType(SocketActionTypes.InitEvents),
     tap(payload => {
       socketService.init(payload.payload);
       socketService.emitEvent('onClientInitialized');
@@ -38,12 +40,15 @@ export const initEvents$ = (actions$: ActionsObservable<InitEvents>) =>
   );
 
 export const emitEvent$ = (actions$: ActionsObservable<EmitEvent>) =>
-  actions$.ofType(SocketActionTypes.EmitEvent).pipe(
-    tap(payload => {
-      socketService.emitEvent(payload.payload);
+  actions$.pipe(
+    ofType(SocketActionTypes.EmitEvent),
+    tap(action => {
+      socketService.emitEvent(action.payload);
     }),
     ignoreElements()
   );
 
-// tslint:disable-next-line:array-type
-export const SocketEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [initEvents$, emitEvent$];
+export const SocketEffects = [
+  initEvents$,
+  emitEvent$
+];

@@ -1,14 +1,9 @@
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
 
-import { ActionsObservable } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { switchMap } from 'rxjs/operators';
-
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import { ActionsObservable, ofType } from 'redux-observable';
+import { from, of } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
 
 import {
   deleteAuthToken,
@@ -29,36 +24,48 @@ import {
 import { GetErrors } from '../errors';
 import { FrontEndUser } from './interfaces';
 
-export const loginUser$ = (actions$: ActionsObservable<LoginUser>) => actions$
-  .ofType(AuthTypes.LoginUser).pipe(
-    switchMap(action => fromPromise(HttpWrapper.post('api/users/login', action.payload))
-      .map(res => {
-        const { token } = res.data;
-        Cookies.set('jwtToken', token);
-        setAuthToken(token);
-        const decoded: FrontEndUser = jwt_decode(token);
+export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
+  actions$.pipe(
+    ofType(AuthTypes.LoginUser),
+    switchMap(action =>
+      from(HttpWrapper.post('api/users/login', action.payload)).pipe(
+        map(res => {
+          const { token } = res.data;
+          Cookies.set('jwtToken', token);
+          setAuthToken(token);
+          const decoded: FrontEndUser = jwt_decode(token);
 
-        return new SetCurrentUser(decoded);
-      }).catch(error => Observable.of(new GetErrors(error.response.data))))
+          return new SetCurrentUser(decoded);
+        }),
+        catchError(error => of(new GetErrors(error.response.data)))
+      )
+    )
   );
 
-export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) => actions$
-  .ofType(AuthTypes.RegisterUser).pipe(
-    switchMap(action => fromPromise(HttpWrapper.post('api/users/register', action.payload))
-      .map(() => history.push('/login'))
-      .catch((error) => {
-        return Observable.of(new GetErrors(error.response.data));
-      }))
+export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
+  actions$.pipe(
+    ofType(AuthTypes.RegisterUser),
+    switchMap(action =>
+      from(HttpWrapper.post('api/users/register', action.payload)).pipe(
+        map(() => history.push('/login')),
+        catchError((error) => of(new GetErrors(error.response.data)))
+      )
+    )
   );
 
-export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) => actions$
-  .ofType(AuthTypes.LogoutUser)
-  .map(() => {
-    Cookies.remove('jwtToken');
-    deleteAuthToken();
+export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) =>
+  actions$.pipe(
+    ofType(AuthTypes.LogoutUser),
+    map(() => {
+      Cookies.remove('jwtToken');
+      deleteAuthToken();
 
-    return new SetCurrentUser(undefined);
-  });
+      return new SetCurrentUser(undefined);
+    })
+  );
 
-// tslint:disable-next-line:array-type
-export const AuthEffects: ((actions$: ActionsObservable<any>) => Observable<any>)[] = [loginUser$, registerUser$, logoutUser$];
+export const AuthEffects = [
+  loginUser$,
+  registerUser$,
+  logoutUser$
+];
