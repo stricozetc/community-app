@@ -1,6 +1,8 @@
+import { styles } from './CaUsersTables.styles';
+import { WithStyles } from '@material-ui/core';
 import { StatisticState } from 'store/statistic/interfaces';
 
-export interface CaUsersTablesProps {
+export interface CaUsersTablesProps extends WithStyles<typeof styles> {
   statistic: StatisticState;
 }
 

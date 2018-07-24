@@ -5,3 +5,5 @@ export const defaultTableTextColor = 'rgb(219, 219, 219)';
 export const defaultTableBgColor = '#1C2227';
 export const hoverTableRowTextColor = '#fff';
 export const hoverTableRowBgColor = '#343737';
+export const defaultTabsTextColor = '#fff';
+export const defaultIndicatorBgColor = '#f4b33a';
