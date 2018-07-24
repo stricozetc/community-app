@@ -6,7 +6,7 @@ import {CaSnackbarProps} from './Snackbar.model';
 
 import {Snackbar} from '@material-ui/core';
 
-import {CaSlide} from 'components/Slide';
+import {CaSlide} from 'components';
 
 export class CaSnackbar extends React.Component<CaSnackbarProps> {
 

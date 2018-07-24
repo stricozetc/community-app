@@ -14,10 +14,8 @@ import {
 } from 'store/statistic';
 import { isEmpty } from 'utils';
 
-import { CaSpinner } from 'components/Spinner';
-import { CaSnackbar } from 'components/Snackbar';
+import { CaUsersTables, CaSnackbar, CaSpinner } from 'components';
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
-import { CaUsersTables } from 'components/CaUsersTables';
 
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];

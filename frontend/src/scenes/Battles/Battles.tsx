@@ -8,14 +8,11 @@ import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
 
-import { CaGameCard } from 'components/GameCard';
-import { CaSpinner } from 'components/Spinner';
+import { CaGameCard, CaSnackbar, CaSpinner } from 'components';
 
 import { InitGames, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
-
-import { CaSnackbar } from 'components/Snackbar';
 
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 

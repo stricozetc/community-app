@@ -7,7 +7,7 @@ import { AuthStatus } from 'models';
 import { AppState } from 'store';
 
 import { LandingProps } from './Landing.model';
-import { CaButton } from 'components/form-controls/Button';
+import { CaButton } from 'components';
 
 class LandingComponent extends React.Component<LandingProps> {
   public componentDidMount(): void {
