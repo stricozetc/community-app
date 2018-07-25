@@ -85,6 +85,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 return accumulator.concat(result);
               },                               []);
             }
+            
             return recentGames;
           })
           .catch((err) => err);

@@ -45,9 +45,6 @@ import {
 
 import { errorsReducer } from './errors';
 
-// (Valiantsin): redux-observable types issue
-type Epic = any;
-
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
@@ -58,7 +55,7 @@ const rootReducers = combineReducers({
   snackbarUi: snackbarUiReducer
 });
 
-const rootEpic: Epic = combineEpics(
+const rootEpic = combineEpics(
   ...BattleEffects,
   ...AuthEffects,
   ...GamesEffects,
@@ -66,7 +63,7 @@ const rootEpic: Epic = combineEpics(
   ...SocketEffects
 );
 
-const epicMiddleware = createEpicMiddleware(rootEpic);
+const epicMiddleware = createEpicMiddleware();
 
 export interface AppState {
   battle: BattleState;
@@ -78,14 +75,13 @@ export interface AppState {
   snackbarUi: SnackbarUiState;
 }
 
-// tslint:disable-next-line:no-angle-bracket-type-assertion
-const reduxDevTools = (<any>window).__REDUX_DEVTOOLS_EXTENSION__ && (<any>window).__REDUX_DEVTOOLS_EXTENSION__();
+const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 
 const composeForAllBrowsers = (devTools: any) => {
   return devTools ? compose(
     applyMiddleware(epicMiddleware),
     devTools
-    )
+  )
     : compose(
       applyMiddleware(epicMiddleware)
     );
@@ -95,5 +91,7 @@ export const store = createStore(
   rootReducers,
   composeForAllBrowsers(reduxDevTools)
 );
+
+epicMiddleware.run(rootEpic);
 
 export const connect = nativeConnect;
