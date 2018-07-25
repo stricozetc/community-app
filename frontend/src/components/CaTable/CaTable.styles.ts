@@ -27,5 +27,5 @@ export const styles = createStyles({
   tableHeadCell: {
     borderBottom: 'none',
     color: '#fff'
-  },
+  }
 });

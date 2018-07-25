@@ -17,7 +17,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const arrayOfPropertyName = columnDef.map(column => column.field);
 
   return(
-    <Table className='statistic-table'>
+    <Table>
         <TableHead className={classes.tableHead}>
             <TableRow className={classes.tableHeadRow}>
                 {arrayOfColumnName.map((nameOfColumn, index) => {
@@ -37,7 +37,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
         <TableBody>
             {rowData.map((user, index) => {
             return (
-                <TableRow className='statistic-table__row' key={index}>
+                <TableRow key={index}>
                     {arrayOfPropertyName.map((property, index) => {
                         const numeric = index !== 0;
 
