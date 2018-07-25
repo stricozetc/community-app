@@ -14,6 +14,7 @@ export const defaultTabsTextColor = '#fff';
 export const defaultIndicatorBgColor = '#f4b33a';
 
 // SNACKBAR COLORS
+export const defaultSnackbarTextColor = '#fff';
 export const errorSnackbarBgColor = '#d32f2f';
 export const infoSnackbarBgColor = '#1976d2';
 export const warningSnackbarBgColor = '#ffa000';
