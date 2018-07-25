@@ -3,7 +3,8 @@ import {
   MuiTable,
   MuiTableRow,
   MuiTabs,
-  MuiTab
+  MuiTab,
+  MuiSnackbarContent
 } from 'components';
 import { createMuiTheme } from '@material-ui/core';
 
@@ -13,6 +14,7 @@ export const theme = createMuiTheme({
     MuiTable,
     MuiTableRow,
     MuiTabs,
-    MuiTab
+    MuiTab,
+    MuiSnackbarContent
   }
 });

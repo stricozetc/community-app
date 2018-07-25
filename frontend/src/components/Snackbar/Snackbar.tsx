@@ -1,64 +1,38 @@
-import './Snackbar.scss';
-
+import { Snackbar, Slide } from '@material-ui/core';
 import * as React from 'react';
-
-import {CaSnackbarProps} from './Snackbar.model';
-
-import {Snackbar} from '@material-ui/core';
-
-import {CaSlide} from 'components';
+import { CaSnackbarProps } from './Snackbar.model';
+import { CaSnackbarContent } from './SnackbarContent';
 
 export class CaSnackbar extends React.Component<CaSnackbarProps> {
-
   public render(): JSX.Element {
 
-    const {type, handleClose} = this.props;
-    const classes: string[] = [];
+    const { type, handleClose, message, ...otherProps } = this.props;
 
     const transition = (props: any): JSX.Element => {
 
-      return <CaSlide {...props} direction={this.props.transitionDirection}/>;
+      return <Slide {...props} direction={this.props.transitionDirection} />;
     };
-
-    switch (type) {
-      case 'error':
-        classes.push('ca-snackbar--red');
-        break;
-
-      case 'info':
-
-        classes.push('ca-snackbar--blue');
-        break;
-
-      case 'warning':
-
-        classes.push('ca-snackbar--orange');
-        break;
-
-      case 'success':
-
-        classes.push('ca-snackbar--green');
-        break;
-
-      default:
-        break;
-    }
 
     return (
       <Snackbar
-
-        className={['ca-snackbar', ...classes].join(' ')}
         anchorOrigin={this.props.anchorOrigin}
         open={this.props.open}
         onClose={handleClose && handleClose}
         autoHideDuration={this.props.autoHideDuration}
-        message={this.props.message}
         action={this.props.action}
 
         TransitionComponent={transition}
-        {...this.props}
-      />
+        {...otherProps}
+      >
+        <CaSnackbarContent
+          /* there is some discrepancy with types of message attribute:
+          Snackbar message attribute has the following type: {message?: React.ReactElement<any>;}
+          However, SnackbarContent message attribute type is as follows: {message: React.ReactElement<any> | string;}
+          */
+          message={this.props.message || ''}
+          type={type}
+        />
+      </Snackbar>
     );
   }
-
 }
