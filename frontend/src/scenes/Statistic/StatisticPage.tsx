@@ -5,7 +5,6 @@ import { AuthStatus, LoadStatus, FrontEndSnackbarData } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { StatisticProps } from './Statistic.model';
-import './Statistic.scss';
 
 import {
   InitBestUsers,
@@ -109,7 +108,6 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
         {this.props.children}
 
         <CaSnackbar
-          style={{ top: '75px' }}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
@@ -126,7 +124,6 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
         />
 
         <CaSnackbar
-          style={{ bottom: '50px' }}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
