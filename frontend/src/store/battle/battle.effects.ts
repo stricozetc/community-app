@@ -1,5 +1,5 @@
 import { ActionsObservable, ofType } from 'redux-observable';
-import { map, tap, withLatestFrom } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
 
 import { Game } from 'models';
 import { AppState } from 'store';
@@ -29,7 +29,7 @@ export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>, state$: O
   actions$.pipe(
     ofType(BattleActionTypes.LeaveBattle),
     withLatestFrom(state$),
-    tap(([action, state]) => {
+    map(([action, state]) => {
       const game: Game | undefined = state.games.games
         .find((info: Game) => info.name === action.payload);
 
