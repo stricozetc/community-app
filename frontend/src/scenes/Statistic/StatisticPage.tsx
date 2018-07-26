@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, LoadStatus, FrontEndSnackbarData, SnackbarType } from 'models';
+import {
+  AuthStatus,
+  LoadStatus,
+  FrontEndSnackbarData,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { StatisticProps } from './Statistic.model';
@@ -120,7 +125,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection='down'
+          transitionDirection={transitionDirection.down}
         />
 
         <CaSnackbar
@@ -136,7 +141,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection='up'
+          transitionDirection={transitionDirection.up}
         />
         {!isDataLoaded && !isDataFailed ? (
           <div className='ca-homepage__spinner-container'>

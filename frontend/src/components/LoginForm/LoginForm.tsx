@@ -8,7 +8,12 @@ import { connect } from 'react-redux';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
-import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister, SnackbarType } from 'models';
+import {
+  AuthStatus,
+  UserFieldsToLogin,
+  UserFieldsToRegister,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { isEmpty } from './../../utils/isEmpty';
 
 import {
@@ -154,7 +159,7 @@ export class LoginFormComponent extends React.Component<
           handleClose= {() => this.closeSnackbar()}
           type={SnackbarType.error}
          //  transitionComponent = {this.transitionUp}
-         transitionDirection='down'
+         transitionDirection={transitionDirection.down}
           message={
             <div>
               {keys && keys.map((k: string) =>

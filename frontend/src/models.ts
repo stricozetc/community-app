@@ -107,3 +107,10 @@ export enum SnackbarType {
   info = 'info',
   success = 'success'
 }
+
+export enum transitionDirection {
+  left = 'left',
+  right = 'right',
+  up = 'up',
+  down = 'down'
+}

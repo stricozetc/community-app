@@ -3,7 +3,13 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, LoadStatus, Game, RoomInfo, SnackbarType } from 'models';
+import {
+  AuthStatus,
+  LoadStatus,
+  Game,
+  RoomInfo,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -71,7 +77,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           handleClose={() => this.closeSnackbar()}
           type={SnackbarType.error}
           message={<span> Game fetching Failed! </span>}
-          transitionDirection='down'
+          transitionDirection={transitionDirection.down}
         />
 
         {!isEmpty(this.props.games) && (
