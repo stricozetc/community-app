@@ -26,20 +26,25 @@ class LandingComponent extends React.Component<LandingProps> {
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div className='ca-landing'>
         {this.props.children}
-        <h2>Landing for Community App</h2>
-        <CaButton
-          onClick={() => this.redToRegister()}
-        >
-        Register
-        </CaButton>
+        <div className='ca-landing__container'>
+          <h2 className='ca-landing__title'>Landing for Community App</h2>
+          <div className='ca-landing__buttons-container'>
+            <CaButton
+              className='ca-landing__register-btn'
+              onClick={() => this.redToRegister()}
+            >
+            Register
+            </CaButton>
 
-        <CaButton
-          onClick={() => this.redToLogin()}
-        >
-        Login
-        </CaButton>
+            <CaButton
+              onClick={() => this.redToLogin()}
+            >
+            Login
+            </CaButton>
+          </div>
+        </div>
       </div>
     );
   }
