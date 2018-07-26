@@ -15,6 +15,11 @@ export const theme = createMuiTheme({
     MuiTableRow,
     MuiTabs,
     MuiTab,
-    MuiSnackbarContent
+    MuiSnackbarContent,
+    MuiInput: {
+      root: {
+        fontSize: '1.6rem'
+      }
+    }
   }
 });
