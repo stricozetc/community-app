@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, LoadStatus, FrontEndSnackbarData } from 'models';
+import { AuthStatus, LoadStatus, FrontEndSnackbarData, SnackbarType } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { StatisticProps } from './Statistic.model';
@@ -112,7 +112,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type='error'
+          type={SnackbarType.error}
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (
@@ -128,7 +128,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type='info'
+          type={SnackbarType.info}
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (

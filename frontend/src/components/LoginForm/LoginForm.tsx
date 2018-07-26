@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
-import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister } from 'models';
+import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister, SnackbarType } from 'models';
 import { isEmpty } from './../../utils/isEmpty';
 
 import {
@@ -152,7 +152,7 @@ export class LoginFormComponent extends React.Component<
           open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
-          type='error'
+          type={SnackbarType.error}
          //  transitionComponent = {this.transitionUp}
          transitionDirection='down'
           message={

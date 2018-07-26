@@ -9,7 +9,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 
 import {emailRegExp, frontEndValidationErrorsRegister} from 'constes';
-import {UserFieldsToRegister} from 'models';
+import {UserFieldsToRegister, SnackbarType} from 'models';
 
 import {
   AppState,
@@ -167,7 +167,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type='error'
+          type={SnackbarType.error}
           // transitionComponent = {this.transitionUp}
           transitionDirection='down'
           message={

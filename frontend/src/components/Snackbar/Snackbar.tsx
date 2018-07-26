@@ -3,6 +3,7 @@ import * as React from 'react';
 import { CaSnackbarProps } from './Snackbar.model';
 import { CaSnackbarContent } from './SnackbarContent';
 import { styles } from './Snackbar.styles';
+import { SnackbarType } from 'models';
 
 export const CaSnackbar = withStyles(styles)(
   class extends React.Component<CaSnackbarProps> {
@@ -15,7 +16,7 @@ export const CaSnackbar = withStyles(styles)(
         return <Slide {...props} direction={this.props.transitionDirection} />;
       };
 
-      const position: string = type === 'info' ? classes.positionBottom : classes.positionTop;
+      const position: string = type === SnackbarType.info ? classes.positionBottom : classes.positionTop;
 
       return (
         <Snackbar
