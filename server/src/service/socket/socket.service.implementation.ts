@@ -26,7 +26,10 @@ export class SocketServiceImplementation extends SocketService {
       client.on('disconnect', () => this.onDisconnect(client));
 
       for (let index = 0; index < this.games.length; index++) {
+        
         client.on(this.games[index].registrationEventName, (token: string) => {
+
+          console.log('SOCKET SERVICE TOKEN', token);
           this.addNewPlayer(client, token);
           this.onRegister(index, client, token);
         });

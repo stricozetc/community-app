@@ -3,6 +3,7 @@ import * as openSocket from 'socket.io-client';
 import { Subject } from 'rxjs';
 import { Game, RoomInfo } from 'models';
 
+
 export class SocketService {
   public roomsInfo: Subject<RoomInfo[]> = new Subject();
   public notifyCountdown: Subject<number> = new Subject();
@@ -28,6 +29,10 @@ export class SocketService {
 
   public emitEvent(eventName: string): void {
     this.socket.emit(eventName);
+  }
+
+  public emitEventWithOptions(eventName: string, opts?: any): void {
+    this.socket.emit(eventName, opts);
   }
 
   public getRoomUrl(): Promise<string> {
