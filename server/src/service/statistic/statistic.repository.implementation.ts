@@ -41,7 +41,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         const token = tokenRow && tokenRow.token;
         if (token) {
           let promises: Promise<boolean>[] = [];
-          //statistic = JSON.parse(statistic); // TODO: why body-parser is not working as expected
+          // statistic = JSON.parse(statistic); // Uncomment to test with PostMan
           promises = statistic.map((stat: Statistic) => {
 
             return this.saveStatistic(token, stat);
@@ -70,7 +70,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     return StatisticModel.findAll({
       where: { userToken },
       order: [['createdAt', 'DESC']]
-      // attributes: ['id', 'playedTime', 'scores', 'isWin']
     })
       .then(recentGames => {
         const promises = recentGames.map(game => {
