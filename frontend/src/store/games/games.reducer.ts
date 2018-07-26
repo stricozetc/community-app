@@ -5,6 +5,7 @@ import { initialState } from './games.initial';
 import { LoadStatus } from 'models';
 
 export const gamesReducer = (state = initialState, action: GamesActions) => {
+
     switch (action.type) {
         case GamesTypes.InitGames: {
             return {
@@ -28,4 +29,5 @@ export const gamesReducer = (state = initialState, action: GamesActions) => {
         default:
             return state;
     }
+
 };

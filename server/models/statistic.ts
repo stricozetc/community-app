@@ -1,3 +1,4 @@
+
 import * as Sequelize from "sequelize";
 import { db } from './SequelizeConnect';
 import { dbConfig } from './../src/config/dbconfig';

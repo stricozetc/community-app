@@ -31,6 +31,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     @inject(StatisticService) private statisticService: StatisticService
   ) {}
 
+
   public setGameResult(data: DataFromGame[], appToken: string): Promise<boolean> {
     let statistic  = data;
 
@@ -40,6 +41,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       .then((tokenRow: TokenFromDb) => {
         const token = tokenRow && tokenRow.token;
         if (token) {
+
           let promises: Promise<boolean>[] = [];
           // statistic = JSON.parse(statistic); // Uncomment to test with PostMan
           promises = statistic.map((stat: Statistic) => {
@@ -53,6 +55,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
             .then(() => {
               return true;
             })
+
             .catch(err => {
              return err;
             });
@@ -60,16 +63,20 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
           return 'you must register your game and provide correct app token';
         }
       })
+
       .catch((err: any) => {
         return err;
       });
   }
 
 
+
   public getRecentGames(userToken: string): Promise<RecentGameFromServer[]> {
     return StatisticModel.findAll({
+
       where: { userToken },
       order: [['createdAt', 'DESC']]
+
     })
       .then(recentGames => {
         const promises = recentGames.map(game => {
@@ -86,6 +93,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   
                 let result = {
                   game: gameName,
+
                   scores: game.scores,
                   result: game.status === 1
                 };
@@ -174,11 +182,13 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
   public getBestUsers(): Promise<BestUsersFromServer[]> {
     return new Promise<BestUsersFromServer[]>((resolveBestUsers, reject) => {
+
       UserModel.findAll({ attributes: ['token', 'name', 'isActive'] })
         .then(users => {
           const promises = users.map(currentUser => {
             if (currentUser.isActive) {
               return StatisticModel.findAll({
+         
                 where: { userToken: currentUser.token }
               })
 
@@ -186,6 +196,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                   let playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
                   let scoresArray = historyRows.map(row => {
+
                     if (row.scores) {
                       return row.scores;
                     }
@@ -196,6 +207,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                   }
 
                   let result = {
+
                     userToken: currentUser.token,
                     name: currentUser.name,
                     playedTime,
@@ -227,15 +239,18 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   private saveStatistic(token: string, stat: Statistic): Promise<boolean> {
     const newHistory = StatisticModel.build({
       appToken: token,
+
       userToken: stat.userToken,
       playedTime: stat.playedTime,
       scores: stat.scores,
+
       status: stat.status
     });
 
     return newHistory
       .save()
       .then((savedHistory: Statistic) => true)
+
       .catch((err: any) => {
         return err;
       });

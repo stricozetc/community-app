@@ -1,4 +1,4 @@
-import { errCodes, technicalErrCodes } from "./errCodes";
+import { errCodes, technicalErrCodes } from './errCodes';
 
 export const loginErr = {
   emailIsRequired: {
@@ -22,4 +22,3 @@ export const loginErr = {
     msg: `Password is incorrent for ${email}`
   })
 };
-

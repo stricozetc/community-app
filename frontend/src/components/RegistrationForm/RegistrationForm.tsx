@@ -1,7 +1,6 @@
 import './RegistrationForm.scss';
 
 import {
-  Button,
   FormGroup,
   TextField
 } from '@material-ui/core';
@@ -10,7 +9,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 
 import {emailRegExp, frontEndValidationErrorsRegister} from 'constes';
-import {UserFieldsToRegister} from 'models';
+import {UserFieldsToRegister, SnackbarType, transitionDirection} from 'models';
 
 import {
   AppState,
@@ -23,7 +22,7 @@ import {
   RegistrationFormState
 } from './RegistrationForm.model';
 
-import {CaSnackbar} from './../Snackbar/Snackbar';
+import {CaButton, CaSnackbar} from 'components';
 
 import {isEmpty} from 'utils';
 import {CloseSnackbar, OpenSnackbar} from 'store/snackbar';
@@ -168,9 +167,9 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type='error'
-          // TransitionComponent = {this.transitionUp}
-          transitionDirection='down'
+          type={SnackbarType.error}
+          // transitionComponent = {this.transitionUp}
+          transitionDirection={transitionDirection.down}
           message={
             <div>
               {keys && keys.map((k: string) =>
@@ -289,14 +288,10 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
             )}
           </FormGroup>
 
-          <Button
+          <CaButton
             color='primary'
             type='submit'
-            style={{
-              marginTop: '20px',
-              fontSize: '1.6rem'
-            }}
-            className='ca-Registration-form__field'
+            className='ca-Registration-form__registration-btn'
             disabled={
               !this.state.isEmailValid ||
               !this.state.isPasswordValid ||
@@ -305,7 +300,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
             }
           >
             REGISTER
-          </Button>
+          </CaButton>
         </form>
       </div>
     );

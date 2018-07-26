@@ -57,6 +57,7 @@ export class LoadMostPopularGamesFailed {
 export class InitRecentGames {
     public readonly type = StatisticTypes.InitRecentGames;
 
+
     constructor(public userToken: string) { }
 }
 

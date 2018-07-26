@@ -6,9 +6,7 @@ import './IconWithInfo.scss';
 
 import {BattleStatus} from 'models';
 
-import {GameCardProps} from './GameCard.model';
-
-import {CaButton} from 'components/form-controls/Button';
+import {CaButton, GameCardProps} from 'components';
 
 import userImage from 'assets/user.svg';
 
@@ -23,16 +21,18 @@ const getBattleButton = (
   if (status === BattleStatus.INIT) {
     return (
       <CaButton
-        clickHandler={() => joinBattleAction(gameName)}
-        value='Join The Battle'
-      />
+        onClick={() => joinBattleAction(gameName)}
+      >
+      Join The Battle
+      </CaButton>
     );
   } else {
     return (
       <CaButton
-        clickHandler={() => leaveBattleAction(gameName)}
-        value='Leave The Battle'
-      />
+        onClick={() => leaveBattleAction(gameName)}
+      >
+      Leave The Battle
+      </CaButton>
     );
   }
 };

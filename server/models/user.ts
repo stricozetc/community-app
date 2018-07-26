@@ -5,6 +5,7 @@ import { dbConfig } from '../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from "sequelize";
 
 export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.usersModel, {
+
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

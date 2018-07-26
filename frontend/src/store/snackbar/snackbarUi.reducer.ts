@@ -3,6 +3,7 @@ import { initialState } from './snackbarUi.initial';
 import { SnackbarUiTypes, SnackbarUiActions } from './snackbarUi.action';
 
 export const snackbarUiReducer = (state = initialState, action: SnackbarUiActions) => {
+
     switch (action.type) {
         case SnackbarUiTypes.OpenSnackbar: {
             return {
@@ -11,12 +12,14 @@ export const snackbarUiReducer = (state = initialState, action: SnackbarUiAction
             };
         }
 
+
         case SnackbarUiTypes.CloseSnackbar: {
             return {
                 ...state,
                 isOpen: false
             };
         }
+
 
         case SnackbarUiTypes.ToggleSnackbar: {
             return {
@@ -27,4 +30,5 @@ export const snackbarUiReducer = (state = initialState, action: SnackbarUiAction
         default:
             return state;
     }
+
 };

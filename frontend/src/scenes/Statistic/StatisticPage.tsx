@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, LoadStatus, FrontEndSnackbarData } from 'models';
+import {
+  AuthStatus,
+  LoadStatus,
+  FrontEndSnackbarData,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { StatisticProps } from './Statistic.model';
-import './Statistic.scss';
 
 import {
   InitBestUsers,
@@ -14,10 +18,8 @@ import {
 } from 'store/statistic';
 import { isEmpty } from 'utils';
 
-import { CaSpinner } from 'components/Spinner';
-import { CaSnackbar } from 'components/Snackbar';
+import { CaUsersTables, CaSnackbar, CaSpinner } from 'components';
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
-import { CaUsersTables } from 'components/CaUsersTables';
 
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];
@@ -25,15 +27,15 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     const isBestUsersInitFailed =
       nextProps.statistic.bestUsersStatus === LoadStatus.FAILED &&
       nextProps.statistic.bestUsersStatus !==
-        this.props.statistic.bestUsersStatus;
+      this.props.statistic.bestUsersStatus;
     const isRecentGamesInitFailed =
       nextProps.statistic.recentGamesStatus === LoadStatus.FAILED &&
       nextProps.statistic.recentGamesStatus !==
-        this.props.statistic.recentGamesStatus;
+      this.props.statistic.recentGamesStatus;
     const isMostPopularGamesFailed =
       nextProps.statistic.mostPopularGamesStatus === LoadStatus.FAILED &&
       nextProps.statistic.mostPopularGamesStatus !==
-        this.props.statistic.mostPopularGamesStatus;
+      this.props.statistic.mostPopularGamesStatus;
 
     if (isBestUsersInitFailed) {
       this.dataForSnack.push({
@@ -107,16 +109,15 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
       this.props.statistic.recentGamesStatus === LoadStatus.FAILED &&
       this.props.statistic.mostPopularGamesStatus === LoadStatus.FAILED;
     return (
-      <div className="ca-statistic">
+      <div className='ca-statistic'>
         {this.props.children}
 
         <CaSnackbar
-          style={{ top: '75px' }}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type="error"
+          type={SnackbarType.error}
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (
@@ -124,16 +125,15 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection="down"
+          transitionDirection={transitionDirection.down}
         />
 
         <CaSnackbar
-          style={{ bottom: '50px' }}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type="info"
+          type={SnackbarType.info}
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (
@@ -141,15 +141,15 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection="up"
+          transitionDirection={transitionDirection.up}
         />
         {!isDataLoaded && !isDataFailed ? (
-          <div className="ca-homepage__spinner-container">
+          <div className='ca-homepage__spinner-container'>
             <CaSpinner isActive={!isDataLoaded} />
           </div>
         ) : (
-          <CaUsersTables statistic={this.props.statistic} />
-        )}
+            <CaUsersTables statistic={this.props.statistic} />
+          )}
       </div>
     );
   }
@@ -157,7 +157,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
 
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
-  user: state.auth.user,
+  user: state.auth.user!,
   statistic: state.statistic,
   isSnackbarOpen: state.snackbarUi.isOpen
 });

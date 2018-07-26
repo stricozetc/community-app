@@ -3,6 +3,7 @@ import getDecorators from 'inversify-inject-decorators';
 
 import { LoggerService, LoggerServiceImplementation } from './logger';
 import { SocketServiceImplementation, SocketService } from './socket';
+
 import { ErrorServiceImplementation, ErrorService } from './error';
 import { RoomService } from './room';
 import { TimerService } from './timer';
@@ -15,10 +16,12 @@ import { MocksRepository, MocksRepositoryImplementation } from './mocks';
 import { AppTokenRepository, AppTokenService } from './app-token';
 import { PlayersBindService } from './players-bind';
 import { StatisticService, StatisticRepositoryImplementation, StatisticRepository } from './statistic';
+
 export const CONTAINER = new Container();
 
 CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
 CONTAINER.bind<SocketService>(SocketService).to(SocketServiceImplementation);
+
 CONTAINER.bind<ErrorService>(ErrorService).to(ErrorServiceImplementation);
 CONTAINER.bind<RoomService>(RoomService).to(RoomService);
 CONTAINER.bind<TimerService>(TimerService).to(TimerService);

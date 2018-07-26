@@ -1,6 +1,6 @@
 import './LoginForm.scss';
 
-import { Button, FormGroup, TextField } from '@material-ui/core';
+import { FormGroup, TextField } from '@material-ui/core';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -8,7 +8,12 @@ import { connect } from 'react-redux';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
-import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister } from 'models';
+import {
+  AuthStatus,
+  UserFieldsToLogin,
+  UserFieldsToRegister,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { isEmpty } from './../../utils/isEmpty';
 
 import {
@@ -19,7 +24,7 @@ import {
 
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
-import { CaSnackbar } from './../Snackbar/Snackbar';
+import { CaButton, CaSnackbar } from 'components';
 import { isObjectsEqual } from 'utils/isObjectsEqual';
 
 export class LoginFormComponent extends React.Component<
@@ -152,9 +157,9 @@ export class LoginFormComponent extends React.Component<
           open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
-          type='error'
-         //  TransitionComponent = {this.transitionUp}
-         transitionDirection='down'
+          type={SnackbarType.error}
+         //  transitionComponent = {this.transitionUp}
+         transitionDirection={transitionDirection.down}
           message={
             <div>
               {keys && keys.map((k: string) =>
@@ -206,21 +211,21 @@ export class LoginFormComponent extends React.Component<
               this.state.touched.password &&
               this.state.passwordErrors.map((err, index) => {
                 return (
-                  <div className='CA-Registration-form__error' key={index}>
+                  <div className='ca-login-form__error' key={index}>
                     {err}
                   </div>
                 );
               })}
           </FormGroup>
 
-          <Button
+          <CaButton
             color='primary'
             type='submit'
             className='ca-login-form__login-btn'
             disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
           >
             LOGIN
-          </Button>
+          </CaButton>
         </form>
       </div>
     );

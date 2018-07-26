@@ -68,7 +68,6 @@ export interface FrontEndValidationErrorsLogin {
 
 export interface UserFieldsToRegister {
 
-
   email: string;
   name: string;
   password: string;
@@ -86,7 +85,7 @@ export enum LoadStatus {
     FETCHING,
     COMPLETED,
     FAILED
-  
+
 }
 
 export enum StatTab {
@@ -102,4 +101,18 @@ export interface ErrorsFromServer {
 export interface FrontEndSnackbarData {
   type: 'error' | 'warning' | 'info' | 'success';
   msg: string;
+}
+
+export enum SnackbarType {
+  error = 'error',
+  warning = 'warning',
+  info = 'info',
+  success = 'success'
+}
+
+export enum transitionDirection {
+  left = 'left',
+  right = 'right',
+  up = 'up',
+  down = 'down'
 }

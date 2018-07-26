@@ -1,3 +1,3 @@
-export default {
+export let keys = {
     secretOrKey: 'secret'
 };

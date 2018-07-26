@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { switchMap, tap, ignoreElements } from 'rxjs/operators';
 
+
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -16,6 +17,7 @@ import {
   LoadGamesFailed
 } from './games.action';
 
+
 import { store } from 'store';
 import { InitEvents } from 'store/socket';
 import { Game } from 'models';
@@ -24,10 +26,12 @@ export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
   .ofType(GamesTypes.InitGames).pipe(
     switchMap(() => {
 
+
       return fromPromise(HttpWrapper.get('api/mocks/games'))
         .map((res: any) => {
 
           const games: Game[] = res.data;
+
 
           return new LoadGamesCompleted(games);
         }).catch(error => {

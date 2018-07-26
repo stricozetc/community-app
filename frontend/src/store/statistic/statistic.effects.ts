@@ -50,6 +50,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
             return new LoadMostPopularGamesCompleted(popGames);
             }).catch(error => {
 
+
               return Observable.of(new LoadMostPopularGamesFailed(error));
             });
           })

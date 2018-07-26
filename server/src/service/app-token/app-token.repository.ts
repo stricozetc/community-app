@@ -34,4 +34,5 @@ export class AppTokenRepository {
 
         return app;
     }
+
 }

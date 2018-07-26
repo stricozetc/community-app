@@ -40,7 +40,7 @@ export class SocketServiceImplementation extends SocketService {
   }
 
   public notifyAllClients(eventName: string, payload: RoomInfo[]): void {
-    this.clients.forEach(client => {
+    this.clients.forEach((client) => {
       client.emit(eventName, payload);
     });
   }
@@ -75,7 +75,7 @@ export class SocketServiceImplementation extends SocketService {
 
           this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
           this.notifyAllClients(this.games[index].updateRoomsInfoEventName,
-            this.mapRoomsToRoomsInfo()
+                                this.mapRoomsToRoomsInfo()
           );
         }
 
@@ -97,7 +97,7 @@ export class SocketServiceImplementation extends SocketService {
         if (isRemoved && room) {
           this.loggerService.infoLog(`Sent count wait players in ${this.games[room.id].name}`);
           this.notifyAllClients(this.games[room.id].updateRoomsInfoEventName,
-            this.mapRoomsToRoomsInfo()
+                                this.mapRoomsToRoomsInfo()
           );
         }
       })
@@ -107,7 +107,7 @@ export class SocketServiceImplementation extends SocketService {
   }
 
   private mapRoomsToRoomsInfo(): RoomInfo[] {
-    return this.roomService.getRooms().map(r => {
+    return this.roomService.getRooms().map((r) => {
       return {
         id: r.id,
         gameId: r.gameId,

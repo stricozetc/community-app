@@ -26,6 +26,7 @@ export class RoomService {
     return this.rooms.find(r => r.id === index);
   }
 
+
   public createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
     return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
       let isCreated = false;
@@ -41,7 +42,6 @@ export class RoomService {
         });
 
         this.playersBindService.bindPlayer(roomToken, playerToken);
-
         this.loggerService.infoLog(`New room was added for ${this.games[index].name}`);
         this.loggerService.infoLog(`Current count of players is 1`);
 
@@ -53,6 +53,7 @@ export class RoomService {
       return isCreated;
     });
   }
+
 
   public addPlayerToRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<[boolean, Room]> {
     /*
@@ -69,6 +70,7 @@ export class RoomService {
       this.loggerService.infoLog(`Add player to ${this.games[index].name} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else {
+   
       operation$ = this.createNewRoom(index, client, playerToken).then(result => {
 
         let newRoom = this.rooms.find(r => r.id === index);
@@ -85,6 +87,7 @@ export class RoomService {
           },
           () => {
             this.loggerService.infoLog(`Start game by timer -> ${this.games[index].name}`);
+   
 
             this.startGame(this.games[index], newRoom, index);
           },
@@ -104,6 +107,7 @@ export class RoomService {
     });
   }
 
+
   public removePlayerFromRoom(index: number, client: SocketIO.Socket, token: string): Promise<[boolean, Room]> {
     /*
     * @todo refactor for lock async operations (multiple users)
@@ -116,6 +120,7 @@ export class RoomService {
     }
 
     if (room && room.players.length > 1) {
+ 
       room.players = room.players.filter(p => p !== client);
 
       this.loggerService.infoLog(`Remove player from ${this.games[index].name} room`);
@@ -136,6 +141,7 @@ export class RoomService {
       return [result, room] as [boolean, Room];
     });
   }
+
 
   public removePlayer(client: SocketIO.Socket, token: string): Promise<[boolean, Room]> {
     /*
@@ -177,12 +183,15 @@ export class RoomService {
 
     if (room && room.players.length === this.games[index].maxRoomPlayer) {
       this.timerService.end(room.timer);
+
       this.startGame(this.games[index], room, index);
     }
   }
 
+
   private startGame(game: Game, room: Room, index: number): void {
 
+   
     this.playersBindService.sendPlayerBind(game, room)
       .then(() => {
         room.players.forEach((player: SocketIO.Socket) => {

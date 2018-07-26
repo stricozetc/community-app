@@ -5,6 +5,7 @@ import { AuthActions, AuthTypes } from './auth.action';
 import { initialState } from './auth.initial';
 
 export const authReducer = (state = initialState, action: AuthActions) => {
+
     switch (action.type) {
         case AuthTypes.SetCurrentUser: {
             return {
@@ -16,4 +17,5 @@ export const authReducer = (state = initialState, action: AuthActions) => {
         default:
             return state;
     }
+
 };

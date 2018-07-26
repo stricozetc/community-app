@@ -10,42 +10,42 @@ export class MocksRepositoryImplementation implements MocksRepository {
   private games: Game[] = require('../../config/games.json').games;
 
   public getGames(): Promise<Game[]> {
-    let randomTime = Math.random() * (5000 - 2000) + 2000;
+    const randomTime = Math.random() * (5000 - 2000) + 2000;
 
     return new Promise<Game[]>((resolve, _reject) => {
       setTimeout(() => {
         resolve(this.games);
-      }, randomTime);
+      },         randomTime);
     });
   }
 
   public getBestUsers(): Promise<any[]> {
-    let randomTime = Math.random() * (5000 - 2000) + 2000;
+    const randomTime = Math.random() * (5000 - 2000) + 2000;
 
     return new Promise<any[]>((resolve, _reject) => {
       setTimeout(() => {
         resolve(bestUsers);
-      }, randomTime);
+      },         randomTime);
     });
   }
 
   public getMostPopularGames(): Promise<any[]> {
-    let randomTime = Math.random() * (5000 - 2000) + 2000;
+    const randomTime = Math.random() * (5000 - 2000) + 2000;
 
     return new Promise<Game[]>((resolve, _reject) => {
       setTimeout(() => {
         resolve(mostPopularGames);
-      }, randomTime);
+      },         randomTime);
     });
   }
 
   public getRecentGames(): Promise<Game[]> {
-    let randomTime = Math.random() * (5000 - 2000) + 2000;
+    const randomTime = Math.random() * (5000 - 2000) + 2000;
 
     return new Promise<Game[]>((resolve, _reject) => {
       setTimeout(() => {
         resolve(recentGames);
-      }, randomTime);
+      },         randomTime);
     });
   }
 }
