@@ -3,19 +3,22 @@ import './Battles.scss';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, LoadStatus, Game, RoomInfo } from 'models';
+import {
+  AuthStatus,
+  LoadStatus,
+  Game,
+  RoomInfo,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { BattleProps } from './Battles.model';
 
-import { CaGameCard } from 'components/GameCard';
-import { CaSpinner } from 'components/Spinner';
+import { CaGameCard, CaSnackbar, CaSpinner } from 'components';
 
 import { InitGames, JoinBattle, LeaveBattle } from 'store';
 
 import { isEmpty } from 'utils/isEmpty';
-
-import { CaSnackbar } from 'components/Snackbar';
 
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
 
@@ -72,9 +75,9 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type='error'
+          type={SnackbarType.error}
           message={<span> Game fetching Failed! </span>}
-          transitionDirection='down'
+          transitionDirection={transitionDirection.down}
         />
 
         {!isEmpty(this.props.games) && (

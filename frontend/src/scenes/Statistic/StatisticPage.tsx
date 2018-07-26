@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { AuthStatus, LoadStatus, FrontEndSnackbarData } from 'models';
+import {
+  AuthStatus,
+  LoadStatus,
+  FrontEndSnackbarData,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { AppState, LogoutUser } from 'store';
 
 import { StatisticProps } from './Statistic.model';
-import './Statistic.scss';
 
 import {
   InitBestUsers,
@@ -14,10 +18,8 @@ import {
 } from 'store/statistic';
 import { isEmpty } from 'utils';
 
-import { CaSpinner } from 'components/Spinner';
-import { CaSnackbar } from 'components/Snackbar';
+import { CaUsersTables, CaSnackbar, CaSpinner } from 'components';
 import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
-import { CaUsersTables } from 'components/CaUsersTables';
 
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];
@@ -111,12 +113,11 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
         {this.props.children}
 
         <CaSnackbar
-          style={{ top: '75px' }}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type='error'
+          type={SnackbarType.error}
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (
@@ -124,16 +125,15 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection='down'
+          transitionDirection={transitionDirection.down}
         />
 
         <CaSnackbar
-          style={{ bottom: '50px' }}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type='info'
+          type={SnackbarType.info}
           message={
             <React.Fragment>
               {errorMessages.map((err: FrontEndSnackbarData, index: number) => (
@@ -141,7 +141,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
               ))}
             </React.Fragment>
           }
-          transitionDirection='up'
+          transitionDirection={transitionDirection.up}
         />
         {!isDataLoaded && !isDataFailed ? (
           <div className='ca-homepage__spinner-container'>

@@ -8,7 +8,12 @@ import { connect } from 'react-redux';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
-import { AuthStatus, UserFieldsToLogin, UserFieldsToRegister } from 'models';
+import {
+  AuthStatus,
+  UserFieldsToLogin,
+  UserFieldsToRegister,
+  SnackbarType,
+  transitionDirection } from 'models';
 import { isEmpty } from './../../utils/isEmpty';
 
 import {
@@ -152,9 +157,9 @@ export class LoginFormComponent extends React.Component<
           open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
-          type='error'
+          type={SnackbarType.error}
          //  transitionComponent = {this.transitionUp}
-         transitionDirection='down'
+         transitionDirection={transitionDirection.down}
           message={
             <div>
               {keys && keys.map((k: string) =>
@@ -206,7 +211,7 @@ export class LoginFormComponent extends React.Component<
               this.state.touched.password &&
               this.state.passwordErrors.map((err, index) => {
                 return (
-                  <div className='CA-Registration-form__error' key={index}>
+                  <div className='ca-login-form__error' key={index}>
                     {err}
                   </div>
                 );

@@ -1,33 +1,34 @@
-import './CaTable.scss';
 import * as React from 'react';
 
 import {CaTableProps} from './CaTable.model';
-
+import * as classNames from 'classnames';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { withStyles } from '@material-ui/core';
+import { styles } from './CaTable.styles';
 
-export const CaTable = (props: CaTableProps) => {
-  const rowData = props.rowData;
-  const columnDef = props.columnDef;
+export const CaTable = withStyles(styles)((props: CaTableProps) => {
+  const { columnDef, rowData, classes } = props;
 
   const arrayOfColumnName = columnDef.map(column => column.headerName);
   const arrayOfPropertyName = columnDef.map(column => column.field);
 
   return(
-    <Table className='statistic-table'>
-        <TableHead className='statistic-table__table-head'>
-            <TableRow>
+    <Table>
+        <TableHead className={classes.tableHead}>
+            <TableRow className={classes.tableHeadRow}>
                 {arrayOfColumnName.map((nameOfColumn, index) => {
                     const numeric = index !== 0;
                     return (
-                        <TableCell key={nameOfColumn}
-                                    numeric={numeric}
-                                    className={`statistic-table__column${index + 1}-cell statistic-table__table-head-cell`}
+                        <TableCell
+                          key={nameOfColumn}
+                          numeric={numeric}
+                          className={classNames(classes.columnCell, classes.tableHeadCell)}
                         >
-                            {nameOfColumn}
+                        {nameOfColumn}
                         </TableCell>
                     );
                 })}
@@ -36,12 +37,17 @@ export const CaTable = (props: CaTableProps) => {
         <TableBody>
             {rowData.map((user, index) => {
             return (
-                <TableRow className='statistic-table__row' key={index}>
-                    {arrayOfPropertyName.map((property, ind) => {
-                        const numeric = ind !== 0;
+                <TableRow key={index}>
+                    {arrayOfPropertyName.map((property, index) => {
+                        const numeric = index !== 0;
+
                         return (
-                            <TableCell numeric={numeric} key={ind} className={`statistic-table__column${ind + 1}-cell`}>
-                                {user[property]}
+                            <TableCell
+                              numeric={numeric}
+                              key={index}
+                              className={classes.columnCell}
+                            >
+                            {user[property]}
                             </TableCell>
                         );
                     }
@@ -50,7 +56,6 @@ export const CaTable = (props: CaTableProps) => {
             );
             })}
         </TableBody>
-
     </Table>
   );
-};
+});

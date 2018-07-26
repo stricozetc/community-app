@@ -100,3 +100,17 @@ export interface FrontEndSnackbarData {
   type: 'error' | 'warning' | 'info' | 'success';
   msg: string;
 }
+
+export enum SnackbarType {
+  error = 'error',
+  warning = 'warning',
+  info = 'info',
+  success = 'success'
+}
+
+export enum transitionDirection {
+  left = 'left',
+  right = 'right',
+  up = 'up',
+  down = 'down'
+}
