@@ -7,5 +7,5 @@ export * from './LoginForm';
 export * from './Logo';
 export * from './Navbar';
 export * from './RegistrationForm';
-export * from './Snackbar';
+export * from './CaSnackbar';
 export * from './Spinner';
