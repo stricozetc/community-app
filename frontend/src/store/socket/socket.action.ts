@@ -6,7 +6,7 @@ import { Game } from 'models';
 export enum SocketActionTypes {
   CloseSocket = '[socket] Close Socket',
   InitEvents = '[socket] Init Events',
-  EmitEvent = '[socket] Emit Event',
+  EmitEvent = '[socket] Emit Event'
 }
 
 @action()
@@ -26,7 +26,7 @@ export class InitEvents implements Action {
 export class EmitEvent implements Action {
   public readonly type = SocketActionTypes.EmitEvent;
 
-  public constructor(public payload: {eventName: string, args?: any}) {
+  public constructor(public payload: string) {
   }
 }
 
