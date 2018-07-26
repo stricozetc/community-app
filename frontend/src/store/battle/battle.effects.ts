@@ -55,7 +55,7 @@ export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>)
       let userToken: string = '';
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
-        		userToken = user.token;
+        userToken = user.token;
         return window.location.replace(`${action.payload}/${userToken}`);
       } else {
         return store.dispatch(new ErrorBattle());

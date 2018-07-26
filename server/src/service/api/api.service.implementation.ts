@@ -21,8 +21,6 @@ export class ApiServiceImplementation extends ApiService {
     public async startNewRoom(requestUrl: string, data: any, game: Game): Promise<string> {
         let app = await this.tokenService.getByAppName(game.appName);
 
-        console.log(requestUrl);
-        console.log(app.token);
         if (app) {
             return axios.post<boolean>(requestUrl, data, {
                 headers: {

@@ -4,7 +4,7 @@ import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
 export interface Statistic {
-    userId: number;
+    userToken: number;
     playedTime: number;
     scores: number;
     status: UserStatus;
@@ -29,10 +29,9 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
     appToken: {
         type: Sequelize.STRING(50),
     },
-    userId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: false
+    userToken: {
+        type: Sequelize.STRING(50),
+        primaryKey: true
     },
     playedTime: {
         type: Sequelize.INTEGER,

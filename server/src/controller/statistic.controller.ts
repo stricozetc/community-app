@@ -12,7 +12,7 @@ import { Game } from '../typing/game';
 import { UserStatus } from '../../models';
 
 export interface DataFromGame { 
-  userId: number;
+  userToken: number;
   playedTime: number;
   scores: number;
   status: UserStatus;
@@ -31,17 +31,8 @@ export class StatisticController {
       let appToken: string = request.headers.authorization;
       appToken = appToken.replace('Bearer ', '');
 
-      console.log('==============================');
-      console.log('==============================');
-      console.log(data);
-      console.log(typeof data[0].userId);
-      console.log('==============================');
-      console.log('==============================');
-
       return this.statisticRepository.setGameResult(data, appToken)
       .catch((err) => {
-        console.log(err);
-
         return response.status(400).send(err);
       });
    

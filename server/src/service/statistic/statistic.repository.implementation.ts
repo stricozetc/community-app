@@ -39,7 +39,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     })
       .then((tokenRow: TokenFromDb) => {
         const token = tokenRow && tokenRow.token;
-        console.log('TOKEN', token);
         if (token) {
           let promises: Promise<boolean>[] = [];
           //statistic = JSON.parse(statistic); // TODO: why body-parser is not working as expected
@@ -55,8 +54,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
               return true;
             })
             .catch(err => {
-              console.log(err);
-
              return err;
             });
         } else {
@@ -64,16 +61,14 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         }
       })
       .catch((err: any) => {
-        console.log(err);
-
         return err;
       });
   }
 
 
-  public getRecentGames(userId: number): Promise<RecentGameFromServer[]> {
+  public getRecentGames(userToken: string): Promise<RecentGameFromServer[]> {
     return StatisticModel.findAll({
-      where: { userId },
+      where: { userToken },
       order: [['createdAt', 'DESC']]
       // attributes: ['id', 'playedTime', 'scores', 'isWin']
     })
@@ -92,7 +87,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   
                 let result = {
                   game: gameName,
-                  playedTime: game.playedTime,
+                  scores: game.scores,
                   result: game.status === 1
                 };
   
@@ -180,19 +175,19 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
   public getBestUsers(): Promise<BestUsersFromServer[]> {
     return new Promise<BestUsersFromServer[]>((resolveBestUsers, reject) => {
-      UserModel.findAll({ attributes: ['id', 'name', 'isActive'] })
+      UserModel.findAll({ attributes: ['token', 'name', 'isActive'] })
         .then(users => {
           const promises = users.map(currentUser => {
             if (currentUser.isActive) {
               return StatisticModel.findAll({
-                where: { userId: currentUser.id }
+                where: { userToken: currentUser.token }
               })
 
                 .then(historyRows => {
                   let playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
                   let scoresArray = historyRows.map(row => {
-                    if (row.playedTime) {
+                    if (row.scores) {
                       return row.scores;
                     }
                   });
@@ -202,7 +197,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                   }
 
                   let result = {
-                    id: currentUser.id,
+                    userToken: currentUser.token,
                     name: currentUser.name,
                     playedTime,
                     scores
@@ -233,7 +228,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   private saveStatistic(token: string, stat: Statistic): Promise<boolean> {
     const newHistory = StatisticModel.build({
       appToken: token,
-      userId: stat.userId,
+      userToken: stat.userToken,
       playedTime: stat.playedTime,
       scores: stat.scores,
       status: stat.status
@@ -243,8 +238,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       .save()
       .then((savedHistory: Statistic) => true)
       .catch((err: any) => {
-        console.log(err);
-
         return err;
       });
   }
