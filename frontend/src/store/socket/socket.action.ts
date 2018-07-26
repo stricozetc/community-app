@@ -26,7 +26,7 @@ export class InitEvents implements Action {
 export class EmitEvent implements Action {
   public readonly type = SocketActionTypes.EmitEvent;
 
-  public constructor(public payload: {eventName: string, options?: any}) {
+  public constructor(public payload: {eventName: string, args?: any}) {
   }
 }
 

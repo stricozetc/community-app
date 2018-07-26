@@ -30,8 +30,8 @@ export class SocketService {
     this.socket.emit(eventName);
   }
 
-  public emitEventWithOptions(eventName: string, options: any): void {
-    this.socket.emit(eventName, options);
+  public emitEventWithOptions(eventName: string, args: any): void {
+    this.socket.emit(eventName, args);
   }
 
   public getRoomUrl(): Promise<string> {
