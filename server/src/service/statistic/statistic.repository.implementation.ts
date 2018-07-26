@@ -31,31 +31,43 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     @inject(StatisticService) private statisticService: StatisticService
   ) {}
 
-  public setGameResult(data: DataFromGame, appToken: string): Promise<boolean> {
-    let { statistic } = data;
+  public setGameResult(data: DataFromGame[], appToken: string): Promise<boolean> {
+    let statistic  = data;
 
     return AppTokenModel.findOne({
       where: { token: appToken }
     })
       .then((tokenRow: TokenFromDb) => {
         const token = tokenRow && tokenRow.token;
+        console.log('TOKEN', token);
         if (token) {
           let promises: Promise<boolean>[] = [];
-          statistic = JSON.parse(statistic); // TODO: why body-parser is not working as expected
-          promises = statistic.map((stat: Statistic) =>
-            this.saveStatistic(token, stat)
+          //statistic = JSON.parse(statistic); // TODO: why body-parser is not working as expected
+          promises = statistic.map((stat: Statistic) => {
+
+            return this.saveStatistic(token, stat);
+          }
+            
           );
 
           return Promise.all(promises)
             .then(() => {
               return true;
             })
-            .catch(err => err);
+            .catch(err => {
+              console.log(err);
+
+             return err;
+            });
         } else {
           return 'you must register your game and provide correct app token';
         }
       })
-      .catch((err: any) => err);
+      .catch((err: any) => {
+        console.log(err);
+
+        return err;
+      });
   }
 
 
@@ -81,12 +93,13 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 let result = {
                   game: gameName,
                   playedTime: game.playedTime,
-                  result: game.isWin
+                  result: game.status === 1
                 };
   
                 return accumulator.concat(result);
               }, []);
             }
+
             return recentGames;
           })
           .catch(err => err);
@@ -223,12 +236,16 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       userId: stat.userId,
       playedTime: stat.playedTime,
       scores: stat.scores,
-      isWin: stat.isWin
+      status: stat.status
     });
 
     return newHistory
       .save()
       .then((savedHistory: Statistic) => true)
-      .catch((err: any) => err);
+      .catch((err: any) => {
+        console.log(err);
+
+        return err;
+      });
   }
 }

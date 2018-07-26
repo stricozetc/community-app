@@ -9,9 +9,13 @@ import {
 } from './../service/statistic';
 
 import { Game } from '../typing/game';
+import { UserStatus } from '../../models';
 
 export interface DataFromGame { 
-  statistic: any;
+  userId: number;
+  playedTime: number;
+  scores: number;
+  status: UserStatus;
 }
 
 
@@ -23,11 +27,20 @@ export class StatisticController {
 
   @httpPost('/set-game-result')
   public setGameResult(request: Request, response: Response): Promise<void | Response> | Response {
-      const data: DataFromGame  = request.body;
-      const appToken: string = request.headers.authorization;
+      const data: DataFromGame[]  = request.body;
+      let appToken: string = request.headers.authorization;
+      appToken = appToken.replace('Bearer ', '');
+
+      console.log('==============================');
+      console.log('==============================');
+      console.log(data);
+      console.log(typeof data[0].userId);
+      console.log('==============================');
+      console.log('==============================');
 
       return this.statisticRepository.setGameResult(data, appToken)
       .catch((err) => {
+        console.log(err);
 
         return response.status(400).send(err);
       });

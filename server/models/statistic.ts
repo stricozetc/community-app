@@ -7,9 +7,17 @@ export interface Statistic {
     userId: number;
     playedTime: number;
     scores: number;
-    isWin: boolean;
+    status: UserStatus;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export enum UserStatus {
+    INIT,
+    WIN,
+    LOSE,
+    DEAD_HEAT,
+    LEAVE
 }
   
 export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.statisticModel, {
@@ -34,9 +42,9 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
         type: Sequelize.INTEGER,
         defaultValue: 0
     },
-    isWin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+    status: {
+        type: Sequelize.INTEGER,
+        defaultValue: 2
     }
 
 }, {

@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { action } from '../decorators';
 
 import { ErrorsFromServer } from 'models';

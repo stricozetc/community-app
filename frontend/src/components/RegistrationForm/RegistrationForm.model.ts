@@ -45,5 +45,5 @@ export interface RegistrationFormProps {
   isSnackbarOpen: boolean;
   registerUser(user: UserFieldsToRegister): void;
   closeSnackbar(): void;
-  openSnackbar():void;
+  openSnackbar(): void;
 }

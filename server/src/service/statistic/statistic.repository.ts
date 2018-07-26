@@ -6,6 +6,6 @@ export abstract class StatisticRepository {
     public abstract getMostPopularGames(): Promise<any[]>;
     public abstract getBestUsers(): Promise<any[]>;
     public abstract getRecentGames(userId: number): Promise<any>;
-    public abstract setGameResult(statistic: DataFromGame, appToken: string): Promise<any>;
+    public abstract setGameResult(statistic: DataFromGame[], appToken: string): Promise<any>;
 
 }

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-
 import { AuthStatus, LoadStatus, FrontEndSnackbarData } from 'models';
 import { AppState, LogoutUser } from 'store';
 
@@ -28,34 +27,34 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     const isMostPopularGamesFailed = nextProps.statistic.mostPopularGamesStatus
     === LoadStatus.FAILED && nextProps.statistic.mostPopularGamesStatus !== this.props.statistic.mostPopularGamesStatus;
 
-    if(isBestUsersInitFailed) {
+    if (isBestUsersInitFailed) {
       this.dataForSnack.push({
         type: 'error',
         msg: 'User Init failed'
       });
     }
 
-    if(isRecentGamesInitFailed) {
+    if (isRecentGamesInitFailed) {
       this.dataForSnack.push({
         type: 'error',
         msg: 'Recent Games Init failed'
       });
     }
 
-    if(isMostPopularGamesFailed) {
+    if (isMostPopularGamesFailed) {
       this.dataForSnack.push({
         type: 'error',
         msg: 'Most Popular Games Init failed'
       });
     }
 
-    if( isBestUsersInitFailed || isRecentGamesInitFailed || isMostPopularGamesFailed ) {
+    if ( isBestUsersInitFailed || isRecentGamesInitFailed || isMostPopularGamesFailed ) {
       this.props.openSnackbar();
     }
 
   }
-    
-  public closeSnackbar(): void{
+
+  public closeSnackbar(): void {
     this.props.closeSnackbar();
   }
 
@@ -74,7 +73,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
   }
 
   public componentDidMount(): void {
-  
+
     if (this.props.authStatus === AuthStatus.NOT_AUTHORIZED) {
       this.props.history.push('/login');
     }
@@ -85,23 +84,21 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     this.props.history.push('/');
   }
 
-
-
   public render(): JSX.Element {
-const errorMessages = this.dataForSnack.filter(d => d.type = "error");
+const errorMessages = this.dataForSnack.filter(d => d.type = 'error');
 
-    const isDataLoaded = (
-      this.props.statistic.bestUsersStatus === LoadStatus.COMPLETED && 
-      this.props.statistic.recentGamesStatus  === LoadStatus.COMPLETED && 
+const isDataLoaded = (
+      this.props.statistic.bestUsersStatus === LoadStatus.COMPLETED &&
+      this.props.statistic.recentGamesStatus  === LoadStatus.COMPLETED &&
       this.props.statistic.mostPopularGamesStatus  === LoadStatus.COMPLETED
     );
 
-    const isDataFailed = (
-      this.props.statistic.bestUsersStatus === LoadStatus.FAILED && 
-      this.props.statistic.recentGamesStatus  === LoadStatus.FAILED && 
+const isDataFailed = (
+      this.props.statistic.bestUsersStatus === LoadStatus.FAILED &&
+      this.props.statistic.recentGamesStatus  === LoadStatus.FAILED &&
       this.props.statistic.mostPopularGamesStatus  === LoadStatus.FAILED
     );    return (
-      <div className="ca-statistic">
+      <div className='ca-statistic'>
         {this.props.children}
 
 <CaSnackbar
@@ -110,15 +107,15 @@ const errorMessages = this.dataForSnack.filter(d => d.type = "error");
           open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
-          type="error"
+          type='error'
           message={
           <React.Fragment>
-          {errorMessages.map((err: FrontEndSnackbarData, index: number) => 
+          {errorMessages.map((err: FrontEndSnackbarData, index: number) =>
             <div key={index}>* {err.msg}</div>
           )}
           </React.Fragment>
         }
-          transitionDirection="down"
+          transitionDirection='down'
         />
 
         <CaSnackbar
@@ -127,19 +124,19 @@ const errorMessages = this.dataForSnack.filter(d => d.type = "error");
           open={ this.props.isSnackbarOpen }
           autoHideDuration = {4000}
           handleClose= {() => this.closeSnackbar()}
-          type="info"
+          type='info'
           message={
           <React.Fragment>
-          {errorMessages.map((err: FrontEndSnackbarData, index: number) => 
+          {errorMessages.map((err: FrontEndSnackbarData, index: number) =>
             <div key={index}>* {err.msg}</div>
           )}
           </React.Fragment>
         }
-          transitionDirection="up"
+          transitionDirection='up'
         />
-      {!isDataLoaded && !isDataFailed ?          
-      <div className="ca-homepage__spinner-container">
- 			  <CaSpinner isActive={!isDataLoaded} />  
+      {!isDataLoaded && !isDataFailed ?
+      <div className='ca-homepage__spinner-container'>
+ 			  <CaSpinner isActive={!isDataLoaded} />
       </div>
        :
         <CaUsersTables statistic={this.props.statistic}/>
@@ -164,7 +161,6 @@ const mapDispatchToProps = (dispatch: any) => ({
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   openSnackbar: () => dispatch(new OpenSnackbar())
 });
-
 
 export const CaStatisticPage = connect(
   mapStateToProps,
