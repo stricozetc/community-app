@@ -22,15 +22,15 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     const isBestUsersInitFailed =
       nextProps.statistic.bestUsersStatus === LoadStatus.FAILED &&
       nextProps.statistic.bestUsersStatus !==
-        this.props.statistic.bestUsersStatus;
+      this.props.statistic.bestUsersStatus;
     const isRecentGamesInitFailed =
       nextProps.statistic.recentGamesStatus === LoadStatus.FAILED &&
       nextProps.statistic.recentGamesStatus !==
-        this.props.statistic.recentGamesStatus;
+      this.props.statistic.recentGamesStatus;
     const isMostPopularGamesFailed =
       nextProps.statistic.mostPopularGamesStatus === LoadStatus.FAILED &&
       nextProps.statistic.mostPopularGamesStatus !==
-        this.props.statistic.mostPopularGamesStatus;
+      this.props.statistic.mostPopularGamesStatus;
 
     if (isBestUsersInitFailed) {
       this.dataForSnack.push({
@@ -143,8 +143,8 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
             <CaSpinner isActive={!isDataLoaded} />
           </div>
         ) : (
-          <CaUsersTables statistic={this.props.statistic} />
-        )}
+            <CaUsersTables statistic={this.props.statistic} />
+          )}
       </div>
     );
   }
@@ -152,7 +152,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
 
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
-  user: state.auth.user,
+  user: state.auth.user!,
   statistic: state.statistic,
   isSnackbarOpen: state.snackbarUi.isOpen
 });
