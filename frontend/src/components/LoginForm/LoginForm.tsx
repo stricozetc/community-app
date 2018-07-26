@@ -206,7 +206,7 @@ export class LoginFormComponent extends React.Component<
               this.state.touched.password &&
               this.state.passwordErrors.map((err, index) => {
                 return (
-                  <div className='CA-Registration-form__error' key={index}>
+                  <div className='ca-login-form__error' key={index}>
                     {err}
                   </div>
                 );
