@@ -22,17 +22,17 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
       const game: Game | undefined = store.getState().games.games
         .find((info: Game) => info.name === action.payload);
 
-      let options: number = 0;
+      let args: string = '';
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
-        options = user.iat;
+        args = user.token;
       }
       let eventName = '';
       if (game) {
         eventName = game.registrationEventName;
       }
 
-      store.dispatch(new EmitEvent({ eventName, options }));
+      store.dispatch(new EmitEvent({ eventName, args }));
     }),
     ignoreElements()
   );
@@ -50,10 +50,10 @@ export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
 export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>) =>
   actions$.ofType(BattleActionTypes.RedirectToBattle).pipe(
     map(action => {
-      let userToken: number = 0;
+      let userToken: string = '';
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
-        userToken = user.iat;
+        userToken = user.token;
 
         return window.location.replace(`${action.payload}/${userToken}`);
       } else {

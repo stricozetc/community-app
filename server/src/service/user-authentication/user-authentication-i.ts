@@ -2,6 +2,7 @@ import { injectable } from "inversify";
 
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+import * as uuid from 'uuid/v4';
 
 import { UserModel } from "../../../models/user";
 import { UserRoles } from "../../../models/userRoles";
@@ -22,7 +23,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
             let errors: any = {};
             UserModel.findOne({
-                where: {email: data.email}
+                where: { email: data.email }
             }).then((user: User) => {
                 if (user) {
                     errors.email = registerErr.userIsAlreadyRegistered;
@@ -30,11 +31,13 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
                     return reject(errors);
                 }
+                const token = uuid();
 
                 const newUserDate = UserModel.build({
                     name: data.name,
                     email: data.email,
-                    password: null
+                    password: null,
+                    token: token
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
@@ -48,7 +51,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                         newUserDate.password = hash;
                         newUserDate.save().then((savedUser: User) => {
                             RoleModel.findOne({
-                                where: {name: 'user'}
+                                where: { name: 'user' }
                             }).then((role: Role) => {
 
                                 UserRoles.upsert({
@@ -72,7 +75,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             const password = data.password;
 
             let errors: any = {};
-            UserModel.findOne({where: {email}}).then((user: User) => {
+            UserModel.findOne({ where: { email } }).then((user: User) => {
                 if (!user) {
                     errors.email = loginErr.notFoundUser;
                 }
@@ -85,7 +88,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                                 const payload = {
                                     id: user.id,
                                     name: user.name,
-                                    email: user.email
+                                    email: user.email,
+                                    token: user.token
                                 };
 
                                 jwt.sign(payload, keys.secretOrKey, (err: any, token: string) => {
