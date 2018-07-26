@@ -22,18 +22,17 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
       const game: Game | undefined = store.getState().games.games
         .find((info: Game) => info.name === action.payload);
 
-
-      let options: string = '';
+      let args: string = '';
       const user: FrontEndUser | undefined = store.getState().auth.user;
       if (user) {
-        
-		options = user.token;      }
+        args = user.token;
+      }
       let eventName = '';
       if (game) {
         eventName = game.registrationEventName;
       }
 
-      store.dispatch(new EmitEvent({ eventName, options }));
+      store.dispatch(new EmitEvent({ eventName, args }));
     }),
     ignoreElements()
   );

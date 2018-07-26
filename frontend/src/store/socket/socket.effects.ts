@@ -48,7 +48,7 @@ export const initEvents$ = (actions$: ActionsObservable<InitEvents>) =>
 export const emitEvent$ = (actions$: ActionsObservable<EmitEvent>) =>
   actions$.ofType(SocketActionTypes.EmitEvent).pipe(
     tap(payload => {
-      socketService.emitEventWithOptions(payload.payload.eventName, payload.payload.options);
+      socketService.emitEventWithOptions(payload.payload.eventName, payload.payload.args);
     }),
     ignoreElements()
   );
