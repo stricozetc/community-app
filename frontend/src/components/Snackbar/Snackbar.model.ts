@@ -1,4 +1,4 @@
-import { SnackbarType } from './../../models';
+import { SnackbarType } from 'models';
 import { WithStyles } from '@material-ui/core';
 import { SnackbarProps } from '@material-ui/core/Snackbar';
 import { Omit } from 'utils/Omit';
