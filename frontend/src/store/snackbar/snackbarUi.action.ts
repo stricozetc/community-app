@@ -1,5 +1,4 @@
 
-
 import { action } from '../decorators';
 
 export enum SnackbarUiTypes {
@@ -24,9 +23,8 @@ export class ToggleSnackbar {
 
 }
 
-
 export type SnackbarUiActions =
     | CloseSnackbar
     | OpenSnackbar
     | ToggleSnackbar;
-   
+

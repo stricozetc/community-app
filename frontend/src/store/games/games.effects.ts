@@ -7,7 +7,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-
 import { HttpWrapper } from 'services';
 
 import {
@@ -16,7 +15,6 @@ import {
   GamesTypes,
   LoadGamesFailed
 } from './games.action';
-
 
 import { store } from 'store';
 import { InitEvents } from 'store/socket';
@@ -28,13 +26,13 @@ export const initGames$ = (actions$: ActionsObservable<InitGames>) => actions$
 
       return fromPromise(HttpWrapper.get('api/mocks/games'))
         .map((res: any) => {
-      
+
           const games: Game[] = res.data;
 
-          return new LoadGamesCompleted(games)
+          return new LoadGamesCompleted(games);
         }).catch(error => {
           return Observable.of(new LoadGamesFailed());
-        })
+        });
     })
   );
 

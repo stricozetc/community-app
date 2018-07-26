@@ -23,14 +23,14 @@ class LandingComponent extends React.Component<LandingProps> {
       <div>
         {this.props.children}
         <h2>Landing for Community App</h2>
-        <Link to="/register" className="ca-landing__register-btn">
-          <Button variant="raised" color="primary">
+        <Link to='/register' className='ca-landing__register-btn'>
+          <Button variant='raised' color='primary'>
             Register
           </Button>
         </Link>
 
-        <Link to="/login">
-          <Button variant="raised" color="primary">
+        <Link to='/login'>
+          <Button variant='raised' color='primary'>
             Login
           </Button>
         </Link>

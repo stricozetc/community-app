@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { AppState, LeaveBattle, LogoutUser } from 'store';
 import { CurrentBattleComponent } from './CurrentBattle';
 
-
 const mapStateToProps = (state: AppState) => ({
   roomsInfo: state.battle.roomsInfo,
   battleName: state.battle.battleName,

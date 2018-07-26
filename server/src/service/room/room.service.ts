@@ -29,7 +29,7 @@ export class RoomService {
   public createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
     return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]).then((roomToken: string) => {
       let isCreated = false;
-
+      
       if (roomToken) {
         this.rooms.push({
           id: index,

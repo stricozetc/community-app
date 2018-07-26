@@ -54,17 +54,21 @@ export interface RoomInfo {
 }
 
 export interface FrontEndValidationErrorsRegister {
+
   email: { mustBeCorrect: string, required: string };
   password: { min: string, required: string };
   name: { min: string, required: string };
 }
 
 export interface FrontEndValidationErrorsLogin {
+
   email: { mustBeCorrect: string, required: string };
   password: { min: string, required: string };
 }
 
 export interface UserFieldsToRegister {
+
+
   email: string;
   name: string;
   password: string;
@@ -72,6 +76,7 @@ export interface UserFieldsToRegister {
 }
 
 export interface UserFieldsToLogin {
+
   email: string;
   password: string;
 }
@@ -81,6 +86,7 @@ export enum LoadStatus {
     FETCHING,
     COMPLETED,
     FAILED
+  
 }
 
 export enum StatTab {
@@ -91,4 +97,9 @@ export enum StatTab {
 
 export interface ErrorsFromServer {
   [key: string]: { code: number; msg: string };
+}
+
+export interface FrontEndSnackbarData {
+  type: 'error' | 'warning' | 'info' | 'success';
+  msg: string;
 }

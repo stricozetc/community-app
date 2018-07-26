@@ -3,7 +3,7 @@ import './root.scss';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
 import * as React from 'react';
-import { HashRouter as Router, Redirect, Route } from 'react-router-dom';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import { setAuthToken } from 'utils';
 
@@ -26,7 +26,7 @@ import { CaNavbar } from 'components/Navbar';
 import { CaLogo } from 'components/Logo';
 import { CaButton } from 'components/form-controls/Button';
 import { AuthStatus } from 'models';
-
+import { PageNotFound } from '../PageNotFound';
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -60,12 +60,12 @@ export class RootComponent extends React.Component<RootProps> {
       isAuthorized ?
         <CaButton
           clickHandler={() => this.logoutUser()}
-          value="Logout"
+          value='Logout'
         />
         :
         <CaButton
           clickHandler={() => this.redToLogin()}
-          value="Login"
+          value='Login'
         />
     );
   }
@@ -91,10 +91,10 @@ export class RootComponent extends React.Component<RootProps> {
         ]}
       >
         <CaLogo
-          text="battlenet"
+          text='battlenet'
         />
 
-        <div className="ca-navbar__logout-btn-container">
+        <div className='ca-navbar__logout-btn-container'>
           {this.getButton(this.props.status)}
         </div>
 
@@ -105,20 +105,21 @@ export class RootComponent extends React.Component<RootProps> {
   public render(): JSX.Element {
     return (
       <Router>
-        <div className="App">
-          <Route
-            exact={true}
-            path="/"
-            render={props =>
-              <Landing {...props} >
-                {this.getNavbar(this.props.status)}
-              </Landing>
-            }
-          />
-          <div className="container">
+        <div className='App'>
+          <Switch>
             <Route
               exact={true}
-              path="/register"
+              path='/'
+              render={props =>
+                <Landing {...props} >
+                  {this.getNavbar(this.props.status)}
+                </Landing>
+              }
+            />
+
+            <Route
+              exact={true}
+              path='/register'
               render={props =>
                 <RegistrationForm {...props} >
                   {this.getNavbar(this.props.status)}
@@ -128,7 +129,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/login"
+              path='/login'
               render={props =>
                 <LoginForm {...props} >
                   {this.getNavbar(this.props.status)}
@@ -137,13 +138,13 @@ export class RootComponent extends React.Component<RootProps> {
             />
             <Route
               exact={true}
-              path="/homepage"
-              render={props => <Redirect to="/battles"/>}
+              path='/homepage'
+              render={props => <Redirect to='/battles'/>}
             />
 
             <Route
               exact={true}
-              path="/statistics"
+              path='/statistics'
               render={props =>
                 <CaStatisticPage {...props}>
                   {this.getNavbar(this.props.status)}
@@ -153,7 +154,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/battles"
+              path='/battles'
               render={
                 props =>
                   <CaBattles {...props}>
@@ -164,14 +165,23 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/battles/:id"
+              path='/battles/:id'
               render={props =>
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
                 </CurrentBattle>
               }
             />
-          </div>
+
+            <Route
+              path='/*'
+              render={() =>
+                <PageNotFound>
+                  {this.getNavbar(this.props.status)}
+                </PageNotFound>
+              }
+            />
+          </Switch>
         </div>
       </Router>
     );

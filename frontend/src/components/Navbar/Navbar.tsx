@@ -11,8 +11,8 @@ import { Link } from './Navbar.model';
 export const CaNavbar = (props: NavbarProps) => {
   return (
     <div className='ca-navbar'>
-      <div className="ca-navbar__container">
-        <ul className="ca-navbar__items-container">
+      <div className='ca-navbar__container'>
+        <ul className='ca-navbar__items-container'>
           {props.children}
           {props.linksToRender &&
           props.linksToRender.map((link: Link, index: number) => {
@@ -22,7 +22,7 @@ export const CaNavbar = (props: NavbarProps) => {
                 key={index}
                 to={link.to}
                 activeClassName={link.activeClassName}
-                className="ca-navbar__nav-item"
+                className='ca-navbar__nav-item'
               >
                 {link.text}
               </NavLink>

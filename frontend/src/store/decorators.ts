@@ -25,7 +25,7 @@ export function action(): ClassDecorator {
     function construct(constructor: any, args: any): any {
       const c: any = function (): any {
         return constructor.apply(this, args);
-      }
+      };
       c.prototype = constructor.prototype;
       const returnC = Object.assign({}, new c());
 
@@ -33,9 +33,9 @@ export function action(): ClassDecorator {
     }
     const f: any = (...args: any[]) => {
       return construct(original, args);
-    }
+    };
     f.prototype = original.prototype;
 
-    return f
-  }
+    return f;
+  };
 }
