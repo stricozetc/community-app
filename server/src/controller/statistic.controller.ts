@@ -2,17 +2,23 @@ import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import * as passport from 'passport';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import Promise = require('bluebird');
+import Promise = require("bluebird");
 
-import {
-  StatisticRepository
+import { 
+  StatisticRepository 
 } from './../service/statistic';
 
 import { Game } from '../typing/game';
+import { UserStatus } from '../../models';
 
-export interface DataFromGame {
-  statistic: any; // temporary. Before test with real API, not with postman
+
+export interface DataFromGame { 
+  userToken: number;
+  playedTime: number;
+  scores: number;
+  status: UserStatus;
 }
+
 
 @controller('/api/v1/statistic')
 export class StatisticController {
@@ -22,15 +28,16 @@ export class StatisticController {
 
   @httpPost('/set-game-result')
   public setGameResult(request: Request, response: Response): Promise<void | Response> | Response {
-      const data: DataFromGame  = request.body;
-      const appToken: string = request.headers.authorization;
+
+      const data: DataFromGame[]  = request.body;
+      let appToken: string = request.headers.authorization;
+      appToken = appToken.replace('Bearer ', '');
 
       return this.statisticRepository.setGameResult(data, appToken)
       .catch((err) => {
-
         return response.status(400).send(err);
       });
-
+   
   }
 
   @httpGet('/recent-games', passport.authenticate('jwt', {session: false}))
@@ -63,6 +70,8 @@ export class StatisticController {
         return response.status(400).json(err);
       });
   }
+
+  
 
   @httpGet('/statistic', passport.authenticate('jwt', {session: false}))
   public getStatistic(request: Request, response: Response): Promise<void | Response> {

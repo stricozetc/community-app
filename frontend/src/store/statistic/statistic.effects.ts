@@ -50,7 +50,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
 export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =>
   actions$.ofType(StatisticTypes.InitRecentGames).pipe(
     switchMap((action) =>
-      from(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userId}`)).pipe(
+      from(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
         map((res: any) => {
           const rg: any[] = res.data;
 

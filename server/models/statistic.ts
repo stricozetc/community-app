@@ -1,17 +1,26 @@
-import * as Sequelize from 'sequelize';
+
+import * as Sequelize from "sequelize";
 import { db } from './SequelizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
 export interface Statistic {
-    userId: number;
+    userToken: number;
     playedTime: number;
     scores: number;
-    isWin: boolean;
+    status: UserStatus;
     createdAt: Date;
     updatedAt: Date;
 }
 
+export enum UserStatus {
+    INIT,
+    WIN,
+    LOSE,
+    DEAD_HEAT,
+    LEAVE
+}
+  
 export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.statisticModel, {
     id: {
         type: Sequelize.INTEGER,
@@ -21,10 +30,9 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
     appToken: {
         type: Sequelize.STRING(50),
     },
-    userId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: false
+    userToken: {
+        type: Sequelize.STRING(50),
+        primaryKey: true
     },
     playedTime: {
         type: Sequelize.INTEGER,
@@ -34,23 +42,22 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
         type: Sequelize.INTEGER,
         defaultValue: 0
     },
-    isWin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+    status: {
+        type: Sequelize.INTEGER,
+        defaultValue: 2
     }
 
-},                                                                                   {
-    // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
-    // otherwise, the model name will be pluralized
+}, {
+    // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
     freezeTableName: true,
-    // defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
+    //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
     tableName: dbConfig.statisticTable,
 
     classMethods: {
         associate: (models: any) => {
             // skip associating during working with DB
-            StatisticModel.belongsTo(models.users, {foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
-            StatisticModel.belongsTo(models.appTokens, {foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
+            StatisticModel.belongsTo(models.users, {foreignKey: 'userId', onDelete: "CASCADE", onUpdate: 'CASCADE'});
+            StatisticModel.belongsTo(models.appTokens, {foreignKey: 'userId', onDelete: "CASCADE", onUpdate: 'CASCADE'});
         }
     },
 });

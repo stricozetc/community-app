@@ -9,9 +9,10 @@
             "leaveEventName": "onLeaveJsMarathon",
             "updateRoomsInfoEventName": "onUpdateRoomsInfoJsMarathon",
             "notifyCountdown": "onNotifyCountdownJsMarathon",
-            "maxRoomPlayer": 5,
+            "maxRoomPlayer": 1,
             "maxRooms": 5,
             "requestUrl": "http://localhost:2018",
+            "redirectUrl": "http://localhost:2018/#/user/login",
             "maxWaitingTime": 3000000,
             "battleTime": 300000
         },
@@ -27,6 +28,7 @@
             "maxRoomPlayer": 10,
             "maxRooms": 7,
             "requestUrl": "http://localhost:1111",
+            "redirectUrl": "http://localhost:1111",
             "maxWaitingTime": 30,
             "battleTime": 600000
         },
@@ -42,6 +44,7 @@
             "maxRoomPlayer": 0,
             "maxRooms": 0,
             "requestUrl": "http://localhost:1111",
+            "redirectUrl": "http://localhost:1111",
             "maxWaitingTime": 30,
             "battleTime": 600000
         }

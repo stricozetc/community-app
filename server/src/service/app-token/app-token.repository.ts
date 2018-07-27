@@ -19,27 +19,20 @@ export class AppTokenRepository {
                 if (isUpsert) {
                     resolve(newToken);
                 } else {
-                    reject('Error in token creation!');
+                    reject("Error in token creation!");
                 }
-            }).catch((e) => {
+            }).catch(e => {
                 reject(e);
             });
         });
     }
 
     public async getByName(gameName: string): Promise<AppToken> {
-        const app = await AppTokenModel.findOne({
+        let app = await AppTokenModel.findOne({
             where: {appName: gameName}
         });
 
         return app;
     }
 
-    public async getByToken(tokenName: string): Promise<AppToken> {
-        const app = await AppTokenModel.findOne({
-            where: {token: tokenName}
-        });
-
-        return app;
-    }
 }

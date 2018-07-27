@@ -45,6 +45,12 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       };
     }
 
+    case BattleActionTypes.ErrorBattle: {
+      return {
+        ...state,
+        status: BattleStatus.ERROR
+      };
+    }
     default:
       return state;
   }

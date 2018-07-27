@@ -15,7 +15,7 @@ export interface StatisticProps {
   logoutUser(): void;
   initBestUsers(): void;
   initMostPopularGames(): void;
-  initRecentGames(userId: number): void;
+  initRecentGames(userToken: string): void;
   closeSnackbar(): void;
   openSnackbar(): void;
 }

@@ -12,7 +12,7 @@ export interface PopularGamesFromServer {
 }
 
 export interface BestUsersFromServer {
-  id: number;
+  userToken: string;
   name: number;
   playedTime: number;
   scores: number;

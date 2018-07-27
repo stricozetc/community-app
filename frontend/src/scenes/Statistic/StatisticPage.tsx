@@ -81,7 +81,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     }
 
     if (isEmpty(this.props.statistic.recentGames)) {
-      this.props.initRecentGames(this.props.user.id);
+      this.props.initRecentGames(this.props.user.token);
     }
   }
 
@@ -166,7 +166,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   initBestUsers: () => dispatch(new InitBestUsers()),
   initMostPopularGames: () => dispatch(new InitMostPopularGames()),
-  initRecentGames: (userId: number) => dispatch(new InitRecentGames(userId)),
+  initRecentGames: (userToken: string) => dispatch(new InitRecentGames(userToken)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   openSnackbar: () => dispatch(new OpenSnackbar())
 });
