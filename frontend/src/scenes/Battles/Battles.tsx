@@ -31,7 +31,6 @@ class CaBattlesComponent extends React.Component<BattleProps> {
   }
 
   public componentWillMount(): void {
-
     const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
 
     if (!isAuthenticated) {

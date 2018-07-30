@@ -7,7 +7,6 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 
 import {
   deleteAuthToken,
-  history,
   setAuthToken
 } from 'utils';
 
@@ -19,6 +18,7 @@ import {
   LogoutUser,
   RegisterUser,
   SetCurrentUser,
+  RedirectToLoginForm
 } from './auth.action';
 
 import { GetErrors } from '../errors';
@@ -47,7 +47,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     ofType(AuthTypes.RegisterUser),
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
-        map(() => history.push('/login')),
+        map(() => new RedirectToLoginForm('./login')),
         catchError((error) => of(new GetErrors(error.response.data)))
       )
     )

@@ -53,6 +53,7 @@ export class LoginFormComponent extends React.Component<
   }
 
   public componentDidMount(): void {
+
     if (this.props.status === AuthStatus.AUTHORIZED) {
       this.props.history.push('/homepage');
     }
