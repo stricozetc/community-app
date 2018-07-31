@@ -3,15 +3,10 @@ import * as jwt_decode from 'jwt-decode';
 
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
-import { switchMap, map, catchError, ignoreElements } from 'rxjs/operators';
-
-import {
-  deleteAuthToken,
-  setAuthToken,
-  history
-} from 'utils';
-
+import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
+import { GetErrors } from 'store/errors';
+import { deleteAuthToken, history, setAuthToken } from 'utils';
 
 import {
   AuthTypes,
@@ -22,7 +17,6 @@ import {
   SuccessRegistration
 } from './auth.action';
 
-import { GetErrors } from '../errors';
 import { FrontEndUser } from './interfaces';
 
 export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
@@ -55,7 +49,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
   );
 
 export const successRegistration$ = (action$: ActionsObservable<SuccessRegistration>) =>
-   action$.ofType(AuthTypes.SuccessRegistration).pipe(
+  action$.ofType(AuthTypes.SuccessRegistration).pipe(
     map(action => {
       history.push(action.payload);
     }),

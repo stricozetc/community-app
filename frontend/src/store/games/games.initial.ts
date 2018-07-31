@@ -1,5 +1,6 @@
-import { GamesState } from './interfaces';
 import { LoadStatus } from 'models';
+
+import { GamesState } from './interfaces';
 
 type State = GamesState;
 

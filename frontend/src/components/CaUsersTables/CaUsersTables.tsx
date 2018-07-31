@@ -1,13 +1,13 @@
 import * as React from 'react';
 
+import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
-import { CaUsersTablesProps, CaUsersTablesState, StatisticOfUser, HeaderName } from './CaUsersTables.model';
-import './CaUsersTables.scss';
-
-import { Tabs, Tab, withStyles } from '@material-ui/core';
-
 import { StatTab } from 'models';
+
+import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
+
+import './CaUsersTables.scss';
 
 export const CaUsersTables = withStyles(styles)(
   class extends React.Component<CaUsersTablesProps, CaUsersTablesState> {

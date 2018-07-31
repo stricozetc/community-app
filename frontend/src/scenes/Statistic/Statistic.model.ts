@@ -1,7 +1,6 @@
 import { AuthStatus } from 'models';
-import { StatisticState } from './../../store/statistic/interfaces';
-
-import {FrontEndUser} from 'store';
+import { FrontEndUser } from 'store';
+import { StatisticState } from 'store/statistic';
 
 export interface StatisticProps {
   authStatus: AuthStatus;

@@ -1,5 +1,4 @@
-import { AuthStatus, UserFieldsToRegister } from 'models';
-import { ErrorsFromServer } from 'models';
+import { AuthStatus, ErrorsFromServer, UserFieldsToRegister } from 'models';
 
 export interface RegistrationFormState {
   email: string;

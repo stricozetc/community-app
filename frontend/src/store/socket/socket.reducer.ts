@@ -1,6 +1,6 @@
 import { SocketStatus } from 'models';
 
-import { SocketActions, SocketActionTypes } from './socket.action';
+import { SocketActionTypes, SocketActions } from './socket.action';
 import { initialState } from './socket.initial';
 
 export const socketReducer = (state = initialState, action: SocketActions) => {

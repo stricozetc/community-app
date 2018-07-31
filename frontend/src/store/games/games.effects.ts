@@ -1,18 +1,16 @@
+import { Game } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
-import { switchMap, catchError, map } from 'rxjs/operators';
-
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
+import { InitEvents } from 'store/socket';
 
 import {
-  LoadGamesCompleted,
-  InitGames,
   GamesTypes,
+  InitGames,
+  LoadGamesCompleted,
   LoadGamesFailed
 } from './games.action';
-
-import { InitEvents } from 'store/socket';
-import { Game } from 'models';
 
 export const initGames$ = (actions$: ActionsObservable<InitGames>) =>
   actions$.pipe(

@@ -1,8 +1,7 @@
-import './Countdown.scss';
-
 import * as  React from 'react';
 
 import { CountdownProps, CountdownState } from './Countdown.model';
+import './Countdown.scss';
 
 export class Countdown extends React.Component<CountdownProps, CountdownState> {
 
@@ -26,17 +25,20 @@ export class Countdown extends React.Component<CountdownProps, CountdownState> {
         clearInterval(this.timer);
       }
 
-      this.timer = setInterval(() => {
-        if (this.props.time <= 1000 || this.state.currentTime <= 1000) {
-          if (this.timer) {
-            clearInterval(this.timer);
+      this.timer = setInterval(
+        () => {
+          if (this.props.time <= 1000 || this.state.currentTime <= 1000) {
+            if (this.timer) {
+              clearInterval(this.timer);
+            }
           }
-        }
 
-        this.setState({
-          currentTime: this.state.currentTime - 1000
-        });
-      },                       1000);
+          this.setState({
+            currentTime: this.state.currentTime - 1000
+          });
+        },
+        1000
+      );
     }
   }
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import './pageNotFound.scss';
 
 export class PageNotFound extends React.Component {

@@ -1,8 +1,6 @@
-
 import { LoadStatus } from 'models';
 
 export interface StatisticState {
-
   bestUsers: any[];
   mostPopularGames: any[];
   recentGames: any[];
@@ -10,4 +8,3 @@ export interface StatisticState {
   mostPopularGamesStatus: LoadStatus;
   recentGamesStatus: LoadStatus;
 }
-

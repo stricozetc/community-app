@@ -4,7 +4,6 @@ import { isEmpty } from 'utils';
 import { AuthActions, AuthTypes } from './auth.action';
 import { initialState } from './auth.initial';
 
-
 export const authReducer = (state = initialState, action: AuthActions) => {
 
     switch (action.type) {

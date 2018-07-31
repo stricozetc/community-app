@@ -1,4 +1,3 @@
-
 import { AuthStatus } from 'models';
 
 export interface AuthState {

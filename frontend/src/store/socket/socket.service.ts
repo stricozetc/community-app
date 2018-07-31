@@ -1,8 +1,7 @@
 import * as openSocket from 'socket.io-client';
 
-import { Subject } from 'rxjs';
 import { Game, RoomInfo } from 'models';
-
+import { Subject } from 'rxjs';
 
 export class SocketService {
   public roomsInfo: Subject<RoomInfo[]> = new Subject();

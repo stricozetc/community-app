@@ -1,15 +1,12 @@
-import { ActionsObservable, ofType } from 'redux-observable';
-import { tap, ignoreElements } from 'rxjs/operators';
-
-import { InitEvents, EmitEvent, SocketActionTypes } from './socket.action';
-import { store } from 'store';
-
-import { SocketService } from './socket.service';
-
-import { NotifyCountdown, RedirectToBattle, SetRoomsInfo } from 'store/battle';
 import { RoomInfo } from 'models';
+import { ActionsObservable, ofType } from 'redux-observable';
+import { ignoreElements, tap } from 'rxjs/operators';
+import { store } from 'store';
+import { NotifyCountdown, RedirectToBattle, SetRoomsInfo } from 'store/battle';
 import { EmitEventWithOptions } from 'store/socket';
 
+import { EmitEvent, InitEvents, SocketActionTypes } from './socket.action';
+import { SocketService } from './socket.service';
 
 const socketService = new SocketService();
 

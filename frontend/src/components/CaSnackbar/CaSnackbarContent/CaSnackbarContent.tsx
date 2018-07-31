@@ -1,5 +1,7 @@
-import { SnackbarContent, withStyles } from '@material-ui/core';
 import * as React from 'react';
+
+import { SnackbarContent, withStyles } from '@material-ui/core';
+
 import { CaSnackbarContentProps } from './CaSnackbarContent.model';
 import { styles } from './CaSnackbarContent.styles';
 

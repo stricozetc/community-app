@@ -1,7 +1,6 @@
-import { Action } from 'redux';
-
-import { action } from 'store/decorators';
 import { RoomInfo } from 'models';
+import { Action } from 'redux';
+import { action } from 'store/decorators';
 
 export enum BattleActionTypes {
   JoinBattle = '[battle] Join Battle',
@@ -50,9 +49,6 @@ export class NotifyCountdown implements Action {
 @action()
 export class ErrorBattle implements Action {
   public readonly type = BattleActionTypes.ErrorBattle;
-
-  constructor() {
-  }
 }
 
 export type BattleActions =

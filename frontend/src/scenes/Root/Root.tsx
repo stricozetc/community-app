@@ -1,25 +1,16 @@
-import './root.scss';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import * as React from 'react';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-
-import { setAuthToken } from 'utils';
-
-import { FrontEndUser, SetCurrentUser, AppState, LogoutUser, store, LeaveBattle } from 'store';
-
-import { Landing } from 'scenes/Landing';
-
+import { AuthStatus } from 'models';
 import { CaBattles } from 'scenes/Battles';
-
-import { connect } from 'react-redux';
-
-import { CaStatisticPage } from 'scenes/Statistic';
-
-import { RootProps } from './Root.model';
-
 import { CurrentBattle } from 'scenes/Battles';
+import { Landing } from 'scenes/Landing';
+import { CaStatisticPage } from 'scenes/Statistic';
+import { AppState, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
+import { setAuthToken } from 'utils';
 
 import {
   CaButton,
@@ -29,8 +20,10 @@ import {
   RegistrationForm
 } from 'components';
 
-import { AuthStatus } from 'models';
 import { PageNotFound } from '../PageNotFound';
+
+import { RootProps } from './Root.model';
+import './root.scss';
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -65,13 +58,13 @@ export class RootComponent extends React.Component<RootProps> {
         <CaButton
           onClick={() => this.logoutUser()}
         >
-        Logout
+          Logout
         </CaButton>
         :
         <CaButton
           onClick={() => this.redToLogin()}
         >
-        Login
+          Login
         </CaButton>
     );
   }
@@ -145,7 +138,7 @@ export class RootComponent extends React.Component<RootProps> {
             <Route
               exact={true}
               path='/homepage'
-              render={props => <Redirect to='/battles'/>}
+              render={props => <Redirect to='/battles' />}
             />
 
             <Route

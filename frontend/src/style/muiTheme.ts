@@ -1,12 +1,13 @@
+import { createMuiTheme } from '@material-ui/core';
+
 import {
   MuiButton,
+  MuiSnackbarContent,
+  MuiTab,
   MuiTable,
   MuiTableRow,
-  MuiTabs,
-  MuiTab,
-  MuiSnackbarContent
+  MuiTabs
 } from 'components';
-import { createMuiTheme } from '@material-ui/core';
 
 export const theme = createMuiTheme({
   overrides: {

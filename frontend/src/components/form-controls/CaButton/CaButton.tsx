@@ -1,7 +1,9 @@
+import * as React from 'react';
+
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import * as classNames from 'classnames';
-import * as React from 'react';
+
 import { CaButtonProps } from './CaButton.model';
 import { styles } from './CaButton.styles';
 

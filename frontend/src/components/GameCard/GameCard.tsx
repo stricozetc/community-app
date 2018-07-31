@@ -1,16 +1,14 @@
 import * as React from 'react';
 
+import {CaButton, GameCardProps} from 'components';
+import {BattleStatus} from 'models';
+
+import clockImage from 'assets/clock.svg';
+import userImage from 'assets/user.svg';
+
 import './GameCard.scss';
 import './GameCardFooter.scss';
 import './IconWithInfo.scss';
-
-import {BattleStatus} from 'models';
-
-import {CaButton, GameCardProps} from 'components';
-
-import userImage from 'assets/user.svg';
-
-import clockImage from 'assets/clock.svg';
 
 const getBattleButton = (
   status: BattleStatus,

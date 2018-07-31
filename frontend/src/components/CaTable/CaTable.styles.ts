@@ -1,4 +1,5 @@
 import { createStyles } from '@material-ui/core';
+
 export const styles = createStyles({
   tableHead: {
     borderTop: '2px solid rgb(161, 161, 161)'

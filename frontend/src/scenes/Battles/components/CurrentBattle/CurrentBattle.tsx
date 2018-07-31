@@ -1,13 +1,12 @@
 import * as React from 'react';
 
-import { CaButton, Countdown } from 'components';
-
-import './current-battle.scss';
-
+import clockImage from 'assets/clock-small.svg';
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
-import clockImage from 'assets/clock-small.svg';
+import { CaButton, Countdown } from 'components';
 import { AuthStatus, BattleStatus, Game, RoomInfo } from 'models';
+
+import './current-battle.scss';
 
 interface Props {
   roomsInfo: RoomInfo[];
@@ -17,9 +16,7 @@ interface Props {
   games: Game[];
   gameStatus: number;
   authStatus: number;
-
   leaveBattleAction(payload: string): void;
-
   logoutUser(): void;
 }
 
@@ -60,7 +57,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
   }
 
   public render(): JSX.Element {
-    const {battleName, countdown, leaveBattleAction} = this.props;
+    const { battleName, countdown, leaveBattleAction } = this.props;
 
     const currentGame = this.props.games && this.props.games.length ?
       this.props.games[this.getGameIndex()] : undefined;
@@ -71,7 +68,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
         <div className='ca-current-battle__content'>
           <div className='ca-current-battle__header'>
             <div className='ca-current-battle__logo'>
-              <img src={swordImage} alt='Can not found User img'/>
+              <img src={swordImage} alt='Can not found User img' />
             </div>
             <div className='ca-current-battle__header-text'>
               <div className='ca-current-battle__title'>
@@ -87,14 +84,14 @@ export class CurrentBattleComponent extends React.Component<Props> {
           <div className='ca-current-battle__time-line'>
             <div className='ca-current-battle__time'>
               <span className='ca-current-battle__time-description'>Starting in:</span>
-              <Countdown time={countdown}/>
+              <Countdown time={countdown} />
             </div>
             <div className='ca-current-battle__start-button'>
 
               <CaButton
                 disabled={!this.isGameFull()}
               >
-              Start the battle
+                Start the battle
               </CaButton>
 
             </div>
@@ -102,17 +99,17 @@ export class CurrentBattleComponent extends React.Component<Props> {
 
           <div className='ca-current-battle__info'>
             <div className='ca-current-battle__info-icon'>
-              <img src={userImage} alt='Can not found User img'/>
+              <img src={userImage} alt='Can not found User img' />
             </div>
             <span className='ca-current-battle__info-text'>Players: </span>
             <span
               className='ca-current-battle__info-count'>{this.getPlayersCount()}/{currentGame ?
-              currentGame.maxRoomPlayer : 0}</span>
+                currentGame.maxRoomPlayer : 0}</span>
           </div>
 
           <div className='ca-current-battle__info'>
             <div className='ca-current-battle__info-icon'>
-              <img src={clockImage} alt='Can not found User img'/>
+              <img src={clockImage} alt='Can not found User img' />
             </div>
             <span className='ca-current-battle__info-text'>Battle time: </span>
             <span
@@ -123,7 +120,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
             <CaButton
               disabled={true}
             >
-            Invite friend
+              Invite friend
             </CaButton>
           </div>
 
@@ -134,7 +131,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
                 this.props.history.push('/battles');
               }}
             >
-            Leave the room
+              Leave the room
             </CaButton>
           </div>
 
