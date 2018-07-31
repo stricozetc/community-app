@@ -8,7 +8,7 @@ export enum AuthTypes {
   LoginUser = '[auth] Login User',
   LogoutUser = '[auth] Logout User',
   SetCurrentUser = '[auth] Set Current User',
-  RedirectToLoginForm = '[auth] Redirect to login form'
+  SuccessRegistration = '[auth] Success registration'
 }
 
 @action()
@@ -38,8 +38,8 @@ export class LogoutUser {
 }
 
 @action()
-export class RedirectToLoginForm {
-  public readonly type = AuthTypes.RedirectToLoginForm;
+export class SuccessRegistration {
+  public readonly type = AuthTypes.SuccessRegistration;
 
   constructor(public payload: string) {}
 }
@@ -49,4 +49,4 @@ export type AuthActions =
   | LoginUser
   | LogoutUser
   | SetCurrentUser
-  | RedirectToLoginForm;
+  | SuccessRegistration;

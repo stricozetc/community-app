@@ -4,7 +4,6 @@ import { isEmpty } from 'utils';
 import { AuthActions, AuthTypes } from './auth.action';
 import { initialState } from './auth.initial';
 
-import {history} from 'utils';
 
 export const authReducer = (state = initialState, action: AuthActions) => {
 
@@ -14,12 +13,6 @@ export const authReducer = (state = initialState, action: AuthActions) => {
                 ...state,
                 status: !isEmpty(action.payload) ? AuthStatus.AUTHORIZED : AuthStatus.NOT_AUTHORIZED,
                 user: action.payload
-            };
-        }
-        case AuthTypes.RedirectToLoginForm: {
-            history.push(action.payload);
-            return {
-                ...state
             };
         }
         default:
