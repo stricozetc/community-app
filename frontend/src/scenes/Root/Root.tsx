@@ -83,10 +83,6 @@ export const RootComponent = translate('translations')(
 
       const { t, i18n } = this.props;
 
-      const changeLanguage = (lng: string) => {
-        i18n.changeLanguage(lng);
-      };
-
       return (
         <CaNavbar
           linksToRender={[
@@ -110,8 +106,8 @@ export const RootComponent = translate('translations')(
 
           <p>{t('text')}</p>
 
-          <button onClick={() => changeLanguage('en')} >{t('ENtoggle')}</button>
-          <button onClick={() => changeLanguage('ru')} >{t('RUtoggle')}</button>
+          <button onClick={() => i18n.changeLanguage('en')} >{t('ENtoggle')}</button>
+          <button onClick={() => i18n.changeLanguage('ru')} >{t('RUtoggle')}</button>
 
           <div className='ca-navbar__logout-btn-container'>
             {this.getButton(this.props.status)}
