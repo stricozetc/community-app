@@ -312,4 +312,5 @@ module.exports = {
   performance: {
     hints: false,
   },
+  watch: true
 };
