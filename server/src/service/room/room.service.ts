@@ -115,7 +115,7 @@ export class RoomService {
     let room = this.rooms.find(r => r.id === index);
     const operation$ = Promise.resolve(true);
 
-    if (token) {
+    if (token && room) {
       this.playersBindService.removePlayers(room.token, token);
     }
 
