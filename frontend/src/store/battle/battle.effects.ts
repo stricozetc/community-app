@@ -3,7 +3,6 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { Observable } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
 import { AppState } from 'store';
-import { FrontEndUser } from 'store/auth';
 import { EmitEventWithOptions } from 'store/socket';
 
 import {

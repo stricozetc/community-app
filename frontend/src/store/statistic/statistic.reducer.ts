@@ -13,7 +13,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
     case StatisticTypes.InitBestUsers: {
       return {
         ...state,
-        bestUsersStatus: LoadStatus.FETCHING
+        bestUsersStatus: LoadStatus.Fetching
       };
     }
 
@@ -22,21 +22,21 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
         ...state,
         bestUsers: action.payload,
 
-        bestUsersStatus: LoadStatus.COMPLETED
+        bestUsersStatus: LoadStatus.Success
       };
     }
 
     case StatisticTypes.LoadBestUsersFailed: {
       return {
         ...state,
-        bestUsersStatus: LoadStatus.FAILED
+        bestUsersStatus: LoadStatus.Error
       };
     }
 
     case StatisticTypes.InitMostPopularGames: {
       return {
         ...state,
-        mostPopularGamesStatus: LoadStatus.FETCHING
+        mostPopularGamesStatus: LoadStatus.Fetching
       };
     }
 
@@ -45,21 +45,21 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
         ...state,
         mostPopularGames: action.payload,
 
-        mostPopularGamesStatus: LoadStatus.COMPLETED
+        mostPopularGamesStatus: LoadStatus.Success
       };
     }
 
     case StatisticTypes.LoadMostPopularGamesFailed: {
       return {
         ...state,
-        mostPopularGamesStatus: LoadStatus.FAILED
+        mostPopularGamesStatus: LoadStatus.Error
       };
     }
 
     case StatisticTypes.InitRecentGames: {
       return {
         ...state,
-        recentGamesStatus: LoadStatus.FETCHING
+        recentGamesStatus: LoadStatus.Fetching
       };
     }
 
@@ -68,14 +68,14 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
         ...state,
         recentGames: action.payload,
 
-        recentGamesStatus: LoadStatus.COMPLETED
+        recentGamesStatus: LoadStatus.Success
       };
     }
 
     case StatisticTypes.LoadRecentGamesFailed: {
       return {
         ...state,
-        recentGamesStatus: LoadStatus.FAILED
+        recentGamesStatus: LoadStatus.Error
       };
     }
 
