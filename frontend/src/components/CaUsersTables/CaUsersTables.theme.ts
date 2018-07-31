@@ -1,7 +1,8 @@
-import { defaultIndicatorBgColor, defaultTabsTextColor } from 'style/muiTheme.colors';
-import { StyleRules } from '@material-ui/core/styles';
-import { TabsClassKey } from '@material-ui/core/Tabs';
 import { TabClassKey } from '@material-ui/core/Tab';
+import { TabsClassKey } from '@material-ui/core/Tabs';
+import { StyleRules } from '@material-ui/core/styles';
+
+import { defaultIndicatorBgColor, defaultTabsTextColor } from 'style/muiTheme.colors';
 
 export const MuiTabs: Partial<StyleRules<TabsClassKey>> = {
   root: {

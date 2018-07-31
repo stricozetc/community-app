@@ -1,5 +1,6 @@
-import { StatisticState } from './interfaces';
 import { LoadStatus } from 'models';
+
+import { StatisticState } from './interfaces';
 
 type State = StatisticState;
 

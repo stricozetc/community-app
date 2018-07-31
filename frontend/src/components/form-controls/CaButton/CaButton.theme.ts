@@ -1,10 +1,11 @@
+import { ButtonClassKey } from '@material-ui/core/Button';
+import { StyleRules } from '@material-ui/core/styles';
+
 import {
   defaultButtonTextColor,
   primaryButtonTextColor,
   secondaryButtonTextColor
 } from 'style/muiTheme.colors';
-import { StyleRules } from '@material-ui/core/styles';
-import { ButtonClassKey } from '@material-ui/core/Button';
 
 export const MuiButton: Partial<StyleRules<ButtonClassKey>> = {
   root: {

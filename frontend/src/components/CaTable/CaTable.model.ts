@@ -1,4 +1,5 @@
 import { WithStyles } from '@material-ui/core';
+
 import { styles } from './CaTable.styles';
 
 interface HeaderName {

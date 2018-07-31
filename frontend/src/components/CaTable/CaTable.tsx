@@ -1,13 +1,14 @@
 import * as React from 'react';
 
-import {CaTableProps} from './CaTable.model';
-import * as classNames from 'classnames';
+import { withStyles } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { withStyles } from '@material-ui/core';
+import * as classNames from 'classnames';
+
+import { CaTableProps } from './CaTable.model';
 import { styles } from './CaTable.styles';
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
@@ -16,46 +17,46 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const arrayOfColumnName = columnDef.map(column => column.headerName);
   const arrayOfPropertyName = columnDef.map(column => column.field);
 
-  return(
+  return (
     <Table>
-        <TableHead className={classes.tableHead}>
-            <TableRow className={classes.tableHeadRow}>
-                {arrayOfColumnName.map((nameOfColumn, index) => {
-                    const numeric = index !== 0;
-                    return (
-                        <TableCell
-                          key={nameOfColumn}
-                          numeric={numeric}
-                          className={classNames(classes.columnCell, classes.tableHeadCell)}
-                        >
-                        {nameOfColumn}
-                        </TableCell>
-                    );
-                })}
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {rowData.map((user, index) => {
+      <TableHead className={classes.tableHead}>
+        <TableRow className={classes.tableHeadRow}>
+          {arrayOfColumnName.map((nameOfColumn, index) => {
+            const numeric = index !== 0;
             return (
-                <TableRow key={index}>
-                    {arrayOfPropertyName.map((property, index) => {
-                        const numeric = index !== 0;
-
-                        return (
-                            <TableCell
-                              numeric={numeric}
-                              key={index}
-                              className={classes.columnCell}
-                            >
-                            {user[property]}
-                            </TableCell>
-                        );
-                    }
-                    )}
-                </TableRow>
+              <TableCell
+                key={nameOfColumn}
+                numeric={numeric}
+                className={classNames(classes.columnCell, classes.tableHeadCell)}
+              >
+                {nameOfColumn}
+              </TableCell>
             );
-            })}
-        </TableBody>
+          })}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {rowData.map((user, rowIndex) => {
+          return (
+            <TableRow key={rowIndex}>
+              {arrayOfPropertyName.map((property, propertyIndex) => {
+                const numeric = propertyIndex !== 0;
+
+                return (
+                  <TableCell
+                    numeric={numeric}
+                    key={propertyIndex}
+                    className={classes.columnCell}
+                  >
+                    {user[property]}
+                  </TableCell>
+                );
+              }
+              )}
+            </TableRow>
+          );
+        })}
+      </TableBody>
     </Table>
   );
 });

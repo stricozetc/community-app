@@ -1,9 +1,8 @@
-import './Spinner.scss';
-
 import * as React from 'react';
 import { Fragment } from 'react';
 
 import { SpinnerProps } from './Spinner.model';
+import './Spinner.scss';
 
 export const CaSpinner = (props: SpinnerProps) => {
   const { isActive } = props;
@@ -11,7 +10,7 @@ export const CaSpinner = (props: SpinnerProps) => {
   return (
     <Fragment>
       {isActive && (
-        <div className='ca-spinner'/>
+        <div className='ca-spinner' />
       )}
     </Fragment>
   );

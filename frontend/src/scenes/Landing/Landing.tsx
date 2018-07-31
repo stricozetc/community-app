@@ -1,13 +1,12 @@
-import './landing.scss';
-
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { CaButton } from 'components';
 import { AuthStatus } from 'models';
 import { AppState } from 'store';
 
 import { LandingProps } from './Landing.model';
-import { CaButton } from 'components';
+import './landing.scss';
 
 class LandingComponent extends React.Component<LandingProps> {
   public componentDidMount(): void {

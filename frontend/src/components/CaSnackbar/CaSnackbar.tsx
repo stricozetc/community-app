@@ -1,9 +1,11 @@
-import { Snackbar, Slide, withStyles } from '@material-ui/core';
 import * as React from 'react';
-import { CaSnackbarProps } from './CaSnackbar.model';
-import { CaSnackbarContent } from './CaSnackbarContent';
-import { styles } from './CaSnackbar.styles';
+
+import { Slide, Snackbar, withStyles } from '@material-ui/core';
 import { SnackbarType } from 'models';
+
+import { CaSnackbarProps } from './CaSnackbar.model';
+import { styles } from './CaSnackbar.styles';
+import { CaSnackbarContent } from './CaSnackbarContent';
 
 export const CaSnackbar = withStyles(styles)(
   class extends React.Component<CaSnackbarProps> {

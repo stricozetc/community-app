@@ -1,6 +1,6 @@
 import { BattleStatus } from 'models';
 
-import { BattleActions, BattleActionTypes } from './battle.action';
+import { BattleActionTypes, BattleActions } from './battle.action';
 import { initialState } from './battle.initial';
 
 export const battleReducer = (state = initialState, action: BattleActions) => {

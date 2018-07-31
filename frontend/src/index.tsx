@@ -1,16 +1,14 @@
-import './index.css';
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
 import { Provider } from 'react-redux';
-
 import { store } from 'store';
 
 import { App } from './App';
 import { register } from './registerServiceWorker';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from 'utils/i18n';
+
+import './index.css';
 
 ReactDOM.render(
   <Provider store={store}>

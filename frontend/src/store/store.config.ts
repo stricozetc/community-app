@@ -10,37 +10,37 @@ import {
 
 import {
   AuthEffects,
-  authReducer,
-  AuthState
+  AuthState,
+  authReducer
 } from './auth';
 
 import {
   BattleEffects,
-  battleReducer,
-  BattleState
+  BattleState,
+  battleReducer
 } from './battle';
 
 import {
   GamesEffects,
-  gamesReducer,
-  GamesState
+  GamesState,
+  gamesReducer
 } from './games';
 
 import {
   StatisticEffects,
-  statisticReducer,
-  StatisticState
+  StatisticState,
+  statisticReducer
 } from './statistic';
 
 import {
   SocketEffects,
-  socketReducer,
-  SocketState
+  SocketState,
+  socketReducer
 } from './socket';
 
 import {
-  snackbarUiReducer,
-  SnackbarUiState
+  SnackbarUiState,
+  snackbarUiReducer
 } from './snackbar';
 
 import { errorsReducer } from './errors';

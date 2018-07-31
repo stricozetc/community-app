@@ -1,12 +1,13 @@
+import { TableClassKey } from '@material-ui/core/Table';
+import { TableRowClassKey } from '@material-ui/core/TableRow';
+import { StyleRules } from '@material-ui/core/styles';
+
 import {
   defaultTableBgColor,
   defaultTableTextColor,
   hoverTableRowBgColor,
   hoverTableRowTextColor
 } from 'style/muiTheme.colors';
-import { StyleRules } from '@material-ui/core/styles';
-import { TableClassKey } from '@material-ui/core/Table';
-import { TableRowClassKey } from '@material-ui/core/TableRow';
 
 export const MuiTable: Partial<StyleRules<TableClassKey>> = {
   root: {

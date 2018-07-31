@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { AppState, LeaveBattle, LogoutUser } from 'store';
+
 import { CurrentBattleComponent } from './CurrentBattle';
 
 const mapStateToProps = (state: AppState) => ({

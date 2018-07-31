@@ -1,26 +1,23 @@
-import './Battles.scss';
-
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 import {
   AuthStatus,
-  LoadStatus,
   Game,
+  LoadStatus,
   RoomInfo,
   SnackbarType,
-  transitionDirection } from 'models';
-import { AppState, LogoutUser } from 'store';
-
-import { BattleProps } from './Battles.model';
+  transitionDirection
+} from 'models';
 
 import { CaGameCard, CaSnackbar, CaSpinner } from 'components';
-
+import { AppState, LogoutUser } from 'store';
 import { InitGames, JoinBattle, LeaveBattle } from 'store';
-
+import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { isEmpty } from 'utils/isEmpty';
 
-import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
+import { BattleProps } from './Battles.model';
+import './Battles.scss';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
 
@@ -70,7 +67,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
         {this.props.children}
 
         <CaSnackbar
-          anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
@@ -111,7 +108,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
         )}
         {this.props.status === 1 && (
           <div className='ca-homepage__spinner-container'>
-            <CaSpinner isActive={this.props.status === 1}/>
+            <CaSpinner isActive={this.props.status === 1} />
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 import { UserFieldsToLogin, UserFieldsToRegister } from 'models';
 
 import { action } from '../decorators';
+
 import { FrontEndUser } from './interfaces';
 
 export enum AuthTypes {

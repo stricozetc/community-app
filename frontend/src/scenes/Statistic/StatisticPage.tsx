@@ -3,23 +3,25 @@ import { connect } from 'react-redux';
 
 import {
   AuthStatus,
-  LoadStatus,
   FrontEndSnackbarData,
+  LoadStatus,
   SnackbarType,
-  transitionDirection } from 'models';
+  transitionDirection
+} from 'models';
+
 import { AppState, LogoutUser } from 'store';
 
-import { StatisticProps } from './Statistic.model';
+import { CaSnackbar, CaSpinner, CaUsersTables } from 'components';
+import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
+import { isEmpty } from 'utils';
 
 import {
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames
 } from 'store/statistic';
-import { isEmpty } from 'utils';
 
-import { CaUsersTables, CaSnackbar, CaSpinner } from 'components';
-import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
+import { StatisticProps } from './Statistic.model';
 
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];

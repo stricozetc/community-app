@@ -1,36 +1,35 @@
-import './LoginForm.scss';
-
-import { FormGroup, TextField } from '@material-ui/core';
-
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { FormGroup, TextField } from '@material-ui/core';
+import { CaButton, CaSnackbar } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
+import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
+import { isObjectsEqual } from 'utils/isObjectsEqual';
 
 import {
   AuthStatus,
+  SnackbarType,
   UserFieldsToLogin,
   UserFieldsToRegister,
-  SnackbarType,
-  transitionDirection } from 'models';
+  transitionDirection
+} from 'models';
+
 import { isEmpty } from './../../utils/isEmpty';
 
 import {
-  initLoginFormState,
   LoginFormProps,
-  LoginFormState
+  LoginFormState,
+  initLoginFormState
 } from './LoginForm.model';
 
-import { OpenSnackbar, CloseSnackbar } from 'store/snackbar';
-
-import { CaButton, CaSnackbar } from 'components';
-import { isObjectsEqual } from 'utils/isObjectsEqual';
+import './LoginForm.scss';
 
 export class LoginFormComponent extends React.Component<
   LoginFormProps,
   LoginFormState
-> {
+  > {
   constructor(props: LoginFormProps) {
     super(props);
 
@@ -152,14 +151,14 @@ export class LoginFormComponent extends React.Component<
     const keys = errors && Object.keys(errors);
     return (
       <div className='ca-login-form'>
-      <CaSnackbar
+        <CaSnackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={ this.props.isSnackbarOpen }
-          autoHideDuration = {4000}
-          handleClose= {() => this.closeSnackbar()}
+          open={this.props.isSnackbarOpen}
+          autoHideDuration={4000}
+          handleClose={() => this.closeSnackbar()}
           type={SnackbarType.error}
-         //  transitionComponent = {this.transitionUp}
-         transitionDirection={transitionDirection.down}
+          //  transitionComponent = {this.transitionUp}
+          transitionDirection={transitionDirection.down}
           message={
             <div>
               {keys && keys.map((k: string) =>
@@ -171,7 +170,7 @@ export class LoginFormComponent extends React.Component<
           }
         />
 
-      {this.props.children}
+        {this.props.children}
         <form onSubmit={this.onSubmit} className='ca-login-form__container'>
           <FormGroup>
             <TextField

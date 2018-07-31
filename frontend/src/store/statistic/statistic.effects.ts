@@ -1,6 +1,6 @@
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { HttpWrapper } from 'services';
 
@@ -8,11 +8,11 @@ import {
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
-  LoadMostPopularGamesCompleted,
-  LoadRecentGamesCompleted,
   LoadBestUsersCompleted,
-  LoadMostPopularGamesFailed,
   LoadBestUsersFailed,
+  LoadMostPopularGamesCompleted,
+  LoadMostPopularGamesFailed,
+  LoadRecentGamesCompleted,
   LoadRecentGamesFailed,
   StatisticTypes
 } from './statistic.action';
