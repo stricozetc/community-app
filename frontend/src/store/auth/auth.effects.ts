@@ -3,12 +3,12 @@ import * as jwt_decode from 'jwt-decode';
 
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, ignoreElements } from 'rxjs/operators';
 
 import {
   deleteAuthToken,
-  history,
-  setAuthToken
+  setAuthToken,
+  history
 } from 'utils';
 
 import { HttpWrapper } from 'services';
@@ -19,6 +19,7 @@ import {
   LogoutUser,
   RegisterUser,
   SetCurrentUser,
+  SuccessRegistration
 } from './auth.action';
 
 import { GetErrors } from '../errors';
@@ -47,10 +48,18 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     ofType(AuthTypes.RegisterUser),
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
-        map(() => history.push('/login')),
+        map(() => new SuccessRegistration('./login')),
         catchError((error) => of(new GetErrors(error.response.data)))
       )
     )
+  );
+
+export const successRegistration$ = (action$: ActionsObservable<SuccessRegistration>) =>
+   action$.ofType(AuthTypes.SuccessRegistration).pipe(
+    map(action => {
+      history.push(action.payload);
+    }),
+    ignoreElements()
   );
 
 export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) =>
@@ -67,5 +76,6 @@ export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) =>
 export const AuthEffects = [
   loginUser$,
   registerUser$,
-  logoutUser$
+  logoutUser$,
+  successRegistration$
 ];
