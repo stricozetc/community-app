@@ -2,6 +2,9 @@ import { createMuiTheme } from '@material-ui/core';
 
 import {
   MuiButton,
+  MuiMenu,
+  MuiMenuItem,
+  MuiSelect,
   MuiSnackbarContent,
   MuiTab,
   MuiTable,
@@ -17,6 +20,9 @@ export const theme = createMuiTheme({
     MuiTabs,
     MuiTab,
     MuiSnackbarContent,
+    MuiSelect,
+    MuiMenu,
+    MuiMenuItem,
     MuiInput: {
       root: {
         fontSize: '1.6rem'
