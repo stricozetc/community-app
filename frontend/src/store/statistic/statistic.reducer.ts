@@ -80,7 +80,9 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
     }
 
     case StatisticTypes.CleanStatistic: {
-      return initialState;
+      return {
+        ...initialState
+      };
     }
 
     default:

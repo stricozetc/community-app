@@ -77,8 +77,6 @@ export class LoadRecentGamesFailed {
 @action()
 export class CleanStatistic {
   public readonly type = StatisticTypes.CleanStatistic;
-
-  constructor() { }
 }
 
 export type StatisticAction =
