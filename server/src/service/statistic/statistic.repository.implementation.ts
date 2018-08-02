@@ -31,7 +31,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     @inject(StatisticService) private statisticService: StatisticService
   ) {}
 
-
   public setGameResult(data: DataFromGame[], appToken: string): Promise<boolean> {
     let statistic  = data;
 
@@ -48,7 +47,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
             return this.saveStatistic(token, stat);
           }
-            
+
           );
 
           return Promise.all(promises)
@@ -70,7 +69,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   }
 
 
-
   public getRecentGames(userToken: string): Promise<RecentGameFromServer[]> {
     return StatisticModel.findAll({
 
@@ -90,14 +88,14 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
             if (!isEmpty(recentGames)) {
               recentGames = recentGames.reduce((accumulator, game, index) => {
                 const gameName = appNames[index];
-  
+
                 let result = {
                   game: gameName,
 
                   scores: game.scores,
                   result: game.status === 1
                 };
-  
+
                 return accumulator.concat(result);
               }, []);
             }
@@ -116,7 +114,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         AppTokenModel.findAll({ attributes: ['token', 'appName'] })
           .then((gamesAndTokens: { token: string; appName: string }[]) => {
             const tokens = gamesAndTokens.map(row => row.token);
-            
+
             const promises = tokens.map(currentToken => {
               return StatisticModel.findAll({
                 where: { appToken: currentToken }
@@ -239,12 +237,11 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   private saveStatistic(token: string, stat: Statistic): Promise<boolean> {
     const newHistory = StatisticModel.build({
       appToken: token,
-
       userToken: stat.userToken,
       playedTime: stat.playedTime,
       scores: stat.scores,
-
-      status: stat.status
+      resultStatus: stat.resultStatus,
+      participationStatus: stat.participationStatus
     });
 
     return newHistory
