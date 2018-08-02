@@ -79,6 +79,12 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
+    case StatisticTypes.CleanStatistic: {
+      return {
+        ...initialState
+      };
+    }
+
     default:
       return state;
   }
