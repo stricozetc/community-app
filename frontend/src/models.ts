@@ -116,3 +116,8 @@ export enum transitionDirection {
   up = 'up',
   down = 'down'
 }
+
+export enum languages {
+  en = 'en',
+  ru = 'ru'
+}

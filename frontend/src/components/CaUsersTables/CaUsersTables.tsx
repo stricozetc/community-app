@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
 import { StatTab } from 'models';
+import { I18n } from 'react-i18next';
 
 import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
@@ -28,26 +29,32 @@ export const CaUsersTables = withStyles(styles)(
     public render(): JSX.Element {
 
       return (
-        <div>
-          <h2 className='ca-users-tables__title'>Statistic</h2>
-          <Tabs value={this.state.value}>
-            <Tab
-              label='The best users'
-              onClick={() => this.changeContent(StatTab.BestUsers)}
-              classes={{ label: this.props.classes.label }} />
-            <Tab
-              label='The most popular games'
-              onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
-              classes={{ label: this.props.classes.label }}
-            />
-            <Tab
-              label='Recent games'
-              onClick={() => this.changeContent(StatTab.RecentGames)}
-              classes={{ label: this.props.classes.label }} />
-          </Tabs>
+        <I18n>
+          {
+            ( t ) => (
+              <div>
+                <h2 className='ca-users-tables__title'>{t('statistics')}</h2>
+                <Tabs value={this.state.value}>
+                  <Tab
+                    label={t('bestUsersLabel')}
+                    onClick={() => this.changeContent(StatTab.BestUsers)}
+                    classes={{ label: this.props.classes.label }} />
+                  <Tab
+                    label={t('mostPopularGamesLabel')}
+                    onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
+                    classes={{ label: this.props.classes.label }}
+                  />
+                  <Tab
+                    label={t('recentGames')}
+                    onClick={() => this.changeContent(StatTab.RecentGames)}
+                    classes={{ label: this.props.classes.label }} />
+                </Tabs>
 
-          <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
-        </div>
+                <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
+              </div>
+            )
+          }
+        </I18n>
       );
     }
 

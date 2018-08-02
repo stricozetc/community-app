@@ -5,6 +5,7 @@ import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton, CaSnackbar } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
 import { SnackbarType, UserFieldsToRegister, transitionDirection } from 'models';
+import { I18n } from 'react-i18next';
 import { AppState, RegisterUser } from 'store';
 import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { isEmpty } from 'utils';
@@ -150,148 +151,154 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     const { errors } = this.props;
     const keys = errors && Object.keys(errors);
     return (
-      <div>
-        <CaSnackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={this.props.isSnackbarOpen}
-          autoHideDuration={4000}
-          handleClose={() => this.closeSnackbar()}
-          type={SnackbarType.error}
-          // transitionComponent = {this.transitionUp}
-          transitionDirection={transitionDirection.down}
-          message={
+      <I18n>
+        {
+          ( t ) => (
             <div>
-              {keys && keys.map((k: string) =>
-                (
-                  <div>* {errors[k].msg} </div>
-                )
-              )}
+              <CaSnackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={this.props.isSnackbarOpen}
+                autoHideDuration={4000}
+                handleClose={() => this.closeSnackbar()}
+                type={SnackbarType.error}
+                // transitionComponent = {this.transitionUp}
+                transitionDirection={transitionDirection.down}
+                message={
+                  <div>
+                    {keys && keys.map((k: string) =>
+                      (
+                        <div>* {errors[k].msg} </div>
+                      )
+                    )}
+                  </div>
+                }
+              />
+
+              {this.props.children}
+              <form
+                onSubmit={this.handleSubmit}
+                className='ca-Registration-form__container'
+              >
+                <FormGroup>
+                  <TextField
+                    id='email'
+                    label={t('emailLabel')}
+                    name='email'
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    type='email'
+                    className='ca-Registration-form__field'
+                    onBlur={this.handleBlur('email')}
+                    error={!this.state.isEmailValid && this.state.touched.email}
+                  />
+                  {!this.state.isEmailValid &&
+                    this.state.touched.email &&
+                    this.state.emailErrors.map((err, index) => {
+                      return (
+                        <div className='ca-Registration-form__error' key={index}>
+                          {t(err)}
+                        </div>
+                      );
+                    })}
+                </FormGroup>
+
+                <FormGroup>
+                  <TextField
+                    style={{
+                      marginTop: '20px'
+                    }}
+                    id='name'
+                    label={t('nameLabel')}
+                    name='name'
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    type='text'
+                    className='ca-Registration-form__field'
+                    onBlur={this.handleBlur('name')}
+                    error={!this.state.isNameValid && this.state.touched.name}
+                  />
+                  {!this.state.isNameValid &&
+                    this.state.touched.name &&
+                    this.state.nameErrors.map((err, index) => {
+                      return (
+                        <div className='ca-Registration-form__error' key={index}>
+                          {t(err)}
+                        </div>
+                      );
+                    })}
+                </FormGroup>
+
+                <FormGroup>
+                  <TextField
+                    style={{
+                      marginTop: '20px'
+                    }}
+                    id='password'
+                    label={t('passwordLabel')}
+                    name='password'
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    type='password'
+                    className='ca-Registration-form__field'
+                    onBlur={this.handleBlur('password')}
+                    error={!this.state.isPasswordValid && this.state.touched.password}
+                  />
+                  {!this.state.isPasswordValid &&
+                    this.state.touched.password &&
+                    this.state.passwordErrors.map((err, index) => {
+                      return (
+                        <div className='ca-Registration-form__error' key={index}>
+                          {t(err)}
+                        </div>
+                      );
+                    })}
+                </FormGroup>
+
+                <FormGroup>
+                  <TextField
+                    style={{ marginTop: '20px' }}
+                    id='passwordToRepeat'
+                    label={t('repeatPasswordLabel')}
+                    name='passwordToRepeat'
+                    value={this.state.passwordToRepeat}
+                    onChange={this.handleChange}
+                    type='password'
+                    className='ca-Registration-form__field'
+                    onBlur={this.handleBlur('passwordToRepeat')}
+                    error={
+                      this.state.touched.password &&
+                      this.state.touched.passwordToRepeat &&
+                      this.state.password !== this.state.passwordToRepeat
+                    }
+                  />
+
+                  {this.state.touched.password &&
+                    this.state.touched.passwordToRepeat &&
+                    this.state.password !== this.state.passwordToRepeat && (
+                      <div className='ca-Registration-form__error'>
+                        {t('matchPassword')}
+                    </div>
+                    )}
+                </FormGroup>
+
+                <CaButton
+                  color='primary'
+                  type='submit'
+                  className='ca-Registration-form__registration-btn'
+                  disabled={
+                    !this.state.isEmailValid ||
+                    !this.state.isPasswordValid ||
+                    !this.state.isNameValid ||
+                    this.state.password !== this.state.passwordToRepeat
+                  }
+                >
+                  {t('register')}
+                </CaButton>
+              </form>
             </div>
-          }
-        />
-
-        {this.props.children}
-        <form
-          onSubmit={this.handleSubmit}
-          className='ca-Registration-form__container'
-        >
-          <FormGroup>
-            <TextField
-              id='email'
-              label='Email'
-              name='email'
-              value={this.state.email}
-              onChange={this.handleChange}
-              type='email'
-              className='ca-Registration-form__field'
-              onBlur={this.handleBlur('email')}
-              error={!this.state.isEmailValid && this.state.touched.email}
-            />
-            {!this.state.isEmailValid &&
-              this.state.touched.email &&
-              this.state.emailErrors.map((err, index) => {
-                return (
-                  <div className='ca-Registration-form__error' key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
-
-          <FormGroup>
-            <TextField
-              style={{
-                marginTop: '20px'
-              }}
-              id='name'
-              label='Name'
-              name='name'
-              value={this.state.name}
-              onChange={this.handleChange}
-              type='text'
-              className='ca-Registration-form__field'
-              onBlur={this.handleBlur('name')}
-              error={!this.state.isNameValid && this.state.touched.name}
-            />
-            {!this.state.isNameValid &&
-              this.state.touched.name &&
-              this.state.nameErrors.map((err, index) => {
-                return (
-                  <div className='ca-Registration-form__error' key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
-
-          <FormGroup>
-            <TextField
-              style={{
-                marginTop: '20px'
-              }}
-              id='password'
-              label='Password'
-              name='password'
-              value={this.state.password}
-              onChange={this.handleChange}
-              type='password'
-              className='ca-Registration-form__field'
-              onBlur={this.handleBlur('password')}
-              error={!this.state.isPasswordValid && this.state.touched.password}
-            />
-            {!this.state.isPasswordValid &&
-              this.state.touched.password &&
-              this.state.passwordErrors.map((err, index) => {
-                return (
-                  <div className='ca-Registration-form__error' key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
-
-          <FormGroup>
-            <TextField
-              style={{ marginTop: '20px' }}
-              id='passwordToRepeat'
-              label='Repeat password'
-              name='passwordToRepeat'
-              value={this.state.passwordToRepeat}
-              onChange={this.handleChange}
-              type='password'
-              className='ca-Registration-form__field'
-              onBlur={this.handleBlur('passwordToRepeat')}
-              error={
-                this.state.touched.password &&
-                this.state.touched.passwordToRepeat &&
-                this.state.password !== this.state.passwordToRepeat
-              }
-            />
-
-            {this.state.touched.password &&
-              this.state.touched.passwordToRepeat &&
-              this.state.password !== this.state.passwordToRepeat && (
-                <div className='ca-Registration-form__error'>
-                  Passwords must match!
-              </div>
-              )}
-          </FormGroup>
-
-          <CaButton
-            color='primary'
-            type='submit'
-            className='ca-Registration-form__registration-btn'
-            disabled={
-              !this.state.isEmailValid ||
-              !this.state.isPasswordValid ||
-              !this.state.isNameValid ||
-              this.state.password !== this.state.passwordToRepeat
-            }
-          >
-            REGISTER
-          </CaButton>
-        </form>
-      </div>
+          )
+        }
+      </I18n>
     );
   }
 

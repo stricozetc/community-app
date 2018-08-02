@@ -5,26 +5,26 @@ export const emailRegExp: RegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\
 
 export const frontEndValidationErrorsLogin: FrontEndValidationErrorsLogin = {
     email: {
-        mustBeCorrect: 'Email should be correct',
-        required: 'Email Should be required'
+        mustBeCorrect: 'emailError',
+        required: 'emailRequired'
     },
     password: {
-        min: 'Password should have at least 6 characters',
-        required: 'Password is required'
+        min: 'passwordError',
+        required: 'passwordRequired'
     }
 };
 
 export const frontEndValidationErrorsRegister: FrontEndValidationErrorsRegister = {
     email: {
-        mustBeCorrect: 'Email should be correct',
-        required: 'Email Should be required'
+        mustBeCorrect: 'emailError',
+        required: 'emailRequired'
     },
     password: {
-        min: 'Password should have at least 6 characters',
-        required: 'Password is required'
+        min: 'passwordError',
+        required: 'passwordRequired'
     },
     name: {
-        min: 'Name should be at least 2 characters long',
-        required: 'name is required'
+        min: 'nameError',
+        required: 'nameRequired'
     }
 };

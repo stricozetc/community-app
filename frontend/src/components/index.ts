@@ -9,3 +9,4 @@ export * from './Navbar';
 export * from './RegistrationForm';
 export * from './CaSnackbar';
 export * from './Spinner';
+export * from './form-controls/CaSelect';
