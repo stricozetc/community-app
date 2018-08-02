@@ -11,7 +11,8 @@ export enum StatisticTypes {
   LoadMostPopularGamesFailed = '[statistics] Load Most Popular Games Failed',
   InitRecentGames = '[statistic] Init Recent Games',
   LoadRecentGamesCompleted = '[statistic] Load Recent Games Completed',
-  LoadRecentGamesFailed = '[statistic] Load Recent Games Failed'
+  LoadRecentGamesFailed = '[statistic] Load Recent Games Failed',
+  CleanStatistic = '[statistic] Clean Statistic'
 }
 
 @action()
@@ -73,6 +74,13 @@ export class LoadRecentGamesFailed {
   constructor(public err: ErrorsFromServer) { }
 }
 
+@action()
+export class CleanStatistic {
+  public readonly type = StatisticTypes.CleanStatistic;
+
+  constructor() { }
+}
+
 export type StatisticAction =
   | InitBestUsers
   | LoadBestUsersCompleted
@@ -82,4 +90,5 @@ export type StatisticAction =
   | LoadMostPopularGamesFailed
   | InitRecentGames
   | LoadRecentGamesCompleted
-  | LoadRecentGamesFailed;
+  | LoadRecentGamesFailed
+  | CleanStatistic;
