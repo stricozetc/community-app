@@ -9,13 +9,15 @@ import {
 } from './../service/statistic';
 
 import { Game } from '../typing/game';
-import { UserStatus } from '../../models';
+import { ResultStatus } from '../../models';
+import { ParticipationStatus } from '../../models';
 
 export interface DataFromGame {
   userToken: number;
   playedTime: number;
   scores: number;
-  status: UserStatus;
+  resultStatus: ResultStatus;
+  participationStatus: ParticipationStatus;
 }
 
 @controller('/api/v1/statistic')
