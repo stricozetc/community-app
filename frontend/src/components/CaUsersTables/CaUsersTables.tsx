@@ -8,6 +8,7 @@ import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } f
 import { styles } from './CaUsersTables.styles';
 
 import './CaUsersTables.scss';
+import { CaCircleDiagram } from '../CaCircleDiagram';
 
 export const CaUsersTables = withStyles(styles)(
   class extends React.Component<CaUsersTablesProps, CaUsersTablesState> {
@@ -47,6 +48,7 @@ export const CaUsersTables = withStyles(styles)(
           </Tabs>
 
           <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
+          <CaCircleDiagram diagramData = {this.state.rowData}/>
         </div>
       );
     }
