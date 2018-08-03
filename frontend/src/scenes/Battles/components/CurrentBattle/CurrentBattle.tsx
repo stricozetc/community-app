@@ -63,6 +63,8 @@ export class CurrentBattleComponent extends React.Component<Props> {
     const currentGame = this.props.games && this.props.games.length ?
       this.props.games[this.getGameIndex()] : undefined;
 
+    const timeValue = currentGame ? currentGame.battleTime / 60000 : 0;
+
     return (
       <I18n>
         {
@@ -117,7 +119,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
                   </div>
                   <span className='ca-current-battle__info-text'>{t('battleTime') + ':'} </span>
                   <span
-                    className='ca-current-battle__info-count'>{currentGame ? currentGame.battleTime / 60000 : 0} minutes</span>
+                    className='ca-current-battle__info-count'>{t('minutes', { count: timeValue })}</span>
                 </div>
 
                 <div className='ca-current-battle__invite-button'>

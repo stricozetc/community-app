@@ -1,4 +1,5 @@
 import * as  React from 'react';
+import { I18n } from 'react-i18next';
 
 import { CountdownProps, CountdownState } from './Countdown.model';
 import './Countdown.scss';
@@ -53,9 +54,15 @@ export class Countdown extends React.Component<CountdownProps, CountdownState> {
     const totalSeconds = Math.round(this.state.currentTime / 1000) - totalMinutes * 60;
 
     return (
-      <div className='ca-countdown'>
-        {totalMinutes}m : {totalSeconds}s
-      </div>
+      <I18n>
+        {
+          ( t ) => (
+            <div className='ca-countdown'>
+              {totalMinutes}{t('shortMinute')} : {totalSeconds}{t('shortSecond')}
+            </div>
+          )
+        }
+      </I18n>
     );
   }
 }
