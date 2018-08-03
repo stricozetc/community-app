@@ -24,6 +24,7 @@ import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 import './root.scss';
+import { CaMyGames } from '../MyGames/MyGames';
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -84,6 +85,12 @@ export class RootComponent extends React.Component<RootProps> {
           {
             text: 'Statistics',
             to: '/statistics',
+            activeClassName: 'ca-navbar__nav-item--active',
+            disabled: !isAuthorized
+          },
+          {
+            text: 'My games',
+            to: './my-games',
             activeClassName: 'ca-navbar__nav-item--active',
             disabled: !isAuthorized
           }
@@ -169,6 +176,17 @@ export class RootComponent extends React.Component<RootProps> {
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
                 </CurrentBattle>
+              }
+            />
+
+            <Route
+              exact={true}
+              path='/my-games'
+              render={
+                props =>
+                  <CaMyGames {...props} >
+                    {this.getNavbar(this.props.status)}
+                  </CaMyGames>
               }
             />
 

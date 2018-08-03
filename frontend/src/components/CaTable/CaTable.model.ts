@@ -7,7 +7,17 @@ interface HeaderName {
   field: string;
 }
 
+export interface CellWithElement {
+  name: string;
+  edit?: any;
+  delete?: any;
+}
+
+interface Row {
+  [key: string]: string | CellWithElement;
+}
+
 export interface CaTableProps extends WithStyles<typeof styles> {
-  rowData: any[];
+  rowData: Row[];
   columnDef: HeaderName[];
 }

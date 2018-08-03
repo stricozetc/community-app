@@ -24,5 +24,7 @@ export const dbConfig = {
     userRolesModel: 'userRoles',
     userRolesTable: 'user_roles',
     statisticModel: 'statistic',
-    statisticTable: 'statistic'
+    statisticTable: 'statistic',
+    gamesModel: 'games',
+    gamesTable: 'games'
 };

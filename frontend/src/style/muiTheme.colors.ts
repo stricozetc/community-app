@@ -19,3 +19,9 @@ export const errorSnackbarBgColor = '#d32f2f';
 export const infoSnackbarBgColor = '#1976d2';
 export const warningSnackbarBgColor = '#ffa000';
 export const successSnackbarBgColor = '#43a047';
+
+// my-games edit button
+export const defaultEditButtonColor = 'red';
+
+// my-games delete button
+export const defaultDeleteButtonColor = 'blue';

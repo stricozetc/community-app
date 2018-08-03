@@ -8,14 +8,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import * as classNames from 'classnames';
 
-import { CaTableProps } from './CaTable.model';
+import { CaTableProps, CellWithElement } from './CaTable.model';
 import { styles } from './CaTable.styles';
+
+import './CaTable.scss';
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const { columnDef, rowData, classes } = props;
 
   const arrayOfColumnName = columnDef.map(column => column.headerName);
-  const arrayOfPropertyName = columnDef.map(column => column.field);
+  const arrayOfPropertyName = columnDef.map(column => column.field); 
 
   return (
     <Table>
@@ -30,17 +32,20 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
                 className={classNames(classes.columnCell, classes.tableHeadCell)}
               >
                 {nameOfColumn}
+
               </TableCell>
             );
           })}
         </TableRow>
       </TableHead>
       <TableBody>
-        {rowData.map((user, rowIndex) => {
+        {rowData.map((row, rowIndex) => {
           return (
             <TableRow key={rowIndex}>
               {arrayOfPropertyName.map((property, propertyIndex) => {
                 const numeric = propertyIndex !== 0;
+
+                const cellContent = createCellContent(row[property]);
 
                 return (
                   <TableCell
@@ -48,7 +53,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
                     key={propertyIndex}
                     className={classes.columnCell}
                   >
-                    {user[property]}
+                    {cellContent}
                   </TableCell>
                 );
               }
@@ -60,3 +65,41 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
     </Table>
   );
 });
+
+function checkPropertyInObject(object: object, property: string): boolean {
+  return !!object[property];
+}
+
+function createCellContent(cell: CellWithElement | string): JSX.Element | string | number {
+  if (typeof(cell) === 'string' || typeof(cell) === 'number' ) {
+    return cell;
+  } else {
+        const isCellHasEditButton = checkPropertyInObject(cell, 'edit');
+        const isCellHasDeleteButton = checkPropertyInObject(cell, 'delete');
+
+        return (
+            <div className='cell'>
+              <div className='myGames__name-block'>{cell.name}</div>
+              <div className='myGames__buttons-block'>
+                {isCellHasEditButton
+                  ?
+                    <button className='myGames__button myGames__button_edit' onClick={cell.edit}>
+                      Edit
+                    </button>
+                  :
+                    null
+                }
+
+                {isCellHasDeleteButton
+                  ?
+                    <button className='myGames__button myGames__button_delete' onClick={cell.delete}>
+                      Delete
+                    </button>
+                  :
+                    null
+                }
+              </div>
+            </div>
+        );
+    }
+  }

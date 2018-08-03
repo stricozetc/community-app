@@ -7,17 +7,23 @@ export interface CaUsersTablesProps extends WithStyles<typeof styles> {
   statistic: StatisticState;
 }
 
-export interface StatisticOfUser {
-  [key: string]: string | number | boolean | undefined;
-}
-
 export interface HeaderName {
   headerName: string;
   field: string;
 }
 
+interface CellWithElement {
+  name: string;
+  edit?: () => void;
+  delete?: () => void;
+}
+
+export interface Row {
+  [key: string]: string | CellWithElement;
+}
+
 export interface CaUsersTablesState {
   value: number;
-  rowData: StatisticOfUser[];
+  rowData: Row[];
   columnDef: HeaderName[];
 }
