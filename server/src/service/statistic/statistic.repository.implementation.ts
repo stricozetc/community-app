@@ -74,18 +74,22 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       order: [['createdAt', 'DESC']]
 
     })
+
       .then((recentGames) => {
         const promises = recentGames.map((game) => {
           return AppTokenModel.find({ where: { token: game.appToken } }).then(
+
             (row) => row.appName
           );
         });
 
         return Promise.all(promises)
+
           .then((appNames) => {
             if (!isEmpty(recentGames)) {
               recentGames = recentGames.reduce((accumulator, game, index) => {
                 const gameName = appNames[index];
+
                 const result = {
                   game: gameName,
                   scores: game.scores,
@@ -98,8 +102,10 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
             return recentGames;
           })
+
           .catch((err) => err);
       })
+
       .catch((err) => err);
   }
 
@@ -107,20 +113,25 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     return new Promise<PopularGamesFromServer[]>(
       (resolvePopularGames, reject) => {
         AppTokenModel.findAll({ attributes: ['token', 'appName'] })
+
           .then((gamesAndTokens: Array<{ token: string; appName: string }>) => {
             const tokens = gamesAndTokens.map((row) => row.token);
+
 
             const promises = tokens.map((currentToken) => {
               return StatisticModel.findAll({
                 where: { appToken: currentToken }
               })
+
                 .then((historyRows) => {
 
+  
                   const playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
                   const playedInWeek = this.statisticService.calculatePlayedInWeek(
                     historyRows
                   );
+
 
                   const result = {
                     token: currentToken,
@@ -130,23 +141,28 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
                   return result;
                 })
+
                 .catch((err) => reject(err));
             });
 
             return Promise.all(promises)
               .then(
                 (
+
                   allGamesAndItsPlayedTime: Array<{
                     token: string;
                     playedTime: number;
                     playedInWeek: number;
+
                   }>
                 ) => {
                   let mostPopularGames = allGamesAndItsPlayedTime.reduce(
                     (accumulator, game) => {
                       const gameName = gamesAndTokens.find(
+
                         (el) => el.token === game.token
                       ).appName;
+
 
                       const result = {
                         name: gameName,
@@ -166,8 +182,10 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                   return resolvePopularGames(mostPopularGames);
                 }
               )
+
               .catch((err) => reject(err));
           })
+
           .catch((err) => reject(err));
       }
     );
@@ -177,6 +195,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     return new Promise<BestUsersFromServer[]>((resolveBestUsers, reject) => {
 
       UserModel.findAll({ attributes: ['token', 'name', 'isActive'] })
+
         .then((users) => {
           const promises = users.map((currentUser) => {
             if (currentUser.isActive) {
@@ -185,17 +204,21 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 where: { userToken: currentUser.token }
               })
 
+
                 .then((historyRows) => {
                   const playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
+
                   const scoresArray = historyRows.map((row) => {
                       return row.scores;
+                    
                   });
 
                   let scores = 0;
                   if (!isEmpty(scoresArray)) {
                     scores = scoresArray.reduce((a, b) => a + b);
                   }
+
 
                   const result = {
                     userToken: currentUser.token,
@@ -206,6 +229,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
                   return result;
                 })
+
                 .catch((err) => reject(err));
             } else {
               reject('User should be Active');
@@ -213,15 +237,19 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
           });
 
           return Promise.all(promises)
+
             .then((allUsersStatistic) => {
               const bestUsers = this.statisticService
                 .sortBy(allUsersStatistic, 'scores')
+
                 .filter((user) => user.scores > 0);
 
               return resolveBestUsers(bestUsers);
             })
+
             .catch((err) => reject(err));
         })
+
         .catch((err) => reject(err));
     });
   }
@@ -229,12 +257,12 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   private saveStatistic(token: string, stat: Statistic): Promise<boolean> {
     const newHistory = StatisticModel.build({
       appToken: token,
-
       userToken: stat.userToken,
       playedTime: stat.playedTime,
       scores: stat.scores,
 
-      status: stat.status
+      resultStatus: stat.resultStatus,
+      participationStatus: stat.participationStatus
     });
 
     return newHistory

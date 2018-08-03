@@ -1,4 +1,5 @@
 
+
 import * as Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
@@ -8,17 +9,25 @@ export interface Statistic {
     userToken: number;
     playedTime: number;
     scores: number;
-    status: UserStatus;
+    resultStatus: ResultStatus;
+    participationStatus: ParticipationStatus;
     createdAt: Date;
     updatedAt: Date;
 }
 
-export enum UserStatus {
+
+export enum ResultStatus {
     INIT,
     WIN,
     LOSE,
-    DEAD_HEAT,
-    LEAVE
+
+    DEAD_HEAT
+}
+
+export enum ParticipationStatus {
+    INIT,
+    LEAVE,
+    PLAY
 }
 
 export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.statisticModel, {
@@ -42,7 +51,12 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
         type: Sequelize.INTEGER,
         defaultValue: 0
     },
-    status: {
+
+    resultStatus: {
+        type: Sequelize.INTEGER,
+        defaultValue: 2
+    },
+    participationStatus: {
         type: Sequelize.INTEGER,
         defaultValue: 2
     }
@@ -56,6 +70,7 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
     classMethods: {
         associate: (models: any) => {
             // skip associating during working with DB
+
             StatisticModel.belongsTo(models.users, {foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
             StatisticModel.belongsTo(models.appTokens, {foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
         }
