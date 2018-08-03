@@ -3,10 +3,10 @@ import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
 import * as bodyParser from 'body-parser';
-import * as express from 'express';
 import * as morgan from 'morgan';
 import * as SocketIO from 'socket.io';
 import * as passport from 'passport';
+import * as cors from 'cors';
 
 import {
     LoggerService,
@@ -30,13 +30,13 @@ const config = require('./config/app.config.json');
 server.setConfig((app) => {
     process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));
 
+    app.use(cors());
     app.use(bodyParser.urlencoded({
         extended: true
     }));
     app.use(passport.initialize());
     passportConfig(passport);
     app.use(bodyParser.json());
-    app.use(express.static(config.staticUrl));
 });
 
 // makeAssosiations();
