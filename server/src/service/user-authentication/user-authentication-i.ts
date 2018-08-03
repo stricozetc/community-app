@@ -5,7 +5,6 @@ import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import * as uuid from 'uuid/v4';
 
-
 import { UserModel } from '../../../models/user';
 import { UserRoles } from '../../../models/userRoles';
 import { RoleModel } from '../../../models/role';
@@ -25,7 +24,6 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
         return new Promise<User>((resolve, reject) => {
 
-
             const errors: any = {};
             UserModel.findOne({
 
@@ -43,7 +41,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     email: data.email,
 
                     password: null,
-                    token: token
+                    token
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
@@ -80,7 +78,6 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
 
             const email = data.email;
             const password = data.password;
-
 
             const errors: any = {};
 

@@ -15,7 +15,7 @@ export class SocketServiceImplementation extends SocketService {
   @inject(RoomService) private roomService: RoomService;
 
   private clients: SocketIO.Socket[] = [];
-  private playersSocketBind: { playerToken: string, playerSocketId: string }[] = [];
+  private playersSocketBind: Array<{ playerToken: string, playerSocketId: string }> = [];
 
   public setSocket(socketIO: SocketIO.Server): void {
     socketIO.on('connection', (client: SocketIO.Socket) => {
@@ -26,7 +26,7 @@ export class SocketServiceImplementation extends SocketService {
       client.on('disconnect', () => this.onDisconnect(client));
 
       for (let index = 0; index < this.games.length; index++) {
-        
+
         client.on(this.games[index].registrationEventName, (token: string) => {
 
           console.log('SOCKET SERVICE TOKEN', token);
@@ -122,9 +122,8 @@ export class SocketServiceImplementation extends SocketService {
     });
   }
 
-
   private addNewPlayer(socket: SocketIO.Socket, playerToken: string): void {
-    this.playersSocketBind.push({ playerToken: playerToken, playerSocketId: socket.id });
+    this.playersSocketBind.push({ playerToken, playerSocketId: socket.id });
   }
 
   private getPlayerToken(socket: SocketIO.Socket): string {
