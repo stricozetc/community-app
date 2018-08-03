@@ -6,23 +6,23 @@ import { initialState } from './games.initial';
 export const gamesReducer = (state = initialState, action: GamesActions) => {
 
   switch (action.type) {
-    case GamesTypes.InitGames: {
+    case GamesTypes.LoadGames: {
       return {
         ...state,
-        gamesStatus: LoadStatus.FETCHING
+        gamesStatus: LoadStatus.Fetching
       };
     }
-    case GamesTypes.LoadGamesCompleted: {
+    case GamesTypes.LoadGamesSuccess: {
       return {
         ...state,
         games: action.payload,
-        gamesStatus: LoadStatus.COMPLETED
+        gamesStatus: LoadStatus.Success
       };
     }
-    case GamesTypes.LoadGamesFailed: {
+    case GamesTypes.LoadGamesError: {
       return {
         ...state,
-        gamesStatus: LoadStatus.FAILED
+        gamesStatus: LoadStatus.Error
       };
     }
     default:

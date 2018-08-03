@@ -12,7 +12,7 @@ import {
 
 import { CaGameCard, CaSnackbar, CaSpinner } from 'components';
 import { AppState, LogoutUser } from 'store';
-import { InitGames, JoinBattle, LeaveBattle } from 'store';
+import { JoinBattle, LeaveBattle, LoadGames } from 'store';
 import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { isEmpty } from 'utils/isEmpty';
 
@@ -22,7 +22,7 @@ import './Battles.scss';
 class CaBattlesComponent extends React.Component<BattleProps> {
 
   public componentWillReceiveProps(nextProps: BattleProps): void {
-    if (nextProps.status === LoadStatus.FAILED && nextProps.status !== this.props.status) {
+    if (nextProps.status === LoadStatus.Error && nextProps.status !== this.props.status) {
       this.props.openSnackbar();
     }
   }
@@ -129,7 +129,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new InitGames()),
+  initGames: () => dispatch(new LoadGames()),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   openSnackbar: () => dispatch(new OpenSnackbar())
 });

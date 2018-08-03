@@ -8,4 +8,6 @@ export interface RootProps {
   leaveBattle(battleName: string): void;
 
   logoutUser(): void;
+
+  cleanStatistic(): void;
 }

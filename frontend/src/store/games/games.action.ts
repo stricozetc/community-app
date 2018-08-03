@@ -3,29 +3,29 @@ import { Game } from 'models';
 import { action } from '../decorators';
 
 export enum GamesTypes {
-  InitGames = '[game] Init Game',
-  LoadGamesCompleted = '[game] Load Games Completed',
-  LoadGamesFailed = '[game] Load Games Failed',
+  LoadGames = '[games] Load Games',
+  LoadGamesSuccess = '[games] Load Games (Success)',
+  LoadGamesError = '[games] Load Games (Error)',
 }
 
 @action()
-export class InitGames {
-  public readonly type = GamesTypes.InitGames;
+export class LoadGames {
+  public readonly type = GamesTypes.LoadGames;
 }
 
 @action()
-export class LoadGamesCompleted {
-  public readonly type = GamesTypes.LoadGamesCompleted;
+export class LoadGamesSuccess {
+  public readonly type = GamesTypes.LoadGamesSuccess;
 
   public constructor(public payload: Game[]) { }
 }
 
 @action()
-export class LoadGamesFailed {
-  public readonly type = GamesTypes.LoadGamesFailed;
+export class LoadGamesError {
+  public readonly type = GamesTypes.LoadGamesError;
 }
 
 export type GamesActions =
-  | LoadGamesCompleted
-  | InitGames
-  | LoadGamesFailed;
+  | LoadGamesSuccess
+  | LoadGames
+  | LoadGamesError;

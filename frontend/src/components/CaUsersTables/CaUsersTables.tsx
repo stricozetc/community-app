@@ -197,7 +197,7 @@ export const CaUsersTables = withStyles(styles)(
             { headerName: 'score', field: tableCellDataType.scores },
             { headerName: 'result', field: tableCellDataType.result }
           ];
-          const recentGames = [...this.props.statistic.recentGames];
+          const recentGames = [...this.props.statistic.recentGames] || [];
 
           if (!this.isArrayEmpty(recentGames)) {
             const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);

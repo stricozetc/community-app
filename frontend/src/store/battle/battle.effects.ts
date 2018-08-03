@@ -1,8 +1,8 @@
 import { Game } from 'models';
-import { ActionsObservable } from 'redux-observable';
-import { ignoreElements, map, tap } from 'rxjs/operators';
-import { store } from 'store';
-import { FrontEndUser } from 'store/auth';
+import { ActionsObservable, ofType } from 'redux-observable';
+import { Observable } from 'rxjs';
+import { map, withLatestFrom } from 'rxjs/operators';
+import { AppState } from 'store';
 import { EmitEventWithOptions } from 'store/socket';
 
 import {
@@ -13,14 +13,16 @@ import {
   RedirectToBattle
 } from './battle.action';
 
-export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
-  actions$.ofType(BattleActionTypes.JoinBattle).pipe(
-    tap(action => {
-      const game: Game | undefined = store.getState().games.games
+export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>, state$: Observable<AppState>) =>
+  actions$.pipe(
+    ofType(BattleActionTypes.JoinBattle),
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      const game = state.games.games
         .find((info: Game) => info.name === action.payload);
 
       let args: any = '';
-      const user: FrontEndUser | undefined = store.getState().auth.user;
+      const user = state.auth.user;
       if (user) {
         args = user.token;
       }
@@ -30,34 +32,34 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>) =>
       }
       const options = args;
 
-      store.dispatch(new EmitEventWithOptions({ eventName, options }));
-    }),
-    ignoreElements()
+      return new EmitEventWithOptions({ eventName, options });
+    })
   );
 
-export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>) =>
-  actions$.ofType(BattleActionTypes.LeaveBattle).pipe(
-    tap(action => {
-      const game: Game | undefined = store.getState().games.games
+export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>, state$: Observable<AppState>) =>
+  actions$.pipe(
+    ofType(BattleActionTypes.LeaveBattle),
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      const game = state.games.games
         .find((info: Game) => info.name === action.payload);
 
-      store.dispatch(new EmitEventWithOptions({ eventName: game ? game.leaveEventName : '' }));
-    }),
-    ignoreElements()
+      return new EmitEventWithOptions({ eventName: game ? game.leaveEventName : '' });
+    })
   );
 
-export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>) =>
-  actions$.ofType(BattleActionTypes.RedirectToBattle).pipe(
-
-    map(action => {
-
-      let userToken: string = '';
-      const user: FrontEndUser | undefined = store.getState().auth.user;
+export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToBattle>, state$: Observable<AppState>) =>
+  actions$.pipe(
+    ofType(BattleActionTypes.RedirectToBattle),
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      let userToken = '';
+      const user = state.auth.user;
       if (user) {
         userToken = user.token;
         return window.location.replace(`${action.payload}/${userToken}`);
       } else {
-        return store.dispatch(new ErrorBattle());
+        return new ErrorBattle();
       }
     })
   );

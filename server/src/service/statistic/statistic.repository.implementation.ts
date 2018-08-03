@@ -90,14 +90,12 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
             if (!isEmpty(recentGames)) {
               recentGames = recentGames.reduce((accumulator, game, index) => {
                 const gameName = appNames[index];
-  
-                let result = {
+                const result = {
                   game: gameName,
-
                   scores: game.scores,
                   result: game.status === 1
                 };
-  
+
                 return accumulator.concat(result);
               }, []);
             }
@@ -195,19 +193,16 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 .then(historyRows => {
                   let playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
-                  let scoresArray = historyRows.map(row => {
-
-                    if (row.scores) {
+                  const scoresArray = historyRows.map(row => {
                       return row.scores;
-                    }
                   });
+
                   let scores = 0;
                   if (!isEmpty(scoresArray)) {
                     scores = scoresArray.reduce((a, b) => a + b);
                   }
 
                   let result = {
-
                     userToken: currentUser.token,
                     name: currentUser.name,
                     playedTime,

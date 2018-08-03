@@ -12,7 +12,7 @@ import { CaBattles } from 'scenes/Battles';
 import { CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { CaStatisticPage } from 'scenes/Statistic';
-import { AppState, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
+import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
 import { getCurrentLanguage, setAuthToken } from 'utils';
 
 import {
@@ -28,6 +28,7 @@ import { PageNotFound } from '../PageNotFound';
 import { RootProps } from './Root.model';
 import './root.scss';
 
+
 const token = Cookies.get('jwtToken');
 if (token) {
   setAuthToken(token);
@@ -39,6 +40,7 @@ export class RootComponent extends React.Component<RootProps> {
 
   public logoutUser(): void {
     this.props.logoutUser();
+    this.props.cleanStatistic();
     this.props.history.push('/');
 
     const userInBattle = !!this.props.battleName;
@@ -230,6 +232,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
+  cleanStatistic: () => dispatch(new CleanStatistic()),
   leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName))
 });
 

@@ -7,30 +7,30 @@ import { InitEvents } from 'store/socket';
 
 import {
   GamesTypes,
-  InitGames,
-  LoadGamesCompleted,
-  LoadGamesFailed
+  LoadGames,
+  LoadGamesError,
+  LoadGamesSuccess
 } from './games.action';
 
-export const initGames$ = (actions$: ActionsObservable<InitGames>) =>
+export const initGames$ = (actions$: ActionsObservable<LoadGames>) =>
   actions$.pipe(
-    ofType(GamesTypes.InitGames),
+    ofType(GamesTypes.LoadGames),
     switchMap(() =>
       from(HttpWrapper.get('api/mocks/games')).pipe(
         map((res: any) => {
 
           const games: Game[] = res.data;
 
-          return new LoadGamesCompleted(games);
+          return new LoadGamesSuccess(games);
         }),
-        catchError(() => of(new LoadGamesFailed()))
+        catchError(() => of(new LoadGamesError()))
       )
     )
   );
 
-export const loadGamesCompleted$ = (actions$: ActionsObservable<LoadGamesCompleted>) =>
+export const loadGamesSuccess$ = (actions$: ActionsObservable<LoadGamesSuccess>) =>
   actions$.pipe(
-    ofType(GamesTypes.LoadGamesCompleted),
+    ofType(GamesTypes.LoadGamesSuccess),
     map(payload => {
       /**
        * @todo unsubscribe events
@@ -41,5 +41,5 @@ export const loadGamesCompleted$ = (actions$: ActionsObservable<LoadGamesComplet
 
 export const GamesEffects = [
   initGames$,
-  loadGamesCompleted$
+  loadGamesSuccess$
 ];
