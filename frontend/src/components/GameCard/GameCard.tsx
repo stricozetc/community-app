@@ -5,6 +5,7 @@ import {BattleStatus} from 'models';
 
 import clockImage from 'assets/clock.svg';
 import userImage from 'assets/user.svg';
+import { I18n } from 'react-i18next';
 
 import './GameCard.scss';
 import './GameCardFooter.scss';
@@ -18,19 +19,31 @@ const getBattleButton = (
 ): JSX.Element => {
   if (status === BattleStatus.INIT) {
     return (
-      <CaButton
-        onClick={() => joinBattleAction(gameName)}
-      >
-      Join The Battle
-      </CaButton>
+      <I18n>
+        {
+          ( t ) => (
+            <CaButton
+              onClick={() => joinBattleAction(gameName)}
+            >
+            {t('joinTheBattle')}
+            </CaButton>
+          )
+        }
+      </I18n>
     );
   } else {
     return (
-      <CaButton
-        onClick={() => leaveBattleAction(gameName)}
-      >
-      Leave The Battle
-      </CaButton>
+      <I18n>
+        {
+          ( t ) => (
+            <CaButton
+              onClick={() => leaveBattleAction(gameName)}
+            >
+            {t('leaveTheBattle')}
+            </CaButton>
+          )
+        }
+      </I18n>
     );
   }
 };
@@ -57,57 +70,63 @@ export const CaGameCard = (props: GameCardProps) => {
   const classes = [topBorderClass, backgroundClass];
 
   return (
-    <div className={['ca-game-card', ...classes].join(' ')}>
-      <div className='ca-game-card__container'>
-        <h1 className='ca-game-card__game-title'>{name}</h1>
-        <h2 className='ca-game-card__game-desc'>{desc}</h2>
+    <I18n>
+      {
+        ( t ) => (
+          <div className={['ca-game-card', ...classes].join(' ')}>
+            <div className='ca-game-card__container'>
+              <h1 className='ca-game-card__game-title'>{name}</h1>
+              <h2 className='ca-game-card__game-desc'>{desc}</h2>
 
-        <div className='ca-game-card__btn-container'>
-          {!isFull ? getBattleButton(status, joinGame, leaveGame, name) : <span/>}
-        </div>
-        <div className={'ca-game-footer ' + backgroundFooterColor}>
-          <div className='ca-game-footer__container'>
-            <div className='ca-game-footer__container-item'>
-              {isFull ? (
-                <span className='ca-game-footer__alert'> All rooms are full  </span>
-              ) : (
-                <div className='ca-game-footer__placeholder'>
-                  <div className='ca-game-footer__icon'>
-                    <img src={clockImage} alt='Can not found clock img'/>
+              <div className='ca-game-card__btn-container'>
+                {!isFull ? getBattleButton(status, joinGame, leaveGame, name) : <span/>}
+              </div>
+              <div className={'ca-game-footer ' + backgroundFooterColor}>
+                <div className='ca-game-footer__container'>
+                  <div className='ca-game-footer__container-item'>
+                    {isFull ? (
+                      <span className='ca-game-footer__alert'>{t('roomsAreFull')}</span>
+                    ) : (
+                      <div className='ca-game-footer__placeholder'>
+                        <div className='ca-game-footer__icon'>
+                          <img src={clockImage} alt='Can not found clock img'/>
+                        </div>
+                        <div className='ca-game-footer__info'>
+                          <div className='ca-game-footer__first-line'>
+                            {t('startingIn') + ':'}
+                          </div>
+                          <div
+                            className={
+                              'ca-game-footer__second-line ' + secondLineColor
+                            }
+                          >
+                            {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className='ca-game-footer__info'>
-                    <div className='ca-game-footer__first-line'>
-                      Starting in:
+                  <div className='ca-game-footer__container-item'>
+                    <div className='ca-game-footer__placeholder'>
+                      <div className='ca-game-footer__icon'>
+                        <img src={userImage} alt='Can not found User img'/>
+                      </div>
+                      <div className='ca-game-footer__info'>
+                        <div className='ca-game-footer__first-line'>{t('players') + ':'}</div>
+                        <div
+                          className={'ca-game-footer__second-line ' + secondLineColor}
+                        >
+                          {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer * maxRooms)}`}
+                        </div>
+                      </div>
                     </div>
-                    <div
-                      className={
-                        'ca-game-footer__second-line ' + secondLineColor
-                      }
-                    >
-                      {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className='ca-game-footer__container-item'>
-              <div className='ca-game-footer__placeholder'>
-                <div className='ca-game-footer__icon'>
-                  <img src={userImage} alt='Can not found User img'/>
-                </div>
-                <div className='ca-game-footer__info'>
-                  <div className='ca-game-footer__first-line'>Players:</div>
-                  <div
-                    className={'ca-game-footer__second-line ' + secondLineColor}
-                  >
-                    {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer * maxRooms)}`}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        )
+      }
+    </I18n>
   );
 };
