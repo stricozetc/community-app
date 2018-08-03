@@ -1,0 +1,30 @@
+.cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.myGames__name-block {
+    flex: 2;
+}
+
+.myGames__buttons-block {
+    flex: 1;
+}
+
+.myGames__button {
+    margin: 0 10px;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    padding: 5px 10px;
+}
+
+.myGames__button_delete {
+    background-color:red;
+
+}
+
+.myGames__button_edit {
+    background-color:blue;
+}
