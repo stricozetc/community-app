@@ -7,6 +7,7 @@ let webpackConfig = merge(common, {
     output: {
         filename: pkg.name + '.[name].bundle.js'
     },
+    // watch: true,
 });
 
 module.exports = webpackConfig;

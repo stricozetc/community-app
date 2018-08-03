@@ -25,7 +25,6 @@ import { PageNotFound } from '../PageNotFound';
 import { RootProps } from './Root.model';
 import './root.scss';
 
-
 const token = Cookies.get('jwtToken');
 if (token) {
   setAuthToken(token);

@@ -24,17 +24,17 @@ export class PlayersBindService {
   }
 
   public bindPlayer(room: string, bindPlayer: string): void {
-    let playersBindIndex = this.playersBinds.findIndex((playersBind: PlayersBind) => playersBind.room === room);
+    const playersBindIndex = this.playersBinds.findIndex((playersBind: PlayersBind) => playersBind.room === room);
 
     if (playersBindIndex === -1) {
-      this.playersBinds.push({ room: room, players: [bindPlayer] });
+      this.playersBinds.push({ room, players: [bindPlayer] });
     } else {
       this.playersBinds[playersBindIndex].players.push(bindPlayer);
     }
   }
 
   public removePlayers(room: string, removePlayer: string): void {
-    let playersBindIndex = this.playersBinds
+    const playersBindIndex = this.playersBinds
       .findIndex((playersBind: PlayersBind) => playersBind.room === room);
 
     this.playersBinds[playersBindIndex].players = this.playersBinds[playersBindIndex].players
@@ -52,10 +52,10 @@ export class PlayersBindService {
     const sendingPlayersBind = this.playersBinds
       .find((playersBind: PlayersBind) => playersBind.room === room.token);
 
-    console.log("sendingPlayersBind", sendingPlayersBind);
+    console.log('sendingPlayersBind', sendingPlayersBind);
     return axios.post<any>(`${game.requestUrl}/api/set-user-bind`, sendingPlayersBind, {
       headers: {
-        Authorization: "Bearer " + app.token
+        Authorization: 'Bearer ' + app.token
       }
     }).then((response) => {
       return response.status === 200;
