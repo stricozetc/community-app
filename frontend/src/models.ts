@@ -121,3 +121,12 @@ export enum languages {
   en = 'en',
   ru = 'ru'
 }
+
+export enum tableCellDataType {
+  name = 'name',
+  playedTime = 'playedTime',
+  scores = 'scores',
+  playedInWeek = 'playedInWeek',
+  game = 'game',
+  result = 'result'
+}
