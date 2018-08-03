@@ -7,17 +7,17 @@ export interface I18nInitOptions extends i18n.InitOptions {
   react: i18n.ReactOptions | i18nProps;
 }
 
-const english = require('locales/english.json');
-const russian = require('locales/russian.json');
+const en = require('locales/en.json');
+const ru = require('locales/ru.json');
 
 const options: I18nInitOptions = {
   defaultNS: 'translations',
   resources: {
     en: {
-      translations: english
+      translations: en
     },
     ru: {
-      translations: russian
+      translations: ru
     }
   },
   /*
