@@ -89,6 +89,27 @@ export enum StatTab {
   RecentGames = 2
 }
 
+export enum DeleteGameStatus {
+  Init,
+  Fetching,
+  Success,
+  Error
+}
+
+export enum EditGameStatus {
+  Init,
+  Fetching,
+  Success,
+  Error
+}
+
+export enum AddGameStatus {
+  Init,
+  Fetching,
+  Success,
+  Error
+}
+
 export interface ErrorsFromServer {
   [key: string]: { code: number; msg: string };
 }

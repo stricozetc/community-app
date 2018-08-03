@@ -44,6 +44,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
   };
 
   return (
+
     <I18n>
       {
         ( t ) => (
@@ -71,6 +72,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
                     {arrayOfPropertyName.map((property, propertyIndex) => {
                       const numeric = propertyIndex !== 0;
 
+
                       return (
                         <TableCell
                           numeric={numeric}
@@ -84,6 +86,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
                     )}
                   </TableRow>
                 );
+
               })}
             </TableBody>
           </Table>

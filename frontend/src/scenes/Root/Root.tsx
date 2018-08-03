@@ -27,6 +27,7 @@ import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 import './root.scss';
+import { CaMyGames } from '../MyGames/MyGames';
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -66,6 +67,7 @@ export class RootComponent extends React.Component<RootProps> {
 
     return (
       isAuthorized ?
+
         <I18n>
           {
             ( t ) => (
@@ -78,6 +80,7 @@ export class RootComponent extends React.Component<RootProps> {
           }
         </I18n>
         :
+
         <I18n>
           {
             ( t ) => (
@@ -96,7 +99,7 @@ export class RootComponent extends React.Component<RootProps> {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     return (
-      <I18n>
+<I18n>
         {
           ( t, { i18n } ) => (
             <CaNavbar
@@ -118,7 +121,6 @@ export class RootComponent extends React.Component<RootProps> {
               <CaLogo
                 text='battlenet'
               />
-
               <div className='ca-navbar__logout-btn-container'>
                 {this.getButton(this.props.status)}
               </div>
@@ -206,6 +208,17 @@ export class RootComponent extends React.Component<RootProps> {
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
                 </CurrentBattle>
+              }
+            />
+
+            <Route
+              exact={true}
+              path='/my-games'
+              render={
+                props =>
+                  <CaMyGames {...props} >
+                    {this.getNavbar(this.props.status)}
+                  </CaMyGames>
               }
             />
 

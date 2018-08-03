@@ -1,0 +1,26 @@
+@import "../../style/settings.scss";
+@import "../../style/mixins.scss";
+
+.myGames__title {
+    color: #fff;
+    font-size: 45px;
+    font-weight: bold;
+    margin: 100px 0;
+    text-align: center;
+}
+
+.add-button-block {
+    width: 200px;
+    margin: 20px auto;
+}
+
+.add-button {
+    width: 200px;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: green;
+    border: none;
+}
+
+

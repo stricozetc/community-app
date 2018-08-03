@@ -5,7 +5,7 @@ import { CaTable } from 'components';
 import { StatTab, tableCellDataType } from 'models';
 import { I18n } from 'react-i18next';
 
-import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } from './CaUsersTables.model';
+import { CaUsersTablesProps, CaUsersTablesState, HeaderName, Row } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
 
 import './CaUsersTables.scss';
@@ -259,7 +259,7 @@ export const CaUsersTables = withStyles(styles)(
       return columnDef.map(column => column.field);
     }
 
-    public checkPropertyOfObject(arrayOfData: StatisticOfUser[], arrayOfNecessaryProperty: string[]): any[] {
+    public checkPropertyOfObject(arrayOfData: Row[], arrayOfNecessaryProperty: string[]): any[] {
 
       const newArrayOfData = arrayOfData.map(userStatistic => {
         const newUserStatistic = { ...userStatistic };
@@ -275,7 +275,7 @@ export const CaUsersTables = withStyles(styles)(
       return [...newArrayOfData];
     }
 
-    public deleteUnnecessaryProperty(arrayOfData: StatisticOfUser[], arrayOfNecessaryProperty: string[]): any[] {
+    public deleteUnnecessaryProperty(arrayOfData: Row[], arrayOfNecessaryProperty: string[]): any[] {
       const newArrayOfData = arrayOfData.map(userStatistic => {
         const newUserStatistic = { ...userStatistic };
 
