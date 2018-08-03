@@ -19,7 +19,12 @@ const options: I18nInitOptions = {
       translations: localization.ru
     }
   },
-  /* lng: 'en', */
+  /*
+
+  I'll work with this config in the next branch,
+  for now i'll leave this comments, so i can remember some properties
+
+  lng: 'en', */
   fallbackLng: 'en',
   debug: true,
   /* ns: ['translations'],
