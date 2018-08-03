@@ -13,7 +13,7 @@ import { CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { AppState, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
-import { setAuthToken } from 'utils';
+import { getCurrentLanguage, setAuthToken } from 'utils';
 
 import {
   CaButton,
@@ -127,7 +127,7 @@ export class RootComponent extends React.Component<RootProps> {
                   languages={[languages.en, languages.ru]}
                   displayedLanguages={[t('ENToggle'), t('RUToggle')]}
                   handleChange={this.handleChange}
-                  currLang={i18n.language}
+                  currLang={getCurrentLanguage(i18n)}
                 />
               </div>
             </CaNavbar>
