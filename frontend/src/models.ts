@@ -35,6 +35,13 @@ export enum RoomStatus {
   CLOSED
 }
 
+export enum RestorePasswordStatus {
+  INIT,
+  WAIT,
+  SUCCESS,
+  FAIL
+}
+
 export interface RoomInfo {
   id: number;
   gameId: number;

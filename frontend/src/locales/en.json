@@ -81,5 +81,6 @@
   "deleteApproveQuery": "If you still want to this delete game, click \"Agree\".",
   "copyTokenHeader": "Application Token",
   "copyTokenMainText": "Keep in mind that it's secret information, don't share it with other people",
-  "copyTokenOfferMessage": "If you want to copy application token of this game, click on icon." 
+  "copyTokenOfferMessage": "If you want to copy application token of this game, click on icon.",
+  "restore": "Restore"
 }

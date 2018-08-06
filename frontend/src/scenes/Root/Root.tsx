@@ -16,6 +16,9 @@ import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
+import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
+import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
+import { getCurrentLanguage, setAuthToken } from 'utils';
 
 import {
   AppState,
@@ -207,9 +210,19 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
+              path='/forget-password'
+              render={props =>
+                <CaForgetPasswordPage {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaForgetPasswordPage>
+              }
+            />
+
+            <Route
+              exact={true}
               path='/register'
-              render={props => (
-                <RegistrationForm {...props}>
+              render={props =>
+                <RegistrationForm {...props} >
                   {this.getNavbar(this.props.status)}
                 </RegistrationForm>
               )}
