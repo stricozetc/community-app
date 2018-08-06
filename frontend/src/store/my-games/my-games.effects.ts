@@ -1,6 +1,6 @@
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of} from 'rxjs';
-import { map, switchMap, ignoreElements, catchError } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 
 import { HttpWrapper } from 'services';
 import { MyGameModel } from './interfaces';
@@ -10,6 +10,8 @@ import {
     AddGameCompleted,
     AddGameFailed,
     DeleteGame,
+    DeleteGameCompleted,
+    DeleteGameFailed,
     EditGame,
     InitMyGames,
     LoadMyGamesCompleted,
@@ -22,16 +24,18 @@ export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
         ofType(MyGamesActionTypes.DeleteGame),
         switchMap(action =>
             from(HttpWrapper.post('api/v1/my-games/delete-game', action.payload)).pipe(
-                map(() => {
+                map((res: any) => {
 
+                    const games: MyGameModel[] = res.data;
+
+                    return new DeleteGameCompleted(games);
                 }),
-                ignoreElements()
+                catchError(error => of(new DeleteGameFailed(error)))
             )
         )
     );
 
 export const editGame$ = (action$: ActionsObservable<EditGame>) =>
-
     action$.pipe(
         ofType(MyGamesActionTypes.EditGame),
         switchMap(action =>

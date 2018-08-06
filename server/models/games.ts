@@ -4,6 +4,7 @@ import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
 export interface MyGameInterface {
+    id?: number;
     userId: number;
     appName: string;
     desc: string;
@@ -11,6 +12,8 @@ export interface MyGameInterface {
     maxRooms: number;
     requestUrl: string;
     maxWaitingTime: number;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.gamesModel, {

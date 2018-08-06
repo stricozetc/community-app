@@ -115,6 +115,12 @@ export class RootComponent extends React.Component<RootProps> {
                   to: '/statistics',
                   activeClassName: 'ca-navbar__nav-item--active',
                   disabled: !isAuthorized
+                },
+                {
+                  text: t('adminPage'),
+                  to: './my-games',
+                  activeClassName: 'ca-navbar__nav-item--active',
+                  disabled: !isAuthorized
                 }
               ]}
             >

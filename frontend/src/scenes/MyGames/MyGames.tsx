@@ -1,12 +1,14 @@
-import {CaTable} from 'components';
+import { AppState } from '../../store/store.config';
 import * as React from 'react';
 
+import { CaTable } from 'components';
 import { connect } from 'react-redux';
 
 import { AddGame, DeleteGame, EditGame, InitMyGames } from 'store';
 
 import './myGames.scss';
-import { AppState } from '../../store/store.config';
+
+import {MyGameModel} from './MyGames.model';
 
 export class CaMyGamesComponent extends React.Component<any> {
     public componentWillMount(): void {
@@ -16,69 +18,80 @@ export class CaMyGamesComponent extends React.Component<any> {
     
 
     public render(): JSX.Element {
-
-        console.log(this.props.user.id);
-
         const columnDef = [
             { headerName: 'Game', field: 'game' },
             { headerName: 'CreatedAt', field: 'createdAt' },
             { headerName: 'UpdatedAt', field: 'updatedAt' }
         ];
+
+        // const rowData = [
+        //     {
+        //         game: {
+        //             name: 'JsMarathon',
+        //             edit: () => console.log(`EDIT GAME`),
+        //             delete: () => console.log(`DELETE GAME`),
+        //         },
+        //         createdAt: '2018-07-31 13:05:33',
+        //         updatedAt: '2018-07-31 13:05:33'
+        //     }
+        // ];
         
-        const rowData = [
-            {
-                game: {
-                    name: 'JsMarathon',
-                    edit: () => this.props.editGame({name: 'JsMarathon'}),
-                    delete: () => this.props.deleteGame({name: 'JsMarathon'})
-                },
-                createdAt: '2018-07-31 13:05:33',
-                updatedAt: '2018-07-31 13:05:33'
-            },
-            {
-                game: {
-                    name: 'CSSQuickDraw',
-                    edit:  () => this.props.editGame({name: 'CSSQuickDraw'}),
-                    delete: () => this.props.deleteGame({name: 'CSSQuickDraw'})
-                },
-                createdAt: '2018-07-31 13:05:33',
-                updatedAt: '2018-07-31 13:05:33'
-            },
-            {
-                game: {
-                    name: 'CSSQuickDrawFull',
-                    edit: () => this.props.editGame({name: 'CSSQuickDrawFull'}),
-                    delete: () => this.props.deleteGame({name: 'CSSQuickDrawFull'})
-                },
-                createdAt: '2018-07-31 13:05:33',
-                updatedAt: '2018-07-31 13:05:33'
-            }
-        ];
+        // const rowData = [
+        //     {
+        //         game: {
+        //             name: 'JsMarathon',
+        //             edit: () => this.props.editGame({name: 'JsMarathon'}),
+        //             delete: () => this.props.deleteGame({name: 'JsMarathon'})
+        //         },
+        //         createdAt: '2018-07-31 13:05:33',
+        //         updatedAt: '2018-07-31 13:05:33'
+        //     },
+        //     {
+        //         game: {
+        //             name: 'CSSQuickDraw',
+        //             edit:  () => this.props.editGame({name: 'CSSQuickDraw'}),
+        //             delete: () => this.props.deleteGame({name: 'CSSQuickDraw'})
+        //         },
+        //         createdAt: '2018-07-31 13:05:33',
+        //         updatedAt: '2018-07-31 13:05:33'
+        //     },
+        //     {
+        //         game: {
+        //             name: 'CSSQuickDrawFull',
+        //             edit: () => this.props.editGame({name: 'CSSQuickDrawFull'}),
+        //             delete: () => this.props.deleteGame({name: 'CSSQuickDrawFull'})
+        //         },
+        //         createdAt: '2018-07-31 13:05:33',
+        //         updatedAt: '2018-07-31 13:05:33'
+        //     }
+        // ];
 
         const newGame = {
             userId: this.props.user.id,
-            appName: 'My Ga2me for new User',
+            appName: 'My Game8 for new User',
             desc: 'The3 best3 game in the world!',
             maxRoomPlayer: 5,
             maxRooms: 12,
-            requestUrl: 'http://localh2ost:0022222',
+            requestUrl: 'http://localh2ost:8',
             maxWaitingTime: 3002200
         }
 
         const games = this.props.games;
-        const gamesWithNecessaryProperty = this.deleteUnnecessaryProperty(games, ['appName', 'createdAt', 'updatedAt, id']);
-        const gameWithButtons = this.updatePropertyOfObject(gamesWithNecessaryProperty);
+        const gameWithUpdatedProperty = this.updatePropertyOfObject(games);
+        const rowData = this.deleteUnnecessaryProperty(
+            gameWithUpdatedProperty,
+            ['game', 'createdAt', 'updatedAt']
+        );
+        // const rowData = this.updatePropertyOfObject(gamesWithNecessaryProperty);
 
         console.log(`GAMES BEFORE`);
         console.log(games);
 
         console.log(`GAMES AFTER DELETED UNNECCESARY PROPERTY`);
-        console.log(gamesWithNecessaryProperty);
+        // console.log(gamesWithNecessaryProperty);
 
         console.log(`GAMES AFTER UPDATED`);
-        console.log(gameWithButtons);
-        
-
+        console.log(rowData);
 
         return(
             <div>
@@ -113,7 +126,6 @@ export class CaMyGamesComponent extends React.Component<any> {
     }
 
     public updatePropertyOfObject(arrayOfGames: any[]): any[] {
-
         const newArrayOfGames = arrayOfGames.map(game => {
 
           const gameWithUpdatedProperty = { ...game };
@@ -121,14 +133,14 @@ export class CaMyGamesComponent extends React.Component<any> {
           for (const property in gameWithUpdatedProperty) {
             if (property === 'appName') {
                 const appName = gameWithUpdatedProperty[property];
-                delete gameWithUpdatedProperty[property];
+                const id = gameWithUpdatedProperty['id'];
+                const copyOfTheGame = Object.assign({}, gameWithUpdatedProperty);
 
                 gameWithUpdatedProperty['game'] = {
                     appName,
-                    edit: () => console.log(`${appName} EDIT with ${gameWithUpdatedProperty.id} ID`),
-                    delete: () => console.log(`${appName} DELETE with ${gameWithUpdatedProperty.id} ID`)
+                    edit: () => console.log(`${appName} EDIT with ${id} ID`),
+                    delete: () => this.props.deleteGame(copyOfTheGame)
                 };
-                delete gameWithUpdatedProperty['id'];
             }
           }
 
@@ -145,9 +157,9 @@ const mapStateToProps = (state: AppState) => ({
   });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    deleteGame: (data: object) => dispatch(new DeleteGame(data)),
+    deleteGame: (gameThatNeedToDelete: MyGameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
     editGame: (data: object) => dispatch(new EditGame(data)),
-    addGame: (data: object) => dispatch(new AddGame(data)),
+    addGame: (data: MyGameModel) => dispatch(new AddGame(data)),
     getMyGames: (userId: number) => dispatch(new InitMyGames(userId))
 });
 

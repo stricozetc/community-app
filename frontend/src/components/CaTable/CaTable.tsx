@@ -35,6 +35,15 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
         data = user[property] ? 'W' : 'L';
         break;
       }
+      case 'game': {
+        data =
+          <div>
+            <span>{user[property].appName}</span>
+            <button onClick={user[property].edit}>Edit</button>
+            <button onClick={user[property].delete}>Delete</button>
+          </div>;
+        break;
+      }
       default: {
         data = user[property];
       }
@@ -47,7 +56,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
 
     <I18n>
       {
-        ( t ) => (
+        ( t: any ) => (
           <Table>
             <TableHead className={classes.tableHead}>
               <TableRow className={classes.tableHeadRow}>

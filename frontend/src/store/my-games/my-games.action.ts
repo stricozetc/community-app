@@ -1,8 +1,7 @@
-import { action } from '../decorators';
 import { ErrorsFromServer } from '../../models';
+import { action } from '../decorators';
 
 import { MyGameModel } from './interfaces';
-
 
 export enum MyGamesActionTypes {
     EditGame = '[my-games] Edit Game',
@@ -44,14 +43,14 @@ export class EditGameFailed {
 export class DeleteGame {
   public readonly type = MyGamesActionTypes.DeleteGame;
 
-  public constructor(public payload: object) {}
+  public constructor(public payload: MyGameModel) {}
 }
 
 @action()
 export class DeleteGameCompleted {
   public readonly type = MyGamesActionTypes.DeleteGameCompleted;
 
-  public constructor(public payload: object) {}
+  public constructor(public payload: MyGameModel[]) {}
 }
 
 @action()

@@ -11,9 +11,18 @@ import Promise = require('bluebird');
 
 @injectable()
 export class MyGamesRepositoryImplementation implements MyGamesRepository {
-    public deleteGame(data: MyGameInterface): void {
-        console.log(`DELETE MyGamesRepositoryImplementation`);
-        console.log(data);
+    public deleteGame(gameThatNeedToDelete: MyGameInterface): Promise<MyGameInterface[]>  {
+        return GamesModel.destroy({
+            where: {
+              id: gameThatNeedToDelete.id
+            }
+        }).then(() => {
+            return GamesModel.findAll({
+                where: {
+                    userId: gameThatNeedToDelete.userId
+                }
+            });
+        })
     }
 
     public editGame(data: MyGameInterface): void {
