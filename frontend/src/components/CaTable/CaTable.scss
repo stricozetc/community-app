@@ -28,3 +28,36 @@
 .myGames__button_edit {
     background-color:blue;
 }
+
+.cellWithButton {
+    display: flex;
+    align-items: center;
+}
+
+.cellWithButton__text {
+    flex: 1;
+}
+
+.cellWithButton__buttons {
+    flex: 1;
+}
+
+.cellWithButton__edit-button {
+    margin: 0 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: red;
+    border: none;
+    padding: 2px 6px;
+    width: 80px;
+}
+
+.cellWithButton__delete-button {
+    margin: 0 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: blue;
+    border: none;
+    padding: 2px 6px;
+    width: 80px;
+}

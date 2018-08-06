@@ -11,6 +11,7 @@ import { tableCellDataType } from 'models';
 import { I18n, TranslationFunction } from 'react-i18next';
 
 import { CaTableProps } from './CaTable.model';
+import './CaTable.scss';
 import { styles } from './CaTable.styles';
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
@@ -37,10 +38,12 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
       }
       case 'game': {
         data =
-          <div>
-            <span>{user[property].appName}</span>
-            <button onClick={user[property].edit}>Edit</button>
-            <button onClick={user[property].delete}>Delete</button>
+          <div className='cellWithButton'>
+            <div className='cellWithButton__text'>{user[property].appName}</div>
+            <div className='cellWithButton__buttons'>
+              <button className='cellWithButton__edit-button' onClick={user[property].edit}>Edit</button>
+              <button className='cellWithButton__delete-button' onClick={user[property].delete}>Delete</button>
+            </div>
           </div>;
         break;
       }
