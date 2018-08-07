@@ -31,15 +31,17 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
     }
 
     public addGame(data: MyGameInterface): Promise<MyGameInterface> {
+        console.log(data);
+
         const game = GamesModel.build(
             {
-                userId: data.userId,
+                userId: +data.userId,
                 appName: data.appName,
-                desc: data.desc,
-                maxRoomPlayer: data.maxRoomPlayer,
-                maxRooms: data.maxRooms,
+                description: data.description,
+                maxRoomPlayer: +data.maxRoomPlayer,
+                maxRooms: +data.maxRooms,
                 requestUrl: data.requestUrl,
-                maxWaitingTime: data.maxWaitingTime
+                maxWaitingTime: +data.maxWaitingTime
             }
         );
 

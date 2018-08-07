@@ -1,6 +1,8 @@
 import { AppState } from '../../store/store.config';
 import * as React from 'react';
 
+import { tableCellDataType } from 'models';
+
 import { CaTable } from 'components';
 import { connect } from 'react-redux';
 
@@ -9,6 +11,7 @@ import { AddGame, DeleteGame, EditGame, InitMyGames } from 'store';
 import './myGames.scss';
 
 import {MyGameModel} from './MyGames.model';
+import { history } from 'utils';
 
 export class CaMyGamesComponent extends React.Component<any> {
     public componentWillMount(): void {
@@ -19,9 +22,9 @@ export class CaMyGamesComponent extends React.Component<any> {
 
     public render(): JSX.Element {
         const columnDef = [
-            { headerName: 'Game', field: 'game' },
-            { headerName: 'CreatedAt', field: 'createdAt' },
-            { headerName: 'UpdatedAt', field: 'updatedAt' }
+            { headerName: 'game', field: tableCellDataType.game },
+            { headerName: 'createdAt', field: tableCellDataType.creationTime },
+            { headerName: 'updatedAt', field: tableCellDataType.updateTime }
         ];
 
         // const rowData = [
@@ -66,15 +69,15 @@ export class CaMyGamesComponent extends React.Component<any> {
         //     }
         // ];
 
-        const newGame = {
-            userId: this.props.user.id,
-            appName: 'My Game8 for new User',
-            desc: 'The3 best3 game in the world!',
-            maxRoomPlayer: 5,
-            maxRooms: 12,
-            requestUrl: 'http://localh2ost:8',
-            maxWaitingTime: 3002200
-        }
+        // const newGame = {
+        //     userId: this.props.user.id,
+        //     appName: 'My Game8 for new User',
+        //     desc: 'The3 best3 game in the world!',
+        //     maxRoomPlayer: 5,
+        //     maxRooms: 12,
+        //     requestUrl: 'http://localh2ost:8',
+        //     maxWaitingTime: 3002200
+        // }
 
         const games = this.props.games;
         const gameWithUpdatedProperty = this.updatePropertyOfObject(games);
@@ -84,14 +87,14 @@ export class CaMyGamesComponent extends React.Component<any> {
         );
         // const rowData = this.updatePropertyOfObject(gamesWithNecessaryProperty);
 
-        console.log(`GAMES BEFORE`);
-        console.log(games);
+        // console.log(`GAMES BEFORE`);
+        // console.log(games);
 
-        console.log(`GAMES AFTER DELETED UNNECCESARY PROPERTY`);
-        // console.log(gamesWithNecessaryProperty);
+        // console.log(`GAMES AFTER DELETED UNNECCESARY PROPERTY`);
+        // // console.log(gamesWithNecessaryProperty);
 
-        console.log(`GAMES AFTER UPDATED`);
-        console.log(rowData);
+        // console.log(`GAMES AFTER UPDATED`);
+        // console.log(rowData);
 
         return(
             <div>
@@ -99,7 +102,8 @@ export class CaMyGamesComponent extends React.Component<any> {
                 <h1 className='myGames__title'>My Games</h1>
                 <CaTable rowData={rowData} columnDef={columnDef} />
                 <div className='add-button-block'>
-                    <button className='add-button' onClick={() => this.props.addGame(newGame)}>Add New Game</button>
+                    {/* <button className='add-button' onClick={() => this.props.addGame(newGame)}>Add New Game</button> */}
+                    <button className='add-button' onClick={() => history.push(`/my-games/add-game`)}>Add New Game</button>
                 </div>
             </div>
         );
@@ -138,7 +142,7 @@ export class CaMyGamesComponent extends React.Component<any> {
 
                 gameWithUpdatedProperty['game'] = {
                     appName,
-                    edit: () => console.log(`${appName} EDIT with ${id} ID`),
+                    edit: () => history.push(`/my-games/edit-game/${id}`),
                     delete: () => this.props.deleteGame(copyOfTheGame)
                 };
             }

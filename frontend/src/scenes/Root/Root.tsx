@@ -27,7 +27,9 @@ import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 import './root.scss';
+import { CaAddGame } from '../../components/AddGameComponent/AddGameComponent';
 import { CaMyGames } from '../MyGames/MyGames';
+
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -118,7 +120,7 @@ export class RootComponent extends React.Component<RootProps> {
                 },
                 {
                   text: t('adminPage'),
-                  to: './my-games',
+                  to: '/my-games',
                   activeClassName: 'ca-navbar__nav-item--active',
                   disabled: !isAuthorized
                 }
@@ -227,6 +229,28 @@ export class RootComponent extends React.Component<RootProps> {
                   </CaMyGames>
               }
             />
+
+            <Route
+              exact={true}
+              path='/my-games/add-game'
+              render={
+                props =>
+                  <CaAddGame {...props} >
+                    {this.getNavbar(this.props.status)}
+                  </CaAddGame>
+              }
+            />
+
+            {/* <Route
+              exact={true}
+              path='/my-games/edit-game/:idOfTheGame'
+              render={
+                props =>
+                  <EditGameComponent {...props} >
+                    {this.getNavbar(this.props.status)}
+                  </EditGameComponent>
+              }
+            /> */}
 
             <Route
               path='/*'

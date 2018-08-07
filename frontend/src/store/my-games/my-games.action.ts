@@ -64,7 +64,7 @@ export class DeleteGameFailed {
 export class AddGame {
   public readonly type = MyGamesActionTypes.AddGame;
 
-  public constructor(public payload: object) {}
+  public constructor(public payload: MyGameModel) {}
 }
 
 @action()

@@ -59,7 +59,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
 
     <I18n>
       {
-        ( t: any ) => (
+        ( t ) => (
           <Table>
             <TableHead className={classes.tableHead}>
               <TableRow className={classes.tableHeadRow}>

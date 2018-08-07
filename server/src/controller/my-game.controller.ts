@@ -45,8 +45,11 @@ export class MyGameController {
 
         return this.myGameRepository.addGame(newGame)
             .then((addedGame: MyGameInterface) => {
+                console.log(`line 48`);
                 return response.status(200).json(addedGame);
             }).catch((err) => {
+                console.log(`line 51`);
+                console.log(err);
                 return response.status(400).json(err);
             });
     }

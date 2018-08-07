@@ -50,8 +50,8 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
 export const addGame$ = (action$: ActionsObservable<AddGame>) =>
     action$.pipe(
         ofType(MyGamesActionTypes.AddGame),
-        switchMap(action =>
-            from(HttpWrapper.post('api/v1/my-games/add-game', action.payload)).pipe(
+        switchMap(action => {
+            return from(HttpWrapper.post('api/v1/my-games/add-game', action.payload)).pipe(
                 map((res: any) => {
                     const game: MyGameModel = res.data;
 
@@ -59,6 +59,7 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
                 }),
                 catchError(error => of(new AddGameFailed(error)))
             )
+            }
         )
     );
 

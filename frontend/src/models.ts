@@ -144,5 +144,7 @@ export enum tableCellDataType {
   scores = 'scores',
   playedInWeek = 'playedInWeek',
   game = 'game',
-  result = 'result'
+  result = 'result',
+  creationTime = 'createdAt',
+  updateTime = 'updatedAt'
 }

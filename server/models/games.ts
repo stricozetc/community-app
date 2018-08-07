@@ -7,7 +7,7 @@ export interface MyGameInterface {
     id?: number;
     userId: number;
     appName: string;
-    desc: string;
+    description: string;
     maxRoomPlayer: number;
     maxRooms: number;
     requestUrl: string;
@@ -32,7 +32,7 @@ export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define
             notEmpty: true
         }
     },
-    desc: {
+    description: {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {

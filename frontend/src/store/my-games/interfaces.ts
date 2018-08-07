@@ -11,7 +11,7 @@ export interface MyGamesState {
 export interface MyGameModel {
     userId: number;
     appName: string;
-    desc: string;
+    description: string;
     maxRoomPlayer: number;
     maxRooms: number;
     requestUrl: string;

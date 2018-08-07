@@ -43,5 +43,7 @@
   "game": "Game",
   "playedInWeek": "Played in week",
   "playedAll": "Played all",
-  "result": "Result"
+  "result": "Result",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at"
 }
