@@ -15,6 +15,7 @@ import {
   UserFieldsToRegister,
   transitionDirection
 } from 'models';
+import { I18n } from 'react-i18next';
 
 import { isEmpty } from './../../utils/isEmpty';
 
@@ -150,83 +151,89 @@ export class LoginFormComponent extends React.Component<
     const { errors } = this.props;
     const keys = errors && Object.keys(errors);
     return (
-      <div className='ca-login-form'>
-        <CaSnackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={this.props.isSnackbarOpen}
-          autoHideDuration={4000}
-          handleClose={() => this.closeSnackbar()}
-          type={SnackbarType.error}
-          //  transitionComponent = {this.transitionUp}
-          transitionDirection={transitionDirection.down}
-          message={
-            <div>
-              {keys && keys.map((k: string) =>
-                (
-                  <div>* {errors[k].msg} </div>
-                )
-              )}
+      <I18n>
+        {
+          ( t ) => (
+            <div className='ca-login-form'>
+              <CaSnackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={this.props.isSnackbarOpen}
+                autoHideDuration={4000}
+                handleClose={() => this.closeSnackbar()}
+                type={SnackbarType.error}
+                //  transitionComponent = {this.transitionUp}
+                transitionDirection={transitionDirection.down}
+                message={
+                  <div>
+                    {keys && keys.map((k: string) =>
+                      (
+                        <div>* {errors[k].msg} </div>
+                      )
+                    )}
+                  </div>
+                }
+              />
+
+              {this.props.children}
+              <form onSubmit={this.onSubmit} className='ca-login-form__container'>
+                <FormGroup>
+                  <TextField
+                    id='email'
+                    label={t('emailLabel')}
+                    name='email'
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    type='email'
+                    onBlur={this.onBlur('email')}
+                    error={!this.state.isEmailValid && this.state.touched.email}
+                  />
+                  {!this.state.isEmailValid &&
+                    this.state.touched.email &&
+                    this.state.emailErrors.map((err, index) => {
+                      return (
+                        <div className='ca-login-form__error' key={index}>
+                          {t(err)}
+                        </div>
+                      );
+                    })}
+                </FormGroup>
+
+                <FormGroup>
+                  <TextField
+                    className='ca-login-form__password-field'
+                    id='password'
+                    label={t('passwordLabel')}
+                    name='password'
+                    value={this.state.password}
+                    onChange={this.onChange}
+                    type='password'
+                    onBlur={this.onBlur('password')}
+                    error={!this.state.isPasswordValid && this.state.touched.password}
+                  />
+                  {!this.state.isPasswordValid &&
+                    this.state.touched.password &&
+                    this.state.passwordErrors.map((err, index) => {
+                      return (
+                        <div className='ca-login-form__error' key={index}>
+                          {t(err)}
+                        </div>
+                      );
+                    })}
+                </FormGroup>
+
+                <CaButton
+                  color='primary'
+                  type='submit'
+                  className='ca-login-form__login-btn'
+                  disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
+                >
+                  {t('login').toUpperCase()}
+                </CaButton>
+              </form>
             </div>
-          }
-        />
-
-        {this.props.children}
-        <form onSubmit={this.onSubmit} className='ca-login-form__container'>
-          <FormGroup>
-            <TextField
-              id='email'
-              label='Email'
-              name='email'
-              value={this.state.email}
-              onChange={this.onChange}
-              type='email'
-              onBlur={this.onBlur('email')}
-              error={!this.state.isEmailValid && this.state.touched.email}
-            />
-            {!this.state.isEmailValid &&
-              this.state.touched.email &&
-              this.state.emailErrors.map((err, index) => {
-                return (
-                  <div className='ca-login-form__error' key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
-
-          <FormGroup>
-            <TextField
-              className='ca-login-form__password-field'
-              id='password'
-              label='Password'
-              name='password'
-              value={this.state.password}
-              onChange={this.onChange}
-              type='password'
-              onBlur={this.onBlur('password')}
-              error={!this.state.isPasswordValid && this.state.touched.password}
-            />
-            {!this.state.isPasswordValid &&
-              this.state.touched.password &&
-              this.state.passwordErrors.map((err, index) => {
-                return (
-                  <div className='ca-login-form__error' key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
-
-          <CaButton
-            color='primary'
-            type='submit'
-            className='ca-login-form__login-btn'
-            disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
-          >
-            LOGIN
-          </CaButton>
-        </form>
-      </div>
+          )
+        }
+      </I18n>
     );
   }
 

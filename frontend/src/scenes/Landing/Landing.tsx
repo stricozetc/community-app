@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { CaButton } from 'components';
 import { AuthStatus } from 'models';
+import { I18n } from 'react-i18next';
 import { AppState } from 'store';
 
 import { LandingProps } from './Landing.model';
@@ -25,26 +26,32 @@ class LandingComponent extends React.Component<LandingProps> {
 
   public render(): JSX.Element {
     return (
-      <div className='ca-landing'>
-        {this.props.children}
-        <div className='ca-landing__container'>
-          <h2 className='ca-landing__title'>Landing for Community App</h2>
-          <div className='ca-landing__buttons-container'>
-            <CaButton
-              className='ca-landing__register-btn'
-              onClick={() => this.redToRegister()}
-            >
-            Register
-            </CaButton>
+      <I18n>
+        {
+          ( t ) => (
+            <div className='ca-landing'>
+              {this.props.children}
+              <div className='ca-landing__container'>
+                <h2 className='ca-landing__title'>{t('landingTitle')}</h2>
+                <div className='ca-landing__buttons-container'>
+                  <CaButton
+                    className='ca-landing__register-btn'
+                    onClick={() => this.redToRegister()}
+                  >
+                    {t('register')}
+                  </CaButton>
 
-            <CaButton
-              onClick={() => this.redToLogin()}
-            >
-            Login
-            </CaButton>
-          </div>
-        </div>
-      </div>
+                  <CaButton
+                    onClick={() => this.redToLogin()}
+                  >
+                    {t('login')}
+                  </CaButton>
+                </div>
+              </div>
+            </div>
+          )
+        }
+      </I18n>
     );
   }
 }

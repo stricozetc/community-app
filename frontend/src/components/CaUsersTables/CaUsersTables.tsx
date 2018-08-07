@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
-import { StatTab } from 'models';
+import { StatTab, tableCellDataType } from 'models';
+import { I18n } from 'react-i18next';
 
 import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
@@ -29,27 +30,33 @@ export const CaUsersTables = withStyles(styles)(
     public render(): JSX.Element {
 
       return (
-        <div>
-          <h2 className='ca-users-tables__title'>Statistic</h2>
-          <Tabs value={this.state.value}>
-            <Tab
-              label='The best users'
-              onClick={() => this.changeContent(StatTab.BestUsers)}
-              classes={{ label: this.props.classes.label }} />
-            <Tab
-              label='The most popular games'
-              onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
-              classes={{ label: this.props.classes.label }}
-            />
-            <Tab
-              label='Recent games'
-              onClick={() => this.changeContent(StatTab.RecentGames)}
-              classes={{ label: this.props.classes.label }} />
-          </Tabs>
+        <I18n>
+          {
+            ( t ) => (
+              <div>
+                <h2 className='ca-users-tables__title'>{t('statistics')}</h2>
+                <Tabs value={this.state.value}>
+                  <Tab
+                    label={t('bestUsersLabel')}
+                    onClick={() => this.changeContent(StatTab.BestUsers)}
+                    classes={{ label: this.props.classes.label }} />
+                  <Tab
+                    label={t('mostPopularGamesLabel')}
+                    onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
+                    classes={{ label: this.props.classes.label }}
+                  />
+                  <Tab
+                    label={t('recentGamesLabel')}
+                    onClick={() => this.changeContent(StatTab.RecentGames)}
+                    classes={{ label: this.props.classes.label }} />
+                </Tabs>
 
-          <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
-          <CaCircleDiagram diagramData = {this.state.rowData}/>
-        </div>
+                <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
+                <CaCircleDiagram diagramData = {this.state.rowData}/>
+              </div>
+            )
+          }
+        </I18n>
       );
     }
 
@@ -72,9 +79,9 @@ export const CaUsersTables = withStyles(styles)(
         case StatTab.BestUsers: {
 
           const columnDef = [
-            { headerName: 'User name', field: 'name' },
-            { headerName: 'Played time', field: 'playedTime' },
-            { headerName: 'Score', field: 'scores' }
+            { headerName: 'userName', field: tableCellDataType.name },
+            { headerName: 'playedTime', field: tableCellDataType.playedTime },
+            { headerName: 'score', field: tableCellDataType.scores }
           ];
           const bestUsers = [...this.props.statistic.bestUsers];
 
@@ -86,23 +93,27 @@ export const CaUsersTables = withStyles(styles)(
 
             const rowData = arrayWithCheckedProperties.map(userStatistic => {
               const newUserStatistic = { ...userStatistic };
-              const arrayOfProperty = Object.keys(newUserStatistic);
 
-              arrayOfProperty.forEach(property => {
-                if (newUserStatistic[property] !== '-') {
-                  if (property === 'name') {
-                    newUserStatistic[property] = newUserStatistic[property];
-                  }
+              // I'll leave these comments for a while, in case of further changes in the logic of the tabular data
 
-                  if (property === 'playedTime') {
-                    newUserStatistic[property] = newUserStatistic[property] + ' minutes';
-                  }
+              // const arrayOfProperty = Object.keys(newUserStatistic);
 
-                  if (property === 'scores') {
-                    newUserStatistic[property] = newUserStatistic[property];
-                  }
-                }
-              });
+              // arrayOfProperty.forEach(property => {
+              //   if (newUserStatistic[property] !== '-') {
+              //     if (property === tableCellDataType.name) {
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+
+              //     if (property === tableCellDataType.playedTime) {
+              //       // newUserStatistic[property] = newUserStatistic[property] + ' minutes';
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+
+              //     if (property === tableCellDataType.scores) {
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+              //   }
+              // });
 
               return newUserStatistic;
             });
@@ -125,9 +136,9 @@ export const CaUsersTables = withStyles(styles)(
         case StatTab.TheMostPopularGames: {
 
           const columnDef = [
-            { headerName: 'Game', field: 'name' },
-            { headerName: 'Played in week', field: 'playedInWeek' },
-            { headerName: 'Played all', field: 'playedTime' }
+            { headerName: 'game', field: tableCellDataType.name },
+            { headerName: 'playedInWeek', field: tableCellDataType.playedInWeek },
+            { headerName: 'playedAll', field: tableCellDataType.playedTime }
           ];
           const mostPopularGames = [...this.props.statistic.mostPopularGames];
 
@@ -139,24 +150,29 @@ export const CaUsersTables = withStyles(styles)(
 
             const rowData = arrayWithCheckedProperties.map(userStatistic => {
               const newUserStatistic = { ...userStatistic };
-              const arrayOfProperty = Object.keys(newUserStatistic);
 
-              arrayOfProperty.forEach(property => {
-                if (newUserStatistic[property] !== '-') {
+              // I'll leave these comments for a while, in case of further changes in the logic of the tabular data
 
-                  if (property === 'name') {
-                    newUserStatistic[property] = newUserStatistic[property];
-                  }
+              // const arrayOfProperty = Object.keys(newUserStatistic);
 
-                  if (property === 'playedInWeek') {
-                    newUserStatistic[property] = newUserStatistic[property] + ' minutes';
-                  }
+              // arrayOfProperty.forEach(property => {
+              //   if (newUserStatistic[property] !== '-') {
 
-                  if (property === 'playedTime') {
-                    newUserStatistic[property] = newUserStatistic[property] + ' minutes';
-                  }
-                }
-              });
+              //     if (property === tableCellDataType.name) {
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+
+              //     if (property === tableCellDataType.playedInWeek) {
+              //       // newUserStatistic[property] = newUserStatistic[property] + ' minutes';
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+
+              //     if (property === tableCellDataType.playedTime) {
+              //       // newUserStatistic[property] = newUserStatistic[property] + ' minutes';
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+              //   }
+              // });
 
               return newUserStatistic;
             });
@@ -179,9 +195,9 @@ export const CaUsersTables = withStyles(styles)(
         case StatTab.RecentGames: {
 
           const columnDef = [
-            { headerName: 'Game', field: 'game' },
-            { headerName: 'Score', field: 'scores' },
-            { headerName: 'Result', field: 'result' }
+            { headerName: 'game', field: tableCellDataType.game },
+            { headerName: 'score', field: tableCellDataType.scores },
+            { headerName: 'result', field: tableCellDataType.result }
           ];
           const recentGames = [...this.props.statistic.recentGames] || [];
 
@@ -193,23 +209,27 @@ export const CaUsersTables = withStyles(styles)(
 
             const rowData = arrayWithCheckedProperties.map(userStatistic => {
               const newUserStatistic = { ...userStatistic };
-              const arrayOfProperty = Object.keys(newUserStatistic);
 
-              arrayOfProperty.forEach(property => {
-                if (newUserStatistic[property] !== '-') {
-                  if (property === 'game') {
-                    newUserStatistic[property] = newUserStatistic[property];
-                  }
+              // I'll leave these comments for a while, in case of further changes in the logic of the tabular data
 
-                  if (property === 'scores') {
-                    newUserStatistic[property] = newUserStatistic[property];
-                  }
+              // const arrayOfProperty = Object.keys(newUserStatistic);
 
-                  if (property === 'result') {
-                    newUserStatistic[property] = newUserStatistic[property] ? 'W' : 'L';
-                  }
-                }
-              });
+              // arrayOfProperty.forEach(property => {
+              //   if (newUserStatistic[property] !== '-') {
+              //     if (property === tableCellDataType.game) {
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+
+              //     if (property === tableCellDataType.scores) {
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+
+              //     if (property === tableCellDataType.result) {
+              //       // newUserStatistic[property] = newUserStatistic[property] ? 'W' : 'L';
+              //       newUserStatistic[property] = newUserStatistic[property];
+              //     }
+              //   }
+              // });
 
               return newUserStatistic;
             });

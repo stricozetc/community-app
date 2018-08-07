@@ -2,15 +2,18 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
+import { CaSelect } from 'components/form-controls/CaSelect';
+import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AuthStatus } from 'models';
+import { AuthStatus, languages } from 'models';
+import { I18n } from 'react-i18next';
 import { CaBattles } from 'scenes/Battles';
 import { CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
-import { setAuthToken } from 'utils';
+import { getCurrentLanguage, setAuthToken } from 'utils';
 
 import {
   CaButton,
@@ -24,7 +27,6 @@ import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 import './root.scss';
-
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -53,21 +55,40 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
+  public handleChange = (event: any, i18n: i18n) => {
+    const language = event.target.value;
+
+    i18n.changeLanguage(language);
+  }
+
   public getButton(authStatus: number): JSX.Element {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+
     return (
       isAuthorized ?
-        <CaButton
-          onClick={() => this.logoutUser()}
-        >
-          Logout
-        </CaButton>
+        <I18n>
+          {
+            ( t ) => (
+              <CaButton
+                onClick={() => this.logoutUser()}
+              >
+                {t('logout')}
+              </CaButton>
+            )
+          }
+        </I18n>
         :
-        <CaButton
-          onClick={() => this.redToLogin()}
-        >
-          Login
-        </CaButton>
+        <I18n>
+          {
+            ( t ) => (
+              <CaButton
+                onClick={() => this.redToLogin()}
+              >
+                {t('login')}
+              </CaButton>
+            )
+          }
+        </I18n>
     );
   }
 
@@ -75,31 +96,45 @@ export class RootComponent extends React.Component<RootProps> {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     return (
-      <CaNavbar
-        linksToRender={[
-          {
-            text: 'Battles',
-            to: '/battles',
-            activeClassName: 'ca-navbar__nav-item--active',
-            disabled: !isAuthorized
-          },
-          {
-            text: 'Statistics',
-            to: '/statistics',
-            activeClassName: 'ca-navbar__nav-item--active',
-            disabled: !isAuthorized
-          }
-        ]}
-      >
-        <CaLogo
-          text='battlenet'
-        />
+      <I18n>
+        {
+          ( t, { i18n } ) => (
+            <CaNavbar
+              linksToRender={[
+                {
+                  text: t('battles'),
+                  to: '/battles',
+                  activeClassName: 'ca-navbar__nav-item--active',
+                  disabled: !isAuthorized
+                },
+                {
+                  text: t('statistics'),
+                  to: '/statistics',
+                  activeClassName: 'ca-navbar__nav-item--active',
+                  disabled: !isAuthorized
+                }
+              ]}
+            >
+              <CaLogo
+                text='battlenet'
+              />
 
-        <div className='ca-navbar__logout-btn-container'>
-          {this.getButton(this.props.status)}
-        </div>
+              <div className='ca-navbar__logout-btn-container'>
+                {this.getButton(this.props.status)}
+              </div>
 
-      </CaNavbar>
+              <div className='ca-navbar__select-language'>
+                <CaSelect
+                  languages={[languages.en, languages.ru]}
+                  displayedLanguages={[t('ENToggle'), t('RUToggle')]}
+                  handleChange={this.handleChange}
+                  currLang={getCurrentLanguage(i18n)}
+                />
+              </div>
+            </CaNavbar>
+          )
+        }
+      </I18n>
     );
   }
 

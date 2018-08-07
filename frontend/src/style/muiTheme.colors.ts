@@ -19,3 +19,12 @@ export const errorSnackbarBgColor = '#d32f2f';
 export const infoSnackbarBgColor = '#1976d2';
 export const warningSnackbarBgColor = '#ffa000';
 export const successSnackbarBgColor = '#43a047';
+
+// select colors
+export const defaultSelectIconColor = '#f4b33a';
+
+// menu colors
+export const defaultMenuBgColor = '#313c45';
+
+// menu item colors
+export const defaultMenuItemTextColor = '#f4b33a';

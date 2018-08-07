@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "scripts": {
     "install": "node install.js",
-    "build": "cd server && npm run prestart",
+    "build": "node build.js",
     "full-build": "npm install && npm run build",
-    "start": "cd server && npm start",
+    "start": "concurrently \"cd frontend && npm start\" \"cd server && npm start\"",
     "full-start": "npm install && npm start"
+  },
+  "dependencies": {
+    "concurrently": "^3.6.1"
   }
 }
