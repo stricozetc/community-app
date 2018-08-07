@@ -22,14 +22,14 @@ export enum MyGamesActionTypes {
 export class EditGame {
   public readonly type = MyGamesActionTypes.EditGame;
 
-  public constructor(public payload: object) {}
+  public constructor(public payload: MyGameModel) {}
 }
 
 @action()
 export class EditGameCompleted {
   public readonly type = MyGamesActionTypes.EditGameCompleted;
 
-  public constructor(public payload: object) {}
+  public constructor(public payload: MyGameModel[]) {}
 }
 
 @action()

@@ -30,12 +30,16 @@ export class MyGameController {
     }
 
     @httpPost('/edit-game')
-    public editGame(request: Request, response: Response): void {
+    public editGame(request: Request, response: Response): Promise<void | Response> {
 
         const data: MyGameInterface = request.body;
 
-        this.myGameRepository.editGame(data);
-
+        return this.myGameRepository.editGame(data)
+        .then((games: MyGameInterface[]) => {
+            return response.status(200).send(games);
+        }).catch((err) => {
+            return response.sendStatus(500);
+        });
     }
 
     @httpPost('/add-game')

@@ -14,6 +14,8 @@ import { CaTableProps } from './CaTable.model';
 import './CaTable.scss';
 import { styles } from './CaTable.styles';
 
+import { CaButton } from 'components';
+
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const { columnDef, rowData, classes } = props;
 
@@ -41,8 +43,25 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
           <div className='cellWithButton'>
             <div className='cellWithButton__text'>{user[property].appName}</div>
             <div className='cellWithButton__buttons'>
-              <button className='cellWithButton__edit-button' onClick={user[property].edit}>Edit</button>
-              <button className='cellWithButton__delete-button' onClick={user[property].delete}>Delete</button>
+              <CaButton
+                color='primary'
+                type='submit'
+                className='ca-button'
+                onClick={user[property].edit}
+                >
+                Edit Game
+              </CaButton>
+
+              <CaButton
+                color='primary'
+                type='submit'
+                className='ca-button'
+                onClick={user[property].delete}
+                >
+                Delete Game
+              </CaButton>
+              {/* <button className='cellWithButton__edit-button' onClick={user[property].edit}>Edit</button>
+              <button className='cellWithButton__delete-button' onClick={user[property].delete}>Delete</button> */}
             </div>
           </div>;
         break;

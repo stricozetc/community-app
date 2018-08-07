@@ -10,17 +10,21 @@
 }
 
 .add-button-block {
-    width: 200px;
+    width: 350px;
     margin: 20px auto;
 }
 
-.add-button {
-    width: 200px;
-    color: #fff;
-    font-size: 18px;
-    padding: 10px 20px;
-    background-color: green;
-    border: none;
+.add-button > button{
+    color: #F4B33A !important;
+    height: 60px;
+    width:320px;
+    font-size: 30px;
+    background-color: #313C45;
+}
+
+.add-button > button:hover{
+    color: #fff !important;
+
 }
 
 

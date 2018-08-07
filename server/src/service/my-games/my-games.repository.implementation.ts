@@ -25,14 +25,26 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
         })
     }
 
-    public editGame(data: MyGameInterface): void {
-        console.log(`EDIT MyGamesRepositoryImplementation`);
-        console.log(data);
+    public editGame(gameThatNeedEdit: MyGameInterface): Promise<MyGameInterface[]>  {
+        return GamesModel.upsert({
+            id: +gameThatNeedEdit.id,
+            userId: +gameThatNeedEdit.userId,
+            appName: gameThatNeedEdit.appName,
+            description: gameThatNeedEdit.description,
+            maxRoomPlayer: +gameThatNeedEdit.maxRoomPlayer,
+            maxRooms: +gameThatNeedEdit.maxRooms,
+            requestUrl: gameThatNeedEdit.requestUrl,
+            maxWaitingTime: +gameThatNeedEdit.maxWaitingTime
+        }).then(() => {
+            return GamesModel.findAll({
+                where: {
+                    userId: gameThatNeedEdit.userId
+                }
+            });
+        })
     }
 
     public addGame(data: MyGameInterface): Promise<MyGameInterface> {
-        console.log(data);
-
         const game = GamesModel.build(
             {
                 userId: +data.userId,

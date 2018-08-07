@@ -17,6 +17,11 @@ export interface MyGameInterface {
 }
 
 export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.gamesModel, {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     userId: {
         type: Sequelize.INTEGER,
         allowNull: false,

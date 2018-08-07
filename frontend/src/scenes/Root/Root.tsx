@@ -25,11 +25,12 @@ import {
 
 import { PageNotFound } from '../PageNotFound';
 
-import { RootProps } from './Root.model';
-import './root.scss';
 import { CaAddGame } from '../../components/AddGameComponent/AddGameComponent';
+import { CaEditGame } from '../../components/EditGameComponent/EditGameComponent';
 import { CaMyGames } from '../MyGames/MyGames';
 
+import { RootProps } from './Root.model';
+import './root.scss';
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -241,16 +242,16 @@ export class RootComponent extends React.Component<RootProps> {
               }
             />
 
-            {/* <Route
+            <Route
               exact={true}
               path='/my-games/edit-game/:idOfTheGame'
               render={
                 props =>
-                  <EditGameComponent {...props} >
+                  <CaEditGame {...props} >
                     {this.getNavbar(this.props.status)}
-                  </EditGameComponent>
+                  </CaEditGame>
               }
-            /> */}
+            />
 
             <Route
               path='/*'

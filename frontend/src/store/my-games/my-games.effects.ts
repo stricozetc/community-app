@@ -13,6 +13,8 @@ import {
     DeleteGameCompleted,
     DeleteGameFailed,
     EditGame,
+    EditGameCompleted,
+    EditGameFailed,
     InitMyGames,
     LoadMyGamesCompleted,
     LoadMyGamesFailed,
@@ -41,8 +43,12 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
         switchMap(action =>
             from(HttpWrapper.post('api/v1/my-games/edit-game', action.payload)).pipe(
                 map((res: any) => {
-                    
-                })
+
+                    const games: MyGameModel[] = res.data;
+
+                    return new EditGameCompleted(games);
+                }),
+                catchError(error => of(new EditGameFailed(error)))
             )
         )
     );

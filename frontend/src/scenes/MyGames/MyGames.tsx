@@ -13,6 +13,9 @@ import './myGames.scss';
 import {MyGameModel} from './MyGames.model';
 import { history } from 'utils';
 
+
+import { CaButton } from 'components';
+
 export class CaMyGamesComponent extends React.Component<any> {
     public componentWillMount(): void {
         this.props.getMyGames(this.props.user.id);
@@ -27,47 +30,6 @@ export class CaMyGamesComponent extends React.Component<any> {
             { headerName: 'updatedAt', field: tableCellDataType.updateTime }
         ];
 
-        // const rowData = [
-        //     {
-        //         game: {
-        //             name: 'JsMarathon',
-        //             edit: () => console.log(`EDIT GAME`),
-        //             delete: () => console.log(`DELETE GAME`),
-        //         },
-        //         createdAt: '2018-07-31 13:05:33',
-        //         updatedAt: '2018-07-31 13:05:33'
-        //     }
-        // ];
-        
-        // const rowData = [
-        //     {
-        //         game: {
-        //             name: 'JsMarathon',
-        //             edit: () => this.props.editGame({name: 'JsMarathon'}),
-        //             delete: () => this.props.deleteGame({name: 'JsMarathon'})
-        //         },
-        //         createdAt: '2018-07-31 13:05:33',
-        //         updatedAt: '2018-07-31 13:05:33'
-        //     },
-        //     {
-        //         game: {
-        //             name: 'CSSQuickDraw',
-        //             edit:  () => this.props.editGame({name: 'CSSQuickDraw'}),
-        //             delete: () => this.props.deleteGame({name: 'CSSQuickDraw'})
-        //         },
-        //         createdAt: '2018-07-31 13:05:33',
-        //         updatedAt: '2018-07-31 13:05:33'
-        //     },
-        //     {
-        //         game: {
-        //             name: 'CSSQuickDrawFull',
-        //             edit: () => this.props.editGame({name: 'CSSQuickDrawFull'}),
-        //             delete: () => this.props.deleteGame({name: 'CSSQuickDrawFull'})
-        //         },
-        //         createdAt: '2018-07-31 13:05:33',
-        //         updatedAt: '2018-07-31 13:05:33'
-        //     }
-        // ];
 
         // const newGame = {
         //     userId: this.props.user.id,
@@ -85,16 +47,7 @@ export class CaMyGamesComponent extends React.Component<any> {
             gameWithUpdatedProperty,
             ['game', 'createdAt', 'updatedAt']
         );
-        // const rowData = this.updatePropertyOfObject(gamesWithNecessaryProperty);
 
-        // console.log(`GAMES BEFORE`);
-        // console.log(games);
-
-        // console.log(`GAMES AFTER DELETED UNNECCESARY PROPERTY`);
-        // // console.log(gamesWithNecessaryProperty);
-
-        // console.log(`GAMES AFTER UPDATED`);
-        // console.log(rowData);
 
         return(
             <div>
@@ -103,7 +56,15 @@ export class CaMyGamesComponent extends React.Component<any> {
                 <CaTable rowData={rowData} columnDef={columnDef} />
                 <div className='add-button-block'>
                     {/* <button className='add-button' onClick={() => this.props.addGame(newGame)}>Add New Game</button> */}
-                    <button className='add-button' onClick={() => history.push(`/my-games/add-game`)}>Add New Game</button>
+                    {/* <button className='add-button' onClick={() => history.push(`/my-games/add-game`)}>Add New Game</button> */}
+                    <CaButton
+                        color='primary'
+                        type='submit'
+                        className='add-button'
+                        onClick={() => history.push(`/my-games/add-game`)}
+                        >
+                        Add New Game
+                    </CaButton>
                 </div>
             </div>
         );
@@ -162,7 +123,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     deleteGame: (gameThatNeedToDelete: MyGameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
-    editGame: (data: object) => dispatch(new EditGame(data)),
+    editGame: (data: MyGameModel) => dispatch(new EditGame(data)),
     addGame: (data: MyGameModel) => dispatch(new AddGame(data)),
     getMyGames: (userId: number) => dispatch(new InitMyGames(userId))
 });

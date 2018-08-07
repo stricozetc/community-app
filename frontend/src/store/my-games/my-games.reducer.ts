@@ -67,6 +67,26 @@ export const myGamesReducer = (state = initialState, action: MyGameActions) => {
                 deleteGameStatus: LoadStatus.Error
             };
         }
+////////////////////////////////////////////////////////////////////////
+        case MyGamesActionTypes.EditGame : {
+            return {
+                ...state,
+                editGameStatus: LoadStatus.Fetching
+            };
+        }
+        case MyGamesActionTypes.EditGameCompleted : {
+            return {
+                ...state,
+                myGames: action.payload,
+                editGameStatus: LoadStatus.Success
+            };
+        }
+        case MyGamesActionTypes.EditGameFailed : {
+            return {
+                ...state,
+                editGameStatus: LoadStatus.Error
+            };
+        }
 
         default:
         return state;

@@ -42,22 +42,15 @@
     flex: 1;
 }
 
-.cellWithButton__edit-button {
-    margin: 0 10px;
-    font-size: 18px;
-    color: #fff;
-    background-color: red;
-    border: none;
-    padding: 2px 6px;
-    width: 80px;
+.ca-button > button {
+    color: #fff !important;
+    height: 20px !important;
+    width:130px !important;
+    font-size: 15px;
+    background-color: #313C45;
+    margin: 0 10px; 
 }
 
-.cellWithButton__delete-button {
-    margin: 0 10px;
-    font-size: 18px;
-    color: #fff;
-    background-color: blue;
-    border: none;
-    padding: 2px 6px;
-    width: 80px;
+.ca-button > button:hover {
+    color: #F4B33A !important;
 }
