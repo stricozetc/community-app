@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 
@@ -9,14 +10,17 @@ import { isEmpty } from 'utils/isEmpty';
 import { isObjectsEqual } from 'utils/isObjectsEqual';
 
 import { CaSnackbar } from 'components/CaSnackbar';
+import { CaSpinner } from 'components/Spinner';
 import { CaButton } from 'components/form-controls/CaButton';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
-import { SnackbarType, transitionDirection } from 'models';
+import { RestorePasswordStatus, SnackbarType, transitionDirection } from 'models';
 import { SendRestoreRequest } from 'store/restore-password';
 import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { AppState } from 'store/store.config';
 
 import { ForgetPasswordProps, ForgetPasswordState, initForgetPasswordState } from './ForgetPassword.model';
+
+import './ForgetPassword.scss';
 
 class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, ForgetPasswordState> {
   constructor(props: ForgetPasswordProps) {
@@ -49,6 +53,7 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
 
     this.props.sendRestoreRequest(this.state.email);
   }
+
   public checkValidation(): void {
     let emailErrors: string[] = [];
 
@@ -94,7 +99,7 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
       <I18n>
         {
           (t) => (
-            <div className='ca-login-form'>
+            <div className='ca-forget-password-form'>
               <CaSnackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={this.props.isSnackbarOpen}
@@ -114,37 +119,45 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
               />
 
               {this.props.children}
-              <form onSubmit={this.onSubmit} className='ca-login-form__container'>
-                <FormGroup>
-                  <TextField
-                    id='email'
-                    label={t('emailLabel')}
-                    name='email'
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    type='email'
-                    onBlur={this.onBlur('email')}
-                    error={!this.state.isEmailValid && this.state.isTouched}
-                  />
-                  {!this.state.isEmailValid &&
-                    this.state.isTouched &&
-                    this.state.emailErrors.map((err, index) => {
-                      return (
-                        <div className='ca-login-form__error' key={index}>
-                          {t(err)}
-                        </div>
-                      );
-                    })}
-                </FormGroup>
-                <CaButton
-                  color='primary'
-                  type='submit'
-                  className='ca-login-form__login-btn'
-                  disabled={!this.state.isEmailValid}
-                >
-                  {t('login').toUpperCase()}
-                </CaButton>
-              </form>
+              {this.props.status === RestorePasswordStatus.INIT ?
+                <form onSubmit={this.onSubmit} className='ca-forget-password-form__container'>
+                  <FormGroup>
+                    <TextField
+                      id='email'
+                      label={t('emailLabel')}
+                      name='email'
+                      value={this.state.email}
+                      onChange={this.onChange}
+                      type='email'
+                      onBlur={this.onBlur('email')}
+                      error={!this.state.isEmailValid && this.state.isTouched}
+                    />
+                    {!this.state.isEmailValid &&
+                      this.state.isTouched &&
+                      this.state.emailErrors.map((err, index) => {
+                        return (
+                          <div className='ca-forget-password-form__error' key={index}>
+                            {t(err)}
+                          </div>
+                        );
+                      })}
+                  </FormGroup>
+                  <CaButton
+                    color='primary'
+                    type='submit'
+                    className='ca-forget-password-form__login-btn'
+                    disabled={!this.state.isEmailValid}
+                  >
+                    {t('login').toUpperCase()}
+                  </CaButton>
+                </form> :
+                this.props.status === RestorePasswordStatus.WAIT ?
+                  <CaSpinner isActive={true} /> :
+                  <div className='ca-forget-password-form__confirm-message'>
+                    <div className='ca-forget-password-form__message'>{t('email-sent')}</div>
+                    <div className='ca-forget-password-form__message'>{t('mail')}{this.state.email}</div>
+                  </div>
+              }
             </div>
           )
         }

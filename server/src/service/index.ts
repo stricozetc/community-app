@@ -4,5 +4,6 @@ export * from './error';
 export * from './api';
 export * from './services-registration';
 export * from './user-authentication';
+export * from './mailer';
 export * from './games';
 export * from './user-settings';

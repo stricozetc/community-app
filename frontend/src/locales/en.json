@@ -82,5 +82,8 @@
   "copyTokenHeader": "Application Token",
   "copyTokenMainText": "Keep in mind that it's secret information, don't share it with other people",
   "copyTokenOfferMessage": "If you want to copy application token of this game, click on icon.",
-  "restore": "Restore"
+  "restore": "Restore",
+  "email-sent": "Email sent.",
+  "mail": "An email with a link to restore access has been sent to ",
+  "forget-password": "Forget password?"
 }

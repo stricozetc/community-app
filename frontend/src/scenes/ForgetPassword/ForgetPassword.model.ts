@@ -16,7 +16,6 @@ export const initForgetPasswordState: ForgetPasswordState = {
 
 export interface ForgetPasswordProps {
   status: RestorePasswordStatus;
-  history: any;
   errors: ErrorsFromServer;
   isSnackbarOpen: boolean;
   sendRestoreRequest(userEmail: string): void;

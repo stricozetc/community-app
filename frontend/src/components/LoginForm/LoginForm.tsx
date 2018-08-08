@@ -146,13 +146,17 @@ export class LoginFormComponent extends React.Component<
     this.props.closeSnackbar();
   }
 
+  public redToForgetPassword(): void {
+    this.props.history.push('/forget-password');
+  }
+
   public render(): JSX.Element {
     const { errors } = this.props;
     const keys = errors && Object.keys(errors);
     return (
       <I18n>
         {
-          ( t ) => (
+          (t) => (
             <div className='ca-login-form'>
               <CaSnackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -221,15 +225,19 @@ export class LoginFormComponent extends React.Component<
                       );
                     })}
                 </FormGroup>
-
-                <CaButton
-                  color='primary'
-                  type='submit'
-                  className='ca-login-form__login-btn'
-                  disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
-                >
-                  {t('login').toUpperCase()}
-                </CaButton>
+                <div className='ca-login-form__footer'>
+                  <CaButton
+                    color='primary'
+                    type='submit'
+                    className='ca-login-form__login-btn'
+                    disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
+                  >
+                    {t('login').toUpperCase()}
+                  </CaButton>
+                  <div className='ca-login-form__forget-password'>
+                    <a href="/#/forget-password" onClick={() => this.redToForgetPassword()}>{t('forget-password')}</a>
+                  </div>
+                </div>
               </form>
             </div>
           )
