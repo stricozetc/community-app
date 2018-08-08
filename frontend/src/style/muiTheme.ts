@@ -28,6 +28,11 @@ export const theme = createMuiTheme({
         fontSize: '1.6rem'
       }
     },
+    MuiInputLabel: {
+      root: {
+        fontSize: '1.5rem'
+      }
+    },
     MuiTooltip: {
       tooltip: {
         fontSize: '1.5rem'

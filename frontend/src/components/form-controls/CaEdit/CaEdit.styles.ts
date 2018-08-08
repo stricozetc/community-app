@@ -1,18 +1,12 @@
 import { createStyles } from '@material-ui/core';
 
-import {
-  defaultEditIconBgColorHover,
-  defaultEditIconColor,
-  defaultEditIconColorHover
-} from 'style/muiTheme.colors';
-
 export const styles = () => createStyles({
   editIconButton: {
-    color: defaultEditIconColor,
+    color: '#f4b33a',
 
     '&:hover': {
-      color: defaultEditIconColorHover,
-      backgroundColor: defaultEditIconBgColorHover
+      color: '#000',
+      backgroundColor: '#f4b33a'
     }
   },
   editIcon: {

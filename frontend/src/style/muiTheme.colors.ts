@@ -28,13 +28,3 @@ export const defaultMenuBgColor = '#313c45';
 
 // menu item colors
 export const defaultMenuItemTextColor = '#f4b33a';
-
-// edit icon button colors
-export const defaultEditIconColor = '#f4b33a';
-export const defaultEditIconColorHover = '#000';
-export const defaultEditIconBgColorHover = '#f4b33a';
-
-// delete icon button colors
-export const defaultDeleteIconColor = 'rgb(168, 23, 4)';
-export const defaultDeleteIconColorHover = '#fff';
-export const defaultDeleteIconBgColorHover = 'rgb(168, 23, 4)';

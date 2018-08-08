@@ -1,18 +1,12 @@
 import { createStyles } from '@material-ui/core';
 
-import {
-  defaultDeleteIconBgColorHover,
-  defaultDeleteIconColor,
-  defaultDeleteIconColorHover
-} from 'style/muiTheme.colors';
-
 export const styles = () => createStyles({
   deleteIconButton: {
-    color: defaultDeleteIconColor,
+    color: 'rgb(168, 23, 4)',
 
     '&:hover': {
-      color: defaultDeleteIconColorHover,
-      backgroundColor: defaultDeleteIconBgColorHover
+      color: '#000',
+      backgroundColor: 'rgb(168, 23, 4)'
     }
   },
   deleteIcon: {

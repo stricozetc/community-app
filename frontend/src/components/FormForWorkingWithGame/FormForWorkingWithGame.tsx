@@ -5,8 +5,6 @@ import { CaButton } from 'components';
 import { history } from 'utils';
 
 import { FormForAddingNewGameState } from './FormForWorkingWithGame.model';
-import './FormForWorkingWithGame.scss';
-
 
 export class FormForWorkingWithGame extends React.Component<any, FormForAddingNewGameState> {
     constructor(props: any) {
@@ -67,7 +65,6 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
                                 value={this.state[`${input}`]}
                                 onChange={this.handleChange}
                                 type={(['maxRoomPlayer', 'maxRooms', 'maxWaitingTime'].indexOf(`${input}`) + 1) ? 'number' : 'text'}
-                                className='ca-Registration-form__field'
                             />
                         </FormGroup>
                    );

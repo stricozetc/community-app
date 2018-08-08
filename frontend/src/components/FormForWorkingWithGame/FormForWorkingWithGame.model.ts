@@ -6,12 +6,3 @@ export interface FormForAddingNewGameState {
     requestUrl: string;
     maxWaitingTime: string;
 }
-
-export const initFormForAddingNewGame: FormForAddingNewGameState = {
-    appName: '',
-    description: '',
-    maxRoomPlayer: '',
-    maxRooms: '',
-    requestUrl: '',
-    maxWaitingTime: ''
-};
