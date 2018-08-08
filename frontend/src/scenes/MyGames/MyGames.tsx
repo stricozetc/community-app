@@ -6,19 +6,31 @@ import { tableCellDataType } from 'models';
 import { CaTable } from 'components';
 import { connect } from 'react-redux';
 
-import { AddGame, DeleteGame, EditGame, InitMyGames } from 'store';
+import { AddGame, DeleteGame, EditGame, InitMyGames, LogoutUser } from 'store';
 
 import './myGames.scss';
 
 import {MyGameModel} from './MyGames.model';
 import { history } from 'utils';
-
+// import { isEmpty } from 'utils/isEmpty';
 
 import { CaButton } from 'components';
-
+import {
+    AuthStatus,
+  } from 'models';
 export class CaMyGamesComponent extends React.Component<any> {
     public componentWillMount(): void {
         this.props.getMyGames(this.props.user.id);
+
+        const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+
+        if (!isAuthenticated) {
+        this.props.history.push('/login');
+        }
+
+        // if (isEmpty(this.props.games)) {
+        // this.props.initGames();
+        // }
     }
 
     
@@ -30,24 +42,12 @@ export class CaMyGamesComponent extends React.Component<any> {
             { headerName: 'updatedAt', field: tableCellDataType.updateTime }
         ];
 
-
-        // const newGame = {
-        //     userId: this.props.user.id,
-        //     appName: 'My Game8 for new User',
-        //     desc: 'The3 best3 game in the world!',
-        //     maxRoomPlayer: 5,
-        //     maxRooms: 12,
-        //     requestUrl: 'http://localh2ost:8',
-        //     maxWaitingTime: 3002200
-        // }
-
         const games = this.props.games;
         const gameWithUpdatedProperty = this.updatePropertyOfObject(games);
         const rowData = this.deleteUnnecessaryProperty(
             gameWithUpdatedProperty,
             ['game', 'createdAt', 'updatedAt']
         );
-
 
         return(
             <div>
@@ -117,11 +117,13 @@ export class CaMyGamesComponent extends React.Component<any> {
 }
 
 const mapStateToProps = (state: AppState) => ({
+    authStatus: state.auth.status,
     user: state.auth.user,
     games: state.myGames.myGames
   });
 
 const mapDispatchToProps = (dispatch: any) => ({
+    logoutUser: () => dispatch(new LogoutUser()),
     deleteGame: (gameThatNeedToDelete: MyGameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
     editGame: (data: MyGameModel) => dispatch(new EditGame(data)),
     addGame: (data: MyGameModel) => dispatch(new AddGame(data)),

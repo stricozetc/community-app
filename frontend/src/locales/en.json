@@ -45,5 +45,6 @@
   "playedAll": "Played all",
   "result": "Result",
   "createdAt": "Created at",
-  "updatedAt": "Updated at"
+  "updatedAt": "Updated at",
+  "key": "{{date, MM/DD/YYYY}}"
 }

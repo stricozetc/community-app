@@ -53,7 +53,7 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
                 className='ca-Registration-form__container'
                 onSubmit={this.handleSubmit}
                >
-
+                <h2>FORM SETTINGS</h2>
                {arrayOfInputs.map(input => {
                    return(
                         <FormGroup key={input}>
@@ -66,7 +66,7 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
                                 name={input}
                                 value={this.state[`${input}`]}
                                 onChange={this.handleChange}
-                                type='text'
+                                type={(['maxRoomPlayer', 'maxRooms', 'maxWaitingTime'].indexOf(`${input}`) + 1) ? 'number' : 'text'}
                                 className='ca-Registration-form__field'
                             />
                         </FormGroup>

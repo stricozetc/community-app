@@ -18,6 +18,7 @@ export class AddGameComponent extends React.Component<any, FormForAddingNewGameS
     public render(): JSX.Element {
         return(
            <div>
+                {this.props.children}
                <FormForWorkingWithGame
                     userId = {this.props.user.id}
                     config='Add Game'

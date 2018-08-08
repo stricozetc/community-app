@@ -6,6 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
 import * as classNames from 'classnames';
 import { tableCellDataType } from 'models';
 import { I18n, TranslationFunction } from 'react-i18next';
@@ -14,7 +15,14 @@ import { CaTableProps } from './CaTable.model';
 import './CaTable.scss';
 import { styles } from './CaTable.styles';
 
-import { CaButton } from 'components';
+// import { CaButton } from 'components';
+
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import EditIcon from '@material-ui/icons/Edit';
+// import IconButton from '@material-ui/core/IconButton';
+// import Tooltip from '@material-ui/core/Tooltip';
+import { CaEdit } from '../form-controls/CaEdit';
+import { CaDelete } from '../form-controls/CaDelete/CaDelete';
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const { columnDef, rowData, classes } = props;
@@ -27,39 +35,42 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
 
     switch (property) {
       case (tableCellDataType.playedTime): {
-        data = t('minutes', { count: user[property]});
+        data = t('minutes', { count: user[property] });
         break;
       }
       case (tableCellDataType.playedInWeek): {
-        data = t('minutes', { count: user[property]});
+        data = t('minutes', { count: user[property] });
         break;
       }
       case (tableCellDataType.result): {
         data = user[property] ? 'W' : 'L';
         break;
       }
+      case 'createdAt': {
+        const date = new Date(user[property])
+        data = t('key', { date });
+        break;
+      }
       case 'game': {
+
         data =
           <div className='cellWithButton'>
             <div className='cellWithButton__text'>{user[property].appName}</div>
             <div className='cellWithButton__buttons'>
-              <CaButton
-                color='primary'
-                type='submit'
-                className='ca-button'
-                onClick={user[property].edit}
-                >
-                Edit Game
-              </CaButton>
+              {/* <Tooltip title="Edit" placement="left" className='tooltip'>
+                <IconButton aria-label="Delete" className='icon-button_edit' >
+                  <EditIcon  className='edit-icon' onClick={user[property].edit}/>
+                </IconButton>
+              </Tooltip> */}
+              <CaEdit editHandler={user[property].edit} />
+              <CaDelete deleteHandler={user[property].delete} />
 
-              <CaButton
-                color='primary'
-                type='submit'
-                className='ca-button'
-                onClick={user[property].delete}
-                >
-                Delete Game
-              </CaButton>
+              {/* <Tooltip title="Delete" placement="right">
+                <IconButton aria-label="Delete" className='icon-button_delete'>
+                  <DeleteIcon  className='delete-icon' onClick={user[property].delete}/>
+                </IconButton>
+              </Tooltip> */}
+
               {/* <button className='cellWithButton__edit-button' onClick={user[property].edit}>Edit</button>
               <button className='cellWithButton__delete-button' onClick={user[property].delete}>Delete</button> */}
             </div>
@@ -78,7 +89,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
 
     <I18n>
       {
-        ( t ) => (
+        (t) => (
           <Table>
             <TableHead className={classes.tableHead}>
               <TableRow className={classes.tableHeadRow}>

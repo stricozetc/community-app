@@ -1,3 +1,4 @@
+
 .cell {
     display: flex;
     justify-content: space-between;
@@ -20,37 +21,42 @@
     padding: 5px 10px;
 }
 
-.myGames__button_delete {
-    background-color:red;
-
-}
-
-.myGames__button_edit {
-    background-color:blue;
-}
-
 .cellWithButton {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .cellWithButton__text {
-    flex: 1;
+    flex: 2;
 }
 
 .cellWithButton__buttons {
     flex: 1;
 }
 
-.ca-button > button {
-    color: #fff !important;
-    height: 20px !important;
-    width:130px !important;
-    font-size: 15px;
-    background-color: #313C45;
-    margin: 0 10px; 
+.delete-icon {
+    font-size: 30px !important;
 }
 
-.ca-button > button:hover {
-    color: #F4B33A !important;
+.edit-icon {
+    font-size: 30px !important;
+}
+
+.icon-button_delete {
+    color:rgb(168, 23, 4) !important;
+}
+
+.icon-button_edit {
+    color:#F4B33A !important;
+}
+
+.icon-button_edit:hover {
+    color:#fff !important;
+    background-color :#F4B33A !important;
+}
+
+.icon-button_delete:hover {
+    color:#fff !important;
+    background-color: rgb(168, 23, 4) !important;
 }

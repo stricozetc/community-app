@@ -46,5 +46,6 @@
   "playedAll": "Сыграно всего",
   "result": "Результат",
   "createdAt": "Дата создания",
-  "updatedAt": "Дата обновления"
+  "updatedAt": "Дата обновления",
+  "key": "{{date, DD/MM/YYYY}}"
 }

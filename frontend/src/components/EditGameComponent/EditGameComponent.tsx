@@ -19,6 +19,7 @@ export class EditGameComponent extends React.Component<any, FormForAddingNewGame
 
         return(
            <div>
+               {this.props.children}
                <FormForWorkingWithGame
                     id = {this.props.match.params['idOfTheGame']}
                     userId = {this.props.user.id}
