@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { store } from 'store';
 
+import { i18nInstance } from 'utils/i18n';
+
 import { App } from './App';
 import { register } from './registerServiceWorker';
-import { I18nextProvider } from 'react-i18next';
-import { i18nInstance } from 'utils/i18n';
 
 import './index.css';
 

@@ -87,6 +87,7 @@ export interface UserFieldsToRegister {
   name: string;
   password: string;
   password2: string;
+  language: string;
 }
 
 export interface UserFieldsToLogin {
@@ -209,4 +210,13 @@ export const JsMarathonCharts: string[] = [chartsTypes.winRate];
 export const MyGameCharts: string[] = [chartsTypes.winRate];
 export interface Errors {
   [key: string]: [{ code: number; msg: string }];
+}
+
+export enum LanguageStatus {
+  INIT,
+  SAVING,
+  SAVED,
+  FAIL,
+  CHANGING,
+  CHANGED
 }

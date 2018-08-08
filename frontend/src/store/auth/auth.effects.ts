@@ -1,12 +1,14 @@
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
+
 import { HttpWrapper } from 'services';
 import { GetErrors } from 'store/errors';
 import { deleteAuthToken, history, setAuthToken } from 'utils';
+
+import { ChangeLanguage } from '../language';
 
 import {
   AuthTypes,
@@ -14,6 +16,7 @@ import {
   LogoutUser,
   RegisterUser,
   SetCurrentUser,
+  SetCurrentUserSuccess,
   SuccessRegistration
 } from './auth.action';
 
@@ -29,7 +32,8 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           Cookies.set('jwtToken', token);
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
-
+          console.log('decoded', decoded);
+          console.log('res.data', res.data);
           return new SetCurrentUser(decoded);
         }),
         catchError(error => {
@@ -73,9 +77,28 @@ export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) =>
     })
   );
 
+export const setCurrentUser$ = (action$: ActionsObservable<SetCurrentUser>) =>
+  action$.ofType(AuthTypes.SetCurrentUser).pipe(
+    switchMap(action => {
+      const user: FrontEndUser | undefined = action.payload;
+      if (user) {
+        return from(HttpWrapper.get(`api/users/get-user-language?email=${user.email}`)).pipe(
+          map(res => {
+            return new ChangeLanguage(res.data);
+          }),
+          catchError(error => of(new GetErrors(error.response.data)))
+        );
+      } else {
+        return of(new SetCurrentUserSuccess());
+      }
+    }
+    )
+  );
+
 export const AuthEffects = [
   loginUser$,
   registerUser$,
   logoutUser$,
-  successRegistration$
+  successRegistration$,
+  setCurrentUser$
 ];

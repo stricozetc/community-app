@@ -9,6 +9,7 @@ export enum AuthTypes {
   LoginUser = '[auth] Login User',
   LogoutUser = '[auth] Logout User',
   SetCurrentUser = '[auth] Set Current User',
+  SetCurrentUserSuccess = '[auth] Set Current User Success',
   SuccessRegistration = '[auth] Success registration'
 }
 
@@ -17,6 +18,11 @@ export class SetCurrentUser {
   public readonly type = AuthTypes.SetCurrentUser;
 
   constructor(public payload: FrontEndUser | undefined) { }
+}
+
+@action()
+export class SetCurrentUserSuccess {
+  public readonly type = AuthTypes.SetCurrentUserSuccess;
 }
 
 @action()
@@ -42,7 +48,7 @@ export class LogoutUser {
 export class SuccessRegistration {
   public readonly type = AuthTypes.SuccessRegistration;
 
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export type AuthActions =

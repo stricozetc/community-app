@@ -10,4 +10,6 @@ export interface RootProps {
   logoutUser(): void;
 
   cleanStatistic(): void;
+
+  changeLanguage(language: string): void;
 }

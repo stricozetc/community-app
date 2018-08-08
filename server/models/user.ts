@@ -21,7 +21,8 @@ export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
     },
     email: {
         type: Sequelize.STRING(255),
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     token: {
         type: Sequelize.STRING(50),
@@ -31,6 +32,11 @@ export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
+    },
+    language: {
+        type: Sequelize.STRING(2),
+        allowNull: false,
+        // defaultValue: 'en',
     },
 },                                                                              {
         // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
