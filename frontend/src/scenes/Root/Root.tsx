@@ -2,6 +2,7 @@ import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
+import { AuthStatus, languages, SnackbarType, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -30,9 +31,13 @@ import {
   SetCurrentUser,
   store
 } from 'store';
+import { getCurrentLanguage, setAuthToken, isEmpty } from 'utils';
+<<<<<<< .mine
+import { isObjectsEqual } from 'utils/isObjectsEqual';
+=======
 
 import { CloseSnackbar } from 'store/snackbar'
-import { SnackbarErrorMessage } from 'components/CaSnackbar'
+import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 
 import {
   getCurrentLanguage,
@@ -57,6 +62,16 @@ import SettingsIcon from '@material-ui/icons/SettingsRounded';
 import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import { CaMyGames } from '../MyGames/MyGames';
+import {
+  CaButton,
+  CaLogo,
+  CaNavbar,
+  CaSnackbar,
+  LoginForm,
+  RegistrationForm
+} from 'components';
+
+import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 
@@ -71,6 +86,18 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
+<<<<<<< .mine
+  public componentWillReceiveProps(nextProps: RootProps): void {
+    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
+      this.props.openSnackbar();
+    }
+  }
+
+  public closeSnackbar(): void {
+    this.props.closeSnackbar();
+  }
+
+=======
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
   }
@@ -85,33 +112,35 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public logoutUser = (): void => {
-    this.props.logoutUser();
-    this.props.cleanStatistic();
-    this.props.history.push('/');
+	this.props.logoutUser();
+	this.props.cleanStatistic();
+	this.props.history.push('/');
 
-    const userInBattle = !!this.props.battleName;
+	const userInBattle = !!this.props.battleName;
 
-    if (userInBattle) {
-      this.props.leaveBattle(this.props.battleName);
-    }
+	if (userInBattle) {
+	  this.props.leaveBattle(this.props.battleName);
+	}
   }
 
   public redToLogin = (): void => {
-    this.props.logoutUser();
-    this.props.history.push('/login');
+	this.props.logoutUser();
+	this.props.history.push('/login');
   }
 
   public redToMainPage = () => {
-    this.props.history.push('/');
+	this.props.history.push('/');
   }
 
   public handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const language = event.target.value;
+	const language = event.target.value;
 
-    this.props.changeLanguage(language);
+	this.props.changeLanguage(language);
   }
 
-  public getMenuProfilePanel = (): JSX.Element => {
+  public getButton(authStatus: number): JSX.Element {
+	const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+
     return (
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>
@@ -133,7 +162,6 @@ export class RootComponent extends React.Component<RootProps> {
     );
   }
   public getNavbar(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     const appMenuItems: AppMenuItem[] = [
       {
@@ -362,6 +390,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
+  openSnackbar: () => dispatch(new OpenSnackbar()),
 });
 
 export const Root = connect(
