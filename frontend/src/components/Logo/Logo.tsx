@@ -8,6 +8,7 @@ export const CaLogo = (props: LogoProps) => {
 
   return (
     <div
+      onClick={onClick}
       className='ca-logo'
       onClick={onClick}
     >

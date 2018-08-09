@@ -90,11 +90,11 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public redToMainPage = () => {
+  public redToMainPage(): void {
     this.props.history.push('/');
   }
 
-  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  public handleChange = (event: any, i18n: i18n) => {
     const language = event.target.value;
 
     this.props.changeLanguage(language);
