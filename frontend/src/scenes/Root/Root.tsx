@@ -125,10 +125,10 @@ export class RootComponent extends React.Component<RootProps> {
 
               <div className='ca-navbar__select-language'>
                 <CaSelect
-                  languages={[languages.en, languages.ru]}
-                  displayedLanguages={[t('ENToggle'), t('RUToggle')]}
+                  values={[languages.en, languages.ru]}
+                  displayedValues={[t('ENToggle'), t('RUToggle')]}
                   handleChange={this.handleChange}
-                  currLang={getCurrentLanguage(i18n)}
+                  currentValue={getCurrentLanguage(i18n)}
                 />
               </div>
             </CaNavbar>
