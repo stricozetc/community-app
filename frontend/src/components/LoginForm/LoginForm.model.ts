@@ -29,7 +29,8 @@ export const initLoginFormState: LoginFormState = {
 };
 export interface LoginFormProps {
   status: AuthStatus;
-  history: any;  
+  history: any;
+  
 
   loginUser(user: UserFieldsToLogin): void;  
 }

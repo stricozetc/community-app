@@ -41,9 +41,12 @@ export const initRegistrationFormState: RegistrationFormState = {
 };
 export interface RegistrationFormProps {
   history: any;
-  status: AuthStatus;  
+  status: AuthStatus;
+  // errors: ErrorsFromServer;
   // isSnackbarOpen: boolean;
   language: string;
 
   registerUser(user: UserFieldsToRegister): void;
+  // closeSnackbar(): void;
+//   openSnackbar(): void;
 }
