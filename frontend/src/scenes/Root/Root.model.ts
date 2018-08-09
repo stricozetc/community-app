@@ -1,12 +1,14 @@
 import { FrontEndUser } from 'store';
 
-import { AuthStatus } from 'models';
+import { AuthStatus, ErrorsFromServer } from 'models';
 
 export interface RootProps {
   status: AuthStatus;
   user: FrontEndUser  | undefined;
   history: any;
   battleName: string;
+  isSnackbarOpen: boolean;
+  errors: ErrorsFromServer
 
   leaveBattle(battleName: string): void;
 
@@ -14,5 +16,8 @@ export interface RootProps {
 
   cleanStatistic(): void;
 
-  changeLanguage(language: string): void;
-}
+  closeSnackbar(): void;
+
+  openSnackbar(): void;
+} 
+  

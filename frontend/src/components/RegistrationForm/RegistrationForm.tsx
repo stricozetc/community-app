@@ -2,15 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
-import { I18n } from 'react-i18next';
+import { CaButton } from 'components';
 
-import { CaButton, CaSnackbar } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
-import { SnackbarType, UserFieldsToRegister, transitionDirection } from 'models';
+import { UserFieldsToRegister } from 'models';
 import { AppState, RegisterUser } from 'store';
-import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
-import { isEmpty } from 'utils/isEmpty';
-import { isObjectsEqual } from 'utils/isObjectsEqual';
 
 import {
   RegistrationFormProps,
@@ -28,17 +24,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
-  }
-
-  public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
-    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
-      this.props.openSnackbar();
-    }
-  }
-
-  public closeSnackbar = () => {
-    this.props.closeSnackbar();
-  }
+  }  
 
   public handleChange(event: any): void {
     const target = event.target;
@@ -150,32 +136,13 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
   public render(): JSX.Element {
 
-    const { errors } = this.props;
-    const keys = errors && Object.keys(errors);
+    
     return (
       <I18n>
         {
           (t) => (
             <div>
-              <CaSnackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={this.props.isSnackbarOpen}
-                autoHideDuration={4000}
-                handleClose={this.closeSnackbar}
-                type={SnackbarType.ERROR}
-                // transitionComponent = {this.transitionUp}
-                transitionDirection={transitionDirection.DOWN}
-                message={
-                  <div>
-                    {keys && keys.map((k: string) =>
-                      (
-                        <div>* {errors[k].msg} </div>
-                      )
-                    )}
-                  </div>
-                }
-              />
-
+              
               {this.props.children}
               <form
                 onSubmit={this.handleSubmit}
@@ -327,8 +294,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user)),
-  closeSnackbar: () => dispatch(new CloseSnackbar()),
-  openSnackbar: () => dispatch(new OpenSnackbar())
+  
 });
 
 export const RegistrationForm = connect(
