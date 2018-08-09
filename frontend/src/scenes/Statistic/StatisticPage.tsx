@@ -5,14 +5,14 @@ import {
   AuthStatus,
   FrontEndSnackbarData,
   LoadStatus,
-  SnackbarType,
-  transitionDirection
+  /* SnackbarType, */
+  /* transitionDirection */
 } from 'models';
 
 import { AppState, LogoutUser } from 'store';
 
-import { CaSnackbar, CaSpinner, StatisticTables } from 'components';
-import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
+import { /* CaSnackbar, */ CaSpinner, CaUsersTables } from 'components';
+/* import { CloseSnackbar, OpenSnackbar } from 'store/snackbar'; */
 import { isEmpty } from 'utils';
 
 import {
@@ -62,18 +62,18 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
       });
     }
 
-    if (
+    /* if (
       isBestUsersInitFailed ||
       isRecentGamesInitFailed ||
       isMostPopularGamesFailed
     ) {
       this.props.openSnackbar();
-    }
+    } */
   }
 
-  public closeSnackbar = () => {
+  /* public closeSnackbar(): void {
     this.props.closeSnackbar();
-  }
+  } */
 
   public componentWillMount(): void {
     if (isEmpty(this.props.statistic.bestUsers)) {
@@ -101,7 +101,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
   }
 
   public render(): JSX.Element {
-    const errorMessages = this.dataForSnack.filter(d => (d.type = 'error'));
+    /* const errorMessages = this.dataForSnack.filter(d => (d.type = 'error')); */
 
     const isDataLoaded =
       this.props.statistic.bestUsersStatus === LoadStatus.SUCCESS &&
@@ -116,7 +116,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
       <div className='ca-statistic'>
         {this.props.children}
 
-        <CaSnackbar
+        {/* <CaSnackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
@@ -146,7 +146,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
             </React.Fragment>
           }
           transitionDirection={transitionDirection.UP}
-        />
+        /> */}
         {!isDataLoaded && !isDataFailed ? (
           <div className='ca-homepage__spinner-container'>
             <CaSpinner isActive={!isDataLoaded} />
@@ -171,8 +171,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   initBestUsers: () => dispatch(new InitBestUsers()),
   initMostPopularGames: () => dispatch(new InitMostPopularGames()),
   initRecentGames: (userToken: string) => dispatch(new InitRecentGames(userToken)),
-  closeSnackbar: () => dispatch(new CloseSnackbar()),
-  openSnackbar: () => dispatch(new OpenSnackbar())
+  /* closeSnackbar: () => dispatch(new CloseSnackbar()),
+  openSnackbar: () => dispatch(new OpenSnackbar()) */
 });
 
 export const CaStatisticPage = connect(

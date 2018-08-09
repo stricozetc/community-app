@@ -9,7 +9,7 @@ export interface BattleProps {
   games: GameModel[];
   status: LoadStatus;
   children?: JSX.Element;
-  isSnackbarOpen: boolean;
+  /* isSnackbarOpen: boolean; */
 
   joinBattleAction(payload: string): any;
 
@@ -19,7 +19,7 @@ export interface BattleProps {
 
   initGames(): void;
 
-  closeSnackbar(): void;
+  /* closeSnackbar(): void;
 
-  openSnackbar(): void;
+  openSnackbar(): void; */
 }
