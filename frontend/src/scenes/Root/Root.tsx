@@ -1,5 +1,6 @@
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
+import { AuthStatus, languages, SnackbarType, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -27,6 +28,9 @@ import {
   SetCurrentUser,
   store  
 } from 'store';
+import { getCurrentLanguage, setAuthToken, isEmpty } from 'utils';
+import { isObjectsEqual } from 'utils/isObjectsEqual';
+import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 
 import { CloseSnackbar } from 'store/snackbar'
 
@@ -55,6 +59,16 @@ import SettingsIcon from '@material-ui/icons/SettingsRounded';
 import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import { CaMyGames } from '../MyGames/MyGames';
+import {
+  CaButton,
+  CaLogo,
+  CaNavbar,
+  CaSnackbar,
+  LoginForm,
+  RegistrationForm
+} from 'components';
+
+import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 
@@ -135,6 +149,10 @@ export class RootComponent extends React.Component<RootProps> {
 
   public getNavbar(authStatus: number): JSX.Element {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+    const { errors } = this.props;
+    const keys = errors && Object.keys(errors);
 
     const appMenuItems: AppMenuItem[] = [
       {

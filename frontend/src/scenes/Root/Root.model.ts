@@ -20,5 +20,6 @@ export interface RootProps {
 
   closeSnackbar(): void;
 
-  changeLanguage(language: string): void
-}
+  openSnackbar(): void;
+} 
+  
