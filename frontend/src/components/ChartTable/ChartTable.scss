@@ -1,0 +1,21 @@
+.chart-table {
+
+  &__head {
+    height: 56px;
+    border-top: 2px solid rgb(161, 161, 161);
+    background-color: #313c45;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__chart-select {
+    width: 250px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: center;
+  }
+}
