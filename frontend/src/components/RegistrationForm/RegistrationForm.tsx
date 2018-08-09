@@ -2,10 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
-import { I18n } from 'react-i18next';
 import { CaButton } from 'components';
-import { CaButton } from 'components';
-
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
 import { UserFieldsToRegister } from 'models';
 import { AppState, RegisterUser } from 'store';
@@ -26,7 +23,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
-  }
+  }  
 
   public handleChange(event: any): void {
     const target = event.target;
@@ -138,13 +135,13 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
   public render(): JSX.Element {
 
-
+    
     return (
       <I18n>
         {
           (t) => (
             <div>
-
+              
               {this.props.children}
               <form
                 onSubmit={this.handleSubmit}

@@ -2,6 +2,7 @@ import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
+import { AuthStatus, languages, SnackbarType, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -134,6 +135,7 @@ export class RootComponent extends React.Component<RootProps> {
   }
   public getNavbar(authStatus: number): JSX.Element {
 
+
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
     const appMenuItems: AppMenuItem[] = [
       {
@@ -183,8 +185,38 @@ export class RootComponent extends React.Component<RootProps> {
                 handleChange={this.handleChange}
                 currentValue={getCurrentLanguage(i18n)}
               />
-            </div>
-          </CaNavbar>
+
+              <CaSnackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={this.props.isSnackbarOpen}
+                autoHideDuration={4000}
+                handleClose={() => this.closeSnackbar()}
+                type={SnackbarType.error}                
+                transitionDirection={transitionDirection.down}
+                message={
+                  <div>
+                    {keys && keys.map((k: string) =>
+                      (
+                        <div>* {errors[k].msg} </div>
+                      )
+                    )}
+                  </div>
+                }
+              />
+
+              <div className='ca-navbar__logout-btn-container'>
+                {this.getButton(this.props.status)}
+              </div>
+
+              <div className='ca-navbar__select-language'>
+                <CaSelect
+                  languages={[languages.en, languages.ru]}
+                  displayedLanguages={[t('ENToggle'), t('RUToggle')]}
+                  handleChange={this.handleChange}
+                  currLang={getCurrentLanguage(i18n)}
+                />
+              </div>
+            </CaNavbar>
           )
         }
       </I18n>

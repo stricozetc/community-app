@@ -1,4 +1,4 @@
-import { AuthStatus, SnackbarType } from 'models';
+import { AuthStatus, SnackbarType, ErrorsFromServer } from 'models';
 
 export interface RootProps {
   status: AuthStatus;
