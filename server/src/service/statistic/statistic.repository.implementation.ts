@@ -93,7 +93,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 const result = {
                   game: gameName,
                   scores: game.scores,
-                  result: game.status === 1
+                  result: game.resultStatus === 1
                 };
 
                 return accumulator.concat(result);
@@ -125,7 +125,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
                 .then((historyRows) => {
 
-  
+
                   const playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
                   const playedInWeek = this.statisticService.calculatePlayedInWeek(
@@ -211,7 +211,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
                   const scoresArray = historyRows.map((row) => {
                       return row.scores;
-                    
+
                   });
 
                   let scores = 0;
