@@ -132,17 +132,17 @@ export class LoginFormComponent extends React.Component<
       }
     });
     this.checkValidation();
-  }
+  } 
 
   public render(): JSX.Element {
-
-
+    
+    
     return (
       <I18n>
         {
           ( t ) => (
             <div className='ca-login-form'>
-
+              
               {this.props.children}
               <form onSubmit={this.onSubmit} className='ca-login-form__container'>
                 <FormGroup>
@@ -224,8 +224,7 @@ export class LoginFormComponent extends React.Component<
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  errors: state.errors,
-  isSnackbarOpen: state.snackbarUi.isOpen,
+  errors: state.errors  
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

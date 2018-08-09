@@ -25,7 +25,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
-  }  
+  }
 
   public handleChange(event: any): void {
     const target = event.target;
@@ -137,13 +137,13 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
   public render(): JSX.Element {
 
-    
+
     return (
       <I18n>
         {
           (t) => (
             <div>
-              
+
               {this.props.children}
               <form
                 onSubmit={this.handleSubmit}
@@ -287,8 +287,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status,
-  isSnackbarOpen: state.snackbarUi.isOpen  
+  status: state.auth.status
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
