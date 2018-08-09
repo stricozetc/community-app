@@ -1,10 +1,26 @@
 @import "../../style/settings.scss";
 
-.ca-users-tables__title {
+.ca-users-tables {
+  display: flex;
+
+  &__statistics-title, &__charts-title {
       padding-left: 105px;
       color: #fff;
       font-size: 32px;
       font-weight: 600;
       margin-top: 60px;
       margin-bottom: 20px;
+  }
+
+  &__charts-title {
+      margin-bottom: 73px;
+  }
+
+  &__statistics {
+    width: 50%;
+  }
+
+  &__charts {
+    width: 50%;
+  }
 }

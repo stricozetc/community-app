@@ -9,7 +9,7 @@ import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } f
 import { styles } from './CaUsersTables.styles';
 
 import './CaUsersTables.scss';
-import { CaCircleDiagram } from '../CaCircleDiagram';
+import { ChartTable } from '../ChartTable';
 
 export const CaUsersTables = withStyles(styles)(
   class extends React.Component<CaUsersTablesProps, CaUsersTablesState> {
@@ -33,26 +33,31 @@ export const CaUsersTables = withStyles(styles)(
         <I18n>
           {
             ( t ) => (
-              <div>
-                <h2 className='ca-users-tables__title'>{t('statistics')}</h2>
-                <Tabs value={this.state.value}>
-                  <Tab
-                    label={t('bestUsersLabel')}
-                    onClick={() => this.changeContent(StatTab.BestUsers)}
-                    classes={{ label: this.props.classes.label }} />
-                  <Tab
-                    label={t('mostPopularGamesLabel')}
-                    onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
-                    classes={{ label: this.props.classes.label }}
-                  />
-                  <Tab
-                    label={t('recentGamesLabel')}
-                    onClick={() => this.changeContent(StatTab.RecentGames)}
-                    classes={{ label: this.props.classes.label }} />
-                </Tabs>
+              <div className='ca-users-tables'>
+                <div className='ca-users-tables__statistics'>
+                  <h2 className='ca-users-tables__statistics-title'>{t('statistics')}</h2>
+                  <Tabs value={this.state.value}>
+                    <Tab
+                      label={t('bestUsersLabel')}
+                      onClick={() => this.changeContent(StatTab.BestUsers)}
+                      classes={{ label: this.props.classes.label }} />
+                    <Tab
+                      label={t('mostPopularGamesLabel')}
+                      onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
+                      classes={{ label: this.props.classes.label }}
+                    />
+                    <Tab
+                      label={t('recentGamesLabel')}
+                      onClick={() => this.changeContent(StatTab.RecentGames)}
+                      classes={{ label: this.props.classes.label }} />
+                  </Tabs>
 
-                <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
-                <CaCircleDiagram diagramData = {this.state.rowData}/>
+                  <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
+                </div>
+                <div className='ca-users-tables__charts'>
+                  <h2 className='ca-users-tables__charts-title'>{t('charts')}</h2>
+                  <ChartTable statistics={this.props.statistic} />
+                </div>
               </div>
             )
           }
