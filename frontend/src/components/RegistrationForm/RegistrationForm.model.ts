@@ -1,4 +1,4 @@
-import { AuthStatus, ErrorsFromServer, UserFieldsToRegister } from 'models';
+import { AuthStatus, UserFieldsToRegister } from 'models';
 
 export interface RegistrationFormState {
   email: string;
@@ -40,10 +40,10 @@ export const initRegistrationFormState: RegistrationFormState = {
 export interface RegistrationFormProps {
   history: any;
   status: AuthStatus;
-  errors: ErrorsFromServer;
-  isSnackbarOpen: boolean;
+  // errors: ErrorsFromServer;
+  // isSnackbarOpen: boolean;
   language: string;
   registerUser(user: UserFieldsToRegister): void;
-  closeSnackbar(): void;
-  openSnackbar(): void;
+  // closeSnackbar(): void;
+//   openSnackbar(): void;
 }
