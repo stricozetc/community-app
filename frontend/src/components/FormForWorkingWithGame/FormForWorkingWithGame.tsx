@@ -7,7 +7,7 @@ import { history } from 'utils';
 import { FormForAddingNewGameState } from './FormForWorkingWithGame.model';
 
 export class FormForWorkingWithGame extends React.Component<any, FormForAddingNewGameState> {
-    constructor(props: any) {
+     constructor(props: any) {
         super(props);
         this.state = props.model;
         this.handleChange = this.handleChange.bind(this);

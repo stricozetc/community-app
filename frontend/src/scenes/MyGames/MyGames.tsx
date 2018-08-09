@@ -1,39 +1,30 @@
-import { AppState } from '../../store/store.config';
+import { CaButton, CaTable } from 'components';
+import { AuthStatus, tableCellDataType } from 'models';
 import * as React from 'react';
-
-import { tableCellDataType } from 'models';
-
-import { CaTable } from 'components';
 import { connect } from 'react-redux';
+import { AddGame, DeleteGame, InitMyGames, LogoutUser } from 'store';
+import { history } from 'utils';
 
-import { AddGame, DeleteGame, EditGame, InitMyGames, LogoutUser } from 'store';
+import { AppState } from '../../store/store.config';
 
+import { MyGameModel } from './MyGames.model';
 import './myGames.scss';
 
-import {MyGameModel} from './MyGames.model';
-import { history } from 'utils';
-// import { isEmpty } from 'utils/isEmpty';
-
-import { CaButton } from 'components';
-import {
-    AuthStatus,
-  } from 'models';
 export class CaMyGamesComponent extends React.Component<any> {
-    public componentWillMount(): void {
-        this.props.getMyGames(this.props.user.id);
+    public state = {
+        isModalOpen: false
+    };
 
+    public componentWillMount(): void {
         const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
 
+        console.log('MyGames componentWillMount');
         if (!isAuthenticated) {
-        this.props.history.push('/login');
+            this.props.history.push('/login');
+        } else {
+            this.props.getMyGames(this.props.user.id);
         }
-
-        // if (isEmpty(this.props.games)) {
-        // this.props.initGames();
-        // }
     }
-
-    
 
     public render(): JSX.Element {
         const columnDef = [
@@ -55,8 +46,6 @@ export class CaMyGamesComponent extends React.Component<any> {
                 <h1 className='myGames__title'>My Games</h1>
                 <CaTable rowData={rowData} columnDef={columnDef} />
                 <div className='add-button-block'>
-                    {/* <button className='add-button' onClick={() => this.props.addGame(newGame)}>Add New Game</button> */}
-                    {/* <button className='add-button' onClick={() => history.push(`/my-games/add-game`)}>Add New Game</button> */}
                     <CaButton
                         color='primary'
                         type='submit'
@@ -125,7 +114,6 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     logoutUser: () => dispatch(new LogoutUser()),
     deleteGame: (gameThatNeedToDelete: MyGameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
-    editGame: (data: MyGameModel) => dispatch(new EditGame(data)),
     addGame: (data: MyGameModel) => dispatch(new AddGame(data)),
     getMyGames: (userId: number) => dispatch(new InitMyGames(userId))
 });

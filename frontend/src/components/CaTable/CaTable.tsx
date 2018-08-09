@@ -1,11 +1,13 @@
 import * as React from 'react';
 
-import { withStyles } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  withStyles
+} from '@material-ui/core';
 
 import * as classNames from 'classnames';
 import { tableCellDataType } from 'models';
@@ -16,6 +18,7 @@ import { CaEdit } from '../form-controls/CaEdit';
 
 import { CaTableProps } from './CaTable.model';
 import { styles } from './CaTable.styles';
+import { i18nInstance } from '../../utils/i18n';
 
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
@@ -26,6 +29,15 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
 
   const getCellData = (data: any, property: string, t: TranslationFunction) => {
     let dataForCell;
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timezone: 'UTC',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    };
 
     switch (property) {
       case (tableCellDataType.playedTime): {
@@ -41,8 +53,11 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
         break;
       }
       case 'createdAt': {
-        const date = new Date(data[property])
-        dataForCell = t('key', { date });
+        dataForCell = new Date(data[property]).toLocaleString(i18nInstance.language, options);
+        break;
+      }
+      case 'updatedAt': {
+        dataForCell = new Date(data[property]).toLocaleString(i18nInstance.language, options);
         break;
       }
       case 'game': {

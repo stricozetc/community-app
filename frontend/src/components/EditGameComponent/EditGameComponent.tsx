@@ -1,27 +1,44 @@
+import { AuthStatus } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { EditGame, LogoutUser } from 'store';
 
 import { MyGameModel } from '../../store/my-games/interfaces';
 import { AppState } from '../../store/store.config';
 import { FormForWorkingWithGame } from '../FormForWorkingWithGame/FormForWorkingWithGame';
 
-import { FormForAddingNewGameState} from './EditGameComponent.model';
-import { EditGame} from 'store';
-
+import { FormForAddingNewGameState } from './EditGameComponent.model';
 
 export class EditGameComponent extends React.Component<any, FormForAddingNewGameState> {
     constructor(props: any) {
         super(props);
     }
 
+    public componentWillMount(): void {
+        const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+
+        if (!isAuthenticated) {
+            this.props.history.push('/login');
+        } else {
+            if (!(this.props.games.length > 0)) {
+                this.props.history.push('/my-games');
+            }
+        }
+    }
+    //When you use component (instead of render or children, below) the router uses React.createElement to create a new React element from the given component. That means if you provide an inline function to the component prop, you would create a new component every render.So  when we use render in Root component we can't check authorization user in componentWillMount.
+    public shouldComponentUpdate(nextProps: any): boolean {
+        return !!nextProps.user;
+    }
+
     public render(): JSX.Element {
         const game = this.getGame();
+        const id = this.props.match.params['idOfTheGame'];
 
         return(
            <div>
                {this.props.children}
                <FormForWorkingWithGame
-                    id = {this.props.match.params['idOfTheGame']}
+                    id = {id}
                     userId = {this.props.user.id}
                     config='Edit Game'
                     model={game}
@@ -32,6 +49,7 @@ export class EditGameComponent extends React.Component<any, FormForAddingNewGame
     }
 
     public getGame(): any {
+
         const idOfTheGameThatNeedToEdit = this.props.match.params['idOfTheGame'];
         const myGames = this.props.games;
 
@@ -46,20 +64,22 @@ export class EditGameComponent extends React.Component<any, FormForAddingNewGame
         const gameWithNecessaryProperty = { ...object };
 
         for (const property in gameWithNecessaryProperty) {
-        if (!(arrayOfNecessaryProperty.indexOf(property) + 1)) {
-            delete gameWithNecessaryProperty[property];
-        }
+            if (!(arrayOfNecessaryProperty.indexOf(property) + 1)) {
+                delete gameWithNecessaryProperty[property];
+            }
         }
         return gameWithNecessaryProperty;
     }
 }
 
 const mapStateToProps = (state: AppState) => ({
+    authStatus: state.auth.status,
     user: state.auth.user,
     games: state.myGames.myGames
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
+    logoutUser: () => dispatch(new LogoutUser()),
     editGame: (data: MyGameModel) => dispatch(new EditGame(data)),
 });
 
