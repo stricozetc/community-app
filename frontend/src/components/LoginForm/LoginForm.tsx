@@ -9,7 +9,7 @@ import { AppState, LoginUser } from 'store';
 import {
   AuthStatus,
   UserFieldsToLogin,
-  /* UserFieldsToRegister */
+  UserFieldsToRegister  
 } from 'models';
 import { I18n } from 'react-i18next';
 
@@ -135,8 +135,8 @@ export class LoginFormComponent extends React.Component<
   } 
 
   public render(): JSX.Element {
-
-
+    
+    
     return (
       <I18n>
         {
@@ -222,12 +222,11 @@ export class LoginFormComponent extends React.Component<
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  errors: state.errors,
-  isSnackbarOpen: state.snackbarUi.isOpen,
+  errors: state.errors  
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToLogin) => dispatch(new LoginUser(user)),  
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))  
 });
 
 export const LoginForm = connect(
