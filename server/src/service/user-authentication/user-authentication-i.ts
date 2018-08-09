@@ -145,4 +145,27 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             throw technicalErr.databaseCrash;
         }
     }
-}
+
+    public async checkUserEmail(userEmail: string): Promise<boolean> {
+        try {
+            const user: User = await UserModel.findOne({ where: { email: userEmail } });
+            if (user) {
+                return true;
+            } else {
+                throw false;
+            }
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    public async setNewPassword(userEmail: string, newPassword: string): Promise<boolean> {
+        try {
+            const salt = await bcrypt.genSalt(10);
+            const newHashPassword = await bcrypt.hash(newPassword, salt);
+            await UserModel.update({ password: newHashPassword }, { where: { email: userEmail } });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }}

@@ -4,9 +4,9 @@ import { from, of } from 'rxjs';
 
 import {
   catchError,
-  ignoreElements,
+  // ignoreElements,
   map,
-  switchMap
+  switchMap,
 } from 'rxjs/operators';
 
 import { HttpWrapper } from 'services';
@@ -34,7 +34,6 @@ export const sendRestorePasswordRequestFail$ = (actions$: ActionsObservable<Send
   actions$.pipe(
     ofType(RestorePasswordTypes.SendRestoreRequestFail),
     map((action) => new GetErrors(action.payload.response.data)),
-    ignoreElements()
   );
 
 export const RestorePasswordEffects = [

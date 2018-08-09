@@ -14,7 +14,7 @@ import { CaSpinner } from 'components/Spinner';
 import { CaButton } from 'components/form-controls/CaButton';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { RestorePasswordStatus, SnackbarType, transitionDirection } from 'models';
-import { SendRestoreRequest } from 'store/restore-password';
+import { SendRestoreRequest, ResetRequest } from 'store/restore-password';
 import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { AppState } from 'store/store.config';
 
@@ -34,8 +34,11 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
   }
 
   public componentWillReceiveProps(nextProps: ForgetPasswordProps): void {
+    console.log('ERRORS', nextProps.errors);
+
     if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
       this.props.openSnackbar();
+      this.props.resetRequest();
     }
   }
 
@@ -151,12 +154,12 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
                     {t('login').toUpperCase()}
                   </CaButton>
                 </form> :
-                this.props.status === RestorePasswordStatus.WAIT ?
-                  <CaSpinner isActive={true} /> :
+                this.props.status === RestorePasswordStatus.SUCCESS ?
                   <div className='ca-forget-password-form__confirm-message'>
                     <div className='ca-forget-password-form__message'>{t('email-sent')}</div>
                     <div className='ca-forget-password-form__message'>{t('mail')}{this.state.email}</div>
-                  </div>
+                  </div> :
+                  <CaSpinner isActive={true} />
               }
             </div>
           )
@@ -182,7 +185,8 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
 const mapDispatchToProps = (dispatch: any) => ({
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   sendRestoreRequest: (userEmail: string) => dispatch(new SendRestoreRequest(userEmail)),
-  openSnackbar: () => dispatch(new OpenSnackbar())
+  openSnackbar: () => dispatch(new OpenSnackbar()),
+  resetRequest: () => dispatch(new ResetRequest()),
 });
 
 const mapStateToProps = (state: AppState) => ({

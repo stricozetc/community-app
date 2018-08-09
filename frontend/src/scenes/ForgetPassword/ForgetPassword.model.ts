@@ -21,4 +21,5 @@ export interface ForgetPasswordProps {
   sendRestoreRequest(userEmail: string): void;
   closeSnackbar(): void;
   openSnackbar(): void;
+  resetRequest(): void;
 }

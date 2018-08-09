@@ -4,6 +4,7 @@ export enum RestorePasswordTypes {
   SendRestoreRequest = '[restore-password] Send Restore Request',
   SendRestoreRequestSuccess = '[restore-password] Send Restore Request Success',
   SendRestoreRequestFail = '[restore-password] Send Restore Request Fail',
+  ResetRequest = '[restore-password] Reset Request',
 }
 
 @action()
@@ -27,7 +28,14 @@ export class SendRestoreRequestFail {
   constructor(public payload: any) { }
 }
 
+@action()
+export class ResetRequest {
+  public readonly type = RestorePasswordTypes.ResetRequest;
+
+}
+
 export type RestorePasswordActions =
   | SendRestoreRequest
   | SendRestoreRequestSuccess
-  | SendRestoreRequestFail;
+  | SendRestoreRequestFail
+  | ResetRequest;

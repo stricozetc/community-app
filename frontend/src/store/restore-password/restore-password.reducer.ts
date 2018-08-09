@@ -25,6 +25,13 @@ export const restorePasswordReducer = (state = initialState, action: RestorePass
                 status: RestorePasswordStatus.FAIL,
             };
         }
+        case RestorePasswordTypes.ResetRequest: {
+            return {
+                ...state,
+                status: RestorePasswordStatus.INIT,
+                userEmail: ''
+            };
+        }
         default:
             return state;
     }
