@@ -16,13 +16,9 @@ export class AddGameComponent extends React.Component<any, FormForAddingNewGameS
 
     public componentWillMount(): void {
         const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
-
+        console.log(`componentWillMount ADD COMPONENT`);
         if (!isAuthenticated) {
             this.props.history.push('/login');
-        } else {
-            if (!(this.props.games.length > 0)) {
-                this.props.history.push('/my-games');
-            }
         }
     }
 

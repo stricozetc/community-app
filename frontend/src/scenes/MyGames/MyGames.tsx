@@ -9,16 +9,40 @@ import { AppState } from '../../store/store.config';
 
 import { MyGameModel } from './MyGames.model';
 import './myGames.scss';
+import { CaDialog } from '../../components/form-controls/CaDialog/CaDialog';
 
-export class CaMyGamesComponent extends React.Component<any> {
+interface KakouToState {
+    isDialogOpen: boolean;
+    deletedGame: any;
+}
+
+export class CaMyGamesComponent extends React.Component<any, KakouToState> {
     public state = {
-        isModalOpen: false
+        isDialogOpen: false,
+        deletedGame: null
     };
+
+    public handleCloseDialog = () => {
+        this.setState({isDialogOpen: false})
+    }
+
+    public handleOpenDialog = (copyOfTheGame: any) => {
+        console.log(`handleOpenDialog`);
+        this.setState({
+            isDialogOpen: true,
+            deletedGame: copyOfTheGame
+        });
+    }
+
+    public handleDeleteConfirmation = () => {
+        this.props.deleteGame(this.state.deletedGame);
+
+        this.handleCloseDialog();
+    }
 
     public componentWillMount(): void {
         const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
 
-        console.log('MyGames componentWillMount');
         if (!isAuthenticated) {
             this.props.history.push('/login');
         } else {
@@ -55,6 +79,11 @@ export class CaMyGamesComponent extends React.Component<any> {
                         Add New Game
                     </CaButton>
                 </div>
+                <CaDialog 
+                    open={this.state.isDialogOpen} 
+                    onClose={this.handleCloseDialog} 
+                    onAccept={this.handleDeleteConfirmation}
+                />
             </div>
         );
     }
@@ -93,7 +122,8 @@ export class CaMyGamesComponent extends React.Component<any> {
                 gameWithUpdatedProperty['game'] = {
                     appName,
                     edit: () => history.push(`/my-games/edit-game/${id}`),
-                    delete: () => this.props.deleteGame(copyOfTheGame)
+                    //delete: () => this.props.deleteGame(copyOfTheGame)
+                    delete: () => this.handleOpenDialog(copyOfTheGame)
                 };
             }
           }
