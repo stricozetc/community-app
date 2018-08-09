@@ -12,6 +12,7 @@
   "leaveTheRoom": "Покинуть комнату",
   "battles": "Игры",
   "statistics": "Статистика",
+  "charts": "Графики",
   "roomsAreFull": "Все комнаты заняты",
   "startingIn": "Начало в",
   "shortMinute": "м",
@@ -43,5 +44,8 @@
   "game": "Игра",
   "playedInWeek": "Сыграно за неделю",
   "playedAll": "Сыграно всего",
-  "result": "Результат"
+  "result": "Результат",
+  "win": "Победы",
+  "lose": "Поражения",
+  "winRate": "Процент Побед"
 }

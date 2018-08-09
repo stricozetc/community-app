@@ -12,6 +12,7 @@
   "leaveTheRoom": "Leave the room",
   "battles": "Battles",
   "statistics": "Statistics",
+  "charts": "Charts",
   "roomsAreFull": "All rooms are full",
   "startingIn": "Starting in",
   "shortMinute": "m",
@@ -42,5 +43,8 @@
   "game": "Game",
   "playedInWeek": "Played in week",
   "playedAll": "Played all",
-  "result": "Result"
+  "result": "Result",
+  "win": "Win",
+  "lose": "Lose",
+  "winRate": "Win Rate"
 }
