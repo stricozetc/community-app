@@ -1,38 +1,58 @@
 import * as uuid from 'uuid/v4';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import { AppData } from '../../../Interfaces/AppData';
 import { AppTokenModel } from '../../../models/appToken';
 import { AppToken } from '../../../Interfaces/AppToken';
+import { technicalErr } from '../../../errors/technicalErr';
+import { logicErr } from '../../../errors/logicErr';
+import { LoggerService } from '../logger/logger.service';
 
 @injectable()
 export class AppTokenRepository {
-    public create(app: AppData): Promise<string> {
-        return new Promise((resolve: (value?: string | PromiseLike<string>) => void, reject: (reason?: any) => void) => {
-            const newToken = uuid();
 
-            AppTokenModel.upsert({
+    constructor(
+        @inject(LoggerService) private loggerService: LoggerService,
+    ) { }
+
+    public async create(app: AppData): Promise<string> {
+        const token = await this.getByName(app.name);
+
+        if (token) {
+            throw logicErr.appNameIsAlreadyRegistered;
+        }
+
+        try {
+            const newToken = uuid();
+            const isUpsert: boolean = await AppTokenModel.upsert({
                 token: newToken,
                 appName: app.name,
                 createAt: Date.now(),
                 updatedAt: Date.now()
-            }).then((isUpsert: boolean) => {
-                if (isUpsert) {
-                    resolve(newToken);
-                } else {
-                    reject('Error in token creation!');
-                }
-            }).catch((e) => {
-                reject(e);
             });
-        });
+
+            if (isUpsert) {
+                return newToken;
+            } else {
+                throw technicalErr.applicationTokenIsNotUpsertedInDb;
+            }
+        } catch (error) {
+            if (!error.code) {
+                this.loggerService.errorLog(error);
+                throw technicalErr.databaseCrash;
+            } else {
+                throw error;
+            }
+        }
     }
 
     public async getByName(gameName: string): Promise<AppToken> {
-        const app = await AppTokenModel.findOne({
-            where: {appName: gameName}
-        });
-
-        return app;
+        try {
+            return await AppTokenModel.findOne({
+                where: { appName: gameName }
+            });
+        } catch (error) {
+            this.loggerService.errorLog(error);
+            throw technicalErr.databaseCrash;
+        }
     }
-
 }

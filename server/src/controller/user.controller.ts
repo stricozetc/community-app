@@ -1,12 +1,8 @@
-import * as passport from 'passport';
-
-import { controller, httpPost, httpGet } from 'inversify-express-utils';
+import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 
-import {
-    UserAuthenticationRepository,
-} from '../service/user-authentication';
+import { UserAuthenticationRepository } from '../service/user-authentication';
 
 import { validateRegisterInput } from '../validation/register';
 import { validateLoginInput } from '../validation/login';
@@ -28,8 +24,10 @@ export class UserController {
         }
 
         return this.userAuthenticationRepository.registerUser(request.body)
-            .catch((err) => {
-                return response.status(400).json(err);
+            .catch((error) => {
+                return error.code >= 2000 ?
+                    response.status(500).json(error) :
+                    response.status(400).json(error);
             });
     }
 
@@ -42,24 +40,10 @@ export class UserController {
         }
 
         return this.userAuthenticationRepository.loginUser(request.body)
-            .catch((err) => {
-                return response.status(400).json(err);
+            .catch((error) => {
+                return error.code >= 2000 ?
+                    response.status(500).json(error) :
+                    response.status(400).json(error);
             });
-    }
-
-    @httpGet('/current', passport.authenticate('jwt', { session: false }))
-    public getCurrentUser(request: Request, response: Response): Response {
-        const { user } = request;
-
-        if (user) {
-            return response.json({
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                token: user.token
-            });
-        } else {
-            return response.json({ error: true });
-        }
     }
 }
