@@ -24,6 +24,7 @@ import { AppTokenRepository } from './../app-token/app-token.repository';
 import { inject } from 'inversify';
 import { StatisticService } from './statistic.service';
 
+
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
   public constructor(
@@ -84,20 +85,19 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         });
 
         return Promise.all(promises)
-
           .then((appNames) => {
+
             if (!isEmpty(recentGames)) {
               recentGames = recentGames.reduce((accumulator, game, index) => {
                 const gameName = appNames[index];
-
                 const result = {
                   game: gameName,
                   scores: game.scores,
-                  result: game.status === 1
+                  result: game.resultStatus === 1
                 };
 
                 return accumulator.concat(result);
-              },                               []);
+              }, []);
             }
 
             return recentGames;
@@ -117,7 +117,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
           .then((gamesAndTokens: Array<{ token: string; appName: string }>) => {
             const tokens = gamesAndTokens.map((row) => row.token);
 
-
             const promises = tokens.map((currentToken) => {
               return StatisticModel.findAll({
                 where: { appToken: currentToken }
@@ -125,13 +124,11 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
                 .then((historyRows) => {
 
-  
                   const playedTime =  this.statisticService.calculatePlayedTime(historyRows);
 
                   const playedInWeek = this.statisticService.calculatePlayedInWeek(
                     historyRows
                   );
-
 
                   const result = {
                     token: currentToken,

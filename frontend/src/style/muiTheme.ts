@@ -9,10 +9,12 @@ import {
   MuiTab,
   MuiTable,
   MuiTableRow,
-  MuiTabs
+  MuiTabs,
 } from 'components';
 
+
 export const theme = createMuiTheme({
+  direction: 'rtl',
   overrides: {
     MuiButton,
     MuiTable,

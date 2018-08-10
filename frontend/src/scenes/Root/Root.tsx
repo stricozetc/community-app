@@ -12,6 +12,7 @@ import { CaBattles } from 'scenes/Battles';
 import { CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { CaStatisticPage } from 'scenes/Statistic';
+import { CaUserSettings } from 'scenes/UserSettings'
 import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
 import { getCurrentLanguage, setAuthToken } from 'utils';
 
@@ -27,6 +28,8 @@ import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 import './root.scss';
+
+
 
 const token = Cookies.get('jwtToken');
 if (token) {
@@ -112,6 +115,12 @@ export class RootComponent extends React.Component<RootProps> {
                   to: '/statistics',
                   activeClassName: 'ca-navbar__nav-item--active',
                   disabled: !isAuthorized
+                },
+                {
+                  text: t('settings'),
+                  to: '/settings',
+                  activeClassName: 'ca-navbar__nav-item--active',
+                  disabled: !isAuthorized
                 }
               ]}
             >
@@ -131,6 +140,8 @@ export class RootComponent extends React.Component<RootProps> {
                   currLang={getCurrentLanguage(i18n)}
                 />
               </div>
+
+
             </CaNavbar>
           )
         }
@@ -206,6 +217,16 @@ export class RootComponent extends React.Component<RootProps> {
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
                 </CurrentBattle>
+              }
+            />
+
+            <Route
+              exact={true}
+              path='/settings'
+              render={props =>
+                <CaUserSettings {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaUserSettings>
               }
             />
 

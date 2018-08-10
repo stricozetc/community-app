@@ -39,11 +39,18 @@ import {
 } from './socket';
 
 import {
+  UserSettingsEffects,
+  UserSettingsState,
+  userSettingsReducer
+} from './userSettings';
+
+import {
   SnackbarUiState,
   snackbarUiReducer
 } from './snackbar';
 
 import { errorsReducer } from './errors';
+
 
 const rootReducers = combineReducers({
   battle: battleReducer,
@@ -52,7 +59,8 @@ const rootReducers = combineReducers({
   games: gamesReducer,
   statistic: statisticReducer,
   socket: socketReducer,
-  snackbarUi: snackbarUiReducer
+  snackbarUi: snackbarUiReducer,
+  userSettings: userSettingsReducer
 });
 
 const rootEpic = combineEpics(
@@ -60,7 +68,8 @@ const rootEpic = combineEpics(
   ...AuthEffects,
   ...GamesEffects,
   ...StatisticEffects,
-  ...SocketEffects
+  ...SocketEffects,
+  ...UserSettingsEffects
 );
 
 const epicMiddleware = createEpicMiddleware();
@@ -73,6 +82,7 @@ export interface AppState {
   errors: {};
   socket: SocketState;
   snackbarUi: SnackbarUiState;
+  userSettings: UserSettingsState;
 }
 
 const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
