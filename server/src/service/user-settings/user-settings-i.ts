@@ -18,44 +18,7 @@ export class UserSettingsRepositoryImplementation
   public async changePassword(
     fields: FieldsToChangePassword
   ): Promise<{ result: boolean; errors?: ErrorsToChangePassword }> {
-    // return new Promise((resolve, reject) => {
-    //   UserModel.findOne({ where: { id: userId } })
-    //     .then((user: any) => {
-    //       bcrypt
-    //         .compare(oldPassword, user.password)
-    //         .then(isMatch => {
-    //           if (isMatch) {
-    //             bcrypt.genSalt(10, (err, salt) => {
-    //               if (err) {
-    //                 return reject(err); // technical Err
-    //               }
-    //               bcrypt.hash(user.password, salt, (hashErr, hash) => {
-    //                 if (hashErr) {
-    //                   return reject(hashErr);
-    //                 }
-    //                 user.password = hash;
-
-    //                 console.log('current USer', user);
-    //                 UserModel.upsert(user.dataValues)
-    //                   .then(() => {
-    //                     return resolve(true);
-    //                   })
-    //                   .catch(err => reject('cannot upsert new user'));
-    //               });
-    //             });
-    //           } else {
-    //             console.log('IS NOT MATCHED');
-    //             errors.password = errors.password.concat(
-    //               changePasswordErrors.oldPasswordShouldBeReal
-    //             );
-
-    //             return reject(errors);
-    //           }
-    //         })
-    //         .catch(err => reject('passwords are not matched'));
-    //     })
-    //     .catch(err => reject(err));
-    // });
+ 
     try {
       const { oldPassword, newPassword, userId } = fields;
       const errors: ErrorsToChangePassword = {
