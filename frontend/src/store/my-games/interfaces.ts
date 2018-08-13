@@ -1,19 +1,9 @@
-import { LoadStatus} from 'models';
+import { LoadStatus, MyGameModel} from 'models';
 
 export interface MyGamesState {
-    myGames: any[];
+    myGames: MyGameModel[];
     myGamesStatus: LoadStatus;
     editGameStatus: LoadStatus;
     deleteGameStatus: LoadStatus;
     addGameStatus: LoadStatus;
-}
-
-export interface MyGameModel {
-    userId: number;
-    appName: string;
-    description: string;
-    maxRoomPlayer: number;
-    maxRooms: number;
-    requestUrl: string;
-    maxWaitingTime: number;
 }

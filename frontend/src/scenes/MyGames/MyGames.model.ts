@@ -1,18 +1,4 @@
-import { AuthStatus } from 'models';
-
-export interface MyGameModel {
-    id?: number;
-    userId: number;
-    appName: string;
-    description: string;
-    maxRoomPlayer: number;
-    maxRooms: number;
-    requestUrl: string;
-    maxWaitingTime: number;
-    createAt?: Date;
-    updatedAt?: Date;
-}
-
+import { AuthStatus, MyGameModel } from 'models';
 export interface MyGameProps {
     authStatus: AuthStatus;
     history: any;
@@ -23,7 +9,6 @@ export interface MyGameProps {
     deleteGame (payload: MyGameModel | null): any;
     addGame (payload: MyGameModel):  any;
     getMyGames (payload: number):  any;
-
 }
 
 export interface  MyGameState {

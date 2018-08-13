@@ -136,3 +136,27 @@ export enum TypeOfColumn {
   result = 'Result',
   date = 'Date'
 }
+export interface MyGameModel {
+  id?: number;
+  userId: number;
+  appName: string;
+  description: string;
+  maxRoomPlayer: number;
+  maxRooms: number;
+  requestUrl: string;
+  maxWaitingTime: number;
+  createAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface HeaderName {
+  headerName: string;
+  field: RowProperty;
+  type: TypeOfColumn;
+  editAction? (payload: number): void;
+  deleteAction? (payload: MyGameModel): void;
+}
+
+export interface Row {
+  [key: string]: any;
+}

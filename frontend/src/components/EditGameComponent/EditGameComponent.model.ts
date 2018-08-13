@@ -1,4 +1,5 @@
-export interface FormForAddingNewGameState {
+import { AuthStatus, MyGameModel } from 'models';
+export interface EditGameComponentState {
     appName: string;
     description: string;
     maxRoomPlayer: string;
@@ -7,11 +8,22 @@ export interface FormForAddingNewGameState {
     maxWaitingTime: string;
 }
 
-export const initFormForAddingNewGame: FormForAddingNewGameState = {
-    appName: '',
-    description: '',
-    maxRoomPlayer: '',
-    maxRooms: '',
-    requestUrl: '',
-    maxWaitingTime: ''
-};
+export interface EditGameComponentProps {
+    authStatus: AuthStatus;
+    history: any;
+    user: any;
+    games: MyGameModel[];
+    children?: JSX.Element;
+    match: any;
+
+    editGame (payload: MyGameModel): void;
+}
+
+export interface NecessaryPropertyOfTheForEditForm {
+    appName: string;
+    description: string;
+    maxRoomPlayer: number;
+    maxRooms: number;
+    requestUrl: string;
+    maxWaitingTime: number;
+}

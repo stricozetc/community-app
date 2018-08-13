@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
   Table,
   TableBody,
@@ -8,47 +6,34 @@ import {
   TableRow,
   withStyles
 } from '@material-ui/core';
-
 import * as classNames from 'classnames';
-//import { tableCellDataType } from 'models';
+import { HeaderName, TypeOfColumn } from 'models';
+import * as React from 'react';
 import { I18n, TranslationFunction } from 'react-i18next';
 
+import { i18nInstance } from '../../utils/i18n';
 import { CaDelete } from '../form-controls/CaDelete/CaDelete';
 import { CaEdit } from '../form-controls/CaEdit';
 
 import { CaTableProps } from './CaTable.model';
 import { styles } from './CaTable.styles';
-import { i18nInstance } from '../../utils/i18n';
 
-import { TypeOfColumn } from 'models';
-
-// enum TypeOfColumn {
-//   string = 'String',
-//   timeCount = 'Spent Time',
-//   points = 'Points',
-//   result = 'Result',
-//   date = 'Date'
-// }
-
+const options = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timezone: 'UTC',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric'
+};
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const { columnDef, rowData, classes } = props;
 
-  //const arrayOfColumnName = columnDef.map(column => column.headerName);
-
-  const getTextContentOfTheCell = (column: any, row: any, t: TranslationFunction) => {
+  const getTextContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
     let textContent;
     const text = row[`${column.field}`];
-
-    const options = {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          timezone: 'UTC',
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric'
-        };
 
     switch (column.type) {
       case TypeOfColumn.string : {
@@ -78,7 +63,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
     return textContent;
   };
 
-  const getButtonContentOfTheCell = (column: any, row: any, t: TranslationFunction) => {
+  const getButtonContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
     const isCellHaveEditButton = column.editAction;
     const isCellHaveDeleteButton = column.deleteAction;
     let buttonContent;
@@ -86,15 +71,15 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
     if (isCellHaveEditButton || isCellHaveDeleteButton) {
       buttonContent =
         <div className={classes.buttonsInCellWithButtons}>
-          {column.editAction ? <CaEdit editHandler={() => column.editAction(row.id)}/> : null}
-          {column.deleteAction ? <CaDelete deleteHandler={() => column.deleteAction(row)} /> : null}
+          {column.editAction ? <CaEdit editHandler={() => column.editAction && column.editAction(row.id)}/> : null}
+          {column.deleteAction ? <CaDelete deleteHandler={() => column.deleteAction && column.deleteAction(row)} /> : null}
         </div>;
     }
 
     return buttonContent;
   };
 
-  const getContentOfTheCell = (column: any, row: any, t: TranslationFunction) => {
+  const getContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
     const textContent = getTextContentOfTheCell(column, row, t);
 
     const buttonContent = getButtonContentOfTheCell(column, row, t);
@@ -102,13 +87,12 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
     return (
       <div className={classes.cellWithButtons}>
         <div className={classes.textInCellWithButtons}>{textContent}</div>
-        {buttonContent ? buttonContent : null}
+        {buttonContent}
       </div>
     );
   };
 
   return (
-
     <I18n>
       {
         (t) => (

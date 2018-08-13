@@ -2,27 +2,16 @@ import * as React from 'react';
 
 import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
-import { RowProperty, StatTab, TypeOfColumn } from 'models';
+import { HeaderName, Row, RowProperty, StatTab, TypeOfColumn } from 'models';
 import { I18n } from 'react-i18next';
 
-import { CaUsersTablesProps, CaUsersTablesState, HeaderName, Row } from './CaUsersTables.model';
+import { CaUsersTablesProps, CaUsersTablesState } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
 
 import './CaUsersTables.scss';
 
-// enum tableCellDataType {
-//   name = 'name',
-//   playedTime = 'playedTime',
-//   scores = 'scores',
-//   playedInWeek = 'playedInWeek',
-//   appName = 'appName',
-//   result = 'result',
-//   creationTime = 'createdAt',
-//   updateTime = 'updatedAt'
-// }
 export const CaUsersTables = withStyles(styles)(
   class extends React.Component<CaUsersTablesProps, CaUsersTablesState> {
-
     constructor(props: CaUsersTablesProps) {
       super(props);
       this.state = {
@@ -37,7 +26,6 @@ export const CaUsersTables = withStyles(styles)(
     }
 
     public render(): JSX.Element {
-
       return (
         <I18n>
           {
@@ -215,20 +203,5 @@ export const CaUsersTables = withStyles(styles)(
       });
 
       return [...newArrayOfData];
-    }
-
-    public deleteUnnecessaryProperty(arrayOfData: Row[], arrayOfNecessaryProperty: string[]): any[] {
-      const newArrayOfData = arrayOfData.map(userStatistic => {
-        const newUserStatistic = { ...userStatistic };
-
-        for (const property in newUserStatistic) {
-          if (!(arrayOfNecessaryProperty.indexOf(property) + 1)) {
-            delete newUserStatistic[property];
-          }
-        }
-        return newUserStatistic;
-      });
-
-      return newArrayOfData;
     }
   });

@@ -15,14 +15,14 @@ export const myGamesReducer = (state = initialState, action: MyGameActions) => {
                 myGamesStatus: LoadStatus.Fetching
             };
         }
-        case MyGamesActionTypes.LoadMyGamesCompleted : {
+        case MyGamesActionTypes.LoadMyGamesSuccess : {
             return {
                 ...state,
                 myGames: action.payload,
                 myGamesStatus: LoadStatus.Success
             };
         }
-        case MyGamesActionTypes.LoadMyGamesFailed : {
+        case MyGamesActionTypes.LoadMyGamesError : {
             return {
                 ...state,
                 myGamesStatus: LoadStatus.Error
@@ -34,14 +34,14 @@ export const myGamesReducer = (state = initialState, action: MyGameActions) => {
                 addGameStatus: LoadStatus.Fetching
             };
         }
-        case MyGamesActionTypes.AddGameCompleted : {
+        case MyGamesActionTypes.AddGameSuccess : {
             return {
                 ...state,
                 myGames: [...state.myGames, action.payload],
                 addGameStatus: LoadStatus.Success
             };
         }
-        case MyGamesActionTypes.AddGameFailed : {
+        case MyGamesActionTypes.AddGameError : {
             return {
                 ...state,
                 addGameStatus: LoadStatus.Error
@@ -54,34 +54,33 @@ export const myGamesReducer = (state = initialState, action: MyGameActions) => {
                 deleteGameStatus: LoadStatus.Fetching
             };
         }
-        case MyGamesActionTypes.DeleteGameCompleted : {
+        case MyGamesActionTypes.DeleteGameSuccess : {
             return {
                 ...state,
                 myGames: action.payload,
                 deleteGameStatus: LoadStatus.Success
             };
         }
-        case MyGamesActionTypes.DeleteGameFailed : {
+        case MyGamesActionTypes.DeleteGameError : {
             return {
                 ...state,
                 deleteGameStatus: LoadStatus.Error
             };
         }
-////////////////////////////////////////////////////////////////////////
         case MyGamesActionTypes.EditGame : {
             return {
                 ...state,
                 editGameStatus: LoadStatus.Fetching
             };
         }
-        case MyGamesActionTypes.EditGameCompleted : {
+        case MyGamesActionTypes.EditGameSuccess : {
             return {
                 ...state,
                 myGames: action.payload,
                 editGameStatus: LoadStatus.Success
             };
         }
-        case MyGamesActionTypes.EditGameFailed : {
+        case MyGamesActionTypes.EditGameError : {
             return {
                 ...state,
                 editGameStatus: LoadStatus.Error
@@ -91,4 +90,4 @@ export const myGamesReducer = (state = initialState, action: MyGameActions) => {
         default:
         return state;
     }
-}
+};

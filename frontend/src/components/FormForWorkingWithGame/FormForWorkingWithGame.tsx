@@ -1,7 +1,7 @@
 import { FormGroup, TextField } from '@material-ui/core';
-import * as React from 'react';
-
 import { CaButton } from 'components';
+import { MyGameModel } from 'models';
+import * as React from 'react';
 import { history } from 'utils';
 
 import { FormForAddingNewGameState } from './FormForWorkingWithGame.model';
@@ -25,7 +25,7 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
     public handleSubmit(event: any): void {
         event.preventDefault();
 
-        let game: any = {
+        let game: MyGameModel = {
           userId: this.props.userId,
           appName: this.state.appName,
           description: this.state.description,
@@ -51,7 +51,7 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
                 className='ca-Registration-form__container'
                 onSubmit={this.handleSubmit}
                >
-                <h2>FORM SETTINGS</h2>
+                <h2>SETTINGS FORM</h2>
                {arrayOfInputs.map(input => {
                    return(
                         <FormGroup key={input}>

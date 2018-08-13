@@ -1,31 +1,32 @@
-import { MyGamesRepository } from './my-games.repository';
+import Promise = require('bluebird');
 import { injectable } from 'inversify';
 
-// import Promise = require('bluebird');
-// import { inject } from 'inversify';
-// import { MyGamesService } from './my-games.service';
-
-// import { GameData } from '../../controller/my-game.controller';
 import { MyGameInterface, GamesModel } from '../../../models/games';
-import Promise = require('bluebird');
+
+import { MyGamesRepository } from './my-games.repository';
 
 @injectable()
 export class MyGamesRepositoryImplementation implements MyGamesRepository {
-    public deleteGame(gameThatNeedToDelete: MyGameInterface): Promise<MyGameInterface[]>  {
-        return GamesModel.destroy({
-            where: {
-              id: gameThatNeedToDelete.id
-            }
-        }).then(() => {
-            return GamesModel.findAll({
+    public deleteGame(gameThatNeedToDelete: MyGameInterface): Promise<MyGameInterface[]> {
+        return new Promise<MyGameInterface[]>((resolve, reject) => {
+            GamesModel.destroy({
                 where: {
-                    userId: gameThatNeedToDelete.userId
+                    id: gameThatNeedToDelete.id
                 }
-            });
+            }).then(() => {
+                const games = GamesModel.findAll({
+                    where: {
+                        userId: gameThatNeedToDelete.userId
+                    }
+                });
+
+                resolve(games)
+            })
         })
+
     }
 
-    public editGame(gameThatNeedEdit: MyGameInterface): Promise<MyGameInterface[]>  {
+    public editGame(gameThatNeedEdit: MyGameInterface): Promise<MyGameInterface[]> {
         return GamesModel.upsert({
             id: +gameThatNeedEdit.id,
             userId: +gameThatNeedEdit.userId,
@@ -41,23 +42,27 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
                     userId: gameThatNeedEdit.userId
                 }
             });
-        })
+        });
+
     }
 
     public addGame(data: MyGameInterface): Promise<MyGameInterface> {
-        const game = GamesModel.build(
-            {
-                userId: +data.userId,
-                appName: data.appName,
-                description: data.description,
-                maxRoomPlayer: +data.maxRoomPlayer,
-                maxRooms: +data.maxRooms,
-                requestUrl: data.requestUrl,
-                maxWaitingTime: +data.maxWaitingTime
-            }
-        );
+        return new Promise<MyGameInterface>((resolve, reject) => {
+            const game = GamesModel.build(
+                {
+                    userId: +data.userId,
+                    appName: data.appName,
+                    description: data.description,
+                    maxRoomPlayer: +data.maxRoomPlayer,
+                    maxRooms: +data.maxRooms,
+                    requestUrl: data.requestUrl,
+                    maxWaitingTime: +data.maxWaitingTime
+                }
+            );
 
-        return game.save();
+            game.save().then(() => resolve(game));
+        })
+
     }
 
     public getGames(userId: number): Promise<MyGameInterface[]> {

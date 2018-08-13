@@ -1,33 +1,23 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-
+import { CaButton, CaLogo, CaNavbar, LoginForm, RegistrationForm } from 'components';
+import { CaAddGame } from 'components/AddGameComponent/AddGameComponent';
+import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
 import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
 import { AuthStatus, languages } from 'models';
+import * as React from 'react';
 import { I18n } from 'react-i18next';
-import { CaBattles } from 'scenes/Battles';
-import { CurrentBattle } from 'scenes/Battles';
+import { connect } from 'react-redux';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
 import { getCurrentLanguage, setAuthToken } from 'utils';
 
-import {
-  CaButton,
-  CaLogo,
-  CaNavbar,
-  LoginForm,
-  RegistrationForm
-} from 'components';
-
-import { PageNotFound } from '../PageNotFound';
-
-import { CaAddGame } from '../../components/AddGameComponent/AddGameComponent';
-import { CaEditGame } from '../../components/EditGameComponent/EditGameComponent';
 import { CaMyGames } from '../MyGames/MyGames';
+import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 import './root.scss';

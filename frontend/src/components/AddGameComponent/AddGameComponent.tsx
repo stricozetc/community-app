@@ -1,30 +1,32 @@
-import { AuthStatus } from 'models';
+import { AuthStatus, MyGameModel } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AddGame, LogoutUser } from 'store';
+import { AppState } from 'store/store.config';
 
-import { MyGameModel } from '../../store/my-games/interfaces';
-import { AppState } from '../../store/store.config';
 import { FormForWorkingWithGame } from '../FormForWorkingWithGame/FormForWorkingWithGame';
 
-import { FormForAddingNewGameState, initFormForAddingNewGame } from './AddGameComponent.model';
-export class AddGameComponent extends React.Component<any, FormForAddingNewGameState> {
-    constructor(props: any) {
+import { AddGameComponentProps, AddGameComponentState } from './AddGameComponent.model';
+
+const initFormForAddingNewGame: AddGameComponentState = {
+    appName: '',
+    description: '',
+    maxRoomPlayer: '',
+    maxRooms: '',
+    requestUrl: '',
+    maxWaitingTime: ''
+};
+export class AddGameComponent extends React.Component<AddGameComponentProps, AddGameComponentState> {
+    constructor(props: AddGameComponentProps) {
         super(props);
         this.state = initFormForAddingNewGame;
     }
 
     public componentWillMount(): void {
         const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
-        console.log(`componentWillMount ADD COMPONENT`);
         if (!isAuthenticated) {
             this.props.history.push('/login');
         }
-    }
-
-    public shouldComponentUpdate(nextProps: any): boolean {
-        console.log(`shouldComponentUpdate`);
-        return !!nextProps.user;
     }
 
     public render(): JSX.Element {

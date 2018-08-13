@@ -1,21 +1,20 @@
-import { ErrorsFromServer } from '../../models';
-import { action } from '../decorators';
+import { ErrorsFromServer, MyGameModel } from 'models';
 
-import { MyGameModel } from './interfaces';
+import { action } from '../decorators';
 
 export enum MyGamesActionTypes {
     EditGame = '[my-games] Edit Game',
-    EditGameCompleted = '[my-games] Edit Game Completed',
-    EditGameFailed = '[my-games] Edit Game Failed',
+    EditGameSuccess = '[my-games] Edit Game (Success)',
+    EditGameError = '[my-games] Edit Game (Error)',
     DeleteGame = '[my-games] Delete Game',
-    DeleteGameCompleted = '[my-games] Delete Game Completed',
-    DeleteGameFailed = '[my-games] Delete Game Failed',
+    DeleteGameSuccess = '[my-games] Delete Game (Success)',
+    DeleteGameError = '[my-games] Delete Game (Error)',
     AddGame = '[my-games] Add Game',
-    AddGameCompleted = '[my-games] Add Game Completed',
-    AddGameFailed = '[my-games] Add Game Failed',
+    AddGameSuccess = '[my-games] Add Game (Success)',
+    AddGameError = '[my-games] Add Game (Error)',
     InitMyGames = '[my-games] Init My Games',
-    LoadMyGamesCompleted = '[my-games] Load My Games Completed',
-    LoadMyGamesFailed = '[my-games] Load My Games Failed'
+    LoadMyGamesSuccess = '[my-games] Load My Games (Success)',
+    LoadMyGamesError = '[my-games] Load My Games (Error)'
 }
 
 @action()
@@ -26,15 +25,15 @@ export class EditGame {
 }
 
 @action()
-export class EditGameCompleted {
-  public readonly type = MyGamesActionTypes.EditGameCompleted;
+export class EditGameSuccess {
+  public readonly type = MyGamesActionTypes.EditGameSuccess;
 
   public constructor(public payload: MyGameModel[]) {}
 }
 
 @action()
-export class EditGameFailed {
-  public readonly type = MyGamesActionTypes.EditGameFailed;
+export class EditGameError {
+  public readonly type = MyGamesActionTypes.EditGameError;
 
   public constructor(public payload: object) {}
 }
@@ -47,15 +46,15 @@ export class DeleteGame {
 }
 
 @action()
-export class DeleteGameCompleted {
-  public readonly type = MyGamesActionTypes.DeleteGameCompleted;
+export class DeleteGameSuccess {
+  public readonly type = MyGamesActionTypes.DeleteGameSuccess;
 
   public constructor(public payload: MyGameModel[]) {}
 }
 
 @action()
-export class DeleteGameFailed {
-  public readonly type = MyGamesActionTypes.DeleteGameFailed;
+export class DeleteGameError {
+  public readonly type = MyGamesActionTypes.DeleteGameError;
 
   public constructor(public payload: object) {}
 }
@@ -68,15 +67,15 @@ export class AddGame {
 }
 
 @action()
-export class AddGameCompleted {
-  public readonly type = MyGamesActionTypes.AddGameCompleted;
+export class AddGameSuccess {
+  public readonly type = MyGamesActionTypes.AddGameSuccess;
 
   public constructor(public payload: MyGameModel) {}
 }
 
 @action()
-export class AddGameFailed {
-  public readonly type = MyGamesActionTypes.AddGameFailed;
+export class AddGameError {
+  public readonly type = MyGamesActionTypes.AddGameError;
 
   public constructor(public payload: object) {}
 }
@@ -89,29 +88,29 @@ export class InitMyGames {
 }
 
 @action()
-export class LoadMyGamesCompleted {
-  public readonly type = MyGamesActionTypes.LoadMyGamesCompleted;
+export class LoadMyGamesSuccess {
+  public readonly type = MyGamesActionTypes.LoadMyGamesSuccess;
 
   public constructor(public payload: MyGameModel[]) {}
 }
 
 @action()
-export class LoadMyGamesFailed {
-  public readonly type = MyGamesActionTypes.LoadMyGamesFailed;
+export class LoadMyGamesError {
+  public readonly type = MyGamesActionTypes.LoadMyGamesError;
 
   public constructor(public payload: ErrorsFromServer) {}
 }
 
 export type MyGameActions =
   | EditGame
-  | EditGameCompleted
-  | EditGameFailed
+  | EditGameSuccess
+  | EditGameError
   | DeleteGame
-  | DeleteGameCompleted
-  | DeleteGameFailed
+  | DeleteGameSuccess
+  | DeleteGameError
   | AddGame
-  | AddGameCompleted
-  | AddGameFailed
+  | AddGameSuccess
+  | AddGameError
   | InitMyGames
-  | LoadMyGamesCompleted
-  | LoadMyGamesFailed;
+  | LoadMyGamesSuccess
+  | LoadMyGamesError;

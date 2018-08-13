@@ -1,14 +1,13 @@
 import { CaButton, CaTable } from 'components';
-import { AuthStatus, RowProperty, TypeOfColumn } from 'models';
+import { CaDialog } from 'components/form-controls/CaDialog/CaDialog';
+import { AuthStatus, MyGameModel, RowProperty, TypeOfColumn } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AddGame, DeleteGame, InitMyGames } from 'store';
+import { AppState } from 'store/store.config';
 import { history } from 'utils';
 
-import { CaDialog } from '../../components/form-controls/CaDialog/CaDialog';
-import { AppState } from '../../store/store.config';
-
-import { MyGameModel, MyGameProps, MyGameState } from './MyGames.model';
+import { MyGameProps, MyGameState } from './MyGames.model';
 import './myGames.scss';
 
 export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState> {

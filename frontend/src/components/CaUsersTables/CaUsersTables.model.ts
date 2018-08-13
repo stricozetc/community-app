@@ -1,25 +1,10 @@
 import { WithStyles } from '@material-ui/core';
+import { HeaderName, Row } from 'models';
 import { StatisticState } from 'store/statistic/interfaces';
 
 import { styles } from './CaUsersTables.styles';
-
 export interface CaUsersTablesProps extends WithStyles<typeof styles> {
   statistic: StatisticState;
-}
-
-export interface HeaderName {
-  headerName: string;
-  field: string;
-}
-
-// interface CellWithElement {
-//   name: string;
-//   edit?: () => void;
-//   delete?: () => void;
-// }
-
-export interface Row {
-  [key: string]: any;
 }
 
 export interface CaUsersTablesState {

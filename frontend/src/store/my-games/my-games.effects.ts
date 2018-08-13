@@ -1,23 +1,23 @@
 import { ActionsObservable, ofType } from 'redux-observable';
-import { from, of} from 'rxjs';
-import { map, switchMap, catchError } from 'rxjs/operators';
-
+import { from, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
-import { MyGameModel } from './interfaces';
+
+import { MyGameModel } from 'models';
 
 import {
     AddGame,
-    AddGameCompleted,
-    AddGameFailed,
+    AddGameError,
+    AddGameSuccess,
     DeleteGame,
-    DeleteGameCompleted,
-    DeleteGameFailed,
+    DeleteGameError,
+    DeleteGameSuccess,
     EditGame,
-    EditGameCompleted,
-    EditGameFailed,
+    EditGameError,
+    EditGameSuccess,
     InitMyGames,
-    LoadMyGamesCompleted,
-    LoadMyGamesFailed,
+    LoadMyGamesError,
+    LoadMyGamesSuccess,
     MyGamesActionTypes
 } from './my-games.action';
 
@@ -27,12 +27,11 @@ export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
         switchMap(action =>
             from(HttpWrapper.post('api/v1/my-games/delete-game', action.payload)).pipe(
                 map((res: any) => {
-
                     const games: MyGameModel[] = res.data;
 
-                    return new DeleteGameCompleted(games);
+                    return new DeleteGameSuccess(games);
                 }),
-                catchError(error => of(new DeleteGameFailed(error)))
+                catchError(error => of(new DeleteGameError(error)))
             )
         )
     );
@@ -43,12 +42,11 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
         switchMap(action =>
             from(HttpWrapper.post('api/v1/my-games/edit-game', action.payload)).pipe(
                 map((res: any) => {
-
                     const games: MyGameModel[] = res.data;
 
-                    return new EditGameCompleted(games);
+                    return new EditGameSuccess(games);
                 }),
-                catchError(error => of(new EditGameFailed(error)))
+                catchError(error => of(new EditGameError(error)))
             )
         )
     );
@@ -61,9 +59,9 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
                 map((res: any) => {
                     const game: MyGameModel = res.data;
 
-                    return new AddGameCompleted(game);
+                    return new AddGameSuccess(game);
                 }),
-                catchError(error => of(new AddGameFailed(error)))
+                catchError(error => of(new AddGameError(error)))
             )
             }
         )
@@ -77,9 +75,9 @@ export const initMyGames$ = (action$: ActionsObservable<InitMyGames>) =>
                 map((res: any) => {
                     const games: MyGameModel[] = res.data;
 
-                    return new LoadMyGamesCompleted(games);
+                    return new LoadMyGamesSuccess(games);
                 }),
-                catchError(error => of(new LoadMyGamesFailed(error)))
+                catchError(error => of(new LoadMyGamesError(error)))
             )
         )
     );
@@ -89,4 +87,4 @@ export const MyGamesEffects = [
     editGame$,
     addGame$,
     initMyGames$
-]
+];

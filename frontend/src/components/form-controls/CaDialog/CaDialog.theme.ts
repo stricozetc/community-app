@@ -1,17 +1,15 @@
+import { DialogClassKey } from '@material-ui/core/Dialog';
 import { DialogActionsClassKey } from '@material-ui/core/DialogActions';
 import { DialogContentClassKey } from '@material-ui/core/DialogContent';
 import { DialogContentTextClassKey } from '@material-ui/core/DialogContentText';
 import { DialogTitleClassKey } from '@material-ui/core/DialogTitle';
 import { TypographyClassKey } from '@material-ui/core/Typography';
 import { StyleRules } from '@material-ui/core/styles';
-
 import { defaultDialogContentBgColor, defaultDialogTextColor, defaultDialogTitleBGColor } from 'style/muiTheme.colors';
-import { DialogClassKey } from '@material-ui/core/Dialog';
 
 export const MuiDialog: Partial<StyleRules<DialogClassKey>> = {
   root: {
-    position: 'absolute',
-
+    position: 'absolute'
   }
 };
 
