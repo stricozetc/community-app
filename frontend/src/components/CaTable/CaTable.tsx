@@ -15,6 +15,7 @@ import { styles } from './CaTable.styles';
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const { columnDef, rowData, classes } = props;
+  const handleRowClick = props.handleRowClick ? props.handleRowClick : () => {};
 
   const arrayOfColumnName = columnDef.map(column => column.headerName);
   const arrayOfPropertyName = columnDef.map(column => column.field);
@@ -67,7 +68,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
             <TableBody>
               {rowData.map((user, rowIndex) => {
                 return (
-                  <TableRow key={rowIndex}>
+                  <TableRow key={rowIndex} onClick={() => handleRowClick(user)}>
                     {arrayOfPropertyName.map((property, propertyIndex) => {
                       const numeric = propertyIndex !== 0;
 

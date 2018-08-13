@@ -10,4 +10,5 @@ interface HeaderName {
 export interface CaTableProps extends WithStyles<typeof styles> {
   rowData: any[];
   columnDef: HeaderName[];
+  handleRowClick?: (item: any) => void;
 }
