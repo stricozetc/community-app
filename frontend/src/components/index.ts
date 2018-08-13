@@ -10,3 +10,7 @@ export * from './RegistrationForm';
 export * from './CaSnackbar';
 export * from './Spinner';
 export * from './form-controls/CaSelect';
+export * from './form-controls/CaEdit';
+export * from './form-controls/CaDelete';
+export * from './form-controls/CaDialog';
+export * from './AddGameComponent';

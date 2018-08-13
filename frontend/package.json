@@ -41,6 +41,7 @@
     "tslint-fix": "tslint --fix -p tsconfig.json"
   },
   "devDependencies": {
+    "@material-ui/icons": "^2.0.1",
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.6",
     "@types/jest": "^23.3.0",

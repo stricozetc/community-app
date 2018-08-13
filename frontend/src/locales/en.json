@@ -12,6 +12,7 @@
   "leaveTheRoom": "Leave the room",
   "battles": "Battles",
   "statistics": "Statistics",
+  "adminPage": "Admin Page",
   "roomsAreFull": "All rooms are full",
   "startingIn": "Starting in",
   "shortMinute": "m",
@@ -42,5 +43,8 @@
   "game": "Game",
   "playedInWeek": "Played in week",
   "playedAll": "Played all",
-  "result": "Result"
+  "result": "Result",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "key": "{{date, MM/DD/YYYY}}"
 }

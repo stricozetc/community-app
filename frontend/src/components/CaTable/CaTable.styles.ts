@@ -28,5 +28,16 @@ export const styles = createStyles({
   tableHeadCell: {
     borderBottom: 'none',
     color: '#fff'
+  },
+  cellWithButtons: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  textInCellWithButtons: {
+    flex: 2
+  },
+  buttonsInCellWithButtons: {
+    flex: 1
   }
 });

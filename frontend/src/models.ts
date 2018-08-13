@@ -117,11 +117,46 @@ export enum languages {
   ru = 'ru'
 }
 
-export enum tableCellDataType {
+export enum RowProperty {
   name = 'name',
   playedTime = 'playedTime',
   scores = 'scores',
   playedInWeek = 'playedInWeek',
   game = 'game',
-  result = 'result'
+  appName = 'appName',
+  result = 'result',
+  createdAt = 'createdAt',
+  updatedAt = 'updatedAt'
+}
+
+export enum TypeOfColumn {
+  string = 'String',
+  timeCount = 'Spent Time',
+  points = 'Points',
+  result = 'Result',
+  date = 'Date'
+}
+export interface MyGameModel {
+  id?: number;
+  userId: number;
+  appName: string;
+  description: string;
+  maxRoomPlayer: number;
+  maxRooms: number;
+  requestUrl: string;
+  maxWaitingTime: number;
+  createAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface HeaderName {
+  headerName: string;
+  field: RowProperty;
+  type: TypeOfColumn;
+  editAction? (payload: number): void;
+  deleteAction? (payload: MyGameModel): void;
+}
+
+export interface Row {
+  [key: string]: any;
 }
