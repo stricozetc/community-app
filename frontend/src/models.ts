@@ -1,10 +1,12 @@
+import { EChartOption } from 'echarts/lib/echarts';
+
 export interface Item {
   id: string;
   name: string;
 }
 
 export interface WinRateDiagramData {
-  options: any;
+  options: EChartOption;
 }
 
 export enum BattleStatus {

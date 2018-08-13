@@ -1,4 +1,4 @@
-import * as echarts from 'echarts';
+import { init } from 'echarts';
 import * as React from 'react';
 
 import { CircleDiagramProps } from './CircleDiagram.model';
@@ -12,7 +12,7 @@ export class CircleDiagram extends React.Component<CircleDiagramProps> {
   public renderChart(): void {
     const { diagramData } = this.props;
 
-    const myChart = echarts.init(document.querySelector('.win-rate-diagram') as HTMLDivElement);
+    const myChart = init(document.querySelector('.win-rate-diagram') as HTMLDivElement);
 
     myChart.setOption(diagramData.options);
   }
