@@ -2,14 +2,15 @@ import * as React from 'react';
 
 import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
-import { StatTab, tableCellDataType } from 'models';
+import { JsMarathonCharts, MyGameCharts, StatTab, chartCategories, tableCellDataType, chartsTypes,  } from 'models';
 import { I18n } from 'react-i18next';
+
+import { ChartTable } from '../ChartTable';
 
 import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
 
 import './CaUsersTables.scss';
-import { ChartTable } from '../ChartTable';
 
 export const CaUsersTables = withStyles(styles)(
   class extends React.Component<CaUsersTablesProps, CaUsersTablesState> {
@@ -17,14 +18,69 @@ export const CaUsersTables = withStyles(styles)(
     constructor(props: CaUsersTablesProps) {
       super(props);
       this.state = {
-        value: 0,
+        activeTab: 0,
         rowData: [],
-        columnDef: []
+        columnDef: [],
+        chartCategory: -1,
+        tableItemName: ''
       };
     }
 
     public componentWillMount(): void {
       this.changeContent(StatTab.BestUsers);
+    }
+
+    public handleRowClick = (item: any) => {
+      switch (this.state.activeTab) {
+        case StatTab.TheMostPopularGames:
+        case StatTab.RecentGames: {
+          this.setState({
+            chartCategory: chartCategories.gameCharts,
+            tableItemName: item.game
+          });
+
+          break;
+        }
+        case StatTab.BestUsers: {
+          this.setState({
+            chartCategory: chartCategories.userCharts
+          });
+
+          break;
+        }
+        default: {
+          this.setState({
+            chartCategory: -1,
+            tableItemName: ''
+          });
+
+          break;
+        }
+      }
+    }
+
+    public getChartList = (itemNate: string) => {
+      let chartList: string[];
+
+      switch (itemNate) {
+        case 'JsMarathon': {
+          chartList = [...JsMarathonCharts];
+
+          break;
+        }
+        case 'MyGame': {
+          chartList = [...MyGameCharts];
+
+          break;
+        }
+        default: {
+          chartList = [chartsTypes.noChartsAvailable];
+
+          break;
+        }
+      }
+
+      return chartList;
     }
 
     public render(): JSX.Element {
@@ -36,7 +92,7 @@ export const CaUsersTables = withStyles(styles)(
               <div className='ca-users-tables'>
                 <div className='ca-users-tables__statistics'>
                   <h2 className='ca-users-tables__statistics-title'>{t('statistics')}</h2>
-                  <Tabs value={this.state.value}>
+                  <Tabs value={this.state.activeTab}>
                     <Tab
                       label={t('bestUsersLabel')}
                       onClick={() => this.changeContent(StatTab.BestUsers)}
@@ -52,11 +108,18 @@ export const CaUsersTables = withStyles(styles)(
                       classes={{ label: this.props.classes.label }} />
                   </Tabs>
 
-                  <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
+                  <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} handleRowClick={this.handleRowClick} />
                 </div>
                 <div className='ca-users-tables__charts'>
                   <h2 className='ca-users-tables__charts-title'>{t('charts')}</h2>
-                  <ChartTable statistics={this.props.statistic} />
+                  <div className='ca-users-tables__chart-container'>
+                    <ChartTable
+                      statistics={this.props.statistic}
+                      itemName={this.state.tableItemName}
+                      chartList={this.getChartList(this.state.tableItemName)}
+                      chartCategory={this.state.chartCategory}
+                    />
+                  </div>
                 </div>
               </div>
             )
@@ -78,9 +141,9 @@ export const CaUsersTables = withStyles(styles)(
       return [...headersName];
     }
 
-    public changeContent(value: number): void {
+    public changeContent(activeTab: number): void {
 
-      switch (value) {
+      switch (activeTab) {
         case StatTab.BestUsers: {
 
           const columnDef = [
@@ -124,13 +187,13 @@ export const CaUsersTables = withStyles(styles)(
             });
 
             this.setState({
-              value,
+              activeTab,
               rowData,
               columnDef
             });
           } else {
             this.setState({
-              value,
+              activeTab,
               rowData: [],
               columnDef
             });
@@ -141,7 +204,7 @@ export const CaUsersTables = withStyles(styles)(
         case StatTab.TheMostPopularGames: {
 
           const columnDef = [
-            { headerName: 'game', field: tableCellDataType.name },
+            { headerName: 'game', field: tableCellDataType.game },
             { headerName: 'playedInWeek', field: tableCellDataType.playedInWeek },
             { headerName: 'playedAll', field: tableCellDataType.playedTime }
           ];
@@ -183,13 +246,13 @@ export const CaUsersTables = withStyles(styles)(
             });
 
             this.setState({
-              value,
+              activeTab,
               rowData,
               columnDef
             });
           } else {
             this.setState({
-              value,
+              activeTab,
               rowData: [],
               columnDef
             });
@@ -240,13 +303,13 @@ export const CaUsersTables = withStyles(styles)(
             });
 
             this.setState({
-              value,
+              activeTab,
               rowData,
               columnDef
             });
           } else {
             this.setState({
-              value,
+              activeTab,
               rowData: [],
               columnDef
             });

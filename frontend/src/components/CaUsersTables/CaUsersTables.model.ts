@@ -1,6 +1,8 @@
 import { WithStyles } from '@material-ui/core';
 import { StatisticState } from 'store/statistic/interfaces';
 
+import { chartCategories } from 'models';
+
 import { styles } from './CaUsersTables.styles';
 
 export interface CaUsersTablesProps extends WithStyles<typeof styles> {
@@ -17,7 +19,9 @@ export interface HeaderName {
 }
 
 export interface CaUsersTablesState {
-  value: number;
+  activeTab: number;
   rowData: StatisticOfUser[];
   columnDef: HeaderName[];
+  chartCategory: chartCategories;
+  tableItemName: string;
 }
