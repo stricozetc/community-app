@@ -72,7 +72,7 @@ if (token) {
 export class RootComponent extends React.Component<RootProps> {
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
-  }
+  } */
 
   public closeSnackbar(): void {
     this.props.closeSnackbar();
@@ -191,15 +191,11 @@ export class RootComponent extends React.Component<RootProps> {
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
                 handleClose={() => this.closeSnackbar()}
-                type={SnackbarType.error}                
+                type={this.props.snackbarType}                
                 transitionDirection={transitionDirection.down}
                 message={
                   <div>
-                    {keys && keys.map((k: string) =>
-                      (
-                        <div>* {errors[k].msg} </div>
-                      )
-                    )}
+                    {this.props.errors}
                   </div>
                 }
               />
@@ -363,7 +359,6 @@ const mapDispatchToProps = (dispatch: any) => ({
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
-  openSnackbar: () => dispatch(new OpenSnackbar()),
 });
 
 export const Root = connect(
