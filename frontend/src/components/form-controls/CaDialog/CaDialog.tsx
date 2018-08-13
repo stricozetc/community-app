@@ -16,21 +16,20 @@ export const CaDialog = withStyles(styles)((props: CaDialogProps) => {
       <Dialog
         open={props.open}
         onClose={props.onClose}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>{`Are yoy sure want to delete this game?`}</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{`Are YOU sure want to delete this game?`}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            {/* Delete {this.props.nameOfTheGame} */}
-            Delete
+            <span> Keep in mind that you will not be able to restore game and all information about it. </span>
+            <br/> <br/>
+            <span> If you still want to this delete game, click "Agree". </span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={props.onClose} >
             Disagree
           </Button>
-          <Button onClick={props.onAccept} color="primary" autoFocus>
+          <Button onClick={props.onAccept}>
             Agree
           </Button>
         </DialogActions>

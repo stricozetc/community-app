@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 import * as classNames from 'classnames';
-import { tableCellDataType } from 'models';
+//import { tableCellDataType } from 'models';
 import { I18n, TranslationFunction } from 'react-i18next';
 
 import { CaDelete } from '../form-controls/CaDelete/CaDelete';
@@ -20,63 +20,91 @@ import { CaTableProps } from './CaTable.model';
 import { styles } from './CaTable.styles';
 import { i18nInstance } from '../../utils/i18n';
 
+import { TypeOfColumn } from 'models';
+
+// enum TypeOfColumn {
+//   string = 'String',
+//   timeCount = 'Spent Time',
+//   points = 'Points',
+//   result = 'Result',
+//   date = 'Date'
+// }
+
 
 export const CaTable = withStyles(styles)((props: CaTableProps) => {
   const { columnDef, rowData, classes } = props;
 
-  const arrayOfColumnName = columnDef.map(column => column.headerName);
-  const arrayOfPropertyName = columnDef.map(column => column.field);
+  //const arrayOfColumnName = columnDef.map(column => column.headerName);
 
-  const getCellData = (data: any, property: string, t: TranslationFunction) => {
-    let dataForCell;
+  const getTextContentOfTheCell = (column: any, row: any, t: TranslationFunction) => {
+    let textContent;
+    const text = row[`${column.field}`];
+
     const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      timezone: 'UTC',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
-    };
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          timezone: 'UTC',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        };
 
-    switch (property) {
-      case (tableCellDataType.playedTime): {
-        dataForCell = t('minutes', { count: data[property] });
+    switch (column.type) {
+      case TypeOfColumn.string : {
+        textContent = text;
         break;
       }
-      case (tableCellDataType.playedInWeek): {
-        dataForCell = t('minutes', { count: data[property] });
+      case TypeOfColumn.timeCount : {
+        textContent = t('minutes', { count: text });
         break;
       }
-      case (tableCellDataType.result): {
-        dataForCell = data[property] ? 'W' : 'L';
+      case TypeOfColumn.points : {
+        textContent = text;
         break;
       }
-      case 'createdAt': {
-        dataForCell = new Date(data[property]).toLocaleString(i18nInstance.language, options);
+      case TypeOfColumn.result : {
+        textContent = text ? 'Win' : 'Lose';
         break;
       }
-      case 'updatedAt': {
-        dataForCell = new Date(data[property]).toLocaleString(i18nInstance.language, options);
-        break;
-      }
-      case 'game': {
-        dataForCell =
-          <div className={classes.cellWithButtons}>
-            <div className={classes.textInCellWithButtons}>{data[property].appName}</div>
-            <div className={classes.buttonsInCellWithButtons}>
-              <CaEdit editHandler={data[property].edit} />
-              <CaDelete deleteHandler={data[property].delete} />
-            </div>
-          </div>;
+      case TypeOfColumn.date : {
+        textContent = new Date(text).toLocaleString(i18nInstance.language, options);
         break;
       }
       default: {
-        dataForCell = data[property];
+        textContent = text;
       }
     }
+    return textContent;
+  };
 
-    return dataForCell;
+  const getButtonContentOfTheCell = (column: any, row: any, t: TranslationFunction) => {
+    const isCellHaveEditButton = column.editAction;
+    const isCellHaveDeleteButton = column.deleteAction;
+    let buttonContent;
+
+    if (isCellHaveEditButton || isCellHaveDeleteButton) {
+      buttonContent =
+        <div className={classes.buttonsInCellWithButtons}>
+          {column.editAction ? <CaEdit editHandler={() => column.editAction(row.id)}/> : null}
+          {column.deleteAction ? <CaDelete deleteHandler={() => column.deleteAction(row)} /> : null}
+        </div>;
+    }
+
+    return buttonContent;
+  };
+
+  const getContentOfTheCell = (column: any, row: any, t: TranslationFunction) => {
+    const textContent = getTextContentOfTheCell(column, row, t);
+
+    const buttonContent = getButtonContentOfTheCell(column, row, t);
+
+    return (
+      <div className={classes.cellWithButtons}>
+        <div className={classes.textInCellWithButtons}>{textContent}</div>
+        {buttonContent ? buttonContent : null}
+      </div>
+    );
   };
 
   return (
@@ -87,27 +115,26 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
           <Table>
             <TableHead className={classes.tableHead}>
               <TableRow className={classes.tableHeadRow}>
-                {arrayOfColumnName.map((nameOfColumn, index) => {
+                {columnDef.map((nameOfColumn, index) => {
                   const numeric = index !== 0;
                   return (
                     <TableCell
-                      key={nameOfColumn}
+                      key={nameOfColumn.headerName}
                       numeric={numeric}
                       className={classNames(classes.columnCell, classes.tableHeadCell)}
                     >
-                      {t(nameOfColumn)}
+                      {t(nameOfColumn.headerName)}
                     </TableCell>
                   );
                 })}
               </TableRow>
             </TableHead>
             <TableBody>
-              {rowData.map((user, rowIndex) => {
+              {rowData.map((row, rowIndex) => {
                 return (
                   <TableRow key={rowIndex}>
-                    {arrayOfPropertyName.map((property, propertyIndex) => {
+                    {columnDef.map((column, propertyIndex) => {
                       const numeric = propertyIndex !== 0;
-
 
                       return (
                         <TableCell
@@ -115,7 +142,7 @@ export const CaTable = withStyles(styles)((props: CaTableProps) => {
                           key={propertyIndex}
                           className={classes.columnCell}
                         >
-                          {getCellData(user, property, t)}
+                          {getContentOfTheCell(column, row, t)}
                         </TableCell>
                       );
                     }

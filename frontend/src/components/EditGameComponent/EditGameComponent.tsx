@@ -20,6 +20,10 @@ export class EditGameComponent extends React.Component<any, FormForAddingNewGame
         if (!isAuthenticated) {
             this.props.history.push('/login');
         }
+
+        if (this.props.games.length === 0) {
+            this.props.history.push('/my-games');
+        }
     }
     //When you use component (instead of render or children, below) the router uses React.createElement to create a new React element from the given component. That means if you provide an inline function to the component prop, you would create a new component every render.So  when we use render in Root component we can't check authorization user in componentWillMount.
     public shouldComponentUpdate(nextProps: any): boolean {
@@ -30,12 +34,13 @@ export class EditGameComponent extends React.Component<any, FormForAddingNewGame
         const game = this.getGame();
         const id = this.props.match.params['idOfTheGame'];
 
+
         return(
            <div>
                {this.props.children}
                <FormForWorkingWithGame
                     id = {id}
-                    userId = {this.props.user.id}
+                    userId = {this.props.user && this.props.user.id}
                     config='Edit Game'
                     model={game}
                     submit={(data: MyGameModel) => this.props.editGame(data)}

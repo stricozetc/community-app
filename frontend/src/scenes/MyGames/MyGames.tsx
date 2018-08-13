@@ -1,22 +1,17 @@
 import { CaButton, CaTable } from 'components';
-import { AuthStatus, tableCellDataType } from 'models';
+import { AuthStatus, RowProperty, TypeOfColumn } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { AddGame, DeleteGame, InitMyGames, LogoutUser } from 'store';
+import { AddGame, DeleteGame, InitMyGames } from 'store';
 import { history } from 'utils';
 
+import { CaDialog } from '../../components/form-controls/CaDialog/CaDialog';
 import { AppState } from '../../store/store.config';
 
-import { MyGameModel } from './MyGames.model';
+import { MyGameModel, MyGameProps, MyGameState } from './MyGames.model';
 import './myGames.scss';
-import { CaDialog } from '../../components/form-controls/CaDialog/CaDialog';
 
-interface KakouToState {
-    isDialogOpen: boolean;
-    deletedGame: any;
-}
-
-export class CaMyGamesComponent extends React.Component<any, KakouToState> {
+export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState> {
     public state = {
         isDialogOpen: false,
         deletedGame: null
@@ -26,11 +21,10 @@ export class CaMyGamesComponent extends React.Component<any, KakouToState> {
         this.setState({isDialogOpen: false})
     }
 
-    public handleOpenDialog = (copyOfTheGame: any) => {
-        console.log(`handleOpenDialog`);
+    public handleOpenDialog = (game: MyGameModel) => {
         this.setState({
             isDialogOpen: true,
-            deletedGame: copyOfTheGame
+            deletedGame: game
         });
     }
 
@@ -52,17 +46,20 @@ export class CaMyGamesComponent extends React.Component<any, KakouToState> {
 
     public render(): JSX.Element {
         const columnDef = [
-            { headerName: 'game', field: tableCellDataType.game },
-            { headerName: 'createdAt', field: tableCellDataType.creationTime },
-            { headerName: 'updatedAt', field: tableCellDataType.updateTime }
+            { headerName: 'game',
+              field: RowProperty.appName,
+              type: TypeOfColumn.string,
+              editAction: (id: number) => history.push(`/my-games/edit-game/${id}`),
+              deleteAction: (game: MyGameModel) => this.handleOpenDialog(game)},
+            { headerName: 'createdAt',
+              field: RowProperty.createdAt,
+              type: TypeOfColumn.date},
+            { headerName: 'updatedAt',
+              field: RowProperty.updatedAt,
+              type: TypeOfColumn.date},
         ];
 
-        const games = this.props.games;
-        const gameWithUpdatedProperty = this.updatePropertyOfObject(games);
-        const rowData = this.deleteUnnecessaryProperty(
-            gameWithUpdatedProperty,
-            ['game', 'createdAt', 'updatedAt']
-        );
+        const rowData = this.props.games;
 
         return(
             <div>
@@ -79,60 +76,14 @@ export class CaMyGamesComponent extends React.Component<any, KakouToState> {
                         Add New Game
                     </CaButton>
                 </div>
-                <CaDialog 
-                    open={this.state.isDialogOpen} 
-                    onClose={this.handleCloseDialog} 
+                <CaDialog
+                    open={this.state.isDialogOpen}
+                    onClose={this.handleCloseDialog}
                     onAccept={this.handleDeleteConfirmation}
                 />
             </div>
         );
     }
-
-    public isArrayEmpty(arrayOfData: any[]): boolean {
-        return !Array.isArray(arrayOfData) || !arrayOfData.length;
-    }
-
-    public deleteUnnecessaryProperty(arrayOfGames: any[], arrayOfNecessaryProperty: string[]): any[] {
-        const newArrayOfGames = arrayOfGames.map(game => {
-
-          const gameWithNecessaryProperty = { ...game };
-
-          for (const property in gameWithNecessaryProperty) {
-            if (!(arrayOfNecessaryProperty.indexOf(property) + 1)) {
-              delete gameWithNecessaryProperty[property];
-            }
-          }
-          return gameWithNecessaryProperty;
-        });
-
-        return newArrayOfGames;
-    }
-
-    public updatePropertyOfObject(arrayOfGames: any[]): any[] {
-        const newArrayOfGames = arrayOfGames.map(game => {
-
-          const gameWithUpdatedProperty = { ...game };
-
-          for (const property in gameWithUpdatedProperty) {
-            if (property === 'appName') {
-                const appName = gameWithUpdatedProperty[property];
-                const id = gameWithUpdatedProperty['id'];
-                const copyOfTheGame = Object.assign({}, gameWithUpdatedProperty);
-
-                gameWithUpdatedProperty['game'] = {
-                    appName,
-                    edit: () => history.push(`/my-games/edit-game/${id}`),
-                    //delete: () => this.props.deleteGame(copyOfTheGame)
-                    delete: () => this.handleOpenDialog(copyOfTheGame)
-                };
-            }
-          }
-
-          return gameWithUpdatedProperty;
-        });
-
-        return newArrayOfGames;
-      }
 }
 
 const mapStateToProps = (state: AppState) => ({
@@ -142,7 +93,6 @@ const mapStateToProps = (state: AppState) => ({
   });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    logoutUser: () => dispatch(new LogoutUser()),
     deleteGame: (gameThatNeedToDelete: MyGameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
     addGame: (data: MyGameModel) => dispatch(new AddGame(data)),
     getMyGames: (userId: number) => dispatch(new InitMyGames(userId))

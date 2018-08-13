@@ -14,7 +14,7 @@ export interface CellWithElement {
 }
 
 interface Row {
-  [key: string]: string | CellWithElement;
+  [key: string]: any;
 }
 
 export interface CaTableProps extends WithStyles<typeof styles> {

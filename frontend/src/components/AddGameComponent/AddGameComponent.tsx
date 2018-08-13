@@ -23,6 +23,7 @@ export class AddGameComponent extends React.Component<any, FormForAddingNewGameS
     }
 
     public shouldComponentUpdate(nextProps: any): boolean {
+        console.log(`shouldComponentUpdate`);
         return !!nextProps.user;
     }
 
@@ -31,7 +32,7 @@ export class AddGameComponent extends React.Component<any, FormForAddingNewGameS
            <div>
                 {this.props.children}
                <FormForWorkingWithGame
-                    userId = {this.props.user.id}
+                    userId = {this.props.user && this.props.user.id}
                     config='Add Game'
                     model={initFormForAddingNewGame}
                     submit={(data: MyGameModel) => this.props.addGame(data)}

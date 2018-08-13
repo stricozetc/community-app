@@ -12,14 +12,14 @@ export interface HeaderName {
   field: string;
 }
 
-interface CellWithElement {
-  name: string;
-  edit?: () => void;
-  delete?: () => void;
-}
+// interface CellWithElement {
+//   name: string;
+//   edit?: () => void;
+//   delete?: () => void;
+// }
 
 export interface Row {
-  [key: string]: string | CellWithElement;
+  [key: string]: any;
 }
 
 export interface CaUsersTablesState {

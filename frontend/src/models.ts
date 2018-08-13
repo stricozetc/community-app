@@ -89,27 +89,6 @@ export enum StatTab {
   RecentGames = 2
 }
 
-export enum DeleteGameStatus {
-  Init,
-  Fetching,
-  Success,
-  Error
-}
-
-export enum EditGameStatus {
-  Init,
-  Fetching,
-  Success,
-  Error
-}
-
-export enum AddGameStatus {
-  Init,
-  Fetching,
-  Success,
-  Error
-}
-
 export interface ErrorsFromServer {
   [key: string]: { code: number; msg: string };
 }
@@ -138,13 +117,22 @@ export enum languages {
   ru = 'ru'
 }
 
-export enum tableCellDataType {
+export enum RowProperty {
   name = 'name',
   playedTime = 'playedTime',
   scores = 'scores',
   playedInWeek = 'playedInWeek',
   game = 'game',
+  appName = 'appName',
   result = 'result',
-  creationTime = 'createdAt',
-  updateTime = 'updatedAt'
+  createdAt = 'createdAt',
+  updatedAt = 'updatedAt'
+}
+
+export enum TypeOfColumn {
+  string = 'String',
+  timeCount = 'Spent Time',
+  points = 'Points',
+  result = 'Result',
+  date = 'Date'
 }
