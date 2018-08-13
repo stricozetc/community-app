@@ -1,14 +1,11 @@
 import { StatisticState } from 'store/statistic/interfaces';
 
-import { chartCategories } from 'models';
-
-export interface ChartTableProps {
+export interface ChartContainerProps {
   statistics: StatisticState;
   itemName: string;
   chartList: string[];
-  chartCategory: chartCategories;
 }
 
-export interface ChartTableState {
+export interface ChartContainerState {
   chartName: string;
 }

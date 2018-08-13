@@ -5,15 +5,15 @@ import { ChartsService } from 'services/charts.service';
 
 import { StatisticState } from 'store';
 
-import { /* chartCategories, */ chartsTypes } from 'models';
+import { chartsTypes } from 'models';
 
 import { CaSelect } from '../form-controls/CaSelect';
 
-import { ChartTableProps, ChartTableState } from './ChartContainer.model';
+import { ChartContainerProps, ChartContainerState } from './ChartContainer.model';
 import './ChartContainer.scss';
 
-export class ChartContainer extends React.Component<ChartTableProps, ChartTableState> {
-  public constructor(props: ChartTableProps) {
+export class ChartContainer extends React.Component<ChartContainerProps, ChartContainerState> {
+  public constructor(props: ChartContainerProps) {
     super(props);
 
     this.state = {
@@ -21,7 +21,7 @@ export class ChartContainer extends React.Component<ChartTableProps, ChartTableS
     };
   }
 
-  public componentDidUpdate(prevProps: ChartTableProps): void {
+  public componentDidUpdate(prevProps: ChartContainerProps): void {
     if (prevProps.chartList !== this.props.chartList) {
       this.setState({
         chartName: this.props.chartList[0] || ''
@@ -41,7 +41,6 @@ export class ChartContainer extends React.Component<ChartTableProps, ChartTableS
     chartName: string,
     statistics: StatisticState,
     itemName: string,
-    /* chartCategory: chartCategories, */
     t: TranslationFunction
   ) => {
     let chartComponent: JSX.Element;
@@ -69,8 +68,7 @@ export class ChartContainer extends React.Component<ChartTableProps, ChartTableS
   }
 
   public render(): JSX.Element {
-    // wrap chartCategory with comments for now, it can be used later
-    const { statistics, itemName, /* chartCategory, */ chartList } = this.props;
+    const { statistics, itemName, chartList } = this.props;
 
     const isItemSelected = itemName.length !== 0 ? true : false;
 
@@ -97,7 +95,7 @@ export class ChartContainer extends React.Component<ChartTableProps, ChartTableS
                 </div>
               </div>
               <div className='chart-table__content'>
-                {this.setChart(this.state.chartName, statistics, itemName, /* chartCategory, */ t)}
+                {this.setChart(this.state.chartName, statistics, itemName, t)}
               </div>
             </div>
           )
