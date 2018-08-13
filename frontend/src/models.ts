@@ -3,6 +3,10 @@ export interface Item {
   name: string;
 }
 
+export interface WinRateDiagramData {
+  options: any;
+}
+
 export enum BattleStatus {
   INIT,
   WAIT,
@@ -125,3 +129,17 @@ export enum tableCellDataType {
   game = 'game',
   result = 'result'
 }
+
+export enum chartCategories {
+  gameCharts,
+  userCharts
+}
+
+export enum chartsTypes {
+  winRate = 'winRate',
+  noChartsAvailable = 'noChartsAvailable'
+}
+
+export const JsMarathonCharts: string[] = [chartsTypes.winRate];
+
+export const MyGameCharts: string[] = [chartsTypes.winRate];
