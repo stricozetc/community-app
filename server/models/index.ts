@@ -6,3 +6,4 @@ export * from './SequelizeConnect';
 export * from './user';
 export * from './userRoles';
 export * from './otherModels';
+export * from './error';
