@@ -1,4 +1,4 @@
-import { controller, httpPost } from 'inversify-express-utils';
+import { controller, httpPost, httpGet } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 
