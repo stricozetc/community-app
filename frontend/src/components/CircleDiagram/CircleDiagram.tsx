@@ -1,11 +1,11 @@
 import * as echarts from 'echarts';
 import * as React from 'react';
 
-import { WinRateDiagramProps } from './WinRateDiagram.model';
-import './WinRateDiagram.scss';
+import { CircleDiagramProps } from './CircleDiagram.model';
+import './CircleDiagram.scss';
 
-export class WinRateDiagram extends React.Component<WinRateDiagramProps> {
-  public constructor(props: WinRateDiagramProps) {
+export class CircleDiagram extends React.Component<CircleDiagramProps> {
+  public constructor(props: CircleDiagramProps) {
     super(props);
   }
 

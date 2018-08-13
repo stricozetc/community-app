@@ -1,4 +1,4 @@
 import { WinRateDiagramData } from 'models';
-export interface WinRateDiagramProps {
+export interface CircleDiagramProps {
   diagramData: WinRateDiagramData;
 }
