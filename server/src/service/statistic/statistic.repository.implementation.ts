@@ -165,7 +165,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
 
                       const result = {
-                        name: gameName,
+                        game: gameName,
                         playedTime: game.playedTime,
                         playedInWeek: game.playedInWeek
                       };
