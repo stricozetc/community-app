@@ -44,7 +44,9 @@
   "playedInWeek": "Played in week",
   "playedAll": "Played all",
   "result": "Result",
+  "emptyChartMessage": "Choose game to display charts",
   "win": "Win",
   "lose": "Lose",
-  "winRate": "Win Rate"
+  "winRate": "Win Rate",
+  "noChartsAvailable": "No charts available"
 }
