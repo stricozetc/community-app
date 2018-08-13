@@ -1,5 +1,5 @@
+import { ErrorBlock } from './error';
 
-import { Error } from './../errors/errCodes';
 export interface RecentGameFromServer {
   game: string;
   playedTime: number;
@@ -29,8 +29,8 @@ export interface FieldsToChangePassword {
 }
 
 export interface ErrorsToChangePassword {
-  oldPassword?: Error[];
-  newPassword?: Error[];
-  repeatNewPassword?: Error[];
-  [key: string]: Error[];
+  oldPassword?: ErrorBlock[];
+  newPassword?: ErrorBlock[];
+  repeatNewPassword?: ErrorBlock[];
+  [key: string]: ErrorBlock[];
 }

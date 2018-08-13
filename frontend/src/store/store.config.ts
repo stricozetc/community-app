@@ -49,6 +49,12 @@ import {
   snackbarUiReducer
 } from './snackbar';
 
+import {
+  MyGamesEffects,
+  MyGamesState,
+  myGamesReducer
+} from './my-games';
+
 import { errorsReducer } from './errors';
 
 
@@ -60,6 +66,7 @@ const rootReducers = combineReducers({
   statistic: statisticReducer,
   socket: socketReducer,
   snackbarUi: snackbarUiReducer,
+  myGames: myGamesReducer,
   userSettings: userSettingsReducer
 });
 
@@ -69,6 +76,7 @@ const rootEpic = combineEpics(
   ...GamesEffects,
   ...StatisticEffects,
   ...SocketEffects,
+  ...MyGamesEffects,
   ...UserSettingsEffects
 );
 
@@ -83,6 +91,7 @@ export interface AppState {
   socket: SocketState;
   snackbarUi: SnackbarUiState;
   userSettings: UserSettingsState;
+  myGames: MyGamesState;
 }
 
 const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();

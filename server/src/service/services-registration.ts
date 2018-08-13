@@ -16,6 +16,8 @@ import { MocksRepository, MocksRepositoryImplementation } from './mocks';
 import { AppTokenRepository, AppTokenService } from './app-token';
 import { PlayersBindService } from './players-bind';
 import { StatisticService, StatisticRepositoryImplementation, StatisticRepository } from './statistic';
+import { MyGamesRepository } from './my-games/my-games.repository';
+import { MyGamesRepositoryImplementation } from './my-games/my-games.repository.implementation';
 import { UserSettingsRepository, UserSettingsRepositoryImplementation } from './user-settings';
 
 export const CONTAINER = new Container();
@@ -34,5 +36,4 @@ CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
 CONTAINER.bind<PlayersBindService>(PlayersBindService).to(PlayersBindService);
 CONTAINER.bind<StatisticRepository>(StatisticRepository).to(StatisticRepositoryImplementation);
 CONTAINER.bind<StatisticService>(StatisticService).to(StatisticService);
-CONTAINER.bind<UserSettingsRepository>(UserSettingsRepository).to(UserSettingsRepositoryImplementation);
-export const inject = getDecorators(CONTAINER).lazyInject;
+CONTAINER.bind<MyGamesRepository>(MyGamesRepository).to(MyGamesRepositoryImplementation);CONTAINER.bind<UserSettingsRepository>(UserSettingsRepository).to(UserSettingsRepositoryImplementation);export const inject = getDecorators(CONTAINER).lazyInject;

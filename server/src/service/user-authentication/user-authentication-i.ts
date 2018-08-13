@@ -70,7 +70,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                             });
                         }).catch(() => {
                             // (Mikalai) I'm not sure about type the error (logic or technical)
-                            return reject(logicErr.userRoleIsNotSaveInDb);
+                            return reject(technicalErr.userRoleIsNotSaveInDb);
                         });
                     });
                 });

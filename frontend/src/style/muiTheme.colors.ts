@@ -28,3 +28,8 @@ export const defaultMenuBgColor = '#313c45';
 
 // menu item colors
 export const defaultMenuItemTextColor = '#f4b33a';
+
+// dialog colors
+export const defaultDialogTextColor = '#f4b33a';
+export const defaultDialogTitleBGColor = '#313c45';
+export const defaultDialogContentBgColor = '#1C2227';

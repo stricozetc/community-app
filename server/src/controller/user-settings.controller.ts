@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import * as passport from 'passport';
 import { AppTokenService } from './../service/app-token';
-import { validateChangePassword } from './../validation/change-password';
+// import { validateChangePassword } from './../validation/change-password';
 import { UserSettingsRepository } from '../service/user-settings/user-settings';
 // import Promise = require('bluebird');
 
@@ -19,12 +19,12 @@ export class UserSettingsController {
     request: Request,
     response: Response
   ): Promise<void | Response> | Response {
-    const { errors, isValid } = validateChangePassword(request.body);
+    // const { errors, isValid } = validateChangePassword(request.body);
 
-    console.log(request.body);
-    if (!isValid) {
-      return response.status(400).json(errors);
-    }
+    // console.log(request.body);
+    // if (!isValid) {
+    //   return response.status(400).json(errors);
+    // }
 
     return this.userSettingsRepository
       .changePassword(request.body)

@@ -1,15 +1,15 @@
 import { injectable } from 'inversify';
 
 import { UserSettingsRepository } from './user-settings';
-import { FieldsToChangePassword } from '../../../models/otherModels';
 
 import { UserModel } from './../../../models/user';
 import { User } from './../../../Interfaces/User';
 import * as bcrypt from 'bcryptjs';
-import { ErrorsToChangePassword } from './../../../models/otherModels';
-import { changePasswordErrors } from './../../../errors/changePassword';
+// import { changePasswordErrors } from './../../../errors/changePassword';
 import * as passport from 'passport';
 import { technicalErr } from '../../../errors/technicalErr';
+import { ErrorsToChangePassword, FieldsToChangePassword } from '../../../models/otherModels';
+import { logicErr } from '../../../errors/logicErr';
 
 @injectable()
 export class UserSettingsRepositoryImplementation
@@ -30,7 +30,7 @@ export class UserSettingsRepositoryImplementation
         user = await UserModel.findOne({ where: { id: userId } });
 
       } catch (error) {
-        const err = technicalErr.userIsNotFound;
+        const err = logicErr.notFoundUser;
         throw err;
       }
 
@@ -60,9 +60,10 @@ export class UserSettingsRepositoryImplementation
         return { result: true };
       } else {
         console.log('IS NOT MATCHED');
-        errors.password = errors.password.concat(
-          changePasswordErrors.oldPasswordShouldBeReal
-        );
+        // ToDo: fix
+        // errors.password = errors.password.concat(
+        //   changePasswordErrors.oldPasswordShouldBeReal
+        // );
         console.log('ERRORS', errors);
         return { result: false, errors };
       }
