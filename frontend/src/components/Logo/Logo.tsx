@@ -4,11 +4,12 @@ import { LogoProps } from './Logo.model';
 import './Logo.scss';
 
 export const CaLogo = (props: LogoProps) => {
-  const { text } = props;
+  const { text, onClick } = props;
 
   return (
     <div
       className='ca-logo'
+      onClick={onClick}
     >
       {text}
     </div>

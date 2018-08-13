@@ -12,12 +12,6 @@ export const languageReducer = (state = initialState, action: LanguageActions) =
         language: action.payload
       };
     }
-    case LanguageActionTypes.ChangeLanguageSuccess: {
-      return {
-        ...state,
-        status: LanguageStatus.CHANGED,
-      };
-    }
     case LanguageActionTypes.SaveLanguage: {
       return {
         ...state,

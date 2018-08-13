@@ -88,7 +88,11 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  public redToMainPage = () => {
+    this.props.history.push('/');
+  }
+
+  public handleChange = (event: any) => {
     const language = event.target.value;
 
     this.props.changeLanguage(language);

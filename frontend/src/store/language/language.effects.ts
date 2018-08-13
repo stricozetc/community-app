@@ -10,18 +10,31 @@ import {
 } from 'rxjs/operators';
 
 import { HttpWrapper } from 'services/axiosWrapper.service';
-import { AppState, FrontEndUser } from 'store';
+import { AppState, FrontEndUser, store } from 'store';
 import { GetErrors } from 'store/errors';
 import { i18nInstance } from 'utils/i18n';
 
 import {
   ChangeLanguage,
-  ChangeLanguageSuccess,
   LanguageActionTypes,
   SaveLanguage,
   SaveLanguageFail,
   SaveLanguageSuccess,
+  SetLanguage,
 } from './language.action';
+
+export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
+  actions$.pipe(
+    ofType(LanguageActionTypes.SetLanguage),
+    switchMap((action) => {
+      return from(HttpWrapper.get(`api/users/get-user-language?email=${action.payload}`)).pipe(
+        map(res => {
+          return new ChangeLanguage(res.data);
+        }),
+        catchError(error => of(new GetErrors(error.response.data)))
+      );
+    })
+  );
 
 export const changeLanguage$ = (actions$: ActionsObservable<ChangeLanguage>, state$: Observable<AppState>) =>
   actions$.pipe(
@@ -31,11 +44,10 @@ export const changeLanguage$ = (actions$: ActionsObservable<ChangeLanguage>, sta
       i18nInstance.changeLanguage(action.payload);
       const user: FrontEndUser | undefined = state.auth.user;
       if (user) {
-        return new SaveLanguage({ userEmail: user.email, userLanguage: action.payload });
-      } else {
-        return new ChangeLanguageSuccess();
+        store.dispatch(new SaveLanguage({ userEmail: user.email, userLanguage: action.payload }));
       }
-    })
+    }),
+    ignoreElements()
   );
 
 export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
@@ -57,6 +69,7 @@ export const saveLanguageFail$ = (actions$: ActionsObservable<SaveLanguageFail>)
   );
 
 export const LanguageEffects = [
+  setLanguage$,
   changeLanguage$,
   saveLanguage$,
   saveLanguageFail$
