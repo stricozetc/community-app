@@ -31,13 +31,9 @@ import {
   SetCurrentUser,
   store
 } from 'store';
-import { getCurrentLanguage, setAuthToken, isEmpty } from 'utils';
-<<<<<<< .mine
-import { isObjectsEqual } from 'utils/isObjectsEqual';
-=======
-
-import { CloseSnackbar } from 'store/snackbar'
-import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
+import { getCurrentLanguage, setAuthToken/* , isEmpty */ } from 'utils';
+/* import { isObjectsEqual } from 'utils/isObjectsEqual'; */
+import { CloseSnackbar, /* OpenSnackbar */ } from 'store/snackbar';
 
 import {
   getCurrentLanguage,
@@ -86,12 +82,11 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
-<<<<<<< .mine
-  public componentWillReceiveProps(nextProps: RootProps): void {
+  /* public componentWillReceiveProps(nextProps: RootProps): void {
     if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
       this.props.openSnackbar();
     }
-  }
+  } */
 
   public closeSnackbar(): void {
     this.props.closeSnackbar();
@@ -163,6 +158,7 @@ export class RootComponent extends React.Component<RootProps> {
   }
   public getNavbar(authStatus: number): JSX.Element {
 
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
     const appMenuItems: AppMenuItem[] = [
       {
         icon: <SettingsIcon />,
@@ -247,6 +243,19 @@ export class RootComponent extends React.Component<RootProps> {
     );
   }
 
+              <CaSnackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={this.props.isSnackbarOpen}
+                autoHideDuration={4000}
+                handleClose={() => this.closeSnackbar()}
+                type={this.props.snackbarType}                
+                transitionDirection={transitionDirection.down}
+                message={
+                  <div>
+                    {this.props.errors}
+                  </div>
+                }
+              />
 
 
 
