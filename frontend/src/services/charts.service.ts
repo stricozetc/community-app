@@ -1,4 +1,4 @@
-import { WinRateDiagramData } from 'models';
+import { WinRateDiagramData, ResultStatus } from 'models';
 import { i18nInstance } from 'utils/i18n';
 
 export class ChartsService {
@@ -12,12 +12,15 @@ export class ChartsService {
 
     let winsNumber = 0;
     let losesNumber = 0;
+    let drawNumber = 0;
 
     gameResults.forEach(result => {
-      if (result) {
+      if (result === ResultStatus.WIN) {
         winsNumber++;
-      } else {
+      } else if (result === ResultStatus.LOSE) {
         losesNumber++;
+      } else if (result === ResultStatus.DEAD_HEAT) {
+        drawNumber++;
       }
     });
 
@@ -34,7 +37,7 @@ export class ChartsService {
       legend: {
         orient: 'vertical',
         x: 'left',
-        data: [i18nInstance.t('win'), i18nInstance.t('lose')],
+        data: [i18nInstance.t('win'), i18nInstance.t('lose'), i18nInstance.t('draw')],
         textStyle: {
           color: '#fff',
           fontSize: '16'
@@ -44,7 +47,7 @@ export class ChartsService {
         {
           name: gameName,
           type: 'pie',
-          color: ['#2FA36C', '#B43C43'],
+          color: ['#2FA36C', '#B43C43', '#F4B33A'],
           radius: ['50%', '70%'],
           avoidLabelOverlap: false,
           label: {
@@ -73,6 +76,10 @@ export class ChartsService {
             {
               value: losesNumber,
               name: i18nInstance.t('lose')
+            },
+            {
+              value: drawNumber,
+              name: i18nInstance.t('draw')
             }
           ]
         }

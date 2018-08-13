@@ -47,6 +47,7 @@
   "emptyChartMessage": "Choose game to display charts",
   "win": "Win",
   "lose": "Lose",
+  "draw": "Draw",
   "winRate": "Win Rate",
   "noChartsAvailable": "No charts available"
 }

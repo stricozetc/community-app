@@ -14,6 +14,13 @@ export enum BattleStatus {
   ERROR
 }
 
+export enum ResultStatus {
+  INIT,
+  WIN,
+  LOSE,
+  DEAD_HEAT
+}
+
 export enum AuthStatus {
   NOT_AUTHORIZED,
   REGISTERED,
