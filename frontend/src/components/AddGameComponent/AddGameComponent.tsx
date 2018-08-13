@@ -1,10 +1,10 @@
 import { AuthStatus, MyGameModel } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
+
+import { FormForWorkingWithGame } from 'components/FormForWorkingWithGame';
 import { AddGame, LogoutUser } from 'store';
 import { AppState } from 'store/store.config';
-
-import { FormForWorkingWithGame } from '../FormForWorkingWithGame/FormForWorkingWithGame';
 
 import { AddGameComponentProps, AddGameComponentState } from './AddGameComponent.model';
 

@@ -1,5 +1,4 @@
-import { CaButton, CaLogo, CaNavbar, LoginForm, RegistrationForm } from 'components';
-import { CaAddGame } from 'components/AddGameComponent/AddGameComponent';
+import {  CaAddGame, CaButton, CaLogo, CaNavbar, LoginForm, RegistrationForm } from 'components';
 import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
 import { i18n } from 'i18next';

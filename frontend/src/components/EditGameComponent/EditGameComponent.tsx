@@ -1,12 +1,12 @@
+import { FormForWorkingWithGame } from 'components/FormForWorkingWithGame';
 import { AuthStatus, MyGameModel } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { EditGame } from 'store';
 import { AppState } from 'store/store.config';
 
-import { FormForWorkingWithGame } from '../FormForWorkingWithGame/FormForWorkingWithGame';
-
 import { EditGameComponentProps, EditGameComponentState, NecessaryPropertyOfTheForEditForm } from './EditGameComponent.model';
+
 export class EditGameComponent extends React.Component<EditGameComponentProps, EditGameComponentState> {
     constructor(props: EditGameComponentProps) {
         super(props);
