@@ -20,6 +20,5 @@ export interface RootProps {
 
   closeSnackbar(): void;
 
-  openSnackbar(): void;
-} 
-  
+  /* openSnackbar(): void; */
+}

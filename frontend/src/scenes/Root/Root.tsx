@@ -28,9 +28,9 @@ import {
   SetCurrentUser,
   store  
 } from 'store';
-import { getCurrentLanguage, setAuthToken, isEmpty } from 'utils';
-import { isObjectsEqual } from 'utils/isObjectsEqual';
-import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
+import { getCurrentLanguage, setAuthToken/* , isEmpty */ } from 'utils';
+/* import { isObjectsEqual } from 'utils/isObjectsEqual'; */
+import { CloseSnackbar, /* OpenSnackbar */ } from 'store/snackbar';
 
 import { CloseSnackbar } from 'store/snackbar'
 
@@ -85,7 +85,7 @@ if (token) {
 export class RootComponent extends React.Component<RootProps> {
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
-  }
+  } */
 
   public closeSnackbar(): void {
     this.props.closeSnackbar();
@@ -151,8 +151,8 @@ export class RootComponent extends React.Component<RootProps> {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
-    const { errors } = this.props;
-    const keys = errors && Object.keys(errors);
+    /* const { errors } = this.props; */
+    /* const keys = errors && Object.keys(errors); */
 
     const appMenuItems: AppMenuItem[] = [
       {
