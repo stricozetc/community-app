@@ -24,6 +24,7 @@ import { StatisticService } from './statistic.service';
 import { logicErr } from '../../../errors/logicErr';
 import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger/logger.service';
+import { ResultStatus } from '../../../models/statistic';
 
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
@@ -70,7 +71,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       order: [['createdAt', 'DESC']]
     })
       .then((recentGames) => {
-        if (!isEmpty(recentGames)) {
+        if (isEmpty(recentGames)) {
           throw logicErr.notFoundRecentGames;
         }
 
@@ -89,7 +90,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 const result = {
                   game: gameName,
                   scores: game.scores,
-                  result: game.status === 1
+                  result: game.resultStatus === 1
                 };
 
                 return accumulator.concat(result);
