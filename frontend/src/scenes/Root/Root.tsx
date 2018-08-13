@@ -27,6 +27,9 @@ import {
   SetCurrentUser,
   store
 } from 'store';
+import { getCurrentLanguage, setAuthToken/* , isEmpty */ } from 'utils';
+/* import { isObjectsEqual } from 'utils/isObjectsEqual'; */
+import { CloseSnackbar, /* OpenSnackbar */ } from 'store/snackbar';
 
 import {
   getCurrentLanguage,
@@ -66,6 +69,16 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
+  /* public componentWillReceiveProps(nextProps: RootProps): void {
+    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
+      this.props.openSnackbar();
+    }
+  } */
+
+  public closeSnackbar(): void {
+    this.props.closeSnackbar();
+  }
+
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
   }
@@ -181,13 +194,40 @@ export class RootComponent extends React.Component<RootProps> {
                   displayedValues={[t('ENToggle'), t('RUToggle')]}
                   handleChange={this.handleChange}
                   currentValue={getCurrentLanguage(i18n)}
-                />
-              </div>
-            </CaNavbar>
-          )
-        }
-      </I18n>
-    );
+>>>>>>> .theirs
+			  />
+
+              <CaSnackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={this.props.isSnackbarOpen}
+                autoHideDuration={4000}
+                handleClose={() => this.closeSnackbar()}
+                type={this.props.snackbarType}                
+                transitionDirection={transitionDirection.down}
+                message={
+                  <div>
+                    {this.props.errors}
+                  </div>
+                }
+              />
+
+			  <div className='ca-navbar__logout-btn-container'>
+				{this.getButton(this.props.status)}
+			  </div>
+
+			  <div className='ca-navbar__select-language'>
+				<CaSelect
+				  languages={[languages.en, languages.ru]}
+				  displayedLanguages={[t('ENToggle'), t('RUToggle')]}
+				  handleChange={this.handleChange}
+				  currLang={getCurrentLanguage(i18n)}
+				/>
+			  </div>
+			</CaNavbar>
+		  )
+		}
+	  </I18n>
+	);
   }
 
   public render(): JSX.Element {
@@ -314,6 +354,9 @@ export class RootComponent extends React.Component<RootProps> {
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   battleName: state.battle.battleName,
+  isSnackbarOpen: state.snackbarUi.isOpen,  
+  snackbarType: state.snackbarUi.type,
+  errors: state.snackbarUi.message,
   user: state.auth.user
 });
 
@@ -321,7 +364,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
   leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
-  changeLanguage: (language: string) => dispatch(new ChangeLanguage(language))
+  changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
 });
 
 export const Root = connect(

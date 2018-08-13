@@ -60,7 +60,7 @@ import { errorsReducer } from './errors';
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
-  errors: errorsReducer,
+  // errors: errorsReducer,
   games: gamesReducer,
   statistic: statisticReducer,
   socket: socketReducer,

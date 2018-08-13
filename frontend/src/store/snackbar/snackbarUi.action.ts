@@ -1,4 +1,5 @@
 import { action } from '../decorators';
+import { SnackbarType } from 'models'
 
 export enum SnackbarUiTypes {
   CloseSnackbar = '[snackbarUi] Close Snackbar',
@@ -14,6 +15,11 @@ export class CloseSnackbar {
 @action()
 export class OpenSnackbar {
   public readonly type = SnackbarUiTypes.OpenSnackbar;
+
+  public constructor(public payload: {
+    type: SnackbarType,
+    message: any
+  }) { }
 }
 
 @action()

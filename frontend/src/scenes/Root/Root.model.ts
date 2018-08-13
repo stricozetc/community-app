@@ -1,5 +1,5 @@
 import { FrontEndUser } from 'store';
-
+import { SnackbarType} from 'models';
 import { AuthStatus, ErrorsFromServer } from 'models';
 
 export interface RootProps {
@@ -8,7 +8,9 @@ export interface RootProps {
   history: any;
   battleName: string;
   isSnackbarOpen: boolean;
-  errors: ErrorsFromServer
+  snackbarType: SnackbarType;
+  errors: any;
+  /* errors: ErrorsFromServer */
 
   leaveBattle(battleName: string): void;
 
@@ -18,6 +20,5 @@ export interface RootProps {
 
   closeSnackbar(): void;
 
-  openSnackbar(): void;
-} 
-  
+  /* openSnackbar(): void; */
+}

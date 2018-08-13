@@ -1,7 +1,10 @@
 import { SnackbarUiState } from './interfaces';
+import { SnackbarType } from 'models';
 
 type State = SnackbarUiState;
 
 export const initialState: State = {
-  isOpen: false
+  isOpen: false,
+  type: SnackbarType.error,
+  message: null
 };
