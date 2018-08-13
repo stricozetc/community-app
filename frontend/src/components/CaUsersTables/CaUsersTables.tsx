@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
-import { JsMarathonCharts, MyGameCharts, StatTab, chartCategories, tableCellDataType, chartsTypes,  } from 'models';
+import { JsMarathonCharts, MyGameCharts, StatTab, chartCategories, chartsTypes, tableCellDataType } from 'models';
 import { I18n } from 'react-i18next';
 
-import { ChartTable } from '../ChartTable';
+import { ChartContainer } from '../ChartContainer';
 
 import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
@@ -113,7 +113,7 @@ export const CaUsersTables = withStyles(styles)(
                 <div className='ca-users-tables__charts'>
                   <h2 className='ca-users-tables__charts-title'>{t('charts')}</h2>
                   <div className='ca-users-tables__chart-container'>
-                    <ChartTable
+                    <ChartContainer
                       statistics={this.props.statistic}
                       itemName={this.state.tableItemName}
                       chartList={this.getChartList(this.state.tableItemName)}
