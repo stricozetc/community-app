@@ -1,6 +1,6 @@
 import { StatisticState } from 'store/statistic/interfaces';
 
-import { chartCategories } from './../../models';
+import { chartCategories } from 'models';
 
 export interface ChartTableProps {
   statistics: StatisticState;

@@ -1,4 +1,4 @@
-import { WinRateDiagram } from 'components/WinRateDiagram';
+import { CircleDiagram } from 'components/CircleDiagram';
 import * as React from 'react';
 import { I18n, TranslationFunction } from 'react-i18next';
 import { ChartsService } from 'services/charts.service';
@@ -9,10 +9,10 @@ import { /* chartCategories, */ chartsTypes } from 'models';
 
 import { CaSelect } from '../form-controls/CaSelect';
 
-import { ChartTableProps, ChartTableState } from './ChartTable.model';
-import './ChartTable.scss';
+import { ChartTableProps, ChartTableState } from './ChartContainer.model';
+import './ChartContainer.scss';
 
-export class ChartTable extends React.Component<ChartTableProps, ChartTableState> {
+export class ChartContainer extends React.Component<ChartTableProps, ChartTableState> {
   public constructor(props: ChartTableProps) {
     super(props);
 
@@ -50,7 +50,7 @@ export class ChartTable extends React.Component<ChartTableProps, ChartTableState
       case chartsTypes.winRate: {
         const diagramData = ChartsService.getWinRateData(itemName, statistics.recentGames);
 
-        chartComponent = <WinRateDiagram diagramData={diagramData} />;
+        chartComponent = <CircleDiagram diagramData={diagramData} />;
 
         break;
       }
