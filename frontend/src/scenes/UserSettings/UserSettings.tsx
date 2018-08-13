@@ -54,8 +54,7 @@ export class CaUserSettingsComponent extends React.Component<
     }
   }
 
-  public toggleChangePasswordForm(): void {
-    console.log('Clicked');
+  public toggleChangePasswordForm = (): void => {
     this.setState({
       isChangePasswordFormOpen: !this.state.isChangePasswordFormOpen
     });
@@ -65,14 +64,15 @@ export class CaUserSettingsComponent extends React.Component<
     this.props.changePassword(data);
   }
 
-  public render(): JSX.Element {
-    const handleChange = (event: any, value: any): void => {
-      this.setState({ value });
-    };
+  public handleChange = (event: any, value: any): void => {
+    this.setState({ value });
+  }
 
-    const handleChangeIndex = (index: number) => {
-      this.setState({ value: index });
-    };
+  public handleChangeIndex(index: number): void {
+    this.setState({ value: index });
+  }
+
+  public render(): JSX.Element {
 
     return (
       <I18n>
@@ -83,7 +83,7 @@ export class CaUserSettingsComponent extends React.Component<
               <AppBar position="static" color="default">
                 <Tabs
                   value={this.state.value}
-                  onChange={handleChange}
+                  onChange={this.handleChange}
                   indicatorColor="primary"
                   textColor="primary"
                   fullWidth
@@ -96,11 +96,11 @@ export class CaUserSettingsComponent extends React.Component<
               <SwipeableViews
                 axis='x'
                 index={this.state.value}
-                onChangeIndex={handleChangeIndex}
+                onChangeIndex={this.handleChangeIndex}
               >
                 <TabContainer>Profile</TabContainer>
                 <TabContainer>
-                  <CaButton onClick={() => this.toggleChangePasswordForm()}>
+                  <CaButton onClick={this.toggleChangePasswordForm}>
                     {t('changePasswordLabel')}
                   </CaButton>
 

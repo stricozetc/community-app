@@ -2,7 +2,6 @@ import { injectable } from 'inversify';
 
 import { UserSettingsRepository } from './user-settings';
 import { FieldsToChangePassword } from '../../../models/otherModels';
-// import {Promise} from 'bluebird';
 
 import { UserModel } from './../../../models/user';
 import { User } from './../../../Interfaces/User';

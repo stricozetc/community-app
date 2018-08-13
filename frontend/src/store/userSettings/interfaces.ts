@@ -5,7 +5,7 @@ import { Errors } from '../../models';
 
 export interface UserSettingsState {
   changePasswordStatus: LoadStatus;
-  changePasswordErrors: Errors;
+  changePasswordErrors: Errors | undefined;
 }
 
 export interface FieldsToChangePassword {

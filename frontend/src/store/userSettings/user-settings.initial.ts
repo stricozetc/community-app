@@ -5,5 +5,5 @@ type State = UserSettingsState;
 
 export const initialState: State = {
   changePasswordStatus: LoadStatus.Init,
-  changePasswordErrors: {}
+  changePasswordErrors: undefined
 };
