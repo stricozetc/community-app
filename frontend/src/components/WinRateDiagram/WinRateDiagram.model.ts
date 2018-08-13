@@ -1,8 +1,4 @@
+import { WinRateDiagramData } from 'models';
 export interface WinRateDiagramProps {
-  gameData: any[];
-}
-
-export interface WinRateDiagramData {
-  winsNumber: number;
-  losesNumber: number;
+  diagramData: WinRateDiagramData;
 }
