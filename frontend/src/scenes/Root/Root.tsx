@@ -55,7 +55,7 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public handleChange = (event: any, i18n: i18n) => {
+  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>, i18n: i18n) => {
     const language = event.target.value;
 
     i18n.changeLanguage(language);
