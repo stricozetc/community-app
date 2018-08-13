@@ -90,7 +90,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 const result = {
                   game: gameName,
                   scores: game.scores,
-                  result: game.resultStatus === 1
+                  result: game.resultStatus === ResultStatus.WIN
                 };
 
                 return accumulator.concat(result);
