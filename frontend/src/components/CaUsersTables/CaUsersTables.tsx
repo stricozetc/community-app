@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
-import { JsMarathonCharts, MyGameCharts, StatTab, chartCategories, chartsTypes, tableCellDataType } from 'models';
+import { JsMarathonCharts, MyGameCharts, StatTab, chartsTypes, tableCellDataType } from 'models';
 import { I18n } from 'react-i18next';
 
 import { ChartContainer } from '../ChartContainer';
@@ -21,7 +21,6 @@ export const CaUsersTables = withStyles(styles)(
         activeTab: 0,
         rowData: [],
         columnDef: [],
-        chartCategory: -1,
         tableItemName: ''
       };
     }
@@ -35,7 +34,6 @@ export const CaUsersTables = withStyles(styles)(
         case StatTab.TheMostPopularGames:
         case StatTab.RecentGames: {
           this.setState({
-            chartCategory: chartCategories.gameCharts,
             tableItemName: item.game
           });
 
@@ -43,14 +41,12 @@ export const CaUsersTables = withStyles(styles)(
         }
         case StatTab.BestUsers: {
           this.setState({
-            chartCategory: chartCategories.userCharts
           });
 
           break;
         }
         default: {
           this.setState({
-            chartCategory: -1,
             tableItemName: ''
           });
 
@@ -117,7 +113,6 @@ export const CaUsersTables = withStyles(styles)(
                       statistics={this.props.statistic}
                       itemName={this.state.tableItemName}
                       chartList={this.getChartList(this.state.tableItemName)}
-                      chartCategory={this.state.chartCategory}
                     />
                   </div>
                 </div>

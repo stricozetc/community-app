@@ -130,11 +130,6 @@ export enum tableCellDataType {
   result = 'result'
 }
 
-export enum chartCategories {
-  gameCharts,
-  userCharts
-}
-
 export enum chartsTypes {
   winRate = 'winRate',
   noChartsAvailable = 'noChartsAvailable'
