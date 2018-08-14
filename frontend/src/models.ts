@@ -77,6 +77,11 @@ export interface FrontEndValidationErrorsLogin {
   password: { min: string, required: string };
 }
 
+export interface FrontEndValidationErrorsChangePassword {
+  oldPassword: { required: string, min: string },
+  newPassword: { required: string, min: string },
+  repeatNewPassword:  { required: string,  min: string, mustMatch: string }
+}
 export interface UserFieldsToRegister {
   email: string;
   name: string;
@@ -182,3 +187,6 @@ export enum chartsTypes {
 export const JsMarathonCharts: string[] = [chartsTypes.winRate];
 
 export const MyGameCharts: string[] = [chartsTypes.winRate];
+export interface Errors {
+  [key: string]: [{ code: number; msg: string }];
+}

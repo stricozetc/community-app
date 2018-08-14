@@ -1,3 +1,4 @@
+
 export enum errCodes {
   emailIsRequired = 1000,
   nameIsRequired = 1001,
@@ -31,6 +32,16 @@ export enum errCodes {
   passwordLength = 1023,
 
   userShouldBeActive = 1024,
+
+  newPasswordIsRequired = 1025,
+  oldPasswordIsRequired = 1026,
+  repeatNewPasswordIsRequired = 1027,
+
+  newPasswordsMustMatch = 1028,
+  newAndOldPasswordsShouldBeDifferent = 1029,
+  newPasswordLength = 1030,
+  oldPasswordLength = 1031,
+  repeatNewPasswordLength = 1032
 }
 
 export enum technicalErrCodes {

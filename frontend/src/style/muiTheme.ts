@@ -18,7 +18,9 @@ import {
   MuiDialog
 } from 'components';
 
+
 export const theme = createMuiTheme({
+  direction: 'rtl',
   overrides: {
     MuiButton,
     MuiTable,
@@ -37,12 +39,12 @@ export const theme = createMuiTheme({
     MuiInputLabel: {
       root: {
         fontSize: '1.5rem'
-      }
+    }
     },
     MuiTooltip: {
       tooltip: {
         fontSize: '1.5rem'
-      }
+  }
     },
     MuiDialogContent,
     MuiDialogActions,

@@ -121,8 +121,49 @@ export const logicErr = {
     msg: 'Password must be at least 6 characters and not more that 30'
   },
 
+  newPasswordLength: {
+    code: errCodes.newPasswordLength,
+    msg: 'New Password must be at least 6 characters and not more that 30'
+  },
+
+  oldPasswordLength: {
+    code: errCodes.oldPasswordLength,
+    msg: 'Old Password must be at least 6 characters and not more that 30'
+  },
+
   userShouldBeActive: {
     code: errCodes.userShouldBeActive,
     msg: 'User should be Active',
   },
+
+  oldPasswordIsRequired: {
+    code: errCodes.oldPasswordIsRequired,
+    msg: 'Old password is required',
+  },
+
+  newPasswordIsRequired: {
+    code: errCodes.newPasswordIsRequired,
+    msg: 'New password is requred',
+  },
+
+  repeatNewPasswordIsRequired: {
+    code: errCodes.repeatNewPasswordIsRequired,
+    msg: 'Repeat new password is requred',
+  },
+
+  newPasswordsMustMatch: {
+    code: errCodes.newPasswordsMustMatch,
+    msg: 'New password must match',
+  },
+
+  newAndOldPasswordsShouldBeDifferent: {
+    code: errCodes.newAndOldPasswordsShouldBeDifferent,
+    msg: 'New and old passwords should be different',
+  },
+
+  repeatNewPasswordLength: {
+    code: errCodes.repeatNewPasswordLength,
+    msg: 'Password to repeat must be at least 6 characters and not more that 30',
+  }
+
 };
