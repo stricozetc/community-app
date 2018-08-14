@@ -189,7 +189,7 @@ export const CaUsersTables = withStyles(styles)(
 
           const columnDef = [
             { headerName: 'game',
-              field: RowProperty.game, //wefwefwefwef
+              field: RowProperty.game,
               type: TypeOfColumn.string},
             { headerName: 'playedInWeek',
               field: RowProperty.playedInWeek,
