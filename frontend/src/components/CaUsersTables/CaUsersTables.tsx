@@ -2,10 +2,24 @@ import * as React from 'react';
 
 import { Tab, Tabs, withStyles } from '@material-ui/core';
 import { CaTable } from 'components';
-import { HeaderName, Row, RowProperty, StatTab, TypeOfColumn } from 'models';
+
+import {
+  HeaderName,
+  JsMarathonCharts,
+  MyGameCharts,
+  Row,
+  RowProperty,
+  StatTab,
+  TypeOfColumn,
+  chartsTypes
+} from 'models';
+
 import { I18n } from 'react-i18next';
 
+import { ChartContainer } from '../ChartContainer';
+
 import { CaUsersTablesProps, CaUsersTablesState } from './CaUsersTables.model';
+
 import { styles } from './CaUsersTables.styles';
 
 import './CaUsersTables.scss';
@@ -15,9 +29,10 @@ export const CaUsersTables = withStyles(styles)(
     constructor(props: CaUsersTablesProps) {
       super(props);
       this.state = {
-        value: 0,
+        activeTab: 0,
         rowData: [],
-        columnDef: []
+        columnDef: [],
+        tableItemName: ''
       };
     }
 
@@ -25,30 +40,93 @@ export const CaUsersTables = withStyles(styles)(
       this.changeContent(StatTab.BestUsers);
     }
 
+    public handleRowClick = (item: any) => {
+      switch (this.state.activeTab) {
+        case StatTab.TheMostPopularGames:
+        case StatTab.RecentGames: {
+          this.setState({
+            tableItemName: item.game
+          });
+
+          break;
+        }
+        case StatTab.BestUsers: {
+          this.setState({
+            tableItemName: item.name
+          });
+
+          break;
+        }
+        default: {
+          this.setState({
+            tableItemName: ''
+          });
+
+          break;
+        }
+      }
+    }
+
+    public getChartList = (itemNate: string) => {
+      let chartList: string[];
+
+      switch (itemNate) {
+        case 'JsMarathon': {
+          chartList = [...JsMarathonCharts];
+
+          break;
+        }
+        case 'MyGame': {
+          chartList = [...MyGameCharts];
+
+          break;
+        }
+        default: {
+          chartList = [chartsTypes.noChartsAvailable];
+
+          break;
+        }
+      }
+
+      return chartList;
+    }
+
     public render(): JSX.Element {
       return (
         <I18n>
           {
             ( t ) => (
-              <div>
-                <h2 className='ca-users-tables__title'>{t('statistics')}</h2>
-                <Tabs value={this.state.value}>
-                  <Tab
-                    label={t('bestUsersLabel')}
-                    onClick={() => this.changeContent(StatTab.BestUsers)}
-                    classes={{ label: this.props.classes.label }} />
-                  <Tab
-                    label={t('mostPopularGamesLabel')}
-                    onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
-                    classes={{ label: this.props.classes.label }}
-                  />
-                  <Tab
-                    label={t('recentGamesLabel')}
-                    onClick={() => this.changeContent(StatTab.RecentGames)}
-                    classes={{ label: this.props.classes.label }} />
-                </Tabs>
+              <div className='ca-users-tables'>
+                <div className='ca-users-tables__statistics'>
+                  <h2 className='ca-users-tables__statistics-title'>{t('statistics')}</h2>
+                  <Tabs value={this.state.activeTab}>
+                    <Tab
+                      label={t('bestUsersLabel')}
+                      onClick={() => this.changeContent(StatTab.BestUsers)}
+                      classes={{ label: this.props.classes.label }} />
+                    <Tab
+                      label={t('mostPopularGamesLabel')}
+                      onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
+                      classes={{ label: this.props.classes.label }}
+                    />
+                    <Tab
+                      label={t('recentGamesLabel')}
+                      onClick={() => this.changeContent(StatTab.RecentGames)}
+                      classes={{ label: this.props.classes.label }} />
+                  </Tabs>
 
-                <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} />
+                  <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} handleRowClick={this.handleRowClick} />
+                </div>
+                <div className='ca-users-tables__charts'>
+                  <h2 className='ca-users-tables__charts-title'>{t('charts')}</h2>
+                  <div className='ca-users-tables__chart-container'>
+                    <ChartContainer
+                      statistics={this.props.statistic}
+                      itemName={this.state.tableItemName}
+                      chartList={this.getChartList(this.state.tableItemName)}
+                    />
+                  </div>
+                </div>
               </div>
             )
           }
@@ -69,9 +147,9 @@ export const CaUsersTables = withStyles(styles)(
       return [...headersName];
     }
 
-    public changeContent(value: number): void {
+    public changeContent(activeTab: number): void {
 
-      switch (value) {
+      switch (activeTab) {
         case StatTab.BestUsers: {
 
           const columnDef = [
@@ -93,13 +171,13 @@ export const CaUsersTables = withStyles(styles)(
             const rowData = this.checkPropertyOfObject(bestUsers, arrayOfNecessaryProperty);
 
             this.setState({
-              value,
+              activeTab,
               rowData,
               columnDef
             });
           } else {
             this.setState({
-              value,
+              activeTab,
               rowData: [],
               columnDef
             });
@@ -111,7 +189,7 @@ export const CaUsersTables = withStyles(styles)(
 
           const columnDef = [
             { headerName: 'game',
-              field: RowProperty.name,
+              field: RowProperty.game,
               type: TypeOfColumn.string},
             { headerName: 'playedInWeek',
               field: RowProperty.playedInWeek,
@@ -128,13 +206,13 @@ export const CaUsersTables = withStyles(styles)(
             const rowData = this.checkPropertyOfObject(mostPopularGames, arrayOfNecessaryProperty);
 
             this.setState({
-              value,
+              activeTab,
               rowData,
               columnDef
             });
           } else {
             this.setState({
-              value,
+              activeTab,
               rowData: [],
               columnDef
             });
@@ -163,13 +241,13 @@ export const CaUsersTables = withStyles(styles)(
             const rowData = this.checkPropertyOfObject(recentGames, arrayOfNecessaryProperty);
 
             this.setState({
-              value,
+              activeTab,
               rowData,
               columnDef
             });
           } else {
             this.setState({
-              value,
+              activeTab,
               rowData: [],
               columnDef
             });

@@ -23,6 +23,8 @@ import {
 
 import { StatisticProps } from './Statistic.model';
 
+import './StatisticPage.scss';
+
 class CaStatisticPageComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];
   public componentWillReceiveProps(nextProps: StatisticProps): void {

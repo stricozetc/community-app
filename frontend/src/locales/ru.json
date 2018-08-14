@@ -12,7 +12,8 @@
   "leaveTheRoom": "Покинуть комнату",
   "battles": "Игры",
   "statistics": "Статистика",
-"settings": "Настройка",
+  "charts": "Графики",
+  "settings": "Настройки",
   "adminPage": "Панель Админа",
   "roomsAreFull": "Все комнаты заняты",
   "startingIn": "Начало в",
@@ -52,7 +53,12 @@
   "playedInWeek": "Сыграно за неделю",
   "playedAll": "Сыграно всего",
   "result": "Результат",
+  "emptyChartMessage": "Выберите игру чтобы показать графики",
+  "win": "Победа",
+  "lose": "Поражение",
+  "draw": "Ничья",
+  "winRate": "Процент Побед",
+  "noChartsAvailable": "Нет доступных графиков",
   "createdAt": "Дата создания",
-  "updatedAt": "Дата обновления",
-  "key": "{{date, DD/MM/YYYY}}"
+  "updatedAt": "Дата обновления"
 }

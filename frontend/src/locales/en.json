@@ -12,7 +12,8 @@
   "leaveTheRoom": "Leave the room",
   "battles": "Battles",
   "statistics": "Statistics",
-"settings": "Settings",
+  "charts": "Charts",
+  "settings": "Settings",
   "adminPage": "Admin Page",
   "roomsAreFull": "All rooms are full",
   "startingIn": "Starting in",
@@ -51,7 +52,12 @@
   "playedInWeek": "Played in week",
   "playedAll": "Played all",
   "result": "Result",
+  "emptyChartMessage": "Choose game to display charts",
+  "win": "Win",
+  "lose": "Lose",
+  "draw": "Draw",
+  "winRate": "Win Rate",
+  "noChartsAvailable": "No charts available",
   "createdAt": "Created at",
-  "updatedAt": "Updated at",
-  "key": "{{date, MM/DD/YYYY}}"
+  "updatedAt": "Updated at"
 }

@@ -8,12 +8,12 @@ import { styles } from './CaSelect.styles';
 
 export const CaSelect = withStyles(styles)((props: CaSelectProps) => {
 
-  const { classes, displayedLanguages, languages, handleChange, currLang } = props;
+  const { classes, displayedValues, values, handleChange, currentValue } = props;
 
   return (
     <FormControl fullWidth={true} >
       <Select
-        value={currLang}
+        value={currentValue}
         onChange={(e) => handleChange(e, i18nInstance)}
         input={
           <Input
@@ -24,8 +24,8 @@ export const CaSelect = withStyles(styles)((props: CaSelectProps) => {
         }
       >
         {
-          displayedLanguages.map(
-            (language, index) => <MenuItem key={language} value={languages[index]}>{language.toUpperCase()}</MenuItem>
+          displayedValues.map(
+            (language, index) => <MenuItem key={language} value={values[index]}>{language.toUpperCase()}</MenuItem>
           )
         }
       </Select>

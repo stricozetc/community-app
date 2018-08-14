@@ -1,6 +1,12 @@
+import { EChartOption } from 'echarts/lib/echarts';
+
 export interface Item {
   id: string;
   name: string;
+}
+
+export interface WinRateDiagramData {
+  options: EChartOption;
 }
 
 export enum BattleStatus {
@@ -8,6 +14,13 @@ export enum BattleStatus {
   WAIT,
   PLAY,
   ERROR
+}
+
+export enum ResultStatus {
+  INIT,
+  WIN,
+  LOSE,
+  DRAW
 }
 
 export enum AuthStatus {
@@ -165,6 +178,15 @@ export interface HeaderName {
 export interface Row {
   [key: string]: any;
 }
+
+export enum chartsTypes {
+  winRate = 'winRate',
+  noChartsAvailable = 'noChartsAvailable'
+}
+
+export const JsMarathonCharts: string[] = [chartsTypes.winRate];
+
+export const MyGameCharts: string[] = [chartsTypes.winRate];
 export interface Errors {
   [key: string]: [{ code: number; msg: string }];
 }

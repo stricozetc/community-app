@@ -8,7 +8,8 @@ export interface CaUsersTablesProps extends WithStyles<typeof styles> {
 }
 
 export interface CaUsersTablesState {
-  value: number;
+  activeTab: number;
   rowData: Row[];
   columnDef: HeaderName[];
+  tableItemName: string;
 }

@@ -67,7 +67,7 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public handleChange = (event: any, i18n: i18n) => {
+  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>, i18n: i18n) => {
     const language = event.target.value;
 
     i18n.changeLanguage(language);
@@ -130,16 +130,17 @@ export class RootComponent extends React.Component<RootProps> {
               {this.getButton(this.props.status)}
             </div>
 
-            <div className="ca-navbar__select-language">
-              <CaSelect
-                languages={[languages.en, languages.ru]}
-                displayedLanguages={[t('ENToggle'), t('RUToggle')]}
-                handleChange={this.handleChange}
-                currLang={getCurrentLanguage(i18n)}
-              />
-            </div>
-          </CaNavbar>
-        )}
+              <div className='ca-navbar__select-language'>
+                <CaSelect
+                  values={[languages.en, languages.ru]}
+                  displayedValues={[t('ENToggle'), t('RUToggle')]}
+                  handleChange={this.handleChange}
+                  currentValue={getCurrentLanguage(i18n)}
+                />
+              </div>
+            </CaNavbar>
+          )
+        }
       </I18n>
     );
   }
