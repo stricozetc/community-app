@@ -222,7 +222,8 @@ export class LoginFormComponent extends React.Component<
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  errors: state.errors
+  errors: state.errors,
+  isSnackbarOpen: state.snackbarUi.isOpen,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
