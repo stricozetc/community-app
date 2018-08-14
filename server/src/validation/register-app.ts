@@ -10,13 +10,13 @@ export function validateAppDataInput(data: AppData): { errors: ErrorBlock[], isV
   data.url = !isEmpty(data.url) ? data.url : '';
   data.maxRoomPlayer = !isEmpty(data.maxRoomPlayer) && +data.maxRoomPlayer > 0 ? data.maxRoomPlayer : '';
 
-  if (!Validator.isEmpty(data.url)) {
+  if (Validator.isEmpty(data.url)) {
     errors.push(logicErr.urlIsRequired);
   }
-
-  if (!Validator.isURL(data.url)) {
-    errors.push(logicErr.urlMustBeValid);
-  }
+  // (Valiantsin) this validation don't work with localhost
+  // if (!Validator.isURL(data.url)) {
+  //   errors.push(logicErr.urlMustBeValid);
+  // }
 
   if (Validator.isEmpty(data.name)) {
     errors.push(logicErr.nameIsRequired);

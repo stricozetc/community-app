@@ -18,11 +18,7 @@ export const initGames$ = (actions$: ActionsObservable<LoadGames>) =>
     switchMap(() =>
       from(HttpWrapper.get('api/mocks/get-games')).pipe(
         map((res: any) => {
-
           const games: MyGameModel[] = res.data;
-          console.log(`-----------------`)
-          console.log(games);
-          console.log(`-----------------`)
 
           return new LoadGamesSuccess(games);
         }),

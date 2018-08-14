@@ -8,16 +8,24 @@ import { RoomStatus, Room } from './models';
 import { RoomInfo } from '../../typing/room-info';
 import { PlayersBindService } from '../players-bind';
 import { MyGameInterface } from '../../../models/games';
+import { GamesRepository } from '../games/games.repository';
 
 @injectable()
 export class RoomService {
-  private games: MyGameInterface[] = require('../../config/games.json').games;
+
+
+  // private games: MyGameInterface[] = require('../../config/games.json').games;
   @inject(ApiService) private apiService: ApiService;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(TimerService) private timerService: TimerService;
   @inject(PlayersBindService) private playersBindService: PlayersBindService;
+  @inject(GamesRepository) private gamesRepository: GamesRepository;
 
   private rooms: Room[] = [];
+  private games: any[] = [];
+
+  constructor() {
+  }
 
   public getRooms(): Room[] {
     return this.rooms;
@@ -55,10 +63,12 @@ export class RoomService {
       });
   }
 
-  public addPlayerToRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<[boolean, Room]> {
+  public async addPlayerToRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<[boolean, Room]> {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
+    this.games = await this.gamesRepository.getGames();
+
     const room: Room | undefined = this.rooms.find((r) => r.id === index);
     let operation$ = Promise.resolve(true);
 
