@@ -20,7 +20,7 @@ export const userSettingsReducer = (
         changePasswordStatus: LoadStatus.Success
       };
     }
-    case UserSettingsTypes.ChangePasswordFailed: {
+    case UserSettingsTypes.ChangePasswordError: {
       return {
         changePasswordErrors: action.payload,
         changePasswordStatus: LoadStatus.Error

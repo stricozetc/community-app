@@ -7,8 +7,8 @@ import { UserSettingsTypes } from './user-settings.action';
 
 import {
   ChangePassword,
-  ChangePasswordCompleted,
-  ChangePasswordFailed
+  ChangePasswordSuccess,
+  ChangePasswordError
 } from './user-settings.action';
 
 export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
@@ -16,10 +16,10 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
     ofType(UserSettingsTypes.ChangePassword),
     switchMap((action) =>
       from(HttpWrapper.post('api/v1/user-settings/change-password', action.payload)).pipe(
-        map((res: any) => {
-          return new ChangePasswordCompleted();
+        map(() => {
+          return new ChangePasswordSuccess();
         }),
-        catchError(error => of(new ChangePasswordFailed(error.response.data)))
+        catchError(error => of(new ChangePasswordError(error.response.data)))
       )
     )
   );

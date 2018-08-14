@@ -5,7 +5,7 @@ import { FieldsToChangePassword } from './interfaces';
 export enum UserSettingsTypes {
   ChangePassword = '[user-settings] Change Password',
   ChangePasswordSuccess = '[user-settings] Change Password (Success)',
-  ChangePasswordFailed = '[user-settings] Change Password (Error)'
+  ChangePasswordError = '[user-settings] Change Password (Error)'
 
 }
 
@@ -17,20 +17,18 @@ export class ChangePassword {
 }
 
 @action()
-export class ChangePasswordCompleted {
+export class ChangePasswordSuccess {
   public readonly type = UserSettingsTypes.ChangePasswordSuccess;
-
-  constructor() { }
 }
 
 @action()
-export class ChangePasswordFailed {
-  public readonly type = UserSettingsTypes.ChangePasswordFailed;
+export class ChangePasswordError {
+  public readonly type = UserSettingsTypes.ChangePasswordError;
 
   constructor(public payload: any) { }
 }
 
 export type UserSettingsActions =
   | ChangePassword
-  | ChangePasswordCompleted
-  | ChangePasswordFailed;
+  | ChangePasswordSuccess
+  | ChangePasswordError;

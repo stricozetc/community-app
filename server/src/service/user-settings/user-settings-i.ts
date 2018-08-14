@@ -5,7 +5,6 @@ import { UserSettingsRepository } from './user-settings';
 import { UserModel } from './../../../models/user';
 import { User } from './../../../Interfaces/User';
 import * as bcrypt from 'bcryptjs';
-// import { changePasswordErrors } from './../../../errors/changePassword';
 import * as passport from 'passport';
 import { technicalErr } from '../../../errors/technicalErr';
 import { FieldsToChangePassword } from '../../../models/otherModels';

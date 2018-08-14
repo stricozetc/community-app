@@ -29,7 +29,6 @@ export class UserSettingsController {
     return this.userSettingsRepository
       .changePassword(request.body)
       .then(res => {
-        console.log('RESPONS', res);
         if (res.result) {
           return response.status(200).json(res.result);
         } else {
@@ -37,7 +36,6 @@ export class UserSettingsController {
         }
       })
       .catch(err => {
-        console.log('REJECT', err);
         return response.status(400).json(err);
       });
   }
