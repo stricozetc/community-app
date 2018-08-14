@@ -51,8 +51,6 @@ export const CaUsersTables = withStyles(styles)(
           break;
         }
         case StatTab.BestUsers: {
-          this.setState({
-          });
 
           break;
         }
