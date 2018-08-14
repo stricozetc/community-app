@@ -1,6 +1,6 @@
 import * as openSocket from 'socket.io-client';
 
-import { Game, RoomInfo } from 'models';
+import { MyGameModel, RoomInfo } from 'models';
 import { Subject } from 'rxjs';
 
 export class SocketService {
@@ -13,7 +13,7 @@ export class SocketService {
     this.socket = openSocket('http://localhost:3030');
   }
 
-  public init(games: Game[]): void {
+  public init(games: MyGameModel[]): void {
     for (const game of games) {
       this.socket.on(
         game.updateRoomsInfoEventName,

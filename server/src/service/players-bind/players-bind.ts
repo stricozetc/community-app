@@ -1,10 +1,11 @@
 import { injectable, inject } from 'inversify';
 import { Room } from '../room/models';
 import axios from 'axios';
-import { Game } from '../../typing/game';
+
 import { AppTokenService } from '../app-token';
 import { LoggerService } from '../logger';
 import { AppToken } from '../../../Interfaces/AppToken';
+import { MyGameInterface } from '../../../models/games';
 
 @injectable()
 export class PlayersBindService {
@@ -41,7 +42,7 @@ export class PlayersBindService {
       .filter((player) => player !== removePlayer);
   }
 
-  public async sendPlayerBind(game: Game, room: Room): Promise<boolean> {
+  public async sendPlayerBind(game: MyGameInterface, room: Room): Promise<boolean> {
     let app: AppToken;
     try {
       app = await this.tokenService.getByAppName(game.appName);

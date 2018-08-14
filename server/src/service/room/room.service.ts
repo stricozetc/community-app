@@ -1,16 +1,17 @@
 import { injectable, inject } from 'inversify';
 import { ApiService } from '../api';
-import { Game } from '../../typing/game';
+// import { Game } from '../../typing/game';
 import { LoggerService } from '../logger';
 import { TimerService } from './../timer';
 
 import { RoomStatus, Room } from './models';
 import { RoomInfo } from '../../typing/room-info';
 import { PlayersBindService } from '../players-bind';
+import { MyGameInterface } from '../../../models/games';
 
 @injectable()
 export class RoomService {
-  private games: Game[] = require('../../config/games.json').games;
+  private games: MyGameInterface[] = require('../../config/games.json').games;
   @inject(ApiService) private apiService: ApiService;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(TimerService) private timerService: TimerService;
@@ -42,12 +43,12 @@ export class RoomService {
           });
 
           this.playersBindService.bindPlayer(roomToken, playerToken);
-          this.loggerService.infoLog(`New room was added for ${this.games[index].name}`);
+          this.loggerService.infoLog(`New room was added for ${this.games[index].appName}`);
           this.loggerService.infoLog(`Current count of players is 1`);
 
           isCreated = true;
         } else {
-          this.loggerService.errorLog(`New room was not added for ${this.games[index].name}`);
+          this.loggerService.errorLog(`New room was not added for ${this.games[index].appName}`);
         }
 
         return isCreated;
@@ -66,7 +67,7 @@ export class RoomService {
 
       this.playersBindService.bindPlayer(room.token, playerToken);
 
-      this.loggerService.infoLog(`Add player to ${this.games[index].name} room`);
+      this.loggerService.infoLog(`Add player to ${this.games[index].appName} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else {
 
@@ -75,7 +76,7 @@ export class RoomService {
         const newRoom = this.rooms.find((r) => r.id === index);
         const timer = this.timerService.start(
           (distance: number) => {
-            this.loggerService.infoLog(`Countdown ${distance} -> ${this.games[index].name}`);
+            this.loggerService.infoLog(`Countdown ${distance} -> ${this.games[index].appName}`);
             newRoom.distance = distance;
 
             const roundDistance = Math.round(distance / 1000);
@@ -85,7 +86,7 @@ export class RoomService {
             }
           },
           () => {
-            this.loggerService.infoLog(`Start game by timer -> ${this.games[index].name}`);
+            this.loggerService.infoLog(`Start game by timer -> ${this.games[index].appName}`);
 
             this.startGame(this.games[index], newRoom, index);
           },
@@ -120,14 +121,14 @@ export class RoomService {
 
       room.players = room.players.filter((p) => p !== client);
 
-      this.loggerService.infoLog(`Remove player from ${this.games[index].name} room`);
+      this.loggerService.infoLog(`Remove player from ${this.games[index]} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else if (room) {
       this.timerService.end(room.timer);
       this.rooms = [...this.rooms.filter((r) => r.id !== index)];
       room.players = [];
 
-      this.loggerService.infoLog(`Remove ${this.games[index].name} room`);
+      this.loggerService.infoLog(`Remove ${this.games[index].appName} room`);
     }
 
     return operation$.then((result) => {
@@ -155,14 +156,14 @@ export class RoomService {
     if (room && room.players.length > 1) {
       room.players = [...room.players.filter((p) => p !== client)];
 
-      this.loggerService.infoLog(`Remove player from ${this.games[room.id].name} room`);
+      this.loggerService.infoLog(`Remove player from ${this.games[room.id].appName} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else if (room) {
       this.timerService.end(room.timer);
       this.rooms = [...this.rooms.filter((r) => r.id !== room.id)];
       room.players = [];
 
-      this.loggerService.infoLog(`Remove ${this.games[room.id].name} room`);
+      this.loggerService.infoLog(`Remove ${this.games[room.id].appName} room`);
     }
 
     return operation$.then((result) => {
@@ -184,20 +185,20 @@ export class RoomService {
     }
   }
 
-  private startGame(game: Game, room: Room, index: number): void {
+  private startGame(game: MyGameInterface, room: Room, index: number): void {
 
     this.playersBindService.sendPlayerBind(game, room)
       .then(() => {
         room.players.forEach((player: SocketIO.Socket) => {
           player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
-          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
+          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
 
           player.emit('redirect', this.games[index].redirectUrl);
-          this.loggerService.infoLog(`Redirect players group to ${this.games[index].name}`);
+          this.loggerService.infoLog(`Redirect players group to ${this.games[index].appName}`);
         });
         room.status = RoomStatus.InGame;
       })
-      .catch((error) => console.log(error));
+      .catch((error: any) => console.log(error));
   }
 
   private countdown(room: Room, index: number, distance: number): void {

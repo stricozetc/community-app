@@ -1,4 +1,4 @@
-import { Game } from 'models';
+import { MyGameModel } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { Observable } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>, state$: Obs
     withLatestFrom(state$),
     map(([action, state]) => {
       const game = state.games.games
-        .find((info: Game) => info.name === action.payload);
+        .find((info: MyGameModel) => info.appName === action.payload);
 
       let args: any = '';
       const user = state.auth.user;
@@ -42,7 +42,7 @@ export const leaveBattle$ = (actions$: ActionsObservable<LeaveBattle>, state$: O
     withLatestFrom(state$),
     map(([action, state]) => {
       const game = state.games.games
-        .find((info: Game) => info.name === action.payload);
+        .find((info: MyGameModel) => info.appName === action.payload);
 
       return new EmitEventWithOptions({ eventName: game ? game.leaveEventName : '' });
     })

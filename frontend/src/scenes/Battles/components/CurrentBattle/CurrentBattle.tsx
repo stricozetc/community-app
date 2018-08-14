@@ -4,7 +4,7 @@ import clockImage from 'assets/clock-small.svg';
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
 import { CaButton, Countdown } from 'components';
-import { AuthStatus, BattleStatus, Game, RoomInfo } from 'models';
+import { AuthStatus, BattleStatus, MyGameModel, RoomInfo } from 'models';
 import { I18n } from 'react-i18next';
 
 import './current-battle.scss';
@@ -14,7 +14,7 @@ interface Props {
   battleName: string;
   countdown: number;
   history: any;
-  games: Game[];
+  games: MyGameModel[];
   gameStatus: number;
   authStatus: number;
   leaveBattleAction(payload: string): void;
@@ -63,7 +63,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
     const currentGame = this.props.games && this.props.games.length ?
       this.props.games[this.getGameIndex()] : undefined;
 
-    const timeValue = currentGame ? currentGame.battleTime / 60000 : 0;
+    const timeValue = currentGame ? currentGame.maxWaitingTime / 60000 : 0;
 
     return (
       <I18n>
@@ -82,7 +82,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
                     </div>
                     <div className='ca-current-battle__sub-title'>
                       {currentGame ?
-                        currentGame.desc : ''}
+                        currentGame.description : ''}
                     </div>
                   </div>
                 </div>

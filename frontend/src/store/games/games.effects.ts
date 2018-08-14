@@ -1,4 +1,4 @@
-import { Game } from 'models';
+import { MyGameModel } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -16,10 +16,13 @@ export const initGames$ = (actions$: ActionsObservable<LoadGames>) =>
   actions$.pipe(
     ofType(GamesTypes.LoadGames),
     switchMap(() =>
-      from(HttpWrapper.get('api/mocks/games')).pipe(
+      from(HttpWrapper.get('api/mocks/get-games')).pipe(
         map((res: any) => {
 
-          const games: Game[] = res.data;
+          const games: MyGameModel[] = res.data;
+          console.log(`-----------------`)
+          console.log(games);
+          console.log(`-----------------`)
 
           return new LoadGamesSuccess(games);
         }),

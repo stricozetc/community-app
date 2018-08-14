@@ -14,7 +14,7 @@ export class MockController {
   public constructor(@inject(MocksRepository) private mocksRepository: MocksRepository) {
   }
 
-  @httpGet('/games', passport.authenticate('jwt', {session: false}))
+  @httpGet('/get-games', passport.authenticate('jwt', {session: false}))
   public getGames(request: Request, response: Response): Promise<void | Response> {
     return this.mocksRepository.getGames()
       .then((games: Game[]) => {

@@ -148,10 +148,10 @@ export interface MyGameModel {
   createAt?: Date;
   updatedAt?: Date;
   redirectUrl: string;
-  registrationEventName?: string;
-  leaveEventName?: string;
-  updateRoomsInfoEventName?: string;
-  notifyCountdown?: string;
+  registrationEventName: string;
+  leaveEventName: string;
+  updateRoomsInfoEventName: string;
+  notifyCountdown: string;
   approve: boolean;
 }
 export interface HeaderName {
