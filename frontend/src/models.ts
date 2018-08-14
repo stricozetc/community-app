@@ -147,6 +147,11 @@ export interface MyGameModel {
   maxWaitingTime: number;
   createAt?: Date;
   updatedAt?: Date;
+  redirectUrl: string;
+  registrationEventName?: string;
+  leaveEventName?: string;
+  updateRoomsInfoEventName?: string;
+  notifyCountdown?: string;
 }
 
 export interface HeaderName {

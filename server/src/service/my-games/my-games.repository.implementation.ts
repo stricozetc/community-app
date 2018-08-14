@@ -20,9 +20,9 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
                     }
                 });
 
-                resolve(games)
-            })
-        })
+                resolve(games);
+            });
+        });
 
     }
 
@@ -35,7 +35,12 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
             maxRoomPlayer: +gameThatNeedEdit.maxRoomPlayer,
             maxRooms: +gameThatNeedEdit.maxRooms,
             requestUrl: gameThatNeedEdit.requestUrl,
-            maxWaitingTime: +gameThatNeedEdit.maxWaitingTime
+            maxWaitingTime: +gameThatNeedEdit.maxWaitingTime,
+            redirectUrl: gameThatNeedEdit.redirectUrl,
+            registrationEventName: gameThatNeedEdit.registrationEventName,
+            leaveEventName: gameThatNeedEdit.leaveEventName,
+            updateRoomsInfoEventName: gameThatNeedEdit.updateRoomsInfoEventName,
+            notifyCountdown: gameThatNeedEdit.notifyCountdown
         }).then(() => {
             return GamesModel.findAll({
                 where: {
@@ -56,7 +61,12 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
                     maxRoomPlayer: +data.maxRoomPlayer,
                     maxRooms: +data.maxRooms,
                     requestUrl: data.requestUrl,
-                    maxWaitingTime: +data.maxWaitingTime
+                    maxWaitingTime: +data.maxWaitingTime,
+                    redirectUrl: data.redirectUrl,
+                    registrationEventName: data.registrationEventName,
+                    leaveEventName: data.leaveEventName,
+                    updateRoomsInfoEventName: data.updateRoomsInfoEventName,
+                    notifyCountdown: data.notifyCountdown
                 }
             );
 

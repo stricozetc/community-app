@@ -14,6 +14,11 @@ export interface MyGameInterface {
     maxWaitingTime: number;
     createdAt?: string;
     updatedAt?: string;
+    redirectUrl: string;
+    registrationEventName?: string;
+    leaveEventName?: string;
+    updateRoomsInfoEventName?: string;
+    notifyCountdown?: string;
 }
 
 export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.gamesModel, {
@@ -69,6 +74,46 @@ export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define
     maxWaitingTime: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    redirectUrl: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    registrationEventName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    leaveEventName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    updateRoomsInfoEventName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    notifyCountdown: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
         validate: {
             notEmpty: true
         }

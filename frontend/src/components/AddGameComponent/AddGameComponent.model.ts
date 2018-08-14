@@ -7,6 +7,7 @@ export interface AddGameComponentState {
     maxRooms: string;
     requestUrl: string;
     maxWaitingTime: string;
+    redirectUrl: string;
 }
 
 export interface AddGameComponentProps {

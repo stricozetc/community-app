@@ -14,7 +14,8 @@ const initFormForAddingNewGame: AddGameComponentState = {
     maxRoomPlayer: '',
     maxRooms: '',
     requestUrl: '',
-    maxWaitingTime: ''
+    maxWaitingTime: '',
+    redirectUrl: ''
 };
 export class AddGameComponent extends React.Component<AddGameComponentProps, AddGameComponentState> {
     constructor(props: AddGameComponentProps) {

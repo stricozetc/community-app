@@ -7,10 +7,17 @@ export interface FormForAddingNewGameState {
     maxRooms: number;
     requestUrl: string;
     maxWaitingTime: number;
+    redirectUrl: string;
+    registrationEventName?: string;
+    leaveEventName?: string;
+    updateRoomsInfoEventName?: string;
+    notifyCountdown?: string;
 }
 
 export interface FormForAddingNewGameProps {
+    id: number;
     userId: number;
     config: string;
-    model: MyGameModel; 
+    model: MyGameModel;
+    submit (payload: MyGameModel): void;
 }

@@ -19,7 +19,7 @@ export interface EditGameComponentProps {
     editGame (payload: MyGameModel): void;
 }
 
-export interface NecessaryPropertyOfTheForEditForm {
+export interface NecessaryPropertyOfTheGameForEditForm {
     appName: string;
     description: string;
     maxRoomPlayer: number;

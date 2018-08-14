@@ -6,9 +6,9 @@ export interface MyGameProps {
     games: MyGameModel[];
     children?: JSX.Element;
 
-    deleteGame (payload: MyGameModel | null): any;
-    addGame (payload: MyGameModel):  any;
-    getMyGames (payload: number):  any;
+    deleteGame (payload: MyGameModel | null): void;
+    addGame (payload: MyGameModel):  void;
+    getMyGames (payload: number):  void;
 }
 
 export interface  MyGameState {

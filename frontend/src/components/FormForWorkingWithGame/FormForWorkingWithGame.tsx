@@ -32,7 +32,12 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
           maxRoomPlayer: this.state.maxRoomPlayer,
           maxRooms: this.state.maxRooms,
           requestUrl: this.state.requestUrl,
-          maxWaitingTime: this.state.maxWaitingTime
+          maxWaitingTime: this.state.maxWaitingTime,
+          redirectUrl: this.state.redirectUrl,
+          registrationEventName: 'on' + this.state.appName,
+          leaveEventName: 'onLeave' + this.state.appName,
+          updateRoomsInfoEventName: 'onUpdateRoomsInfo' + this.state.appName,
+          notifyCountdown: 'onNotifyCountdown' + this.state.appName
         };
 
         if (this.props.config === 'Edit Game') {
