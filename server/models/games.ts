@@ -19,6 +19,7 @@ export interface MyGameInterface {
     leaveEventName?: string;
     updateRoomsInfoEventName?: string;
     notifyCountdown?: string;
+    approve: boolean;
 }
 
 export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.gamesModel, {
@@ -117,7 +118,14 @@ export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define
         validate: {
             notEmpty: true
         }
-    }
+    },
+    approve: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
 },                                                                                  {
     // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
     // otherwise, the model name will be pluralized

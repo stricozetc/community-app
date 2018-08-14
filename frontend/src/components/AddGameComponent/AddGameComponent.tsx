@@ -46,8 +46,7 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
 
 const mapStateToProps = (state: AppState) => ({
     authStatus: state.auth.status,
-    user: state.auth.user,
-    games: state.myGames.myGames
+    user: state.auth.user
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

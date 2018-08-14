@@ -37,7 +37,8 @@ export class GameForm extends React.Component<any, GameFormState> {
           registrationEventName: 'on' + this.state.appName,
           leaveEventName: 'onLeave' + this.state.appName,
           updateRoomsInfoEventName: 'onUpdateRoomsInfo' + this.state.appName,
-          notifyCountdown: 'onNotifyCountdown' + this.state.appName
+          notifyCountdown: 'onNotifyCountdown' + this.state.appName,
+          approve: false
         };
 
         if (this.props.config === 'Edit Game') {

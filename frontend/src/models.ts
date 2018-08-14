@@ -152,6 +152,7 @@ export interface MyGameModel {
   leaveEventName?: string;
   updateRoomsInfoEventName?: string;
   notifyCountdown?: string;
+  approve: boolean;
 }
 export interface HeaderName {
   headerName: string;

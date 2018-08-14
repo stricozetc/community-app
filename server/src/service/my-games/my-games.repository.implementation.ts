@@ -26,25 +26,26 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
 
     }
 
-    public editGame(gameThatNeedEdit: MyGameInterface): Promise<MyGameInterface[]> {
+    public editGame(game: MyGameInterface): Promise<MyGameInterface[]> {
         return GamesModel.upsert({
-            id: +gameThatNeedEdit.id,
-            userId: +gameThatNeedEdit.userId,
-            appName: gameThatNeedEdit.appName,
-            description: gameThatNeedEdit.description,
-            maxRoomPlayer: +gameThatNeedEdit.maxRoomPlayer,
-            maxRooms: +gameThatNeedEdit.maxRooms,
-            requestUrl: gameThatNeedEdit.requestUrl,
-            maxWaitingTime: +gameThatNeedEdit.maxWaitingTime,
-            redirectUrl: gameThatNeedEdit.redirectUrl,
-            registrationEventName: gameThatNeedEdit.registrationEventName,
-            leaveEventName: gameThatNeedEdit.leaveEventName,
-            updateRoomsInfoEventName: gameThatNeedEdit.updateRoomsInfoEventName,
-            notifyCountdown: gameThatNeedEdit.notifyCountdown
+            id: +game.id,
+            userId: +game.userId,
+            appName: game.appName,
+            description: game.description,
+            maxRoomPlayer: +game.maxRoomPlayer,
+            maxRooms: +game.maxRooms,
+            requestUrl: game.requestUrl,
+            maxWaitingTime: +game.maxWaitingTime,
+            redirectUrl: game.redirectUrl,
+            registrationEventName: game.registrationEventName,
+            leaveEventName: game.leaveEventName,
+            updateRoomsInfoEventName: game.updateRoomsInfoEventName,
+            notifyCountdown: game.notifyCountdown,
+            approve: game.approve
         }).then(() => {
             return GamesModel.findAll({
                 where: {
-                    userId: gameThatNeedEdit.userId
+                    userId: game.userId
                 }
             });
         });
@@ -66,7 +67,8 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
                     registrationEventName: data.registrationEventName,
                     leaveEventName: data.leaveEventName,
                     updateRoomsInfoEventName: data.updateRoomsInfoEventName,
-                    notifyCountdown: data.notifyCountdown
+                    notifyCountdown: data.notifyCountdown,
+                    approve: data.approve
                 }
             );
 
