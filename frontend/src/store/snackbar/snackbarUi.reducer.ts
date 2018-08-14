@@ -5,7 +5,7 @@ import { initialState } from './snackbarUi.initial';
 export const snackbarUiReducer = (state = initialState, action: SnackbarUiActions) => {
   switch (action.type) {
     case SnackbarUiTypes.OpenSnackbar: {
-      return {
+      return {        
         ...state,
         isOpen: true,
         type: action.payload.type,

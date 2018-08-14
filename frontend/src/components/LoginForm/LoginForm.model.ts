@@ -5,6 +5,7 @@ export interface LoginFormState {
   password: string;
   isPasswordValid: boolean;
   isEmailValid: boolean;
+  isnackbarOpen: boolean;
   touched: {
     email: boolean;
     password: boolean;
@@ -18,6 +19,7 @@ export const initLoginFormState: LoginFormState = {
   password: '',
   isPasswordValid: false,
   isEmailValid: false,
+  isnackbarOpen: false,
   touched: {
     email: false,
     password: false

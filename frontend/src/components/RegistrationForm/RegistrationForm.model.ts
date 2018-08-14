@@ -8,6 +8,7 @@ export interface RegistrationFormState {
   isPasswordValid: boolean;
   isEmailValid: boolean;
   isNameValid: boolean;
+  isnackbarOpen: boolean;
   touched: {
     email: boolean;
     password: boolean;
@@ -27,6 +28,7 @@ export const initRegistrationFormState: RegistrationFormState = {
   isPasswordValid: false,
   isEmailValid: false,
   isNameValid: false,
+  isnackbarOpen: false,
   touched: {
     email: false,
     password: false,

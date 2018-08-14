@@ -9,6 +9,7 @@ import { SetLanguage, store } from 'store';
 import { GetErrors } from 'store/errors';
 import { deleteAuthToken, history, setAuthToken } from 'utils';
 
+
 import {
   AuthTypes,
   LoginUser,
@@ -19,6 +20,8 @@ import {
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
+import { OpenSnackbar } from 'store/snackbar';
+import { SnackbarType } from 'models';
 
 export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
   actions$.pipe(
@@ -34,9 +37,11 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           return new SetCurrentUser(decoded);
         }),
         catchError(error => {
-          const errors = error.response.data;
-          return of(new GetErrors(!Array.isArray(errors) ? errors.msg : errors.map((err: any) => err.msg)));
-        })
+          console.log(error.response.data)
+          return of(new OpenSnackbar({type: SnackbarType.info, message: 'Screw you'}))
+        }
+          
+        )        
       )
     )
   );
@@ -47,10 +52,11 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new SuccessRegistration('./login')),
-        catchError(error => {
-          const errors = error.response.data;
-          return of(new GetErrors(!Array.isArray(errors) ? errors.msg : errors.map((err: any) => err.msg)));
-        })
+        catchError((error) =>{
+          console.log(error.response.data.msg)
+          return of(new OpenSnackbar({type: SnackbarType.success, message: 'Fuck you'}))
+        } 
+        )
       )
     )
   );

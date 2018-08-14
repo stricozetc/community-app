@@ -1,5 +1,6 @@
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
+import { AuthStatus, languages, /* SnackbarType ,*/ transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -354,7 +355,7 @@ export class RootComponent extends React.Component<RootProps> {
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   battleName: state.battle.battleName,
-  isSnackbarOpen: state.snackbarUi.isOpen,  
+  isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
   errors: state.snackbarUi.message,
   user: state.auth.user
