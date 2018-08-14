@@ -1,4 +1,4 @@
-import { AuthStatus, MyGameModel } from 'models';
+import { AuthStatus, GameForSettingForm, MyGameModel } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,7 @@ import { AppState } from 'store/store.config';
 
 import { AddGameComponentProps } from './AddGameComponent.model';
 
-const initFormForAddingNewGame: MyGameModel = {
+const initFormForAddingNewGame: GameForSettingForm = {
     appName: '',
     description: '',
     maxRoomPlayer: 5,
@@ -20,7 +20,6 @@ const initFormForAddingNewGame: MyGameModel = {
 export class AddGameComponent extends React.Component<AddGameComponentProps> {
     constructor(props: AddGameComponentProps) {
         super(props);
-        this.state = initFormForAddingNewGame;
     }
 
     public componentWillMount(): void {

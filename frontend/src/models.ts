@@ -164,3 +164,13 @@ export interface HeaderName {
 export interface Row {
   [key: string]: any;
 }
+
+export interface GameForSettingForm {
+  appName: string;
+  description: string;
+  maxRoomPlayer: number;
+  maxRooms: number;
+  requestUrl: string;
+  maxWaitingTime: number;
+  redirectUrl: string;
+}

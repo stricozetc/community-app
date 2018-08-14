@@ -1,5 +1,5 @@
 import { GameForm } from 'components/GameForm';
-import { AuthStatus, MyGameModel } from 'models';
+import { AuthStatus, GameForSettingForm, MyGameModel } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { EditGame } from 'store';
@@ -42,7 +42,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
         );
     }
 
-    public getGame(): MyGameModel {
+    public getGame(): GameForSettingForm {
 
         const idOfTheGameThatNeedToEdit = this.props.match.params['idOfTheGame'];
         const myGames = this.props.games;
@@ -54,7 +54,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
         );
     }
 
-    public deleteUnnecessaryProperty(game: MyGameModel, arrayOfNecessaryProperty: string[]): MyGameModel {
+    public deleteUnnecessaryProperty(game: MyGameModel, arrayOfNecessaryProperty: string[]): GameForSettingForm {
         const gameWithNecessaryProperty = { ...game };
 
         for (const property in gameWithNecessaryProperty) {
