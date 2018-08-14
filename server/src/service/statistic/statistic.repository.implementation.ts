@@ -267,3 +267,4 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       });
   }
 }
+

@@ -64,6 +64,11 @@ export interface FrontEndValidationErrorsLogin {
   password: { min: string, required: string };
 }
 
+export interface FrontEndValidationErrorsChangePassword {
+  oldPassword: { required: string, min: string },
+  newPassword: { required: string, min: string },
+  repeatNewPassword:  { required: string,  min: string, mustMatch: string }
+}
 export interface UserFieldsToRegister {
   email: string;
   name: string;
@@ -159,4 +164,7 @@ export interface HeaderName {
 
 export interface Row {
   [key: string]: any;
+}
+export interface Errors {
+  [key: string]: [{ code: number; msg: string }];
 }
