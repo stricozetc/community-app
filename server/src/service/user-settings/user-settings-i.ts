@@ -8,21 +8,21 @@ import * as bcrypt from 'bcryptjs';
 // import { changePasswordErrors } from './../../../errors/changePassword';
 import * as passport from 'passport';
 import { technicalErr } from '../../../errors/technicalErr';
-import { ErrorsToChangePassword, FieldsToChangePassword } from '../../../models/otherModels';
+import { FieldsToChangePassword } from '../../../models/otherModels';
 import { logicErr } from '../../../errors/logicErr';
+import { ErrorBlock } from './../../../models/error';
 
 @injectable()
 export class UserSettingsRepositoryImplementation
   implements UserSettingsRepository {
   public async changePassword(
     fields: FieldsToChangePassword
-  ): Promise<{ result: boolean; errors?: ErrorsToChangePassword }> {
+  ): Promise<{ result: boolean; errors?: ErrorBlock[] }> {
  
     try {
       const { oldPassword, newPassword, userId } = fields;
-      const errors: ErrorsToChangePassword = {
-        password: []
-      };
+      let errors: ErrorBlock[] = [];
+
       let isMatch = false;
       let user = null;
       let salt: string = null;
@@ -60,11 +60,9 @@ export class UserSettingsRepositoryImplementation
         return { result: true };
       } else {
         console.log('IS NOT MATCHED');
-        // ToDo: fix
-        // errors.password = errors.password.concat(
-        //   changePasswordErrors.oldPasswordShouldBeReal
-        // );
-        console.log('ERRORS', errors);
+
+        errors.push(logicErr.wrongPassword(user.email))
+
         return { result: false, errors };
       }
     } catch (error) {

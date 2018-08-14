@@ -27,10 +27,3 @@ export interface FieldsToChangePassword {
   newPassword: string;
   repeatNewPassword: string;
 }
-
-export interface ErrorsToChangePassword {
-  oldPassword?: ErrorBlock[];
-  newPassword?: ErrorBlock[];
-  repeatNewPassword?: ErrorBlock[];
-  [key: string]: ErrorBlock[];
-}
