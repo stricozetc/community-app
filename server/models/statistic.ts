@@ -6,7 +6,7 @@ import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
 export interface Statistic {
-    userToken: number;
+    userToken: string;
     playedTime: number;
     scores: number;
     resultStatus: ResultStatus;

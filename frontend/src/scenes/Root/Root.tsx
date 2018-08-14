@@ -1,28 +1,21 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-
+import {  CaAddGame, CaButton, CaLogo, CaNavbar, LoginForm, RegistrationForm } from 'components';
+import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
 import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
 import { AuthStatus, languages } from 'models';
+import * as React from 'react';
 import { I18n } from 'react-i18next';
-import { CaBattles } from 'scenes/Battles';
-import { CurrentBattle } from 'scenes/Battles';
+import { connect } from 'react-redux';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
 import { getCurrentLanguage, setAuthToken } from 'utils';
 
-import {
-  CaButton,
-  CaLogo,
-  CaNavbar,
-  LoginForm,
-  RegistrationForm
-} from 'components';
-
+import { CaMyGames } from '../MyGames/MyGames';
 import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
@@ -66,6 +59,7 @@ export class RootComponent extends React.Component<RootProps> {
 
     return (
       isAuthorized ?
+
         <I18n>
           {
             ( t ) => (
@@ -78,6 +72,7 @@ export class RootComponent extends React.Component<RootProps> {
           }
         </I18n>
         :
+
         <I18n>
           {
             ( t ) => (
@@ -96,7 +91,7 @@ export class RootComponent extends React.Component<RootProps> {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     return (
-      <I18n>
+<I18n>
         {
           ( t, { i18n } ) => (
             <CaNavbar
@@ -112,13 +107,18 @@ export class RootComponent extends React.Component<RootProps> {
                   to: '/statistics',
                   activeClassName: 'ca-navbar__nav-item--active',
                   disabled: !isAuthorized
+                },
+                {
+                  text: t('adminPage'),
+                  to: '/my-games',
+                  activeClassName: 'ca-navbar__nav-item--active',
+                  disabled: !isAuthorized
                 }
               ]}
             >
               <CaLogo
                 text='battlenet'
               />
-
               <div className='ca-navbar__logout-btn-container'>
                 {this.getButton(this.props.status)}
               </div>
@@ -206,6 +206,39 @@ export class RootComponent extends React.Component<RootProps> {
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
                 </CurrentBattle>
+              }
+            />
+
+            <Route
+              exact={true}
+              path='/my-games'
+              render={
+                props =>
+                  <CaMyGames {...props} >
+                    {this.getNavbar(this.props.status)}
+                  </CaMyGames>
+              }
+            />
+
+            <Route
+              exact={true}
+              path='/my-games/add-game'
+              render={
+                props =>
+                  <CaAddGame {...props} >
+                    {this.getNavbar(this.props.status)}
+                  </CaAddGame>
+              }
+            />
+
+            <Route
+              exact={true}
+              path='/my-games/edit-game/:idOfTheGame'
+              render={
+                props =>
+                  <CaEditGame {...props} >
+                    {this.getNavbar(this.props.status)}
+                  </CaEditGame>
               }
             />
 

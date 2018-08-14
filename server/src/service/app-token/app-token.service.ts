@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { AppData } from '../../../Interfaces/AppData';
 import { AppTokenRepository } from './app-token.repository';
 import { AppToken } from '../../../Interfaces/AppToken';
+import { ErrorBlock } from '../../../models/error';
 
 @injectable()
 export class AppTokenService {

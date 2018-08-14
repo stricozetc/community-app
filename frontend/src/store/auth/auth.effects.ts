@@ -32,7 +32,10 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
 
           return new SetCurrentUser(decoded);
         }),
-        catchError(error => of(new GetErrors(error.response.data)))
+        catchError(error => {
+          const errors = error.response.data;
+          return of(new GetErrors(!errors.isArray() ? errors.msg : errors.map((err: any) => err.message)));
+        })
       )
     )
   );
@@ -43,7 +46,10 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new SuccessRegistration('./login')),
-        catchError((error) => of(new GetErrors(error.response.data)))
+        catchError(error => {
+          const errors = error.response.data;
+          return of(new GetErrors(!errors.isArray() ? errors.msg : errors.map((err: any) => err.message)));
+        })
       )
     )
   );

@@ -9,7 +9,13 @@ import {
   MuiTab,
   MuiTable,
   MuiTableRow,
-  MuiTabs
+  MuiTabs,
+  MuiDialogTitle,
+  MuiDialogContent,
+  MuiDialogActions,
+  MuiDialogContentText,
+  MuiTypography,
+  MuiDialog
 } from 'components';
 
 export const theme = createMuiTheme({
@@ -27,6 +33,22 @@ export const theme = createMuiTheme({
       root: {
         fontSize: '1.6rem'
       }
-    }
+    },
+    MuiInputLabel: {
+      root: {
+        fontSize: '1.5rem'
+      }
+    },
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '1.5rem'
+      }
+    },
+    MuiDialogContent,
+    MuiDialogActions,
+    MuiDialogContentText,
+    MuiTypography,
+    MuiDialogTitle,
+    MuiDialog
   }
 });

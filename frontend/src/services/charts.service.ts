@@ -21,7 +21,7 @@ export class ChartsService {
         winsNumber++;
       } else if (result === ResultStatus.LOSE) {
         losesNumber++;
-      } else if (result === ResultStatus.DEAD_HEAT) {
+      } else if (result === ResultStatus.DRAW) {
         drawNumber++;
       }
     });

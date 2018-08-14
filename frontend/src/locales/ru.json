@@ -13,6 +13,7 @@
   "battles": "Игры",
   "statistics": "Статистика",
   "charts": "Графики",
+  "adminPage": "Панель Админа",
   "roomsAreFull": "Все комнаты заняты",
   "startingIn": "Начало в",
   "shortMinute": "м",
@@ -46,9 +47,11 @@
   "playedAll": "Сыграно всего",
   "result": "Результат",
   "emptyChartMessage": "Выберите игру чтобы показать графики",
-  "win": "Победы",
-  "lose": "Поражения",
+  "win": "Победа",
+  "lose": "Поражение",
   "draw": "Ничья",
   "winRate": "Процент Побед",
-  "noChartsAvailable": "Нет доступных графиков"
+  "noChartsAvailable": "Нет доступных графиков",
+  "createdAt": "Дата создания",
+  "updatedAt": "Дата обновления"
 }

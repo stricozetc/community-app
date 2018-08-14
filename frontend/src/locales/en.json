@@ -13,6 +13,7 @@
   "battles": "Battles",
   "statistics": "Statistics",
   "charts": "Charts",
+  "adminPage": "Admin Page",
   "roomsAreFull": "All rooms are full",
   "startingIn": "Starting in",
   "shortMinute": "m",
@@ -49,5 +50,7 @@
   "lose": "Lose",
   "draw": "Draw",
   "winRate": "Win Rate",
-  "noChartsAvailable": "No charts available"
+  "noChartsAvailable": "No charts available",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at"
 }
