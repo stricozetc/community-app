@@ -1,4 +1,4 @@
-import { FrontEndValidationErrorsChangePassword } from '../models';
+import { FrontEndValidationErrorsChangePassword } from 'models';
 
 export const frontEndValidationErrorsChangePassword: FrontEndValidationErrorsChangePassword = {
   oldPassword: {

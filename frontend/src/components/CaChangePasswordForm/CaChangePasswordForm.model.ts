@@ -1,7 +1,7 @@
 import { FrontEndUser } from 'store';
 
 import { FieldsToChangePassword } from '../../store/userSettings/interfaces';
-import { LoadStatus } from '../../models';
+import { LoadStatus } from 'models';
 
 export interface ChangePasswordFormState {
   oldPassword: string;

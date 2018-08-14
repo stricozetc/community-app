@@ -1,5 +1,5 @@
 import { AuthStatus, LoadStatus } from 'models';
-import { FieldsToChangePassword } from '../../store/userSettings/interfaces';
+import { FieldsToChangePassword } from 'store/userSettings/interfaces';
 
 import { FrontEndUser } from 'store/auth';
 

@@ -9,7 +9,7 @@
             "leaveEventName": "onLeaveJsMarathon",
             "updateRoomsInfoEventName": "onUpdateRoomsInfoJsMarathon",
             "notifyCountdown": "onNotifyCountdownJsMarathon",
-            "maxRoomPlayer": 2,
+            "maxRoomPlayer": 1,
             "maxRooms": 5,
             "requestUrl": "http://localhost:2018",
             "redirectUrl": "http://localhost:2018/#/user/login",

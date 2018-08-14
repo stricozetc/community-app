@@ -1,17 +1,15 @@
+import { AppBar, Tab, Tabs, Typography } from '@material-ui/core';
 import { CaButton } from 'components';
 import { CaChangePasswordForm } from 'components/CaChangePasswordForm';
 import { AuthStatus } from 'models';
 import * as React from 'react';
-
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { AppState } from 'store';
 import SwipeableViews from 'react-swipeable-views';
+import { AppState } from 'store';
+import { ChangePassword } from 'store/userSettings/user-settings.action';
 
 import { FieldsToChangePassword } from '../../store/userSettings/interfaces';
-import { ChangePassword } from '../../store/userSettings/user-settings.action';
-
-import { AppBar, Tab, Typography, Tabs } from '@material-ui/core';
 
 import {
   UserSettingsProps,

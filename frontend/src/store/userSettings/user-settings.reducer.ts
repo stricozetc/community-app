@@ -14,7 +14,7 @@ export const userSettingsReducer = (
         changePasswordStatus: LoadStatus.Fetching
       };
     }
-    case UserSettingsTypes.ChangePasswordCompleted: {
+    case UserSettingsTypes.ChangePasswordSuccess: {
       return {
         ...state,
         changePasswordStatus: LoadStatus.Success
