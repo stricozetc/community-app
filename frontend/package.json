@@ -4,10 +4,6 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.4.1",
-    "@types/echarts": "0.0.13",
-    "@types/i18next": "^8.4.4",
-    "@types/i18next-browser-languagedetector": "^2.0.1",
-    "@types/react-i18next": "^7.8.0",
     "axios": "^0.18.0",
     "chalk": "2.4.1",
     "classnames": "^2.2.6",
@@ -45,6 +41,10 @@
   },
   "devDependencies": {
     "@material-ui/icons": "^2.0.1",
+    "@types/echarts": "0.0.13",
+    "@types/i18next": "^8.4.4",
+    "@types/i18next-browser-languagedetector": "^2.0.1",
+    "@types/react-i18next": "^7.8.0",
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.6",
     "@types/jest": "^23.3.0",
