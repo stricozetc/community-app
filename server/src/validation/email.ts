@@ -6,8 +6,7 @@ import { ErrorBlock } from '../../models/error';
 export function validateEmail(email: string): { errors: ErrorBlock[], isValid: boolean } {
   const errors: ErrorBlock[] = [];
   email = !isEmpty(email) ? email : '';
-
-  if (!Validator.isEmpty(email)) {
+  if (Validator.isEmpty(email)) {
     errors.push(logicErr.emailIsRequired);
   }
 

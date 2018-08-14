@@ -1,18 +1,5 @@
-import {
-  CaAddGame,
-  CaButton,
-  CaLogo,
-  CaNavbar,
-  LoginForm,
-  RegistrationForm
-} from 'components';
-import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
-import { CaSelect } from 'components/form-controls/CaSelect';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { I18n } from 'react-i18next';
-
-import { AuthStatus, languages } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -22,25 +9,17 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+
+import { AuthStatus, languages } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
-import { ChangeLanguage } from 'store/language';
+
 import {
   AppState,
-  CleanStatistic,
-  FrontEndUser,
-  LeaveBattle,
-  LogoutUser,
-  SetCurrentUser,
-  store
-} from 'store';
-import { getCurrentLanguage, getCurrentLanguageFromLocalStorage, setAuthToken } from 'utils';
-import { CaMyGames } from '../MyGames/MyGames';
-import {
-  AppState,
+  ChangeLanguage,
   CleanStatistic,
   FrontEndUser,
   LeaveBattle,
@@ -50,12 +29,25 @@ import {
 } from 'store';
 
 import {
+  getCurrentLanguage,
+  getCurrentLanguageFromLocalStorage,
+  setAuthToken
+} from 'utils';
+
+import {
+  CaAddGame,
   CaButton,
+  CaEditGame,
   CaLogo,
   CaNavbar,
+  CaSelect,
   LoginForm,
   RegistrationForm
-} from 'components';import { RootProps } from './Root.model';
+} from 'components';
+
+import { CaMyGames } from '../MyGames/MyGames';
+
+import { RootProps } from './Root.model';
 
 import './root.scss';
 
@@ -163,7 +155,10 @@ export class RootComponent extends React.Component<RootProps> {
               }
             ]}
           >
-            <CaLogo text="battlenet" />
+            <CaLogo
+              text="battlenet"
+              onClick={this.redToMainPage}
+            />
             <div className="ca-navbar__logout-btn-container">
               {this.getButton(this.props.status)}
             </div>
