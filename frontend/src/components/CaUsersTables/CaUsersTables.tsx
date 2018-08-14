@@ -23,12 +23,6 @@ import { CaUsersTablesProps, CaUsersTablesState } from './CaUsersTables.model';
 import { styles } from './CaUsersTables.styles';
 
 import './CaUsersTables.scss';
-// import { CaUsersTablesProps, CaUsersTablesState, HeaderName, StatisticOfUser } from './CaUsersTables.model';
-
-/////////////
-
-// import { HeaderName, Row, RowProperty, StatTab, TypeOfColumn } from 'models';
-// import { I18n } from 'react-i18next';
 
 export const CaUsersTables = withStyles(styles)(
   class extends React.Component<CaUsersTablesProps, CaUsersTablesState> {

@@ -9,8 +9,11 @@ import {
 import * as classNames from 'classnames';
 import { CaDelete } from 'components/form-controls/CaDelete';
 import { CaEdit } from 'components/form-controls/CaEdit';
-import { HeaderName, TypeOfColumn, ResultStatus } from 'models';
+
+import { HeaderName, ResultStatus, TypeOfColumn } from 'models';
+
 import * as React from 'react';
+
 import { I18n, TranslationFunction } from 'react-i18next';
 import { i18nInstance } from 'utils/i18n';
 
