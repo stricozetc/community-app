@@ -1,6 +1,6 @@
 import { MyGameModel } from 'models';
 
-export interface FormForAddingNewGameState {
+export interface GameFormState {
     appName: string;
     description: string;
     maxRoomPlayer: number;
@@ -14,7 +14,7 @@ export interface FormForAddingNewGameState {
     notifyCountdown?: string;
 }
 
-export interface FormForAddingNewGameProps {
+export interface GameFormProps {
     id: number;
     userId: number;
     config: string;

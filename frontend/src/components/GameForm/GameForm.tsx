@@ -4,9 +4,9 @@ import { MyGameModel } from 'models';
 import * as React from 'react';
 import { history } from 'utils';
 
-import { FormForAddingNewGameState } from './FormForWorkingWithGame.model';
+import { GameFormState } from './GameForm.model';
 
-export class FormForWorkingWithGame extends React.Component<any, FormForAddingNewGameState> {
+export class GameForm extends React.Component<any, GameFormState> {
      constructor(props: any) {
         super(props);
         this.state = props.model;
@@ -19,7 +19,7 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        this.setState({ [name]: value } as FormForAddingNewGameState);
+        this.setState({ [name]: value } as GameFormState);
     }
 
     public handleSubmit(event: any): void {

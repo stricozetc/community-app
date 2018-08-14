@@ -1,13 +1,13 @@
-import { FormForWorkingWithGame } from 'components/FormForWorkingWithGame';
+import { GameForm } from 'components/GameForm';
 import { AuthStatus, MyGameModel } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { EditGame } from 'store';
 import { AppState } from 'store/store.config';
 
-import { EditGameComponentProps, EditGameComponentState, NecessaryPropertyOfTheGameForEditForm } from './EditGameComponent.model';
+import { EditGameComponentProps } from './EditGameComponent.model';
 
-export class EditGameComponent extends React.Component<EditGameComponentProps, EditGameComponentState> {
+export class EditGameComponent extends React.Component<EditGameComponentProps> {
     constructor(props: EditGameComponentProps) {
         super(props);
     }
@@ -31,7 +31,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps, E
         return(
            <div>
                {this.props.children}
-               <FormForWorkingWithGame
+               <GameForm
                     id = {id}
                     userId = {this.props.user && this.props.user.id}
                     config='Edit Game'
@@ -42,7 +42,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps, E
         );
     }
 
-    public getGame(): NecessaryPropertyOfTheGameForEditForm {
+    public getGame(): MyGameModel {
 
         const idOfTheGameThatNeedToEdit = this.props.match.params['idOfTheGame'];
         const myGames = this.props.games;
@@ -54,7 +54,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps, E
         );
     }
 
-    public deleteUnnecessaryProperty(game: MyGameModel, arrayOfNecessaryProperty: string[]): NecessaryPropertyOfTheGameForEditForm {
+    public deleteUnnecessaryProperty(game: MyGameModel, arrayOfNecessaryProperty: string[]): MyGameModel {
         const gameWithNecessaryProperty = { ...game };
 
         for (const property in gameWithNecessaryProperty) {

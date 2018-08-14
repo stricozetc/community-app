@@ -138,7 +138,7 @@ export enum TypeOfColumn {
 }
 export interface MyGameModel {
   id?: number;
-  userId: number;
+  userId?: number;
   appName: string;
   description: string;
   maxRoomPlayer: number;
@@ -153,7 +153,6 @@ export interface MyGameModel {
   updateRoomsInfoEventName?: string;
   notifyCountdown?: string;
 }
-
 export interface HeaderName {
   headerName: string;
   field: RowProperty;
