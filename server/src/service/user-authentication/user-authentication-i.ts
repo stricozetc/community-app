@@ -127,7 +127,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             await UserModel.update({ language: userLanguage }, { where: { email: userEmail } });
             return true;
         } catch (error) {
-            return false;
+            this.loggerService.errorLog(error);
+            throw technicalErr.databaseCrash;
         }
     }
 
@@ -137,10 +138,11 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             if (user) {
                 return user.language;
             } else {
-                throw new Error('User is not found');
+                throw logicErr.notFoundUser;
             }
         } catch (error) {
-            throw new Error(error.message);
+            this.loggerService.errorLog(error);
+            throw technicalErr.databaseCrash;
         }
     }
 }

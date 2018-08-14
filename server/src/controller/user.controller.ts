@@ -8,6 +8,9 @@ import { validateRegisterInput } from '../validation/register';
 import { validateLoginInput } from '../validation/login';
 
 import { User } from '../../Interfaces/User';
+import { technicalErr } from '../../errors/technicalErr';
+import { validateSetLanguage } from '../validation/language';
+import { validateEmail } from '../validation/email';
 
 @controller('/api/users')
 export class UserController {
@@ -51,22 +54,42 @@ export class UserController {
         const userEmail: string = request.body.userEmail;
         const userLanguage: string = request.body.userLanguage.toLowerCase();
 
-        const result = await this.userAuthenticationRepository.setUserLanguage(userEmail, userLanguage);
-        if (result) {
-            return response.sendStatus(200);
-        } else {
-            return response.sendStatus(400);
+        const { errors, isValid } = validateSetLanguage(userEmail, userLanguage);
+
+        if (!isValid) {
+            return response.status(400).json(errors);
         }
+
+        try {
+            const result = await this.userAuthenticationRepository.setUserLanguage(userEmail, userLanguage);
+            if (result) {
+                return response.sendStatus(200);
+            } else {
+                return response.sendStatus(500).json(technicalErr.userLanguageIsNotUpdatedInDb);
+            }
+        } catch (error) {
+            return response.status(500).json(error);
+        }
+
     }
 
     @httpGet('/get-user-language')
     public async getUserLanguage(request: Request, response: Response): Promise<Response> {
         const userEmail: string = request.query.email;
+
+        const { errors, isValid } = validateEmail(userEmail);
+
+        if (!isValid) {
+            return response.status(400).json(errors);
+        }
+
         try {
             const language = await this.userAuthenticationRepository.getUserLanguage(userEmail);
             return response.status(200).send(language);
         } catch (error) {
-            return response.status(400).send(error.message);
+            return error.code >= 2000 ?
+                response.status(500).json(error) :
+                response.status(400).json(error);
         }
     }
 }
