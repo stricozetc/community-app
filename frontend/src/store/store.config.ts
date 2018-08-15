@@ -57,12 +57,6 @@ import {
 
 import { errorsReducer } from './errors';
 
-import {
-  LanguageEffects,
-  LanguageState,
-  languageReducer
-} from './language';
-
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
@@ -72,8 +66,7 @@ const rootReducers = combineReducers({
   socket: socketReducer,
   snackbarUi: snackbarUiReducer,
   myGames: myGamesReducer,
-  userSettings: userSettingsReducer,
-  language: languageReducer,
+  userSettings: userSettingsReducer
 });
 
 const rootEpic = combineEpics(
@@ -84,7 +77,6 @@ const rootEpic = combineEpics(
   ...SocketEffects,
   ...MyGamesEffects,
   ...UserSettingsEffects,
-  ...LanguageEffects,
 );
 
 const epicMiddleware = createEpicMiddleware();
@@ -97,7 +89,6 @@ export interface AppState {
   errors: {};
   socket: SocketState;
   snackbarUi: SnackbarUiState;
-  language: LanguageState;
   userSettings: UserSettingsState;
   myGames: MyGamesState;
 }

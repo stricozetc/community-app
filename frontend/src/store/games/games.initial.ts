@@ -6,5 +6,5 @@ type State = GamesState;
 
 export const initialState: State = {
   games: [],
-  gamesStatus: LoadStatus.Init
+  gamesStatus: LoadStatus.INIT
 };

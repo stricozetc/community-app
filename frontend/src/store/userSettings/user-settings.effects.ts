@@ -1,14 +1,26 @@
 import { ActionsObservable, ofType } from 'redux-observable';
-import { from, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { catchError, ignoreElements, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
+import { AppState, store } from 'store';
+import { FrontEndUser } from 'store/auth';
+import { i18nInstance } from 'utils/i18n';
 
-import { UserSettingsTypes } from './user-settings.action';
+import { GetErrors } from '../errors';
+
+import {
+  ChangeLanguage,
+  SaveLanguage,
+  SaveLanguageFail,
+  SaveLanguageSuccess,
+  UserSettingsTypes
+} from './user-settings.action';
 
 import {
   ChangePassword,
+  ChangePasswordError,
   ChangePasswordSuccess,
-  ChangePasswordError
+  SetLanguage,
 } from './user-settings.action';
 
 export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
@@ -24,6 +36,55 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
     )
   );
 
+export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
+  actions$.pipe(
+    ofType(UserSettingsTypes.SetLanguage),
+    switchMap((action) => {
+      return from(HttpWrapper.get(`api/users/get-user-language?email=${action.payload}`)).pipe(
+        map(res => {
+          return new ChangeLanguage(res.data);
+        }),
+        catchError(error => of(new GetErrors(error.response.data)))
+      );
+    })
+  );
+
+export const changeLanguage$ = (actions$: ActionsObservable<ChangeLanguage>, state$: Observable<AppState>) =>
+  actions$.pipe(
+    ofType(UserSettingsTypes.ChangeLanguage),
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      i18nInstance.changeLanguage(action.payload);
+      const user: FrontEndUser | undefined = state.auth.user;
+      if (user) {
+        store.dispatch(new SaveLanguage({ userEmail: user.email, userLanguage: action.payload }));
+      }
+    }),
+    ignoreElements()
+  );
+
+export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
+  actions$.pipe(
+    ofType(UserSettingsTypes.SaveLanguage),
+    switchMap((action) => {
+      return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
+        map(() => new SaveLanguageSuccess()),
+        catchError((error) => of(new SaveLanguageFail(error)))
+      );
+    })
+  );
+
+export const saveLanguageFail$ = (actions$: ActionsObservable<SaveLanguageFail>) =>
+  actions$.pipe(
+    ofType(UserSettingsTypes.SaveLanguageFail),
+    map(() => new GetErrors(new Error('Fail save language'))),
+    ignoreElements()
+  );
+
 export const UserSettingsEffects = [
-  changePassword$
+  changePassword$,
+  setLanguage$,
+  changeLanguage$,
+  saveLanguage$,
+  saveLanguageFail$,
 ];

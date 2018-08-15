@@ -322,7 +322,7 @@ const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   errors: state.errors,
   isSnackbarOpen: state.snackbarUi.isOpen,
-  language: state.language.language
+  language: state.userSettings.language
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

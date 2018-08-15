@@ -22,7 +22,7 @@ import './Battles.scss';
 class CaBattlesComponent extends React.Component<BattleProps> {
 
   public componentWillReceiveProps(nextProps: BattleProps): void {
-    if (nextProps.status === LoadStatus.Error && nextProps.status !== this.props.status) {
+    if (nextProps.status === LoadStatus.ERROR && nextProps.status !== this.props.status) {
       this.props.openSnackbar();
     }
   }

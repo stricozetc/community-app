@@ -5,11 +5,9 @@ import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
 import { HttpWrapper } from 'services';
-import { store } from 'store';
+import { SetLanguage, store } from 'store';
 import { GetErrors } from 'store/errors';
 import { deleteAuthToken, history, setAuthToken } from 'utils';
-
-import { SetLanguage } from '../language';
 
 import {
   AuthTypes,
