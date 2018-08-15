@@ -42,7 +42,7 @@ export class LogoutUser {
 export class SuccessRegistration {
   public readonly type = AuthTypes.SuccessRegistration;
 
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export type AuthActions =

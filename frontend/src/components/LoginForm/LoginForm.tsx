@@ -12,7 +12,6 @@ import {
   AuthStatus,
   SnackbarType,
   UserFieldsToLogin,
-  UserFieldsToRegister,
   transitionDirection
 } from 'models';
 import { I18n } from 'react-i18next';
@@ -260,7 +259,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user)),
+  loginUser: (user: UserFieldsToLogin) => dispatch(new LoginUser(user)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   openSnackbar: () => dispatch(new OpenSnackbar())
 });

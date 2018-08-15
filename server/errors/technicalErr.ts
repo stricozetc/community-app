@@ -35,4 +35,9 @@ export const technicalErr = {
         code: technicalErrCodes.userRoleIsNotSaveInDb,
         msg: 'User Role can not be saved in DB',
     },
+
+    userLanguageIsNotUpdatedInDb: {
+        code: technicalErrCodes.userLanguageIsNotUpdatedInDb,
+        msg: 'User language can not be updated in DB',
+    },
 };

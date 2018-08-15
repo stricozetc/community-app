@@ -42,6 +42,7 @@ export interface RegistrationFormProps {
   status: AuthStatus;
   errors: ErrorsFromServer;
   isSnackbarOpen: boolean;
+  language: string;
   registerUser(user: UserFieldsToRegister): void;
   closeSnackbar(): void;
   openSnackbar(): void;

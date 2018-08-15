@@ -87,6 +87,7 @@ export interface UserFieldsToRegister {
   name: string;
   password: string;
   password2: string;
+  language: string;
 }
 
 export interface UserFieldsToLogin {

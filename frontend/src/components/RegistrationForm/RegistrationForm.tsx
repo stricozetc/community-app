@@ -2,13 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
+import { I18n } from 'react-i18next';
+
 import { CaButton, CaSnackbar } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
 import { SnackbarType, UserFieldsToRegister, transitionDirection } from 'models';
-import { I18n } from 'react-i18next';
 import { AppState, RegisterUser } from 'store';
 import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
-import { isEmpty } from 'utils';
+import { isEmpty } from 'utils/isEmpty';
 import { isObjectsEqual } from 'utils/isObjectsEqual';
 
 import {
@@ -56,7 +57,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
       email: this.state.email,
       name: this.state.name,
       password: this.state.password,
-      password2: this.state.passwordToRepeat
+      password2: this.state.passwordToRepeat,
+      language: this.props.language,
     };
 
     this.props.registerUser(user);
@@ -153,7 +155,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     return (
       <I18n>
         {
-          ( t ) => (
+          (t) => (
             <div>
               <CaSnackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -277,7 +279,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                     this.state.password !== this.state.passwordToRepeat && (
                       <div className='ca-Registration-form__error'>
                         {t('matchPassword')}
-                    </div>
+                      </div>
                     )}
                 </FormGroup>
 
@@ -319,7 +321,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   errors: state.errors,
-  isSnackbarOpen: state.snackbarUi.isOpen
+  isSnackbarOpen: state.snackbarUi.isOpen,
+  language: state.userSettings.language
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

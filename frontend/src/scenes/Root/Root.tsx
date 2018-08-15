@@ -1,17 +1,5 @@
-import {
-  CaAddGame,
-  CaButton,
-  CaLogo,
-  CaNavbar,
-  LoginForm,
-  RegistrationForm
-} from 'components';
-import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
-import { CaSelect } from 'components/form-controls/CaSelect';
-import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AuthStatus, languages } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -21,12 +9,17 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+
+import { AuthStatus, languages } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
+import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
+
 import {
   AppState,
+  ChangeLanguage,
   CleanStatistic,
   FrontEndUser,
   LeaveBattle,
@@ -34,12 +27,28 @@ import {
   SetCurrentUser,
   store
 } from 'store';
-import { getCurrentLanguage, setAuthToken } from 'utils';
+
+import {
+  getCurrentLanguage,
+  getCurrentLanguageFromLocalStorage,
+  setAuthToken
+} from 'utils';
+
+import {
+  CaAddGame,
+  CaButton,
+  CaEditGame,
+  CaLogo,
+  CaNavbar,
+  CaSelect,
+  LoginForm,
+  RegistrationForm
+} from 'components';
 
 import { CaMyGames } from '../MyGames/MyGames';
-import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
+
 import './root.scss';
 
 const token = Cookies.get('jwtToken');
@@ -50,6 +59,10 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
+  public componentWillMount(): void {
+    this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
+  }
+
   public logoutUser(): void {
     this.props.logoutUser();
     this.props.cleanStatistic();
@@ -67,27 +80,44 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>, i18n: i18n) => {
+  public redToMainPage = () => {
+    this.props.history.push('/');
+  }
+
+  public handleChange = (event: any) => {
     const language = event.target.value;
 
-    i18n.changeLanguage(language);
+    this.props.changeLanguage(language);
   };
 
   public getButton(authStatus: number): JSX.Element {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
-    return isAuthorized ? (
-      <I18n>
-        {t => (
-          <CaButton onClick={() => this.logoutUser()}>{t('logout')}</CaButton>
-        )}
-      </I18n>
-    ) : (
-      <I18n>
-        {t => (
-          <CaButton onClick={() => this.redToLogin()}>{t('login')}</CaButton>
-        )}
-      </I18n>
+    return (
+      isAuthorized ?
+        <I18n>
+          {
+            (t) => (
+              <CaButton
+                onClick={() => this.logoutUser()}
+              >
+                {t('logout')}
+              </CaButton>
+            )
+          }
+        </I18n>
+        :
+        <I18n>
+          {
+            (t) => (
+              <CaButton
+                onClick={() => this.redToLogin()}
+              >
+                {t('login')}
+              </CaButton>
+            )
+          }
+        </I18n>
     );
   }
 
@@ -125,7 +155,10 @@ export class RootComponent extends React.Component<RootProps> {
               }
             ]}
           >
-            <CaLogo text="battlenet" />
+            <CaLogo
+              text="battlenet"
+              onClick={this.redToMainPage}
+            />
             <div className="ca-navbar__logout-btn-container">
               {this.getButton(this.props.status)}
             </div>
@@ -274,7 +307,8 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
-  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName))
+  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
+  changeLanguage: (language: string) => dispatch(new ChangeLanguage(language))
 });
 
 export const Root = connect(

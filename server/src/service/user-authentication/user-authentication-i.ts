@@ -39,7 +39,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     name: data.name,
                     email: data.email,
                     password: null,
-                    token
+                    token,
+                    language: data.language
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
@@ -119,5 +120,29 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                 return reject(technicalErr.databaseCrash);
             });
         });
+    }
+
+    public async setUserLanguage(userEmail: string, userLanguage: string): Promise<boolean> {
+        try {
+            await UserModel.update({ language: userLanguage }, { where: { email: userEmail } });
+            return true;
+        } catch (error) {
+            this.loggerService.errorLog(error);
+            throw technicalErr.databaseCrash;
+        }
+    }
+
+    public async getUserLanguage(userEmail: string): Promise<string> {
+        try {
+            const user: User = await UserModel.findOne({ where: { email: userEmail } });
+            if (user) {
+                return user.language;
+            } else {
+                throw logicErr.notFoundUser;
+            }
+        } catch (error) {
+            this.loggerService.errorLog(error);
+            throw technicalErr.databaseCrash;
+        }
     }
 }

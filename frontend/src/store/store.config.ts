@@ -57,7 +57,6 @@ import {
 
 import { errorsReducer } from './errors';
 
-
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
@@ -77,7 +76,7 @@ const rootEpic = combineEpics(
   ...StatisticEffects,
   ...SocketEffects,
   ...MyGamesEffects,
-  ...UserSettingsEffects
+  ...UserSettingsEffects,
 );
 
 const epicMiddleware = createEpicMiddleware();
