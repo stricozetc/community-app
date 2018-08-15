@@ -33,11 +33,8 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     if (!isAuthenticated) {
       this.props.history.push('/login');
     }
-
-    if (isEmpty(this.props.games)) {
-      this.props.initGames();
-    }
-
+    console.log(`componentWillMount`);
+    this.props.initGames();
   }
 
   public closeSnackbar(): void {
@@ -62,7 +59,6 @@ class CaBattlesComponent extends React.Component<BattleProps> {
   }
 
   public render(): JSX.Element {
-    console.log(this.props.games)
     return (
       <div className='ca-homepage'>
         {this.props.children}
