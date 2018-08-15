@@ -208,6 +208,9 @@ export class CaChangePasswordForm extends React.Component<
 
               <FormGroup>
                 <TextField
+                  style={{
+                    marginTop: '20px'
+                  }}
                   className="ca-change-password-form__password-field"
                   id="newPassword"
                   label={t('newPasswordLabel')}
@@ -237,6 +240,9 @@ export class CaChangePasswordForm extends React.Component<
 
               <FormGroup>
                 <TextField
+                  style={{
+                    marginTop: '20px'
+                  }}
                   className="ca-change-password-form__password-field"
                   id="repeatNewPassword"
                   label={t('repeatNewPasswordLabel')}

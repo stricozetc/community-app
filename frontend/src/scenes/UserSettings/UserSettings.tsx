@@ -1,5 +1,5 @@
-import { AppBar, Tab, Tabs, Typography } from '@material-ui/core';
-import { CaButton } from 'components';
+import { Typography } from '@material-ui/core';
+import { CaButton, CaTab, CaTabs } from 'components';
 import { CaChangePasswordForm } from 'components/CaChangePasswordForm';
 import { AuthStatus } from 'models';
 import * as React from 'react';
@@ -78,27 +78,24 @@ export class CaUserSettingsComponent extends React.Component<
           <div className="ca-user-settings">
             {this.props.children}
             <div className="ca-user-settings__container">
-              <AppBar position="static" color="default">
-                <Tabs
+                <CaTabs
                   value={this.state.value}
                   onChange={this.handleChange}
-                  indicatorColor="primary"
-                  textColor="primary"
                   fullWidth
                 >
-                  <Tab label="Profile" />
-                  <Tab label="Security" />
-                </Tabs>
-              </AppBar>
+                  <CaTab label="Profile" />
+                  <CaTab label="Security" />
+                </CaTabs>
 
               <SwipeableViews
                 axis='x'
                 index={this.state.value}
                 onChangeIndex={this.handleChangeIndex}
+                className='ca-user-settings__body'
               >
                 <TabContainer>Profile</TabContainer>
                 <TabContainer>
-                  <CaButton onClick={this.toggleChangePasswordForm}>
+                  <CaButton onClick={this.toggleChangePasswordForm} color='primary' >
                     {t('changePasswordLabel')}
                   </CaButton>
 
