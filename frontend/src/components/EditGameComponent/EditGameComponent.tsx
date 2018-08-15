@@ -1,5 +1,5 @@
 import { GameForm } from 'components/GameForm';
-import { AuthStatus, GameForSettingForm, GameModel } from 'models';
+import { AuthStatus, GameForSettingForm, GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { EditGame } from 'store';
@@ -34,7 +34,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
                <GameForm
                     id = {id}
                     userId = {this.props.user && this.props.user.id}
-                    config='Edit Game'
+                    config={SettingFormType.editGame}
                     model={game}
                     submit={(data: GameModel) => this.props.editGame(data)}
                />

@@ -194,6 +194,11 @@ export interface GameForSettingForm {
   redirectUrl: string;
 }
 
+export enum SettingFormType {
+  editGame = 'Edit Game',
+  addGame = 'Add Game'
+}
+
 export enum chartsTypes {
   winRate = 'winRate',
   noChartsAvailable = 'noChartsAvailable'

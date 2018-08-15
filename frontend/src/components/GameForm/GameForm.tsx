@@ -1,6 +1,6 @@
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
-import { GameModel } from 'models';
+import { GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { history } from 'utils';
 
@@ -41,7 +41,7 @@ export class GameForm extends React.Component<any, GameFormState> {
           approve: true
         };
 
-        if (this.props.config === 'Edit Game') {
+        if (this.props.config === SettingFormType.editGame) {
             game = Object.assign(game, {id: this.props.id});
         }
 

@@ -1,4 +1,4 @@
-import { AuthStatus, GameForSettingForm, GameModel } from 'models';
+import { AuthStatus, GameForSettingForm, GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
@@ -35,7 +35,7 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
                 {this.props.children}
                <GameForm
                     userId = {this.props.user && this.props.user.id}
-                    config='Add Game'
+                    config={SettingFormType.addGame}
                     model={initFormForAddingNewGame}
                     submit={(data: GameModel) => this.props.addGame(data)}
                />
