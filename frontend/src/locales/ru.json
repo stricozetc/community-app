@@ -60,5 +60,20 @@
   "winRate": "Процент Побед",
   "noChartsAvailable": "Нет доступных графиков",
   "createdAt": "Дата создания",
-  "updatedAt": "Дата обновления"
+  "updatedAt": "Дата обновления",
+
+  "appNameRequired": "Пожалуйста, укажите название приложения",
+  "applicationNameLengthError": "Длина, названия приложения, должна быть в пределах 3-50 символов",
+  "descriptionRequired": "Пожалуйста, укажите описание приложения",
+  "descriptionApplicationLengthError": "Длина, описания приложения, должна быть в пределах 10-250 символов",
+  "maxRoomPlayerRequired": "Пожалуйста, укажите количество игроков в комнате",
+  "maxRoomPlayerCountError": "Количество игроков в комнате должно быть не менее 2",
+  "maxRoomsRequired": "Пожалуйста, укажите количество комнат",
+  "maxRoomsCountError": "Количество комнат должно быть не менее 1",
+  "requestUrlRequired": "Пожалуйста, укажите requestUrl ",
+  "requestUrlError": "Введите корректный requestUrl",
+  "maxWaitingTimeRequired": "Пожалуйста, укажите время ожидания до начала игры",
+  "maxWaitingTimeError": "Время ожидания до начала игры должно быть не менее 15 минут",  
+  "redirectUrlRequired": "Пожалуйста, укажите redirectUrl ",
+  "redirectUrlError": "Введите корректный redirectUrl"  
 }

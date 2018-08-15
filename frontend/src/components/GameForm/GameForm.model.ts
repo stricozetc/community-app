@@ -12,8 +12,16 @@ export interface GameFormState {
     leaveEventName?: string;
     updateRoomsInfoEventName?: string;
     notifyCountdown?: string;
-    /////////////////////////////
-    appNameErrors?: string[];
+    touched: {
+        appName: boolean;
+        description: boolean;
+        maxRoomPlayer: boolean;
+        maxRooms: boolean;
+        requestUrl: boolean;
+        maxWaitingTime: boolean;
+        redirectUrl: boolean;
+    };
+    appNameErrors: string[];
     descriptionErrors?: string[];
     maxRoomPlayerErrors?: string[];
     maxRoomsErrors?: string[];

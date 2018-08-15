@@ -1,19 +1,37 @@
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 
-import { frontEndValidationGameRegister } from 'constes';
+import { frontEndValidationGameRegister, urlRegExp } from 'constes';
 import { GameModel, SettingFormType } from 'models';
 import * as React from 'react';
-import { history } from 'utils';
+import { history, isEmpty } from 'utils';
 
-
+import { I18n } from 'react-i18next';
 import { GameFormProps, GameFormState } from './GameForm.model';
-
 
 export class GameForm extends React.Component<GameFormProps, GameFormState> {
      constructor(props: GameFormProps) {
         super(props);
-        this.state = props.model;
+        this.state = {
+          ...props.model,
+          appNameErrors: [],
+          descriptionErrors: [],
+          maxRoomPlayerErrors: [],
+          maxRoomsErrors: [],
+          requestUrlErrors: [],
+          maxWaitingTimeErrors: [],
+          redirectUrlErrors: [],
+          touched: {
+            appName: false,
+            description: false,
+            maxRoomPlayer: false,
+            maxRooms: false,
+            requestUrl: false,
+            maxWaitingTime: false,
+            redirectUrl: false
+          }
+        };
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -52,7 +70,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
         }
 
         if (!this.state.description) {
-          descriptionErrors.push(frontEndValidationGameRegister.appName.required);
+          descriptionErrors.push(frontEndValidationGameRegister.description.required);
         } else {
           descriptionErrors = this.removeElFromArrByValue(
             descriptionErrors,
@@ -79,6 +97,77 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
           maxRoomPlayerErrors.push(frontEndValidationGameRegister.maxRoomPlayer.count);
         } else {
           maxRoomPlayerErrors = this.removeElFromArrByValue(maxRoomPlayerErrors, frontEndValidationGameRegister.maxRoomPlayer.count);
+        }
+
+        if (!this.state.maxRooms) {
+          maxRoomsErrors.push(frontEndValidationGameRegister.maxRooms.required);
+        } else {
+          maxRoomsErrors = this.removeElFromArrByValue(
+            maxRoomsErrors,
+            frontEndValidationGameRegister.maxRooms.required
+          );
+        }
+
+        if (this.state.maxRooms < 1) {
+          maxRoomsErrors.push(frontEndValidationGameRegister.maxRooms.count);
+        } else {
+          maxRoomsErrors = this.removeElFromArrByValue(
+            maxRoomsErrors,
+            frontEndValidationGameRegister.maxRooms.count
+          );
+        }
+
+        if (!this.state.maxWaitingTime) {
+          maxWaitingTimeErrors.push(frontEndValidationGameRegister.maxWaitingTime.required);
+        } else {
+          maxWaitingTimeErrors = this.removeElFromArrByValue(
+            maxWaitingTimeErrors,
+            frontEndValidationGameRegister.maxWaitingTime.required
+          );
+        }
+
+        if (this.state.maxWaitingTime < 15) {
+          maxWaitingTimeErrors.push(frontEndValidationGameRegister.maxWaitingTime.mustBeCorrect);
+        } else {
+          maxWaitingTimeErrors = this.removeElFromArrByValue(
+          maxWaitingTimeErrors,
+          frontEndValidationGameRegister.maxWaitingTime.mustBeCorrect);
+        }
+
+        if (!this.state.requestUrl) {
+          requestUrlErrors.push(frontEndValidationGameRegister.requestUrl.required);
+        } else {
+          requestUrlErrors = this.removeElFromArrByValue(
+            requestUrlErrors,
+            frontEndValidationGameRegister.requestUrl.required
+          );
+        }
+
+        if (!this.validateUrl(this.state.requestUrl)) {
+          requestUrlErrors.push(frontEndValidationGameRegister.requestUrl.mustBeCorrect);
+        } else {
+          requestUrlErrors = this.removeElFromArrByValue(
+            requestUrlErrors,
+            frontEndValidationGameRegister.requestUrl.mustBeCorrect
+          );
+        }
+
+        if (!this.state.redirectUrl) {
+          redirectUrlErrors.push(frontEndValidationGameRegister.redirectUrl.required);
+        } else {
+          redirectUrlErrors = this.removeElFromArrByValue(
+            redirectUrlErrors,
+            frontEndValidationGameRegister.redirectUrl.required
+          );
+        }
+
+        if (!this.validateUrl(this.state.redirectUrl)) {
+          redirectUrlErrors.push(frontEndValidationGameRegister.redirectUrl.mustBeCorrect);
+        } else {
+          redirectUrlErrors = this.removeElFromArrByValue(
+            redirectUrlErrors,
+            frontEndValidationGameRegister.redirectUrl.mustBeCorrect
+          );
         }
 
         this.setState({
@@ -122,17 +211,30 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
         history.push('/my-games');
       }
 
+    public handleBlur = (field: string) => (evt: any) => {
+      this.setState({
+        touched: {
+          ...this.state.touched,
+          [field]: true
+        }
+      });
+      this.checkValidation();
+    }
+
     public render(): JSX.Element {
         const arrayOfInputs = Object.keys(this.props.model);
 
         return(
+          <I18n>
+          {
+            ( t ) => (
            <div>
                <form
                 className='ca-Registration-form__container'
                 onSubmit={this.handleSubmit}
                >
                 <h2>SETTINGS FORM</h2>
-               {arrayOfInputs.map(input => {
+               {arrayOfInputs.map((input: string) => { // keys of received object
                    return(
                         <FormGroup key={input}>
                             <TextField
@@ -140,12 +242,23 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                                     marginTop: '20px'
                                 }}
                                 id={input}
-                                label={input}
+                                label={input === 'maxWaitingTime' ? input + ' (minutes)' : input}
                                 name={input}
                                 value={this.state[`${input}`]}
                                 onChange={this.handleChange}
                                 type={(['maxRoomPlayer', 'maxRooms', 'maxWaitingTime'].indexOf(`${input}`) + 1) ? 'number' : 'text'}
+                                onBlur={this.handleBlur(`${input}`)}
+                                error={!this.state[`${input}`] && this.state.touched[`${input}`]}
                             />
+                            {!isEmpty(this.state[`${input}Errors`]) &&
+                              this.state.touched[input] &&
+                              this.state[`${input}Errors`].map((err: string, index: number) => {
+                                return (
+                                  <div className='ca-Registration-form__error' key={index}>
+                                    {t(err)}
+                                  </div>
+                                );
+                              })}
                         </FormGroup>
                    );
                })}
@@ -158,8 +271,14 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                 </CaButton>
                </form>
            </div>
-
+          )
+        }
+      </I18n>
         );
+    }
+
+    private validateUrl(url: string): boolean {
+      return urlRegExp.test(url);
     }
 
     private removeElFromArrByValue(arr: string[], value: string): string[] {

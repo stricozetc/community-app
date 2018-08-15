@@ -59,5 +59,20 @@
   "winRate": "Win Rate",
   "noChartsAvailable": "No charts available",
   "createdAt": "Created at",
-  "updatedAt": "Updated at"
+  "updatedAt": "Updated at",
+  
+  "appNameRequired": "Application name should be required",
+  "applicationNameLengthError": "The length of application name should be in interval of 3-50 symbols",
+  "descriptionRequired": "Application description should be required",
+  "descriptionApplicationLengthError": "The length of application description should be in interval of 3-50 symbols",
+  "maxRoomPlayerRequired": "Count of players in room should be required",
+  "maxRoomPlayerCountError": "Count of players in room should be more than 2",
+  "maxRoomsRequired": "Count of rooms should be required",
+  "maxRoomsCountError": "Count of rooms should be more than 1",
+  "requestUrlRequired": "RequestUrl should be required",
+  "requestUrlError": "RequestUrl should be correct",
+  "maxWaitingTimeRequired": "Waiting time for the battle should be required",
+  "maxWaitingTimeError": "Waiting time for the battle should be more than 15 minutes",
+  "redirectUrlRequired": "RedirectUrl should be required",
+  "redirectUrlError": "RedirectUrl should be correct"  
 }
