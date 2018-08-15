@@ -81,8 +81,7 @@ export const setCurrentUser$ = (action$: ActionsObservable<SetCurrentUser>) =>
       if (user) {
         store.dispatch(new SetLanguage(user.email));
       }
-    }
-    ),
+    }),
     ignoreElements()
   );
 

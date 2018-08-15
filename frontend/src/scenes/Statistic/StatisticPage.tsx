@@ -29,15 +29,15 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];
   public componentWillReceiveProps(nextProps: StatisticProps): void {
     const isBestUsersInitFailed =
-      nextProps.statistic.bestUsersStatus === LoadStatus.ERROR &&
+      nextProps.statistic.bestUsersStatus === LoadStatus.Error &&
       nextProps.statistic.bestUsersStatus !==
       this.props.statistic.bestUsersStatus;
     const isRecentGamesInitFailed =
-      nextProps.statistic.recentGamesStatus === LoadStatus.ERROR &&
+      nextProps.statistic.recentGamesStatus === LoadStatus.Error &&
       nextProps.statistic.recentGamesStatus !==
       this.props.statistic.recentGamesStatus;
     const isMostPopularGamesFailed =
-      nextProps.statistic.mostPopularGamesStatus === LoadStatus.ERROR &&
+      nextProps.statistic.mostPopularGamesStatus === LoadStatus.Error &&
       nextProps.statistic.mostPopularGamesStatus !==
       this.props.statistic.mostPopularGamesStatus;
 
@@ -104,14 +104,14 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     const errorMessages = this.dataForSnack.filter(d => (d.type = 'error'));
 
     const isDataLoaded =
-      this.props.statistic.bestUsersStatus === LoadStatus.SUCCESS &&
-      this.props.statistic.recentGamesStatus === LoadStatus.SUCCESS &&
-      this.props.statistic.mostPopularGamesStatus === LoadStatus.SUCCESS;
+      this.props.statistic.bestUsersStatus === LoadStatus.Success &&
+      this.props.statistic.recentGamesStatus === LoadStatus.Success &&
+      this.props.statistic.mostPopularGamesStatus === LoadStatus.Success;
 
     const isDataFailed =
-      this.props.statistic.bestUsersStatus === LoadStatus.ERROR &&
-      this.props.statistic.recentGamesStatus === LoadStatus.ERROR &&
-      this.props.statistic.mostPopularGamesStatus === LoadStatus.ERROR;
+      this.props.statistic.bestUsersStatus === LoadStatus.Error &&
+      this.props.statistic.recentGamesStatus === LoadStatus.Error &&
+      this.props.statistic.mostPopularGamesStatus === LoadStatus.Error;
     return (
       <div className='ca-statistic'>
         {this.props.children}

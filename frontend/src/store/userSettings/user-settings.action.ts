@@ -10,7 +10,7 @@ export enum UserSettingsTypes {
   ChangeLanguage = '[user-settings] Change Language',
   SaveLanguage = '[user-settings] Save Language',
   SaveLanguageSuccess = '[user-settings] Save Language Success',
-  SaveLanguageFail = '[user-settings] Save Language Fail'
+  SaveLanguageError = '[user-settings] Save Language Error'
 }
 
 @action()
@@ -61,8 +61,8 @@ export class SaveLanguageSuccess {
 }
 
 @action()
-export class SaveLanguageFail {
-  public readonly type = UserSettingsTypes.SaveLanguageFail;
+export class SaveLanguageError {
+  public readonly type = UserSettingsTypes.SaveLanguageError;
 
   constructor(public payload: any) { }
 }
@@ -75,4 +75,4 @@ export type UserSettingsActions =
   | ChangeLanguage
   | SaveLanguage
   | SaveLanguageSuccess
-  | SaveLanguageFail;
+  | SaveLanguageError;

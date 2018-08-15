@@ -96,10 +96,10 @@ export interface UserFieldsToLogin {
 }
 
 export enum LoadStatus {
-  INIT,
-  FETCHING,
-  SUCCESS,
-  ERROR
+  Init,
+  Fetching,
+  Success,
+  Error
 }
 
 export enum StatTab {

@@ -11,7 +11,7 @@ import { GetErrors } from '../errors';
 import {
   ChangeLanguage,
   SaveLanguage,
-  SaveLanguageFail,
+  SaveLanguageError,
   SaveLanguageSuccess,
   UserSettingsTypes
 } from './user-settings.action';
@@ -69,14 +69,14 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
     switchMap((action) => {
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
-        catchError((error) => of(new SaveLanguageFail(error)))
+        catchError((error) => of(new SaveLanguageError(error)))
       );
     })
   );
 
-export const saveLanguageFail$ = (actions$: ActionsObservable<SaveLanguageFail>) =>
+export const saveLanguageError$ = (actions$: ActionsObservable<SaveLanguageError>) =>
   actions$.pipe(
-    ofType(UserSettingsTypes.SaveLanguageFail),
+    ofType(UserSettingsTypes.SaveLanguageError),
     map(() => new GetErrors(new Error('Fail save language'))),
     ignoreElements()
   );
@@ -86,5 +86,5 @@ export const UserSettingsEffects = [
   setLanguage$,
   changeLanguage$,
   saveLanguage$,
-  saveLanguageFail$,
+  saveLanguageError$,
 ];
