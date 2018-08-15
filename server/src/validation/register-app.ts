@@ -6,7 +6,7 @@ import { AppData } from '../../Interfaces/AppData';
 
 export function validateAppDataInput(data: AppData): { errors: ErrorBlock[], isValid: boolean } {
   const errors: ErrorBlock[] = [];
-  data.name = !isEmpty(data.name) ? data.name : '';
+  data.appName = !isEmpty(data.appName) ? data.appName : '';
   data.url = !isEmpty(data.url) ? data.url : '';
   data.maxRoomPlayer = !isEmpty(data.maxRoomPlayer) && +data.maxRoomPlayer > 0 ? data.maxRoomPlayer : '';
 
@@ -14,7 +14,7 @@ export function validateAppDataInput(data: AppData): { errors: ErrorBlock[], isV
     errors.push(logicErr.urlIsRequired);
   }
 
-  if (Validator.isEmpty(data.name)) {
+  if (Validator.isEmpty(data.appName)) {
     errors.push(logicErr.nameIsRequired);
   }
 

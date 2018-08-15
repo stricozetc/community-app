@@ -15,7 +15,7 @@ export class AppTokenRepository {
     ) { }
 
     public async create(app: AppData): Promise<string> {
-        const token = await this.getByName(app.name);
+        const token = await this.getByName(app.appName);
 
         if (token) {
             throw logicErr.appNameIsAlreadyRegistered;
@@ -25,7 +25,7 @@ export class AppTokenRepository {
             const newToken = uuid();
             const isUpsert: boolean = await AppTokenModel.upsert({
                 token: newToken,
-                appName: app.name,
+                appName: app.appName,
                 createAt: Date.now(),
                 updatedAt: Date.now()
             });

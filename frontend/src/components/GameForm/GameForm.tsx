@@ -51,7 +51,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
 
     public render(): JSX.Element {
         const arrayOfInputs = Object.keys(this.props.model);
-        console.log(this.props)
+
         return(
            <div>
                <form
