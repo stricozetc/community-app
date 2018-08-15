@@ -14,3 +14,5 @@ export * from './form-controls/CaEdit';
 export * from './form-controls/CaDelete';
 export * from './form-controls/CaDialog';
 export * from './AddGameComponent';
+export * from './CaTabs';
+export * from './CaTab';

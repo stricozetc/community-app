@@ -31,6 +31,12 @@ export const theme = createMuiTheme({
     MuiSelect,
     MuiMenu,
     MuiMenuItem,
+    MuiDialogContent,
+    MuiDialogActions,
+    MuiDialogContentText,
+    MuiTypography,
+    MuiDialogTitle,
+    MuiDialog,
     MuiInput: {
       root: {
         fontSize: '1.6rem'
@@ -45,12 +51,6 @@ export const theme = createMuiTheme({
       tooltip: {
         fontSize: '1.5rem'
   }
-    },
-    MuiDialogContent,
-    MuiDialogActions,
-    MuiDialogContentText,
-    MuiTypography,
-    MuiDialogTitle,
-    MuiDialog
+    }
   }
 });
