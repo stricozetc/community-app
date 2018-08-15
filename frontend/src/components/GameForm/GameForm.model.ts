@@ -15,7 +15,7 @@ export interface GameFormState {
 }
 
 export interface GameFormProps {
-    id: number;
+    id?: number;
     userId: number;
     config: SettingFormType;
     model: GameForSettingForm;

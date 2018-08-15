@@ -4,10 +4,10 @@ import { GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { history } from 'utils';
 
-import { GameFormState } from './GameForm.model';
+import { GameFormProps, GameFormState } from './GameForm.model';
 
-export class GameForm extends React.Component<any, GameFormState> {
-     constructor(props: any) {
+export class GameForm extends React.Component<GameFormProps, GameFormState> {
+     constructor(props: GameFormProps) {
         super(props);
         this.state = props.model;
         this.handleChange = this.handleChange.bind(this);
@@ -51,6 +51,7 @@ export class GameForm extends React.Component<any, GameFormState> {
 
     public render(): JSX.Element {
         const arrayOfInputs = Object.keys(this.props.model);
+        console.log(this.props)
         return(
            <div>
                <form
