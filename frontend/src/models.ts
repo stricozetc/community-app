@@ -211,12 +211,3 @@ export const MyGameCharts: string[] = [chartsTypes.winRate];
 export interface Errors {
   [key: string]: [{ code: number; msg: string }];
 }
-
-export enum LanguageStatus {
-  INIT,
-  SAVING,
-  SAVED,
-  FAIL,
-  CHANGING,
-  CHANGED
-}
