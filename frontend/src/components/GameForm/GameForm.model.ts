@@ -12,6 +12,14 @@ export interface GameFormState {
     leaveEventName?: string;
     updateRoomsInfoEventName?: string;
     notifyCountdown?: string;
+    /////////////////////////////
+    appNameErrors?: string[];
+    descriptionErrors?: string[];
+    maxRoomPlayerErrors?: string[];
+    maxRoomsErrors?: string[];
+    requestUrlErrors?: string[];
+    maxWaitingTimeErrors?: string[];
+    redirectUrlErrors?: string[];
 }
 
 export interface GameFormProps {
