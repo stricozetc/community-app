@@ -1,4 +1,11 @@
-import {  CaAddGame, CaButton, CaLogo, CaNavbar, LoginForm, RegistrationForm } from 'components';
+import {
+  CaAddGame,
+  CaButton,
+  CaLogo,
+  CaNavbar,
+  LoginForm,
+  RegistrationForm
+} from 'components';
 import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
 import { i18n } from 'i18next';
@@ -8,11 +15,25 @@ import { AuthStatus, languages } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { CaStatisticPage } from 'scenes/Statistic';
-import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
+import { CaUserSettings } from 'scenes/UserSettings';
+import {
+  AppState,
+  CleanStatistic,
+  FrontEndUser,
+  LeaveBattle,
+  LogoutUser,
+  SetCurrentUser,
+  store
+} from 'store';
 import { getCurrentLanguage, setAuthToken } from 'utils';
 
 import { CaMyGames } from '../MyGames/MyGames';
@@ -29,7 +50,6 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
-
   public logoutUser(): void {
     this.props.logoutUser();
     this.props.cleanStatistic();
@@ -40,7 +60,6 @@ export class RootComponent extends React.Component<RootProps> {
     if (userInBattle) {
       this.props.leaveBattle(this.props.battleName);
     }
-
   }
 
   public redToLogin(): void {
@@ -48,42 +67,27 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public handleChange = (event: any, i18n: i18n) => {
+  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>, i18n: i18n) => {
     const language = event.target.value;
 
     i18n.changeLanguage(language);
-  }
+  };
 
   public getButton(authStatus: number): JSX.Element {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
-    return (
-      isAuthorized ?
-
-        <I18n>
-          {
-            ( t ) => (
-              <CaButton
-                onClick={() => this.logoutUser()}
-              >
-                {t('logout')}
-              </CaButton>
-            )
-          }
-        </I18n>
-        :
-
-        <I18n>
-          {
-            ( t ) => (
-              <CaButton
-                onClick={() => this.redToLogin()}
-              >
-                {t('login')}
-              </CaButton>
-            )
-          }
-        </I18n>
+    return isAuthorized ? (
+      <I18n>
+        {t => (
+          <CaButton onClick={() => this.logoutUser()}>{t('logout')}</CaButton>
+        )}
+      </I18n>
+    ) : (
+      <I18n>
+        {t => (
+          <CaButton onClick={() => this.redToLogin()}>{t('login')}</CaButton>
+        )}
+      </I18n>
     );
   }
 
@@ -91,44 +95,47 @@ export class RootComponent extends React.Component<RootProps> {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     return (
-<I18n>
-        {
-          ( t, { i18n } ) => (
-            <CaNavbar
-              linksToRender={[
-                {
-                  text: t('battles'),
-                  to: '/battles',
-                  activeClassName: 'ca-navbar__nav-item--active',
-                  disabled: !isAuthorized
-                },
-                {
-                  text: t('statistics'),
-                  to: '/statistics',
-                  activeClassName: 'ca-navbar__nav-item--active',
-                  disabled: !isAuthorized
-                },
-                {
-                  text: t('adminPage'),
-                  to: '/my-games',
-                  activeClassName: 'ca-navbar__nav-item--active',
-                  disabled: !isAuthorized
-                }
-              ]}
-            >
-              <CaLogo
-                text='battlenet'
-              />
-              <div className='ca-navbar__logout-btn-container'>
-                {this.getButton(this.props.status)}
-              </div>
+      <I18n>
+        {(t, { i18n }) => (
+          <CaNavbar
+            linksToRender={[
+              {
+                text: t('battles'),
+                to: '/battles',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              },
+              {
+                text: t('statistics'),
+                to: '/statistics',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              },
+              {
+                text: t('adminPage'),
+                to: '/my-games',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              },
+              {
+                text: t('settings'),
+                to: '/settings',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              }
+            ]}
+          >
+            <CaLogo text="battlenet" />
+            <div className="ca-navbar__logout-btn-container">
+              {this.getButton(this.props.status)}
+            </div>
 
               <div className='ca-navbar__select-language'>
                 <CaSelect
-                  languages={[languages.en, languages.ru]}
-                  displayedLanguages={[t('ENToggle'), t('RUToggle')]}
+                  values={[languages.en, languages.ru]}
+                  displayedValues={[t('ENToggle'), t('RUToggle')]}
                   handleChange={this.handleChange}
-                  currLang={getCurrentLanguage(i18n)}
+                  currentValue={getCurrentLanguage(i18n)}
                 />
               </div>
             </CaNavbar>
@@ -141,114 +148,116 @@ export class RootComponent extends React.Component<RootProps> {
   public render(): JSX.Element {
     return (
       <Router>
-        <div className='App'>
+        <div className="App">
           <Switch>
             <Route
               exact={true}
-              path='/'
-              render={props =>
-                <Landing {...props} >
+              path="/"
+              render={props => (
+                <Landing {...props}>
                   {this.getNavbar(this.props.status)}
                 </Landing>
-              }
+              )}
             />
 
             <Route
               exact={true}
-              path='/register'
-              render={props =>
-                <RegistrationForm {...props} >
+              path="/register"
+              render={props => (
+                <RegistrationForm {...props}>
                   {this.getNavbar(this.props.status)}
                 </RegistrationForm>
-              }
+              )}
             />
 
             <Route
               exact={true}
-              path='/login'
-              render={props =>
-                <LoginForm {...props} >
+              path="/login"
+              render={props => (
+                <LoginForm {...props}>
                   {this.getNavbar(this.props.status)}
                 </LoginForm>
-              }
+              )}
             />
             <Route
               exact={true}
-              path='/homepage'
-              render={props => <Redirect to='/battles' />}
+              path="/homepage"
+              render={props => <Redirect to="/battles" />}
             />
 
             <Route
               exact={true}
-              path='/statistics'
-              render={props =>
+              path="/statistics"
+              render={props => (
                 <CaStatisticPage {...props}>
                   {this.getNavbar(this.props.status)}
                 </CaStatisticPage>
-              }
+              )}
             />
 
             <Route
               exact={true}
-              path='/battles'
-              render={
-                props =>
-                  <CaBattles {...props}>
-                    {this.getNavbar(this.props.status)}
-                  </CaBattles>
-              }
+              path="/battles"
+              render={props => (
+                <CaBattles {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaBattles>
+              )}
             />
 
             <Route
               exact={true}
-              path='/battles/:id'
-              render={props =>
+              path="/battles/:id"
+              render={props => (
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
                 </CurrentBattle>
-              }
+              )}
             />
 
             <Route
               exact={true}
-              path='/my-games'
-              render={
-                props =>
-                  <CaMyGames {...props} >
-                    {this.getNavbar(this.props.status)}
-                  </CaMyGames>
-              }
-            />
-
-            <Route
-              exact={true}
-              path='/my-games/add-game'
-              render={
-                props =>
-                  <CaAddGame {...props} >
-                    {this.getNavbar(this.props.status)}
-                  </CaAddGame>
-              }
-            />
-
-            <Route
-              exact={true}
-              path='/my-games/edit-game/:idOfTheGame'
-              render={
-                props =>
-                  <CaEditGame {...props} >
-                    {this.getNavbar(this.props.status)}
-                  </CaEditGame>
-              }
-            />
-
-            <Route
-              path='/*'
-              render={() =>
-                <PageNotFound>
+              path="/my-games"
+              render={props => (
+                <CaMyGames {...props}>
                   {this.getNavbar(this.props.status)}
-                </PageNotFound>
-              }
+                </CaMyGames>
+              )}
+            />
+
+            <Route
+              exact={true}
+              path="/my-games/add-game"
+              render={props => (
+                <CaAddGame {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaAddGame>
+              )}
+            />
+
+            <Route
+              exact={true}
+              path="/my-games/edit-game/:idOfTheGame"
+              render={props => (
+                <CaEditGame {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaEditGame>
+              )}
+            />
+            <Route
+              exact={true}
+              path="/settings"
+              render={props => (
+                <CaUserSettings {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaUserSettings>
+              )}
+            />
+            <Route
+              path="/*"
+              render={() => (
+                <PageNotFound>{this.getNavbar(this.props.status)}</PageNotFound>
+              )}
             />
           </Switch>
         </div>

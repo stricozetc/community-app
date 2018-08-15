@@ -39,6 +39,12 @@ import {
 } from './socket';
 
 import {
+  UserSettingsEffects,
+  UserSettingsState,
+  userSettingsReducer
+} from './userSettings';
+
+import {
   SnackbarUiState,
   snackbarUiReducer
 } from './snackbar';
@@ -51,6 +57,7 @@ import {
 
 import { errorsReducer } from './errors';
 
+
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
@@ -59,7 +66,8 @@ const rootReducers = combineReducers({
   statistic: statisticReducer,
   socket: socketReducer,
   snackbarUi: snackbarUiReducer,
-  myGames: myGamesReducer
+  myGames: myGamesReducer,
+  userSettings: userSettingsReducer
 });
 
 const rootEpic = combineEpics(
@@ -68,7 +76,8 @@ const rootEpic = combineEpics(
   ...GamesEffects,
   ...StatisticEffects,
   ...SocketEffects,
-  ...MyGamesEffects
+  ...MyGamesEffects,
+  ...UserSettingsEffects
 );
 
 const epicMiddleware = createEpicMiddleware();
@@ -81,6 +90,7 @@ export interface AppState {
   errors: {};
   socket: SocketState;
   snackbarUi: SnackbarUiState;
+  userSettings: UserSettingsState;
   myGames: MyGamesState;
 }
 
