@@ -1,12 +1,12 @@
-import { AuthStatus, MyGameModel } from 'models';
+import { AuthStatus, GameModel } from 'models';
 
 export interface EditGameComponentProps {
     authStatus: AuthStatus;
     history: any;
     user: any;
-    games: MyGameModel[];
+    games: GameModel[];
     children?: JSX.Element;
     match: any;
 
-    editGame (payload: MyGameModel): void;
+    editGame (payload: GameModel): void;
 }

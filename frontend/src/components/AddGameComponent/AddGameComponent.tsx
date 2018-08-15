@@ -1,4 +1,4 @@
-import { AuthStatus, GameForSettingForm, MyGameModel } from 'models';
+import { AuthStatus, GameForSettingForm, GameModel } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
@@ -37,7 +37,7 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
                     userId = {this.props.user && this.props.user.id}
                     config='Add Game'
                     model={initFormForAddingNewGame}
-                    submit={(data: MyGameModel) => this.props.addGame(data)}
+                    submit={(data: GameModel) => this.props.addGame(data)}
                />
            </div>
         );
@@ -51,7 +51,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     logoutUser: () => dispatch(new LogoutUser()),
-    addGame: (data: MyGameModel) => dispatch(new AddGame(data)),
+    addGame: (data: GameModel) => dispatch(new AddGame(data)),
 });
 
 export const CaAddGame = connect(

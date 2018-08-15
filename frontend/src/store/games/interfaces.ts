@@ -1,6 +1,6 @@
-import { LoadStatus, MyGameModel } from 'models';
+import { LoadStatus, GameModel } from 'models';
 
 export interface GamesState {
-  games: MyGameModel[];
+  games: GameModel[];
   gamesStatus: LoadStatus;
 }

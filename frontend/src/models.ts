@@ -154,7 +154,7 @@ export enum TypeOfColumn {
   result = 'Result',
   date = 'Date'
 }
-export interface MyGameModel {
+export interface GameModel {
   id?: number;
   userId?: number;
   appName: string;
@@ -177,7 +177,7 @@ export interface HeaderName {
   field: RowProperty;
   type: TypeOfColumn;
   editAction?(payload: number): void;
-  deleteAction?(payload: MyGameModel): void;
+  deleteAction?(payload: GameModel): void;
 }
 
 export interface Row {

@@ -1,4 +1,4 @@
-import { AuthStatus, MyGameModel } from 'models';
+import { AuthStatus, GameModel } from 'models';
 
 export interface AddGameComponentProps {
     authStatus: AuthStatus;
@@ -6,5 +6,5 @@ export interface AddGameComponentProps {
     user: any;
     children?: JSX.Element;
 
-    addGame (payload: MyGameModel): void;
+    addGame (payload: GameModel): void;
 }

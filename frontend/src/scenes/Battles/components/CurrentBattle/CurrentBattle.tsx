@@ -4,7 +4,7 @@ import clockImage from 'assets/clock-small.svg';
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
 import { CaButton, Countdown } from 'components';
-import { AuthStatus, BattleStatus, MyGameModel, RoomInfo } from 'models';
+import { AuthStatus, BattleStatus, GameModel, RoomInfo } from 'models';
 import { I18n } from 'react-i18next';
 
 import './current-battle.scss';
@@ -14,7 +14,7 @@ interface Props {
   battleName: string;
   countdown: number;
   history: any;
-  games: MyGameModel[];
+  games: GameModel[];
   gameStatus: number;
   authStatus: number;
   leaveBattleAction(payload: string): void;

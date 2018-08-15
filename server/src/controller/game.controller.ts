@@ -8,7 +8,7 @@ import {
 } from '../service/games';
 import { MyGameInterface } from '../../models/games';
 
-@controller('/api/mocks')
+@controller('/api/games')
 export class MockController {
 
   public constructor(@inject(GamesRepository) private mocksRepository: GamesRepository) {

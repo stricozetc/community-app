@@ -1,6 +1,6 @@
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
-import { MyGameModel } from 'models';
+import { GameModel } from 'models';
 import * as React from 'react';
 import { history } from 'utils';
 
@@ -25,7 +25,7 @@ export class GameForm extends React.Component<any, GameFormState> {
     public handleSubmit(event: any): void {
         event.preventDefault();
 
-        let game: MyGameModel = {
+        let game: GameModel = {
           userId: this.props.userId,
           appName: this.state.appName,
           description: this.state.description,
@@ -38,7 +38,7 @@ export class GameForm extends React.Component<any, GameFormState> {
           leaveEventName: 'onLeave' + this.state.appName,
           updateRoomsInfoEventName: 'onUpdateRoomsInfo' + this.state.appName,
           notifyCountdown: 'onNotifyCountdown' + this.state.appName,
-          approve: false
+          approve: true
         };
 
         if (this.props.config === 'Edit Game') {

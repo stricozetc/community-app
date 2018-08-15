@@ -1,4 +1,4 @@
-import { AuthStatus, BattleStatus, LoadStatus, MyGameModel, RoomInfo } from 'models';
+import { AuthStatus, BattleStatus, LoadStatus, GameModel, RoomInfo } from 'models';
 
 export interface BattleProps {
 
@@ -6,7 +6,7 @@ export interface BattleProps {
   battleStatus: BattleStatus;
   history: any;
   roomsInfo: RoomInfo[];
-  games: MyGameModel[];
+  games: GameModel[];
   status: LoadStatus;
   children?: JSX.Element;
   isSnackbarOpen: boolean;

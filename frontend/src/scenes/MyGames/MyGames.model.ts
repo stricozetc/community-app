@@ -1,17 +1,17 @@
-import { AuthStatus, MyGameModel } from 'models';
+import { AuthStatus, GameModel } from 'models';
 export interface MyGameProps {
     authStatus: AuthStatus;
     history: any;
     user: any;
-    games: MyGameModel[];
+    games: GameModel[];
     children?: JSX.Element;
 
-    deleteGame (payload: MyGameModel | null): void;
-    addGame (payload: MyGameModel):  void;
+    deleteGame (payload: GameModel | null): void;
+    addGame (payload: GameModel):  void;
     getMyGames (payload: number):  void;
 }
 
 export interface  MyGameState {
     isDialogOpen: boolean;
-    deletedGame: MyGameModel | null;
+    deletedGame: GameModel | null;
 }

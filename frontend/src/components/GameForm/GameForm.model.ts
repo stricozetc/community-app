@@ -1,4 +1,4 @@
-import { GameForSettingForm, MyGameModel } from 'models';
+import { GameForSettingForm, GameModel } from 'models';
 
 export interface GameFormState {
     appName: string;
@@ -19,5 +19,5 @@ export interface GameFormProps {
     userId: number;
     config: string;
     model: GameForSettingForm;
-    submit (payload: MyGameModel): void;
+    submit (payload: GameModel): void;
 }

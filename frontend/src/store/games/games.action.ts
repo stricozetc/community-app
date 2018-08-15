@@ -1,4 +1,4 @@
-import { MyGameModel } from 'models';
+import { GameModel } from 'models';
 
 import { action } from '../decorators';
 
@@ -17,7 +17,7 @@ export class LoadGames {
 export class LoadGamesSuccess {
   public readonly type = GamesTypes.LoadGamesSuccess;
 
-  public constructor(public payload: MyGameModel[]) { }
+  public constructor(public payload: GameModel[]) { }
 }
 
 @action()
