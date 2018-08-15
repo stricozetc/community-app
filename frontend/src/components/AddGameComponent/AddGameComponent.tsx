@@ -14,7 +14,7 @@ const initFormForAddingNewGame: GameForSettingForm = {
     maxRoomPlayer: 5,
     maxRooms: 1,
     requestUrl: '',
-    maxWaitingTime: 900000,
+    maxWaitingTime: 20,
     redirectUrl: ''
 };
 export class AddGameComponent extends React.Component<AddGameComponentProps> {

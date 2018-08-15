@@ -211,3 +211,14 @@ export const MyGameCharts: string[] = [chartsTypes.winRate];
 export interface Errors {
   [key: string]: [{ code: number; msg: string }];
 }
+
+////////////////////////////
+export interface FrontEndValidationErrorsGameRegister {
+  appName: { length: string, required: string };
+  description: { length: string, required: string };
+  maxRoomPlayer: { count: string, required: string };
+  maxRooms: { count: string, required: string };
+  requestUrl: { mustBeCorrect: string, required: string };
+  maxWaitingTime: { mustBeCorrect: string, required: string };
+  redirectUrl: { mustBeCorrect: string, required: string };
+}

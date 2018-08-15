@@ -63,7 +63,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
     const currentGame = this.props.games && this.props.games.length ?
       this.props.games[this.getGameIndex()] : undefined;
 
-    const timeValue = currentGame ? currentGame.maxWaitingTime / 60000 : 0;
+    const timeValue = currentGame ? currentGame.maxWaitingTime : 0;
 
     return (
       <I18n>
