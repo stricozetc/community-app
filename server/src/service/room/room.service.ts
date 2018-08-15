@@ -1,9 +1,7 @@
 import { injectable, inject } from 'inversify';
 import { ApiService } from '../api';
-// import { Game } from '../../typing/game';
 import { LoggerService } from '../logger';
 import { TimerService } from './../timer';
-
 import { RoomStatus, Room } from './models';
 import { RoomInfo } from '../../typing/room-info';
 import { PlayersBindService } from '../players-bind';
@@ -12,9 +10,6 @@ import { GamesRepository } from '../games/games.repository';
 
 @injectable()
 export class RoomService {
-
-
-  // private games: MyGameInterface[] = require('../../config/games.json').games;
   @inject(ApiService) private apiService: ApiService;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(TimerService) private timerService: TimerService;
@@ -24,8 +19,7 @@ export class RoomService {
   private rooms: Room[] = [];
   private games: any[] = [];
 
-  constructor() {
-  }
+  constructor() {}
 
   public getRooms(): Room[] {
     return this.rooms;

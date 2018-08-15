@@ -13,10 +13,6 @@ export function validateAppDataInput(data: AppData): { errors: ErrorBlock[], isV
   if (Validator.isEmpty(data.url)) {
     errors.push(logicErr.urlIsRequired);
   }
-  // (Valiantsin) this validation don't work with localhost
-  // if (!Validator.isURL(data.url)) {
-  //   errors.push(logicErr.urlMustBeValid);
-  // }
 
   if (Validator.isEmpty(data.name)) {
     errors.push(logicErr.nameIsRequired);

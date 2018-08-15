@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import { decorate, inject, injectable } from 'inversify';
 
 import { ApiService } from './api.service';
-// import { Game } from '../../typing/game';
 import { AppTokenService } from '../app-token';
 import { MyGameInterface } from '../../../models/games';
 
