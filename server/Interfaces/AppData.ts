@@ -1,5 +1,5 @@
 export interface AppData {
-    name: string;
+    appName: string;
     url: string;
     maxRoomPlayer: string;
 }
