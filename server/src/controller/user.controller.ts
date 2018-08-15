@@ -54,12 +54,9 @@ export class UserController {
         const userEmail: string = request.body.userEmail;
         const userLanguage: string = request.body.userLanguage.toLowerCase();
 
-        console.log('BODY', request.body);
         const { errors, isValid } = validateSetLanguage(userEmail, userLanguage);
 
         if (!isValid) {
-            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', isValid, errors);
-
             return response.status(400).json(errors);
         }
 

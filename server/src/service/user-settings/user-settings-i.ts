@@ -58,8 +58,6 @@ export class UserSettingsRepositoryImplementation
 
         return { result: true };
       } else {
-        console.log('IS NOT MATCHED');
-
         errors.push(logicErr.wrongPassword(user.email))
 
         return { result: false, errors };

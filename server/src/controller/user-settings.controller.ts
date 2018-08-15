@@ -21,7 +21,6 @@ export class UserSettingsController {
   ): Promise<void | Response> | Response {
     const { errors, isValid } = validateChangePassword(request.body);
 
-    console.log(request.body);
     if (!isValid) {
       return response.status(400).json(errors);
     }

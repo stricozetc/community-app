@@ -53,7 +53,6 @@ export class PlayersBindService {
     const sendingPlayersBind = this.playersBinds
       .find((playersBind: PlayersBind) => playersBind.room === room.token);
 
-    console.log('sendingPlayersBind', sendingPlayersBind);
     return axios.post<any>(`${game.requestUrl}/api/set-user-bind`, sendingPlayersBind, {
       headers: {
         Authorization: 'Bearer ' + app.token
