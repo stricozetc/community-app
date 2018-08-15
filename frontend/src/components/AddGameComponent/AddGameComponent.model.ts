@@ -1,20 +1,10 @@
-import { AuthStatus, MyGameModel } from 'models';
-
-export interface AddGameComponentState {
-    appName: string;
-    description: string;
-    maxRoomPlayer: string;
-    maxRooms: string;
-    requestUrl: string;
-    maxWaitingTime: string;
-}
+import { AuthStatus, GameModel } from 'models';
 
 export interface AddGameComponentProps {
     authStatus: AuthStatus;
     history: any;
     user: any;
-    games: MyGameModel[];
     children?: JSX.Element;
 
-    addGame (payload: MyGameModel): void;
+    addGame (payload: GameModel): void;
 }

@@ -1,13 +1,13 @@
-import { FormForWorkingWithGame } from 'components/FormForWorkingWithGame';
-import { AuthStatus, MyGameModel } from 'models';
+import { GameForm } from 'components/GameForm';
+import { AuthStatus, GameForSettingForm, GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { EditGame } from 'store';
 import { AppState } from 'store/store.config';
 
-import { EditGameComponentProps, EditGameComponentState, NecessaryPropertyOfTheForEditForm } from './EditGameComponent.model';
+import { EditGameComponentProps } from './EditGameComponent.model';
 
-export class EditGameComponent extends React.Component<EditGameComponentProps, EditGameComponentState> {
+export class EditGameComponent extends React.Component<EditGameComponentProps> {
     constructor(props: EditGameComponentProps) {
         super(props);
     }
@@ -31,30 +31,30 @@ export class EditGameComponent extends React.Component<EditGameComponentProps, E
         return(
            <div>
                {this.props.children}
-               <FormForWorkingWithGame
+               <GameForm
                     id = {id}
                     userId = {this.props.user && this.props.user.id}
-                    config='Edit Game'
+                    config={SettingFormType.editGame}
                     model={game}
-                    submit={(data: MyGameModel) => this.props.editGame(data)}
+                    submit={(data: GameModel) => this.props.editGame(data)}
                />
            </div>
         );
     }
 
-    public getGame(): NecessaryPropertyOfTheForEditForm {
+    public getGame(): GameForSettingForm {
 
         const idOfTheGameThatNeedToEdit = this.props.match.params['idOfTheGame'];
         const myGames = this.props.games;
 
-        const gameDataFromStore = Object.assign({}, myGames.find((game: MyGameModel) => game.id === +idOfTheGameThatNeedToEdit));
+        const gameDataFromStore = Object.assign({}, myGames.find((game: GameModel) => game.id === +idOfTheGameThatNeedToEdit));
         return this.deleteUnnecessaryProperty(
             gameDataFromStore,
-            ['appName', 'description', 'maxRoomPlayer', 'maxRooms', 'requestUrl', 'maxWaitingTime']
+            ['appName', 'description', 'maxRoomPlayer', 'maxRooms', 'requestUrl', 'maxWaitingTime', 'redirectUrl']
         );
     }
 
-    public deleteUnnecessaryProperty(game: MyGameModel, arrayOfNecessaryProperty: string[]): NecessaryPropertyOfTheForEditForm {
+    public deleteUnnecessaryProperty(game: GameModel, arrayOfNecessaryProperty: string[]): GameForSettingForm {
         const gameWithNecessaryProperty = { ...game };
 
         for (const property in gameWithNecessaryProperty) {
@@ -73,7 +73,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    editGame: (data: MyGameModel) => dispatch(new EditGame(data)),
+    editGame: (data: GameModel) => dispatch(new EditGame(data)),
 });
 
 export const CaEditGame = connect(

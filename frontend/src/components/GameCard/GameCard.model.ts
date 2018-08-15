@@ -1,7 +1,7 @@
-import { BattleStatus, Game } from 'models';
+import { BattleStatus, GameModel } from 'models';
 
 export interface GameCardProps {
-  game: Game;
+  game: GameModel;
   status: BattleStatus;
   battleStatus: BattleStatus;
   waitBattlePlayersCountAction: number;

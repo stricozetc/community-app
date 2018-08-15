@@ -51,7 +51,7 @@ const getBattleButton = (
 export const CaGameCard = (props: GameCardProps) => {
   const {status, joinGame, leaveGame, waitBattlePlayersCountAction, isFull, battleStartTime} = props;
 
-  const {name, desc, maxRoomPlayer, maxRooms} = props.game;
+  const {appName, description, maxRoomPlayer, maxRooms} = props.game;
 
   const secondLineColor = isFull
     ? 'ca-game-footer__second-line--full-players'
@@ -75,11 +75,11 @@ export const CaGameCard = (props: GameCardProps) => {
         ( t ) => (
           <div className={['ca-game-card', ...classes].join(' ')}>
             <div className='ca-game-card__container'>
-              <h1 className='ca-game-card__game-title'>{name}</h1>
-              <h2 className='ca-game-card__game-desc'>{desc}</h2>
+              <h1 className='ca-game-card__game-title'>{appName}</h1>
+              <h2 className='ca-game-card__game-desc'>{description}</h2>
 
               <div className='ca-game-card__btn-container'>
-                {!isFull ? getBattleButton(status, joinGame, leaveGame, name) : <span/>}
+                {!isFull ? getBattleButton(status, joinGame, leaveGame, appName) : <span/>}
               </div>
               <div className={'ca-game-footer ' + backgroundFooterColor}>
                 <div className='ca-game-footer__container'>

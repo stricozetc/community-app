@@ -1,13 +1,13 @@
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
-import { MyGameModel } from 'models';
+import { GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { history } from 'utils';
 
-import { FormForAddingNewGameState } from './FormForWorkingWithGame.model';
+import { GameFormProps, GameFormState } from './GameForm.model';
 
-export class FormForWorkingWithGame extends React.Component<any, FormForAddingNewGameState> {
-     constructor(props: any) {
+export class GameForm extends React.Component<GameFormProps, GameFormState> {
+     constructor(props: GameFormProps) {
         super(props);
         this.state = props.model;
         this.handleChange = this.handleChange.bind(this);
@@ -19,23 +19,29 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        this.setState({ [name]: value } as FormForAddingNewGameState);
+        this.setState({ [name]: value } as GameFormState);
     }
 
     public handleSubmit(event: any): void {
         event.preventDefault();
 
-        let game: MyGameModel = {
+        let game: GameModel = {
           userId: this.props.userId,
           appName: this.state.appName,
           description: this.state.description,
           maxRoomPlayer: this.state.maxRoomPlayer,
           maxRooms: this.state.maxRooms,
           requestUrl: this.state.requestUrl,
-          maxWaitingTime: this.state.maxWaitingTime
+          maxWaitingTime: this.state.maxWaitingTime,
+          redirectUrl: this.state.redirectUrl,
+          registrationEventName: 'on' + this.state.appName,
+          leaveEventName: 'onLeave' + this.state.appName,
+          updateRoomsInfoEventName: 'onUpdateRoomsInfo' + this.state.appName,
+          notifyCountdown: 'onNotifyCountdown' + this.state.appName,
+          approve: true
         };
 
-        if (this.props.config === 'Edit Game') {
+        if (this.props.config === SettingFormType.editGame) {
             game = Object.assign(game, {id: this.props.id});
         }
 
@@ -45,6 +51,7 @@ export class FormForWorkingWithGame extends React.Component<any, FormForAddingNe
 
     public render(): JSX.Element {
         const arrayOfInputs = Object.keys(this.props.model);
+        console.log(this.props)
         return(
            <div>
                <form
