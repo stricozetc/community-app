@@ -8,6 +8,7 @@ export class TimerService {
         ms: number,
         interval: number = 1000
     ): number {
+        ms *= 60000;
         const countDownDate = new Date((new Date()).getTime() + ms).getTime();
 
         onInterval(ms);
