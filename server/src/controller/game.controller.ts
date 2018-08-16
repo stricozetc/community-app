@@ -16,11 +16,12 @@ export class MockController {
 
   @httpGet('/get-games')
     public getGames(request: Request, response: Response): Promise<void | Response> {
+
       return this.mocksRepository.getGames()
-          .then((games: MyGameInterface[]) => {
-              response.status(200).json(games);
-          }).catch((err) => {
-              return response.status(400).json(err);
-          });
+        .then((games: MyGameInterface[]) => {
+          response.status(200).json(games);
+        }).catch((err) => {
+          return response.status(400).json(err);
+        });
     }
 }

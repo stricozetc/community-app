@@ -6,6 +6,8 @@ import { AppToken } from '../../../Interfaces/AppToken';
 import { technicalErr } from '../../../errors/technicalErr';
 import { logicErr } from '../../../errors/logicErr';
 import { LoggerService } from '../logger/logger.service';
+import { MyGameInterface } from '../../../models/games';
+
 
 @injectable()
 export class AppTokenRepository {
@@ -14,7 +16,7 @@ export class AppTokenRepository {
         @inject(LoggerService) private loggerService: LoggerService,
     ) { }
 
-    public async create(app: AppData): Promise<string> {
+    public async create(app: MyGameInterface): Promise<string> {
         const token = await this.getByName(app.appName);
 
         if (token) {

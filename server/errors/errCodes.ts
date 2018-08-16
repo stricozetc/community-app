@@ -43,7 +43,23 @@ export enum errCodes {
   newAndOldPasswordsShouldBeDifferent = 1029,
   newPasswordLength = 1030,
   oldPasswordLength = 1031,
-  repeatNewPasswordLength = 1032
+  repeatNewPasswordLength = 1032,
+
+  appNameRequired = 1033,
+  applicationNameLengthError = 1034,
+  descriptionRequired = 1035,
+  descriptionApplicationLengthError = 1036,
+  maxRoomPlayerRequired = 1037,
+  maxRoomPlayerCountError = 1038,
+  maxRoomsRequired = 1039,
+  maxRoomsCountError = 1040,
+  requestUrlRequired = 1041,
+  requestUrlError = 1042,
+  maxWaitingTimeRequired = 1043,
+  maxWaitingTimeError = 1044,
+  redirectUrlRequired = 1045,
+  redirectUrlError = 1046,
+  userIdRequired = 1047
 }
 
 export enum technicalErrCodes {
