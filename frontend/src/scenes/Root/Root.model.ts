@@ -10,6 +10,7 @@ export interface RootProps {
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
   errors: any;
+  language: string;
 
   leaveBattle(battleName: string): void;
 

@@ -9,7 +9,7 @@ import { AppState, LoginUser } from 'store';
 import {
   AuthStatus,
   UserFieldsToLogin,
-  UserFieldsToRegister
+  /* UserFieldsToRegister */
 } from 'models';
 import { I18n } from 'react-i18next';
 
@@ -229,9 +229,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToLogin) => dispatch(new LoginUser(user)),
-  closeSnackbar: () => dispatch(new CloseSnackbar()),
-  openSnackbar: () => dispatch(new OpenSnackbar())
+  loginUser: (user: UserFieldsToLogin) => dispatch(new LoginUser(user)),  
 });
 
 export const LoginForm = connect(

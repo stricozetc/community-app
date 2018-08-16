@@ -6,19 +6,21 @@ import { AppState, store } from 'store';
 import { FrontEndUser } from 'store/auth';
 import { i18nInstance } from 'utils/i18n';
 
-import { GetErrors } from '../errors';
+/* import { GetErrors } from '../errors'; */
+import { OpenSnackbar } from 'store/snackbar';
+import { SnackbarType } from 'models';
 
 import {
   ChangeLanguage,
   SaveLanguage,
-  SaveLanguageError,
+  /* SaveLanguageError, */
   SaveLanguageSuccess,
   UserSettingsTypes
 } from './user-settings.action';
 
 import {
   ChangePassword,
-  ChangePasswordError,
+  /* ChangePasswordError, */
   ChangePasswordSuccess,
   SetLanguage,
 } from './user-settings.action';
@@ -31,7 +33,9 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
         map(() => {
           return new ChangePasswordSuccess();
         }),
-        catchError(error => of(new ChangePasswordError(error.response.data)))
+        catchError((error) => {
+          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))  
+        })
       )
     )
   );
@@ -44,7 +48,9 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
         map(res => {
           return new ChangeLanguage(res.data);
         }),
-        catchError(error => of(new GetErrors(error.response.data)))
+        catchError((error) => {
+          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))  
+        })
       );
     })
   );
@@ -69,22 +75,24 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
     switchMap((action) => {
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
-        catchError((error) => of(new SaveLanguageError(error)))
+        catchError((error) => {
+          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))  
+        })
       );
     })
   );
 
-export const saveLanguageError$ = (actions$: ActionsObservable<SaveLanguageError>) =>
+/* export const saveLanguageError$ = (actions$: ActionsObservable<SaveLanguageError>) =>
   actions$.pipe(
     ofType(UserSettingsTypes.SaveLanguageError),
     map(() => new GetErrors(new Error('Fail save language'))),
     ignoreElements()
-  );
+  ); */
 
 export const UserSettingsEffects = [
   changePassword$,
   setLanguage$,
   changeLanguage$,
   saveLanguage$,
-  saveLanguageError$,
+  /* saveLanguageError$, */
 ];
