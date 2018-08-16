@@ -1,9 +1,13 @@
+import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
+import { CaSelect } from 'components/form-controls/CaSelect';
+import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AuthStatus, languages, /* SnackbarType ,*/ transitionDirection } from 'models';
+import { AuthStatus, languages, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
+
 import {
   HashRouter as Router,
   Redirect,
@@ -28,9 +32,6 @@ import {
   SetCurrentUser,
   store  
 } from 'store';
-import { getCurrentLanguage, setAuthToken/* , isEmpty */ } from 'utils';
-/* import { isObjectsEqual } from 'utils/isObjectsEqual'; */
-import { CloseSnackbar, /* OpenSnackbar */ } from 'store/snackbar';
 
 import { CloseSnackbar } from 'store/snackbar'
 
@@ -73,6 +74,7 @@ import { PageNotFound } from '../PageNotFound';
 import { RootProps } from './Root.model';
 
 import './root.scss';
+import { CaAddGame } from 'components/AddGameComponent';
 
 const token = Cookies.get('jwtToken');
 
@@ -151,9 +153,7 @@ export class RootComponent extends React.Component<RootProps> {
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
-    /* const { errors } = this.props; */
-    /* const keys = errors && Object.keys(errors); */
-
+    
     const appMenuItems: AppMenuItem[] = [
       {
         icon: <SettingsIcon />,
