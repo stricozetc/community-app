@@ -39,7 +39,7 @@ export const initRegistrationFormState: RegistrationFormState = {
   emailErrors: [],
   passwordErrors: [],
   nameErrors: [],  
-  language: 'english'
+  language: 'eng'
 };
 export interface RegistrationFormProps {
   history: any;
