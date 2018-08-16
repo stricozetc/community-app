@@ -6,5 +6,5 @@ export interface StatisticState {
   recentGames: any[];
   bestUsersStatus: LoadStatus;
   mostPopularGamesStatus: LoadStatus;
-  recentGamesStatus: LoadStatus;
+  recentGamesStatus: LoadStatus;  
 }

@@ -1,9 +1,13 @@
+import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
+import { CaSelect } from 'components/form-controls/CaSelect';
+import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AuthStatus, languages, /* SnackbarType ,*/ transitionDirection } from 'models';
+import { AuthStatus, languages, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
+
 import {
   HashRouter as Router,
   Redirect,
@@ -28,9 +32,6 @@ import {
   SetCurrentUser,
   store
 } from 'store';
-import { getCurrentLanguage, setAuthToken/* , isEmpty */ } from 'utils';
-/* import { isObjectsEqual } from 'utils/isObjectsEqual'; */
-import { CloseSnackbar, /* OpenSnackbar */ } from 'store/snackbar';
 
 import {
   getCurrentLanguage,
@@ -60,6 +61,7 @@ import { CaMyGames } from '../MyGames/MyGames';
 import { RootProps } from './Root.model';
 
 import './root.scss';
+import { CaAddGame } from 'components/AddGameComponent';
 
 const token = Cookies.get('jwtToken');
 
@@ -70,12 +72,7 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
-  /* public componentWillReceiveProps(nextProps: RootProps): void {
-    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
-      this.props.openSnackbar();
-    }
-  } */
-
+  
   public closeSnackbar(): void {
     this.props.closeSnackbar();
   }
@@ -203,11 +200,14 @@ export class RootComponent extends React.Component<RootProps> {
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
                 handleClose={() => this.closeSnackbar()}
-                type={this.props.snackbarType}                
+                type={this.props.snackbarType}
                 transitionDirection={transitionDirection.down}
                 message={
                   <div>
-                    {this.props.errors}
+                    {Array.isArray(this.props.errors) ? 
+                    this.props.errors && this.props.errors.map((item: any, index: number) => <div key={index}>{item.msg}</div>) :
+                    <div>{this.props.errors && this.props.errors.msg}</div>                    
+                    }
                   </div>
                 }
               />

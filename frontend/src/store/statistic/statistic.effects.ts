@@ -8,14 +8,14 @@ import {
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
-  LoadBestUsersCompleted,
-  LoadBestUsersFailed,
-  LoadMostPopularGamesCompleted,
-  LoadMostPopularGamesFailed,
-  LoadRecentGamesCompleted,
-  LoadRecentGamesFailed,
+  LoadBestUsersCompleted,  
+  LoadMostPopularGamesCompleted,  
+  LoadRecentGamesCompleted,  
   StatisticTypes
 } from './statistic.action';
+
+import { OpenSnackbar } from 'store/snackbar';
+import { SnackbarType } from 'models';
 
 export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
   actions$.pipe(
@@ -27,7 +27,9 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
 
           return new LoadBestUsersCompleted(bestUsers);
         }),
-        catchError(error => of(new LoadBestUsersFailed(error)))
+        catchError((error) => {
+          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))  
+        })
       )
     )
   );
@@ -42,7 +44,9 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
 
           return new LoadMostPopularGamesCompleted(popGames);
         }),
-        catchError(error => of(new LoadMostPopularGamesFailed(error)))
+        catchError((error) => {
+          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
+          })
       )
     )
   );
@@ -53,13 +57,15 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
       from(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
         map((res: any) => {
           const rg: any[] = res.data;
-
+          
           return new LoadRecentGamesCompleted(rg);
         }),
-        catchError(error => of(new LoadRecentGamesFailed(error)))
+        catchError((error) => {          
+          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
+        })
       )
     )
-  );
+  );  
 
 export const StatisticEffects = [
   initBestUsers$,

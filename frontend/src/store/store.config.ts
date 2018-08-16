@@ -55,7 +55,6 @@ import {
   myGamesReducer
 } from './my-games';
 
-import { errorsReducer } from './errors';
 
 const rootReducers = combineReducers({
   battle: battleReducer,

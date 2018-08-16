@@ -10,23 +10,16 @@ import {
   /* transitionDirection */
 } from 'models';
 
-import { CaGameCard,/*  CaSnackbar, */ CaSpinner } from 'components';
+import { CaGameCard, CaSpinner } from 'components';
 import { AppState, LogoutUser } from 'store';
 import { JoinBattle, LeaveBattle, LoadGames } from 'store';
-/* import { CloseSnackbar, OpenSnackbar } from 'store/snackbar'; */
 import { isEmpty } from 'utils/isEmpty';
 
 import { BattleProps } from './Battles.model';
 import './Battles.scss';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
-
-  /* public componentWillReceiveProps(nextProps: BattleProps): void {
-    if (nextProps.status === LoadStatus.ERROR && nextProps.status !== this.props.status) {
-      this.props.openSnackbar();
-    }
-  } */
-
+    
   public componentWillMount(): void {
     const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
 
@@ -36,11 +29,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
     this.props.initGames();
   }
-
-  /* public closeSnackbar(): void {
-    this.props.closeSnackbar();
-  } */
-
+  
   public getGameRooms(game: GameModel): RoomInfo[] {
     return this.props.roomsInfo.filter(r => r.gameId === game.id);
   }
@@ -62,17 +51,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return (
       <div className='ca-homepage'>
         {this.props.children}
-
-        {/* <CaSnackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={this.props.isSnackbarOpen}
-          autoHideDuration={4000}
-          handleClose={this.closeSnackbar}
-          type={SnackbarType.ERROR}
-          message={<span> Game fetching Failed! </span>}
-          transitionDirection={transitionDirection.DOWN}
-        /> */}
-
+        
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
             {this.props.games.map((game: GameModel, index: number) => {
@@ -117,8 +96,7 @@ const mapStateToProps = (state: AppState) => ({
   battleStatus: state.battle.status,
   roomsInfo: state.battle.roomsInfo,
   games: state.games.games,
-  status: state.games.gamesStatus,
-  /* isSnackbarOpen: state.snackbarUi.isOpen */
+  status: state.games.gamesStatus  
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

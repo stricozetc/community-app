@@ -39,7 +39,7 @@ export const CaSnackbar = withStyles(styles)(
             */
             message={this.props.message || ''}
             type={type}
-          />
+          />          
         </Snackbar>
       );
     }

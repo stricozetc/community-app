@@ -9,8 +9,7 @@ export interface RootProps {
   battleName: string;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
-  errors: any;
-  /* errors: ErrorsFromServer */
+  errors: any;  
 
   leaveBattle(battleName: string): void;
 
@@ -18,7 +17,5 @@ export interface RootProps {
 
   cleanStatistic(): void;
 
-  closeSnackbar(): void;
-
-  /* openSnackbar(): void; */
+  closeSnackbar(): void
 }
