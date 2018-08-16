@@ -175,6 +175,73 @@ export const logicErr = {
   repeatNewPasswordLength: {
     code: errCodes.repeatNewPasswordLength,
     msg: 'Password to repeat must be at least 6 characters and not more that 30',
-  }
+  },
+  /////////////////////////////////////////////////////////////
+  appNameRequired: {
+    code: errCodes.appNameRequired,
+    msg: 'User token is required'
+  },
+  applicationNameLengthError: {
+    code: errCodes.applicationNameLengthError,
+    msg: 'The length of application name should be in interval of 3-50 symbols',
+  },
 
+  descriptionRequired: {
+    code: errCodes.descriptionRequired,
+    msg: 'Application description should be required'
+  },
+  descriptionApplicationLengthError: {
+    code: errCodes.descriptionApplicationLengthError,
+    msg: 'The length of application description should be in interval of 3-50 symbols',
+  },
+
+  maxRoomPlayerRequired: {
+    code: errCodes.maxRoomPlayerRequired,
+    msg: 'Count of players in room should be required'
+  },
+  maxRoomPlayerCountError: {
+    code: errCodes.maxRoomPlayerCountError,
+    msg: 'Count of players in room should be more than 2',
+  },
+
+  maxRoomsRequired: {
+    code: errCodes.maxRoomsRequired,
+    msg: 'Count of rooms should be required'
+  },
+  maxRoomsCountError: {
+    code: errCodes.maxRoomsCountError,
+    msg: 'Count of rooms should be more than 1',
+  },
+
+  requestUrlRequired: {
+    code: errCodes.requestUrlRequired,
+    msg: 'RequestUrl should be required'
+  },
+  requestUrlError: {
+    code: errCodes.requestUrlError,
+    msg: 'RequestUrl should be correct',
+  },
+
+  maxWaitingTimeRequired: {
+    code: errCodes.maxWaitingTimeRequired,
+    msg: 'Waiting time for the battle should be required'
+  },
+  maxWaitingTimeError: {
+    code: errCodes.maxWaitingTimeError,
+    msg: 'Waiting time for the battle should be more than 15 minutes',
+  },
+
+  redirectUrlRequired: {
+    code: errCodes.redirectUrlRequired,
+    msg: 'RedirectUrl should be required'
+  },
+  redirectUrlError: {
+    code: errCodes.redirectUrlError,
+    msg: 'RedirectUrl should be correct'
+  },
+
+  userIdRequired: {
+    code: errCodes.userIdRequired,
+    msg: 'UserId should be required'
+  }
 };

@@ -4,9 +4,9 @@ import { CaButton } from 'components';
 import { frontEndValidationGameRegister, urlRegExp } from 'constes';
 import { GameModel, SettingFormType } from 'models';
 import * as React from 'react';
+import { I18n } from 'react-i18next';
 import { history, isEmpty } from 'utils';
 
-import { I18n } from 'react-i18next';
 import { GameFormProps, GameFormState } from './GameForm.model';
 
 export class GameForm extends React.Component<GameFormProps, GameFormState> {

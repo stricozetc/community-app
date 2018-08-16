@@ -9,6 +9,8 @@ import {
 } from './../service/my-games';
 
 import { MyGameInterface } from './../../models/games';
+import { validateAppDataInput } from '../validation/register-app';
+
 
 @controller('/api/v1/my-games')
 export class MyGameController {
@@ -37,17 +39,23 @@ export class MyGameController {
         const data: MyGameInterface = request.body;
 
         return this.myGameRepository.editGame(data)
-        .then((games: MyGameInterface[]) => {
-            return response.status(200).send(games);
-        }).catch((err) => {
-            return response.sendStatus(500);
-        });
+            .then((games: MyGameInterface[]) => {
+                return response.status(200).send(games);
+            }).catch((err) => {
+                return response.sendStatus(500);
+            });
     }
 
     @httpPost('/add-game')
-    public addGame(request: Request, response: Response): Promise<void | Response> {
-        this.tokenService.create(request.body);
+    public addGame(request: Request, response: Response): Promise<void | Response> | Response {
         const newGame: MyGameInterface = request.body;
+
+        this.tokenService.create(newGame);
+        const { errors, isValid } = validateAppDataInput(newGame);
+
+        if (!isValid) {
+            return response.status(400).json(errors);
+        }
 
         return this.myGameRepository.addGame(newGame)
             .then((addedGame: MyGameInterface) => {
