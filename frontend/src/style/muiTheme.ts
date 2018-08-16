@@ -45,12 +45,12 @@ export const theme = createMuiTheme({
     MuiInputLabel: {
       root: {
         fontSize: '1.5rem'
-    }
+      }
     },
     MuiTooltip: {
       tooltip: {
         fontSize: '1.5rem'
-  }
+      }
     }
   }
 });
