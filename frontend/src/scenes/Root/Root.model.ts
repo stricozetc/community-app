@@ -17,5 +17,7 @@ export interface RootProps {
 
   cleanStatistic(): void;
 
-  closeSnackbar(): void
+  closeSnackbar(): void;
+
+  changeLanguage(language: string): void
 }

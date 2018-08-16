@@ -1,13 +1,8 @@
-import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
-import { CaSelect } from 'components/form-controls/CaSelect';
-import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AuthStatus, languages, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
-
 import {
   HashRouter as Router,
   Redirect,
@@ -15,7 +10,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { AppMenuItem, AuthStatus, Languages } from 'models';
+import { AuthStatus, languages, transitionDirection ,AppMenuItem } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
@@ -30,8 +25,10 @@ import {
   LeaveBattle,
   LogoutUser,
   SetCurrentUser,
-  store
+  store  
 } from 'store';
+
+import { CloseSnackbar } from 'store/snackbar'
 
 import {
   getCurrentLanguage,
@@ -47,10 +44,11 @@ import {
   CaLogo,
   CaNavbar,
   CaSelect,
-  LoginForm,
-  RegistrationForm
+  LoginForm,  
+  CaSnackbar
 } from 'components';
 
+import { RegistrationForm } from 'components';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/SettingsRounded';
@@ -61,7 +59,6 @@ import { CaMyGames } from '../MyGames/MyGames';
 import { RootProps } from './Root.model';
 
 import './root.scss';
-import { CaAddGame } from 'components/AddGameComponent';
 
 const token = Cookies.get('jwtToken');
 
@@ -72,11 +69,15 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
-  
+  public componentWillMount(): void {
+    this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
+  }
+
   public closeSnackbar(): void {
     this.props.closeSnackbar();
   }
 
+  }
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
   }
@@ -108,7 +109,9 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.changeLanguage(language);
   }
 
-  public getMenuProfilePanel = (): JSX.Element => {
+  public getButton(authStatus: number): JSX.Element {
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+
     return (
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>
@@ -209,26 +212,27 @@ export class RootComponent extends React.Component<RootProps> {
                     <div>{this.props.errors && this.props.errors.msg}</div>                    
                     }
                   </div>
-                }
+                </div>
+              }
+            />
+
+            <div className='ca-navbar__logout-btn-container'>
+              {this.getButton(this.props.status)}
+            </div>
+
+            <div className='ca-navbar__select-language'>
+              <CaSelect
+                values={[languages.en, languages.ru]}
+                displayedValues={[t('ENToggle'), t('RUToggle')]}
+                handleChange={this.handleChange}
+                currentValue={getCurrentLanguage(i18n)}
               />
-
-			  <div className='ca-navbar__logout-btn-container'>
-				{this.getButton(this.props.status)}
-			  </div>
-
-			  <div className='ca-navbar__select-language'>
-				<CaSelect
-				  languages={[languages.en, languages.ru]}
-				  displayedLanguages={[t('ENToggle'), t('RUToggle')]}
-				  handleChange={this.handleChange}
-				  currLang={getCurrentLanguage(i18n)}
-				/>
-			  </div>
-			</CaNavbar>
-		  )
-		}
-	  </I18n>
-	);
+            </div>
+          </CaNavbar>
+          )
+        }
+      </I18n>
+    );
   }
 
   public render(): JSX.Element {
@@ -355,6 +359,7 @@ export class RootComponent extends React.Component<RootProps> {
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   battleName: state.battle.battleName,
+  errors: state.errors,
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
   errors: state.snackbarUi.message,

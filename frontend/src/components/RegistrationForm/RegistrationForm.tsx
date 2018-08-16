@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
+import { I18n } from 'react-i18next';
 import { CaButton } from 'components';
 
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';

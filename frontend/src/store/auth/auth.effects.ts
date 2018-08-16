@@ -6,7 +6,6 @@ import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
-import { GetErrors } from 'store/errors';
 import { deleteAuthToken, history, setAuthToken } from 'utils';
 
 
