@@ -6,7 +6,7 @@ import { styles } from './AppMenu.styles';
 
 export interface AppMenuProps extends WithStyles<typeof styles> {
   appMenuItems: AppMenuItem[];
-  children?: JSX.Element[] | JSX.Element;
+  children?: JSX.Element;
 }
 
 export interface AppMenuState {
