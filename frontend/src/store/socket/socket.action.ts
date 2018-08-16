@@ -1,6 +1,4 @@
-import { Action } from 'redux';
-
-import { Game } from 'models';
+import { GameModel } from 'models';
 import { action } from 'store/decorators';
 
 export enum SocketActionTypes {
@@ -11,20 +9,20 @@ export enum SocketActionTypes {
 }
 
 @action()
-export class CloseSocket implements Action {
+export class CloseSocket {
   public readonly type = SocketActionTypes.CloseSocket;
 }
 
 @action()
-export class InitEvents implements Action {
+export class InitEvents {
   public readonly type = SocketActionTypes.InitEvents;
 
-  public constructor(public payload: Game[]) {
+  public constructor(public payload: GameModel[]) {
   }
 }
 
 @action()
-export class EmitEvent implements Action {
+export class EmitEvent {
   public readonly type = SocketActionTypes.EmitEvent;
 
   public constructor(public payload: string) {
@@ -32,7 +30,7 @@ export class EmitEvent implements Action {
 }
 
 @action()
-export class EmitEventWithOptions implements Action {
+export class EmitEventWithOptions {
   public readonly type = SocketActionTypes.EmitEventWithOptions;
 
   public constructor(public payload: { eventName: string, options?: any }) {

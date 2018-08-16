@@ -10,4 +10,5 @@ export interface FrontEndUser {
   name: string;
   email: string;
   token: string;
+  language: string;
 }

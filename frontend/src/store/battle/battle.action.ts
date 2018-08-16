@@ -1,5 +1,4 @@
 import { RoomInfo } from 'models';
-import { Action } from 'redux';
 import { action } from 'store/decorators';
 
 export enum BattleActionTypes {
@@ -12,42 +11,42 @@ export enum BattleActionTypes {
 }
 
 @action()
-export class JoinBattle implements Action {
+export class JoinBattle {
   public readonly type = BattleActionTypes.JoinBattle;
 
   constructor(public payload: string) { }
 }
 
 @action()
-export class RedirectToBattle implements Action {
+export class RedirectToBattle {
   public readonly type = BattleActionTypes.RedirectToBattle;
 
   constructor(public payload: string) { }
 }
 
 @action()
-export class LeaveBattle implements Action {
+export class LeaveBattle {
   public readonly type = BattleActionTypes.LeaveBattle;
 
   constructor(public payload: string) { }
 }
 
 @action()
-export class SetRoomsInfo implements Action {
+export class SetRoomsInfo {
   public readonly type = BattleActionTypes.SetRoomsInfo;
 
   constructor(public payload: RoomInfo[]) { }
 }
 
 @action()
-export class NotifyCountdown implements Action {
+export class NotifyCountdown {
   public readonly type = BattleActionTypes.NotifyCountdown;
 
   constructor(public payload: number) { }
 }
 
 @action()
-export class ErrorBattle implements Action {
+export class ErrorBattle {
   public readonly type = BattleActionTypes.ErrorBattle;
 }
 

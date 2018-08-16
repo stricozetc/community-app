@@ -1,25 +1,25 @@
-import { AuthStatus, MyGameModel } from 'models';
+import { AuthStatus, GameForSettingForm, GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { FormForWorkingWithGame } from 'components/FormForWorkingWithGame';
+import { GameForm } from 'components/GameForm';
 import { AddGame, LogoutUser } from 'store';
 import { AppState } from 'store/store.config';
 
-import { AddGameComponentProps, AddGameComponentState } from './AddGameComponent.model';
+import { AddGameComponentProps } from './AddGameComponent.model';
 
-const initFormForAddingNewGame: AddGameComponentState = {
+const initFormForAddingNewGame: GameForSettingForm = {
     appName: '',
     description: '',
-    maxRoomPlayer: '',
-    maxRooms: '',
+    maxRoomPlayer: 5,
+    maxRooms: 1,
     requestUrl: '',
-    maxWaitingTime: ''
+    maxWaitingTime: 20,
+    redirectUrl: ''
 };
-export class AddGameComponent extends React.Component<AddGameComponentProps, AddGameComponentState> {
+export class AddGameComponent extends React.Component<AddGameComponentProps> {
     constructor(props: AddGameComponentProps) {
         super(props);
-        this.state = initFormForAddingNewGame;
     }
 
     public componentWillMount(): void {
@@ -33,11 +33,11 @@ export class AddGameComponent extends React.Component<AddGameComponentProps, Add
         return(
            <div>
                 {this.props.children}
-               <FormForWorkingWithGame
+               <GameForm
                     userId = {this.props.user && this.props.user.id}
-                    config='Add Game'
+                    config={SettingFormType.addGame}
                     model={initFormForAddingNewGame}
-                    submit={(data: MyGameModel) => this.props.addGame(data)}
+                    submit={(data: GameModel) => this.props.addGame(data)}
                />
            </div>
         );
@@ -46,13 +46,12 @@ export class AddGameComponent extends React.Component<AddGameComponentProps, Add
 
 const mapStateToProps = (state: AppState) => ({
     authStatus: state.auth.status,
-    user: state.auth.user,
-    games: state.myGames.myGames
+    user: state.auth.user
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
     logoutUser: () => dispatch(new LogoutUser()),
-    addGame: (data: MyGameModel) => dispatch(new AddGame(data)),
+    addGame: (data: GameModel) => dispatch(new AddGame(data)),
 });
 
 export const CaAddGame = connect(

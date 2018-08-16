@@ -1,6 +1,6 @@
 import { CaButton, CaTable } from 'components';
 import { CaDialog } from 'components/form-controls/CaDialog/CaDialog';
-import { AuthStatus, MyGameModel, RowProperty, TypeOfColumn } from 'models';
+import { AuthStatus, GameModel, RowProperty, TypeOfColumn } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AddGame, DeleteGame, InitMyGames } from 'store';
@@ -20,7 +20,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
         this.setState({isDialogOpen: false})
     }
 
-    public handleOpenDialog = (game: MyGameModel) => {
+    public handleOpenDialog = (game: GameModel) => {
         this.setState({
             isDialogOpen: true,
             deletedGame: game
@@ -49,7 +49,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
               field: RowProperty.appName,
               type: TypeOfColumn.string,
               editAction: (id: number) => history.push(`/my-games/edit-game/${id}`),
-              deleteAction: (game: MyGameModel) => this.handleOpenDialog(game)},
+              deleteAction: (game: GameModel) => this.handleOpenDialog(game)},
             { headerName: 'createdAt',
               field: RowProperty.createdAt,
               type: TypeOfColumn.date},
@@ -92,8 +92,8 @@ const mapStateToProps = (state: AppState) => ({
   });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    deleteGame: (gameThatNeedToDelete: MyGameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
-    addGame: (data: MyGameModel) => dispatch(new AddGame(data)),
+    deleteGame: (gameThatNeedToDelete: GameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
+    addGame: (data: GameModel) => dispatch(new AddGame(data)),
     getMyGames: (userId: number) => dispatch(new InitMyGames(userId))
 });
 

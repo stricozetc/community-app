@@ -80,13 +80,14 @@ export interface FrontEndValidationErrorsLogin {
 export interface FrontEndValidationErrorsChangePassword {
   oldPassword: { required: string, min: string },
   newPassword: { required: string, min: string },
-  repeatNewPassword:  { required: string,  min: string, mustMatch: string }
+  repeatNewPassword: { required: string, min: string, mustMatch: string }
 }
 export interface UserFieldsToRegister {
   email: string;
   name: string;
   password: string;
   password2: string;
+  language: string;
 }
 
 export interface UserFieldsToLogin {
@@ -154,9 +155,9 @@ export enum TypeOfColumn {
   result = 'Result',
   date = 'Date'
 }
-export interface MyGameModel {
+export interface GameModel {
   id?: number;
-  userId: number;
+  userId?: number;
   appName: string;
   description: string;
   maxRoomPlayer: number;
@@ -165,18 +166,38 @@ export interface MyGameModel {
   maxWaitingTime: number;
   createAt?: Date;
   updatedAt?: Date;
+  redirectUrl: string;
+  registrationEventName: string;
+  leaveEventName: string;
+  updateRoomsInfoEventName: string;
+  notifyCountdown: string;
+  approve: boolean;
 }
-
 export interface HeaderName {
   headerName: string;
   field: RowProperty;
   type: TypeOfColumn;
-  editAction? (payload: number): void;
-  deleteAction? (payload: MyGameModel): void;
+  editAction?(payload: number): void;
+  deleteAction?(payload: GameModel): void;
 }
 
 export interface Row {
   [key: string]: any;
+}
+
+export interface GameForSettingForm {
+  appName: string;
+  description: string;
+  maxRoomPlayer: number;
+  maxRooms: number;
+  requestUrl: string;
+  maxWaitingTime: number;
+  redirectUrl: string;
+}
+
+export enum SettingFormType {
+  editGame = 'Edit Game',
+  addGame = 'Add Game'
 }
 
 export enum chartsTypes {
@@ -195,4 +216,14 @@ export interface AppMenuItem {
   icon: JSX.Element;
   title: string;
   action: () => void;
+}
+
+export interface FrontEndValidationErrorsGameRegister {
+  appName: { length: string, required: string };
+  description: { length: string, required: string };
+  maxRoomPlayer: { count: string, required: string };
+  maxRooms: { count: string, required: string };
+  requestUrl: { mustBeCorrect: string, required: string };
+  maxWaitingTime: { mustBeCorrect: string, required: string };
+  redirectUrl: { mustBeCorrect: string, required: string };
 }

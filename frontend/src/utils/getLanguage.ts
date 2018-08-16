@@ -5,3 +5,12 @@ export const getCurrentLanguage = (i18n: i18n): string => {
     i18n.language.split('-')[0] :
     i18n.language;
 };
+
+export const getCurrentLanguageFromLocalStorage = (): string => {
+  const language = localStorage.getItem('i18nextLng');
+
+  return language ? language.indexOf('-') !== -1 ?
+    language.split('-')[0] :
+    language :
+    'en';
+};

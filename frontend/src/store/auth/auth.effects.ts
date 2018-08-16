@@ -1,10 +1,11 @@
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
+
 import { HttpWrapper } from 'services';
+import { SetLanguage, store } from 'store';
 import { GetErrors } from 'store/errors';
 import { deleteAuthToken, history, setAuthToken } from 'utils';
 
@@ -34,7 +35,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
         }),
         catchError(error => {
           const errors = error.response.data;
-          return of(new GetErrors(!errors.isArray() ? errors.msg : errors.map((err: any) => err.message)));
+          return of(new GetErrors(!Array.isArray(errors) ? errors.msg : errors.map((err: any) => err.msg)));
         })
       )
     )
@@ -48,7 +49,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
         map(() => new SuccessRegistration('./login')),
         catchError(error => {
           const errors = error.response.data;
-          return of(new GetErrors(!errors.isArray() ? errors.msg : errors.map((err: any) => err.message)));
+          return of(new GetErrors(!Array.isArray(errors) ? errors.msg : errors.map((err: any) => err.msg)));
         })
       )
     )
@@ -73,9 +74,21 @@ export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) =>
     })
   );
 
+export const setCurrentUser$ = (action$: ActionsObservable<SetCurrentUser>) =>
+  action$.ofType(AuthTypes.SetCurrentUser).pipe(
+    map(action => {
+      const user: FrontEndUser | undefined = action.payload;
+      if (user) {
+        store.dispatch(new SetLanguage(user.email));
+      }
+    }),
+    ignoreElements()
+  );
+
 export const AuthEffects = [
   loginUser$,
   registerUser$,
   logoutUser$,
-  successRegistration$
+  successRegistration$,
+  setCurrentUser$
 ];

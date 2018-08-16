@@ -3,7 +3,7 @@ import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
 
-import { MyGameModel } from 'models';
+import { GameModel } from 'models';
 
 import {
     AddGame,
@@ -27,7 +27,7 @@ export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
         switchMap(action =>
             from(HttpWrapper.post('api/v1/my-games/delete-game', action.payload)).pipe(
                 map((res: any) => {
-                    const games: MyGameModel[] = res.data;
+                    const games: GameModel[] = res.data;
 
                     return new DeleteGameSuccess(games);
                 }),
@@ -42,7 +42,7 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
         switchMap(action =>
             from(HttpWrapper.post('api/v1/my-games/edit-game', action.payload)).pipe(
                 map((res: any) => {
-                    const games: MyGameModel[] = res.data;
+                    const games: GameModel[] = res.data;
 
                     return new EditGameSuccess(games);
                 }),
@@ -57,7 +57,7 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
         switchMap(action => {
             return from(HttpWrapper.post('api/v1/my-games/add-game', action.payload)).pipe(
                 map((res: any) => {
-                    const game: MyGameModel = res.data;
+                    const game: GameModel = res.data;
 
                     return new AddGameSuccess(game);
                 }),
@@ -73,7 +73,7 @@ export const initMyGames$ = (action$: ActionsObservable<InitMyGames>) =>
         switchMap(action =>
             from(HttpWrapper.get(`api/v1/my-games/get-games?userId=${action.payload}`)).pipe(
                 map((res: any) => {
-                    const games: MyGameModel[] = res.data;
+                    const games: GameModel[] = res.data;
 
                     return new LoadMyGamesSuccess(games);
                 }),

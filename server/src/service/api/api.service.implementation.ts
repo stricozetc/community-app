@@ -2,8 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 import { decorate, inject, injectable } from 'inversify';
 
 import { ApiService } from './api.service';
-import { Game } from '../../typing/game';
 import { AppTokenService } from '../app-token';
+import { MyGameInterface } from '../../../models/games';
 
 decorate(injectable(), ApiService);
 
@@ -18,7 +18,7 @@ export class ApiServiceImplementation extends ApiService {
         return axios.get(requestUrl);
     }
 
-    public async startNewRoom(requestUrl: string, data: any, game: Game): Promise<string> {
+    public async startNewRoom(requestUrl: string, data: any, game: MyGameInterface): Promise<string> {
         const app = await this.tokenService.getByAppName(game.appName);
 
         if (app) {

@@ -1,29 +1,12 @@
-import { AuthStatus, MyGameModel } from 'models';
-export interface EditGameComponentState {
-    appName: string;
-    description: string;
-    maxRoomPlayer: string;
-    maxRooms: string;
-    requestUrl: string;
-    maxWaitingTime: string;
-}
+import { AuthStatus, GameModel } from 'models';
 
 export interface EditGameComponentProps {
     authStatus: AuthStatus;
     history: any;
     user: any;
-    games: MyGameModel[];
+    games: GameModel[];
     children?: JSX.Element;
     match: any;
 
-    editGame (payload: MyGameModel): void;
-}
-
-export interface NecessaryPropertyOfTheForEditForm {
-    appName: string;
-    description: string;
-    maxRoomPlayer: number;
-    maxRooms: number;
-    requestUrl: string;
-    maxWaitingTime: number;
+    editGame (payload: GameModel): void;
 }

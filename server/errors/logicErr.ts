@@ -46,6 +46,12 @@ export const logicErr = {
     msg: 'Participation status is required'
   },
 
+  languageIsRequired: {
+    code: errCodes.languageIsRequired,
+    msg: 'Language is required'
+  },
+
+
   emailMustBeValid: {
     code: errCodes.emailMustBeValid,
     msg: 'Email is Invalid'
@@ -119,6 +125,11 @@ export const logicErr = {
   passwordLength: {
     code: errCodes.passwordLength,
     msg: 'Password must be at least 6 characters and not more that 30'
+  },
+
+  languageLength: {
+    code: errCodes.languageLength,
+    msg: 'Language must be at least 2 characters'
   },
 
   newPasswordLength: {

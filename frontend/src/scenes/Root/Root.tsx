@@ -1,18 +1,5 @@
-import {
-  AppMenu,
-  CaAddGame,
-  CaButton,
-  CaLogo,
-  CaNavbar,
-  LoginForm,
-  RegistrationForm
-} from 'components';
-import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
-import { CaSelect } from 'components/form-controls/CaSelect';
-import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AppMenuItem, AuthStatus, languages } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -22,12 +9,17 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+
+import { AppMenuItem, AuthStatus, languages } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
+import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
+
 import {
   AppState,
+  ChangeLanguage,
   CleanStatistic,
   FrontEndUser,
   LeaveBattle,
@@ -35,7 +27,24 @@ import {
   SetCurrentUser,
   store
 } from 'store';
-import { getCurrentLanguage, setAuthToken } from 'utils';
+
+import {
+  getCurrentLanguage,
+  getCurrentLanguageFromLocalStorage,
+  setAuthToken
+} from 'utils';
+
+import {
+  AppMenu,
+  CaAddGame,
+  CaButton,
+  CaEditGame,
+  CaLogo,
+  CaNavbar,
+  CaSelect,
+  LoginForm,
+  RegistrationForm
+} from 'components';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
@@ -43,9 +52,9 @@ import SettingsIcon from '@material-ui/icons/SettingsRounded';
 import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import { CaMyGames } from '../MyGames/MyGames';
-import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
+
 import './root.scss';
 
 const token = Cookies.get('jwtToken');
@@ -57,6 +66,10 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
+  public componentWillMount(): void {
+    this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
+  }
+
   public logoutUser = (): void => {
     this.props.logoutUser();
     this.props.cleanStatistic();
@@ -74,10 +87,14 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>, i18n: i18n) => {
+  public redToMainPage = () => {
+    this.props.history.push('/');
+  }
+
+  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const language = event.target.value;
 
-    i18n.changeLanguage(language);
+    this.props.changeLanguage(language);
   }
 
   public getMenuProfilePanel = (): JSX.Element => {
@@ -143,7 +160,11 @@ export class RootComponent extends React.Component<RootProps> {
                 }
               ]}
             >
-              <CaLogo text="battlenet" />
+              <CaLogo
+                text="battlenet"
+                onClick={this.redToMainPage}
+              />
+
               <div className="ca-navbar__menu-container">
                 {
                   isAuthorized
@@ -153,7 +174,6 @@ export class RootComponent extends React.Component<RootProps> {
                   : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
                 }
               </div>
-
 
               <div className='ca-navbar__select-language'>
                 <CaSelect
@@ -300,7 +320,8 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
-  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName))
+  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
+  changeLanguage: (language: string) => dispatch(new ChangeLanguage(language))
 });
 
 export const Root = connect(

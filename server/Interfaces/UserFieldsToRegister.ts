@@ -3,4 +3,5 @@ export interface UserFieldsToRegister {
     password: string;
     password2: string;
     email: string;
+    language: string;
 }

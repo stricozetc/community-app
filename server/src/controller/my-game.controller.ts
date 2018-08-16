@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 import Promise = require("bluebird");
 import { inject } from 'inversify';
-
+import { AppTokenService } from './../service/app-token';
 import {
     MyGamesRepository
 } from './../service/my-games';
@@ -13,7 +13,9 @@ import { MyGameInterface } from './../../models/games';
 @controller('/api/v1/my-games')
 export class MyGameController {
 
-    public constructor(@inject(MyGamesRepository) private myGameRepository: MyGamesRepository) {
+    public constructor(
+        @inject(MyGamesRepository) private myGameRepository: MyGamesRepository,
+        @inject(AppTokenService) private tokenService: AppTokenService) {
     }
 
     @httpPost('/delete-game')
@@ -44,16 +46,13 @@ export class MyGameController {
 
     @httpPost('/add-game')
     public addGame(request: Request, response: Response): Promise<void | Response> {
-
+        this.tokenService.create(request.body);
         const newGame: MyGameInterface = request.body;
 
         return this.myGameRepository.addGame(newGame)
             .then((addedGame: MyGameInterface) => {
-                console.log(`line 48`);
                 return response.status(200).json(addedGame);
             }).catch((err) => {
-                console.log(`line 51`);
-                console.log(err);
                 return response.status(400).json(err);
             });
     }

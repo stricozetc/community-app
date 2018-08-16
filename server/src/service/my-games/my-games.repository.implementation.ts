@@ -20,26 +20,32 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
                     }
                 });
 
-                resolve(games)
-            })
-        })
+                resolve(games);
+            });
+        });
 
     }
 
-    public editGame(gameThatNeedEdit: MyGameInterface): Promise<MyGameInterface[]> {
+    public editGame(game: MyGameInterface): Promise<MyGameInterface[]> {
         return GamesModel.upsert({
-            id: +gameThatNeedEdit.id,
-            userId: +gameThatNeedEdit.userId,
-            appName: gameThatNeedEdit.appName,
-            description: gameThatNeedEdit.description,
-            maxRoomPlayer: +gameThatNeedEdit.maxRoomPlayer,
-            maxRooms: +gameThatNeedEdit.maxRooms,
-            requestUrl: gameThatNeedEdit.requestUrl,
-            maxWaitingTime: +gameThatNeedEdit.maxWaitingTime
+            id: +game.id,
+            userId: +game.userId,
+            appName: game.appName,
+            description: game.description,
+            maxRoomPlayer: +game.maxRoomPlayer,
+            maxRooms: +game.maxRooms,
+            requestUrl: game.requestUrl,
+            maxWaitingTime: +game.maxWaitingTime,
+            redirectUrl: game.redirectUrl,
+            registrationEventName: game.registrationEventName,
+            leaveEventName: game.leaveEventName,
+            updateRoomsInfoEventName: game.updateRoomsInfoEventName,
+            notifyCountdown: game.notifyCountdown,
+            approve: game.approve
         }).then(() => {
             return GamesModel.findAll({
                 where: {
-                    userId: gameThatNeedEdit.userId
+                    userId: game.userId
                 }
             });
         });
@@ -56,7 +62,13 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
                     maxRoomPlayer: +data.maxRoomPlayer,
                     maxRooms: +data.maxRooms,
                     requestUrl: data.requestUrl,
-                    maxWaitingTime: +data.maxWaitingTime
+                    maxWaitingTime: +data.maxWaitingTime,
+                    redirectUrl: data.redirectUrl,
+                    registrationEventName: data.registrationEventName,
+                    leaveEventName: data.leaveEventName,
+                    updateRoomsInfoEventName: data.updateRoomsInfoEventName,
+                    notifyCountdown: data.notifyCountdown,
+                    approve: data.approve
                 }
             );
 

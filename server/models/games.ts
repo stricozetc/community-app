@@ -14,6 +14,12 @@ export interface MyGameInterface {
     maxWaitingTime: number;
     createdAt?: string;
     updatedAt?: string;
+    redirectUrl: string;
+    registrationEventName?: string;
+    leaveEventName?: string;
+    updateRoomsInfoEventName?: string;
+    notifyCountdown?: string;
+    approve: boolean;
 }
 
 export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.gamesModel, {
@@ -72,7 +78,54 @@ export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define
         validate: {
             notEmpty: true
         }
-    }
+    },
+    redirectUrl: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    registrationEventName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    leaveEventName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    updateRoomsInfoEventName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    notifyCountdown: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true
+        }
+    },
+    approve: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
 },                                                                                  {
     // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
     // otherwise, the model name will be pluralized

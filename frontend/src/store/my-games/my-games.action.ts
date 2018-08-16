@@ -1,4 +1,4 @@
-import { ErrorsFromServer, MyGameModel } from 'models';
+import { ErrorsFromServer, GameModel } from 'models';
 
 import { action } from '../decorators';
 
@@ -21,14 +21,14 @@ export enum MyGamesActionTypes {
 export class EditGame {
   public readonly type = MyGamesActionTypes.EditGame;
 
-  public constructor(public payload: MyGameModel) {}
+  public constructor(public payload: GameModel) {}
 }
 
 @action()
 export class EditGameSuccess {
   public readonly type = MyGamesActionTypes.EditGameSuccess;
 
-  public constructor(public payload: MyGameModel[]) {}
+  public constructor(public payload: GameModel[]) {}
 }
 
 @action()
@@ -42,14 +42,14 @@ export class EditGameError {
 export class DeleteGame {
   public readonly type = MyGamesActionTypes.DeleteGame;
 
-  public constructor(public payload: MyGameModel) {}
+  public constructor(public payload: GameModel) {}
 }
 
 @action()
 export class DeleteGameSuccess {
   public readonly type = MyGamesActionTypes.DeleteGameSuccess;
 
-  public constructor(public payload: MyGameModel[]) {}
+  public constructor(public payload: GameModel[]) {}
 }
 
 @action()
@@ -63,14 +63,14 @@ export class DeleteGameError {
 export class AddGame {
   public readonly type = MyGamesActionTypes.AddGame;
 
-  public constructor(public payload: MyGameModel) {}
+  public constructor(public payload: GameModel) {}
 }
 
 @action()
 export class AddGameSuccess {
   public readonly type = MyGamesActionTypes.AddGameSuccess;
 
-  public constructor(public payload: MyGameModel) {}
+  public constructor(public payload: GameModel) {}
 }
 
 @action()
@@ -91,7 +91,7 @@ export class InitMyGames {
 export class LoadMyGamesSuccess {
   public readonly type = MyGamesActionTypes.LoadMyGamesSuccess;
 
-  public constructor(public payload: MyGameModel[]) {}
+  public constructor(public payload: GameModel[]) {}
 }
 
 @action()

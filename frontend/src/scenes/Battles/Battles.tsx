@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {
   AuthStatus,
-  Game,
+  GameModel,
   LoadStatus,
   RoomInfo,
   SnackbarType,
@@ -34,17 +34,14 @@ class CaBattlesComponent extends React.Component<BattleProps> {
       this.props.history.push('/login');
     }
 
-    if (isEmpty(this.props.games)) {
-      this.props.initGames();
-    }
-
+    this.props.initGames();
   }
 
   public closeSnackbar(): void {
     this.props.closeSnackbar();
   }
 
-  public getGameRooms(game: Game): RoomInfo[] {
+  public getGameRooms(game: GameModel): RoomInfo[] {
     return this.props.roomsInfo.filter(r => r.gameId === game.id);
   }
 
@@ -78,8 +75,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
-
-            {this.props.games.map((game: Game, index: number) => {
+            {this.props.games.map((game: GameModel, index: number) => {
               const gameRooms = this.getGameRooms(game);
               const waitBattlePlayersCount = gameRooms && gameRooms.length ? gameRooms
                 .map(r => r.playersCount)
