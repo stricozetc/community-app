@@ -2,9 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  AuthStatus,  
-  RoomInfo,    
-  GameModel
+  AuthStatus,
+  Game,  
+  RoomInfo  
 } from 'models';
 
 import { CaGameCard, CaSpinner } from 'components';
@@ -27,7 +27,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     this.props.initGames();
   }
   
-  public getGameRooms(game: GameModel): RoomInfo[] {
+  public getGameRooms(game: Game): RoomInfo[] {
     return this.props.roomsInfo.filter(r => r.gameId === game.id);
   }
 
@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new LoadGames()),
+  initGames: () => dispatch(new LoadGames())  
 });
 
 export const CaBattles = connect(
