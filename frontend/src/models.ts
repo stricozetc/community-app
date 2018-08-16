@@ -190,3 +190,9 @@ export const MyGameCharts: string[] = [chartsTypes.winRate];
 export interface Errors {
   [key: string]: [{ code: number; msg: string }];
 }
+
+export interface AppMenuItem {
+  icon: JSX.Element;
+  title: string;
+  action: () => void;
+}
