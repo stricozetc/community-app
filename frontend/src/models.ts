@@ -212,7 +212,12 @@ export interface Errors {
   [key: string]: [{ code: number; msg: string }];
 }
 
-////////////////////////////
+export interface AppMenuItem {
+  icon: JSX.Element;
+  title: string;
+  action: () => void;
+}
+
 export interface FrontEndValidationErrorsGameRegister {
   appName: { length: string, required: string };
   description: { length: string, required: string };

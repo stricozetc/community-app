@@ -1,3 +1,4 @@
+export * from './AppMenu';
 export * from './CaTable';
 export * from './CaUsersTables';
 export * from './Countdown';
