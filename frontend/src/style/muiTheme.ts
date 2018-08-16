@@ -2,6 +2,11 @@ import { createMuiTheme } from '@material-ui/core';
 
 import {
   MuiButton,
+  MuiDialog,
+  MuiDialogActions,
+  MuiDialogContent,
+  MuiDialogContentText,
+  MuiDialogTitle,
   MuiMenu,
   MuiMenuItem,
   MuiSelect,
@@ -10,17 +15,10 @@ import {
   MuiTable,
   MuiTableRow,
   MuiTabs,
-  MuiDialogTitle,
-  MuiDialogContent,
-  MuiDialogActions,
-  MuiDialogContentText,
-  MuiTypography,
-  MuiDialog
+  MuiTypography
 } from 'components';
 
-
 export const theme = createMuiTheme({
-  direction: 'rtl',
   overrides: {
     MuiButton,
     MuiTable,
@@ -50,6 +48,11 @@ export const theme = createMuiTheme({
     MuiTooltip: {
       tooltip: {
         fontSize: '1.5rem'
+      }
+    },
+    MuiPaper: {
+      root: {
+        backgroundColor: '#313c45'
       }
     }
   }
