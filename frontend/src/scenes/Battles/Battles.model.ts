@@ -8,8 +8,7 @@ export interface BattleProps {
   roomsInfo: RoomInfo[];
   games: GameModel[];
   status: LoadStatus;
-  children?: JSX.Element;
-  /* isSnackbarOpen: boolean; */
+  children?: JSX.Element;  
 
   joinBattleAction(payload: string): void;
 
@@ -18,8 +17,5 @@ export interface BattleProps {
   logoutUser(): void;
 
   initGames(): void;
-
-  /* closeSnackbar(): void;
-
-  openSnackbar(): void; */
+  
 }

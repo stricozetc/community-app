@@ -1,6 +1,4 @@
-import { FrontEndUser } from 'store';
-import { SnackbarType} from 'models';
-import { AuthStatus } from 'models';
+import { AuthStatus, SnackbarType } from 'models';
 
 export interface RootProps {
   status: AuthStatus;
@@ -18,7 +16,6 @@ export interface RootProps {
 
   cleanStatistic(): void;
 
-  closeSnackbar(): void
-} 
+  closeSnackbar(): void,
   changeLanguage(language: string): void;
 }
