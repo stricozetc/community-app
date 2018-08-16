@@ -18,6 +18,7 @@ export interface RegistrationFormState {
   emailErrors: string[];
   passwordErrors: string[];
   nameErrors: string[];  
+  language: string;
 }
 
 export const initRegistrationFormState: RegistrationFormState = {
@@ -38,15 +39,18 @@ export const initRegistrationFormState: RegistrationFormState = {
   emailErrors: [],
   passwordErrors: [],
   nameErrors: [],  
+  language: 'english'
 };
 export interface RegistrationFormProps {
   history: any;
   status: AuthStatus;
   // errors: ErrorsFromServer;
-  // isSnackbarOpen: boolean;
+  isSnackbarOpen: boolean;
   language: string;
 
   registerUser(user: UserFieldsToRegister): void;
-  // closeSnackbar(): void;
-//   openSnackbar(): void;
+
+  /* closeSnackbar(): void;
+
+  openSnackbar(): void; */
 }
