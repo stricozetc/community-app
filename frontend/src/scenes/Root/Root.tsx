@@ -2,11 +2,9 @@ import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AuthStatus, languages, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
-
 import {
   HashRouter as Router,
   Redirect,
@@ -29,8 +27,10 @@ import {
   LeaveBattle,
   LogoutUser,
   SetCurrentUser,
-  store
+  store  
 } from 'store';
+
+import { CloseSnackbar } from 'store/snackbar'
 
 import {
   getCurrentLanguage,
@@ -55,21 +55,10 @@ import SettingsIcon from '@material-ui/icons/SettingsRounded';
 import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import { CaMyGames } from '../MyGames/MyGames';
-import {
-  CaButton,
-  CaLogo,
-  CaNavbar,
-  CaSnackbar,
-  LoginForm,
-  RegistrationForm
-} from 'components';
-
-import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 
 import './root.scss';
-import { CaAddGame } from 'components/AddGameComponent';
 
 const token = Cookies.get('jwtToken');
 
@@ -80,12 +69,6 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
-  
-  public closeSnackbar(): void {
-    this.props.closeSnackbar();
-  }
-
-=======
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
   }
@@ -100,34 +83,34 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public logoutUser = (): void => {
-	this.props.logoutUser();
-	this.props.cleanStatistic();
-	this.props.history.push('/');
+    this.props.logoutUser();
+    this.props.cleanStatistic();
+    this.props.history.push('/');
 
-	const userInBattle = !!this.props.battleName;
+    const userInBattle = !!this.props.battleName;
 
-	if (userInBattle) {
-	  this.props.leaveBattle(this.props.battleName);
-	}
+    if (userInBattle) {
+      this.props.leaveBattle(this.props.battleName);
+    }
   }
 
   public redToLogin = (): void => {
-	this.props.logoutUser();
-	this.props.history.push('/login');
+    this.props.logoutUser();
+    this.props.history.push('/login');
   }
 
   public redToMainPage = () => {
-	this.props.history.push('/');
+    this.props.history.push('/');
   }
 
   public handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-	const language = event.target.value;
+    const language = event.target.value;
 
-	this.props.changeLanguage(language);
+    this.props.changeLanguage(language);
   }
 
   public getButton(authStatus: number): JSX.Element {
-	const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
 
     return (
       <div className='app-menu__profile'>
@@ -170,90 +153,43 @@ export class RootComponent extends React.Component<RootProps> {
       }
     ];
 
-    return (
-      <I18n>
-        {
-          (t, { i18n }) => (
-            <CaNavbar
-              linksToRender={[
-                {
-                  text: t('battles'),
-                  to: '/battles',
-                  activeClassName: 'ca-navbar__nav-item--active',
-                  disabled: !isAuthorized
-                },
-                {
-                  text: t('statistics'),
-                  to: '/statistics',
-                  activeClassName: 'ca-navbar__nav-item--active',
-                  disabled: !isAuthorized
-                }
-              ]}
-            >
-              <CaLogo
-                text='battlenet'
-                onClick={this.redToMainPage}
-              />
-
-              <div className='ca-navbar__menu-container'>
-                {
-                  isAuthorized
-                    ? <AppMenu appMenuItems={appMenuItems} >
-                      {this.getMenuProfilePanel()}
-                    </AppMenu>
-                    : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
-                }
-              </div>
-
-              <div className='ca-navbar__select-language'>
-                <CaSelect
-                  values={[Languages.EN, Languages.RU]}
-                  displayedValues={[t('ENToggle'), t('RUToggle')]}
-                  handleChange={this.handleChange}
-                  currentValue={getCurrentLanguage(i18n)}
-                />
-              </div>
-              <CaSnackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={this.props.isSnackbarOpen}
-                autoHideDuration={4000}
-                handleClose={() => this.closeSnackbar()}
-                type={this.props.snackbarType}
-                transitionDirection={transitionDirection.down}
-                message={
-                  <div>
-                    {Array.isArray(this.props.errors) ?
-                      this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) => <div key={index}>{item.msg}</div>) :
-                      <div>{this.props.errors && this.props.errors.msg}</div>
-                    }
-                  </div>
-                }
-              />
-            </CaNavbar>
-          )
-        }
-      </I18n>
-    );
-  }
-
-              <CaSnackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={this.props.isSnackbarOpen}
-                autoHideDuration={4000}
-                handleClose={() => this.closeSnackbar()}
-                type={this.props.snackbarType}
-                transitionDirection={transitionDirection.down}
-                message={
+            <CaSnackbar
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+              open={this.props.isSnackbarOpen}
+              autoHideDuration={4000}
+              handleClose={() => this.closeSnackbar()}
+              type={this.props.snackbarType}
+              transitionDirection={transitionDirection.down}
+              message={
+                <div>
                   <div>
                     {Array.isArray(this.props.errors) ? 
                     this.props.errors && this.props.errors.map((item: any, index: number) => <div key={index}>{item.msg}</div>) :
                     <div>{this.props.errors && this.props.errors.msg}</div>                    
                     }
                   </div>
-                }
+                </div>
+              }
+            />
+
+            <div className='ca-navbar__logout-btn-container'>
+              {this.getButton(this.props.status)}
+            </div>
+
+            <div className='ca-navbar__select-language'>
+              <CaSelect
+                values={[languages.en, languages.ru]}
+                displayedValues={[t('ENToggle'), t('RUToggle')]}
+                handleChange={this.handleChange}
+                currentValue={getCurrentLanguage(i18n)}
               />
-
-
+            </div>
+          </CaNavbar>
+          )
+        }
+      </I18n>
+    );
+  }
 
 
 
@@ -381,6 +317,7 @@ export class RootComponent extends React.Component<RootProps> {
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   battleName: state.battle.battleName,
+  errors: state.errors,
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
   errors: state.snackbarUi.message,
