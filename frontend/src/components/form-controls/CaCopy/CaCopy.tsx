@@ -11,10 +11,10 @@ export const CaCopy = withStyles(styles)((props: CaCopyProps) => {
   const { classes, copyHandler } = props;
 
   return (
-      <Tooltip title='Copy' placement='top'>
-        <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={copyHandler} >
-          <CopyIcon  className={classes.copyIcon} />
-        </IconButton>
-      </Tooltip>
+    <Tooltip title='Copy' placement='right'>
+      <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={copyHandler} >
+        <CopyIcon  className={classes.copyIcon} />
+      </IconButton>
+    </Tooltip>
   );
 });
