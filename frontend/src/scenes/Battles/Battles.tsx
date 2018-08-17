@@ -2,9 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  AuthStatus,
-  Game,  
-  RoomInfo  
+  AuthStatus,  
+  RoomInfo,    
+  GameModel
 } from 'models';
 
 import { CaGameCard, CaSpinner } from 'components';
@@ -27,7 +27,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     this.props.initGames();
   }
   
-  public getGameRooms(game: Game): RoomInfo[] {
+  public getGameRooms(game: GameModel): RoomInfo[] {
     return this.props.roomsInfo.filter(r => r.gameId === game.id);
   }
 

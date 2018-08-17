@@ -61,7 +61,6 @@ import { CaMyGames } from '../MyGames/MyGames';
 import { RootProps } from './Root.model';
 
 import './root.scss';
-import { CaAddGame } from 'components/AddGameComponent';
 
 const token = Cookies.get('jwtToken');
 
