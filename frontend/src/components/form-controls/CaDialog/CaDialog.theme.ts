@@ -16,7 +16,6 @@ export const MuiDialog: Partial<StyleRules<DialogClassKey>> = {
 export const MuiDialogTitle: Partial<StyleRules<DialogTitleClassKey>> = {
   root: {
     backgroundColor: defaultDialogTitleBGColor,
-    borderTop: `1px solid #A1A1A1`,
     textAlign: 'center'
   }
 };
@@ -24,7 +23,7 @@ export const MuiDialogTitle: Partial<StyleRules<DialogTitleClassKey>> = {
 export const MuiDialogContent: Partial<StyleRules<DialogContentClassKey>> = {
   root: {
     backgroundColor: defaultDialogContentBgColor,
-    width: '400px',
+    width: '430px',
     height: '100px',
     fontSize: '30px'
   }

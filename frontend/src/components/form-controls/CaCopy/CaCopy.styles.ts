@@ -1,7 +1,7 @@
 import { createStyles } from '@material-ui/core';
 
 export const styles = () => createStyles({
-  editIconButton: {
+  copyIconButton: {
     color: '#f4b33a',
 
     '&:hover': {
@@ -9,7 +9,7 @@ export const styles = () => createStyles({
       backgroundColor: '#f4b33a'
     }
   },
-  editIcon: {
+  copyIcon: {
     fontSize: '30px'
   }
 });

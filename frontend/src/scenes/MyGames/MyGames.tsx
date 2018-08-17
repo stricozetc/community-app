@@ -1,4 +1,4 @@
-import { CaButton, CaTable } from 'components';
+import { CaButton, CaDialogInfo, CaTable } from 'components';
 import { CaDialog } from 'components/form-controls/CaDialog/CaDialog';
 import { AuthStatus, GameModel, RowProperty, TypeOfColumn } from 'models';
 import * as React from 'react';
@@ -13,17 +13,30 @@ import './myGames.scss';
 export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState> {
     public state = {
         isDialogOpen: false,
-        deletedGame: null
+        isPopoverOpen: false,
+        deletedGame: null,
+        appTokenInPopover: ''
     };
 
     public handleCloseDialog = () => {
         this.setState({isDialogOpen: false})
     }
 
+    public handleClosePopover = () => {
+        this.setState({isPopoverOpen: false})
+    }
+
     public handleOpenDialog = (game: GameModel) => {
         this.setState({
             isDialogOpen: true,
             deletedGame: game
+        });
+    }
+
+    public handleOpenPopover = (appToken: string) => {
+        this.setState({
+            isPopoverOpen: true,
+            appTokenInPopover: appToken
         });
     }
 
@@ -50,7 +63,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
               type: TypeOfColumn.string,
               editAction: (id: number) => history.push(`/my-games/edit-game/${id}`),
               deleteAction: (game: GameModel) => this.handleOpenDialog(game),
-              lockAction: (appToken: string) => console.log(appToken)},
+              lockAction: (appToken: string) => this.handleOpenPopover(appToken)},
             { headerName: 'createdAt',
               field: RowProperty.createdAt,
               type: TypeOfColumn.date},
@@ -81,6 +94,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
                     onClose={this.handleCloseDialog}
                     onAccept={this.handleDeleteConfirmation}
                 />
+                <CaDialogInfo onClose={this.handleClosePopover} open={this.state.isPopoverOpen} appToken={this.state.appTokenInPopover}/>
             </div>
         );
     }
