@@ -33,6 +33,7 @@ import {
 } from 'store';
 
 import { CloseSnackbar } from 'store/snackbar'
+import { SnackbarErrorMessage } from 'components/CaSnackbar'
 
 import {
   getCurrentLanguage,
@@ -164,7 +165,7 @@ export class RootComponent extends React.Component<RootProps> {
                 <div>
                   <div>
                     {Array.isArray(this.props.errors) ? 
-                    this.props.errors && this.props.errors.map((item: any, index: number) => <div key={index}>{item.msg}</div>) :
+                    this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) => <div key={index}>{item.msg}</div>) :
                     <div>{this.props.errors && this.props.errors.msg}</div>                    
                     }
                   </div>
@@ -334,6 +335,7 @@ export class RootComponent extends React.Component<RootProps> {
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   battleName: state.battle.battleName,
+  errors: state.snackbarUi.message,
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
   errors: state.snackbarUi.message,
