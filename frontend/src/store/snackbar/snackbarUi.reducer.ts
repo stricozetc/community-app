@@ -1,6 +1,5 @@
 import { SnackbarUiActions, SnackbarUiTypes } from './snackbarUi.action';
 import { initialState } from './snackbarUi.initial';
-/* import { SnackbarType } from 'models'; */
 
 export const snackbarUiReducer = (state = initialState, action: SnackbarUiActions) => {
   switch (action.type) {

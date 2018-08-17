@@ -58,8 +58,7 @@ import {
 
 const rootReducers = combineReducers({
   battle: battleReducer,
-  auth: authReducer,
-  // errors: errorsReducer,
+  auth: authReducer,  
   games: gamesReducer,
   statistic: statisticReducer,
   socket: socketReducer,
