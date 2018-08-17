@@ -7,9 +7,9 @@ import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
 import {
-  AuthStatus,
+  AuthStatus,  
   UserFieldsToLogin,
-  /* UserFieldsToRegister */
+  UserFieldsToRegister  
 } from 'models';
 import { I18n } from 'react-i18next';
 
@@ -169,9 +169,7 @@ export class LoginFormComponent extends React.Component<
 
                 <FormGroup>
                   <TextField
-                    style={{
-                      marginTop: '20px'
-                    }}
+                    className='ca-login-form__password-field'
                     id='password'
                     label={t('passwordLabel')}
                     name='password'
@@ -225,11 +223,11 @@ export class LoginFormComponent extends React.Component<
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   errors: state.errors,
-  isSnackbarOpen: state.snackbarUi.isOpen,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToLogin) => dispatch(new LoginUser(user)),  
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))  
 });
 
 export const LoginForm = connect(

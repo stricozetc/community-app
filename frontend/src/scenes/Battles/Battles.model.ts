@@ -10,9 +10,9 @@ export interface BattleProps {
   status: LoadStatus;
   children?: JSX.Element;  
 
-  joinBattleAction(payload: string): any;
+  joinBattleAction(payload: string): void;
 
-  leaveBattleAction(payload: string): any;
+  leaveBattleAction(payload: string): void;
 
   logoutUser(): void;
 
