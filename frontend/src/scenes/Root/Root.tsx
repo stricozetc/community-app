@@ -1,9 +1,7 @@
 import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
 import { CaSelect } from 'components/form-controls/CaSelect';
-import { i18n } from 'i18next';
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
-import { AuthStatus, languages, transitionDirection } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -15,7 +13,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { AuthStatus, languages, transitionDirection ,AppMenuItem } from 'models';
+import { AuthStatus, languages, transitionDirection, AppMenuItem } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
@@ -45,11 +43,9 @@ import {
 import {
   AppMenu,
   CaAddGame,
-  CaButton,
-  CaEditGame,
+  CaButton,  
   CaLogo,
-  CaNavbar,
-  CaSelect,
+  CaNavbar,  
   LoginForm,  
   CaSnackbar
 } from 'components';
@@ -61,16 +57,6 @@ import SettingsIcon from '@material-ui/icons/SettingsRounded';
 import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import { CaMyGames } from '../MyGames/MyGames';
-import {
-  CaButton,
-  CaLogo,
-  CaNavbar,
-  CaSnackbar,
-  LoginForm,
-  RegistrationForm
-} from 'components';
-
-import { PageNotFound } from '../PageNotFound';
 
 import { RootProps } from './Root.model';
 
@@ -87,7 +73,7 @@ if (token) {
 export class RootComponent extends React.Component<RootProps> {
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
-  } */
+  }
 
   public closeSnackbar(): void {
     this.props.closeSnackbar();
@@ -123,11 +109,9 @@ export class RootComponent extends React.Component<RootProps> {
     const language = event.target.value;
 
     this.props.changeLanguage(language);
-  }
-
-  public getButton(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
-
+	}
+	
+	public getMenuProfilePanel = (): JSX.Element => {
     return (
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>
@@ -213,10 +197,10 @@ export class RootComponent extends React.Component<RootProps> {
                   displayedValues={[t('ENToggle'), t('RUToggle')]}
                   handleChange={this.handleChange}
                   currentValue={getCurrentLanguage(i18n)}
->>>>>>> .theirs
-			  />
+                />
+              </div>
 
-              <CaSnackbar
+							<CaSnackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
@@ -229,29 +213,15 @@ export class RootComponent extends React.Component<RootProps> {
                     this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) => <div key={index}>{item.msg}</div>) :
                     <div>{this.props.errors && this.props.errors.msg}</div>                    
                     }
-                  </div>
-                </div>
+                  </div>                
               }
-            />
-
-            <div className='ca-navbar__logout-btn-container'>
-              {this.getButton(this.props.status)}
-            </div>
-
-            <div className='ca-navbar__select-language'>
-              <CaSelect
-                values={[languages.en, languages.ru]}
-                displayedValues={[t('ENToggle'), t('RUToggle')]}
-                handleChange={this.handleChange}
-                currentValue={getCurrentLanguage(i18n)}
-              />
-            </div>
-          </CaNavbar>
+            	/> 
+            </CaNavbar>
           )
         }
       </I18n>
-    );
-  }
+  );
+}
 
   public render(): JSX.Element {
     return (
