@@ -12,7 +12,7 @@ import { CaCopy } from '../CaCopy/CaCopy';
 import { CaDialogInfoProps } from './CaDialogInfo.model';
 import './CaDialogInfo.scss';
 import { styles } from './CaDialogInfo.styles';
-// import IconButton from '@material-ui/core/IconButton';
+import { I18n } from 'react-i18next';
 
 export const CaDialogInfo = withStyles(styles)((props: CaDialogInfoProps) => {
 
@@ -23,36 +23,42 @@ export const CaDialogInfo = withStyles(styles)((props: CaDialogInfoProps) => {
   };
 
   return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={onClose}
-      >
-        <DialogTitle>Application Token</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <span> Keep in mind that it's secret information, don't share it with other people</span>
-            <br/><br/>
-            <span> If you want to copy application token of this game, click on icon.</span>
-          </DialogContentText>
-        </DialogContent>
-        <div className='input-container'>
-          <Input
-            value={appToken}
-            className={classes.input}
-            onFocus={handleFocus}
-            autoFocus={true}
-            classes={{
-              underline: classes.underline
-            }}
-          />
-          <CopyToClipboard text={appToken}>
-            <IconButton>
-              <CaCopy copyHandler={onClose}/>
-            </IconButton>
-          </CopyToClipboard>
-        </div>
-      </Dialog>
-    </div>
+    <I18n>
+      {
+        ( t ) => (
+          <div>
+            <Dialog
+              open={open}
+              onClose={onClose}
+            >
+              <DialogTitle>{t('copyTokenHeader')}</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <span>{t('copyTokenMainText')}</span>
+                  <br/><br/>
+                  <span>{t('copyTokenOfferMessage')}</span>
+                </DialogContentText>
+              </DialogContent>
+              <div className='input-container'>
+                <Input
+                  value={appToken}
+                  className={classes.input}
+                  onFocus={handleFocus}
+                  autoFocus={true}
+                  classes={{
+                    underline: classes.underline
+                  }}
+                />
+                <CopyToClipboard text={appToken}>
+                  <IconButton>
+                    <CaCopy copyHandler={onClose}/>
+                  </IconButton>
+                </CopyToClipboard>
+              </div>
+            </Dialog>
+          </div>
+        )
+      }
+    </I18n>
   );
 });

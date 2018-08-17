@@ -80,8 +80,9 @@ export const CaTable = withStyles(styles)(
       const isCellHaveDeleteButton = column.deleteAction;
       const isCellHaveLockButton = column.lockAction;
       let buttonContent;
+      const isCellHaveAnyButton = isCellHaveEditButton || isCellHaveDeleteButton || isCellHaveLockButton;
 
-      if (isCellHaveEditButton || isCellHaveDeleteButton || isCellHaveLockButton) {
+      if (isCellHaveAnyButton) {
         buttonContent =
           <div className={classes.buttonsInCellWithButtons}>
             {column.lockAction ? <CaLock showAppToken={() => column.lockAction && column.lockAction(row.appToken)}/> : null}

@@ -60,7 +60,8 @@
   "noChartsAvailable": "No charts available",
   "createdAt": "Created at",
   "updatedAt": "Updated at",
-  
+  "agree": "Agree",
+  "disagree": "Disagree",
   "appNameRequired": "Application name should be required",
   "applicationNameLengthError": "The length of application name should be in interval of 3-50 symbols",
   "descriptionRequired": "Application description should be required",
@@ -74,5 +75,11 @@
   "maxWaitingTimeRequired": "Waiting time for the battle should be required",
   "maxWaitingTimeError": "Waiting time for the battle should be more than 15 minutes",
   "redirectUrlRequired": "RedirectUrl should be required",
-  "redirectUrlError": "RedirectUrl should be correct"  
+  "redirectUrlError": "RedirectUrl should be correct",
+  "deleteHeader": "Are YOU sure want to delete this game?",
+  "deleteMainText": "Keep in mind that you will not be able to restore game and all information about it.",
+  "deleteApproveQuery": "If you still want to this delete game, click \"Agree\".",
+  "copyTokenHeader": "Application Token",
+  "copyTokenMainText": "Keep in mind that it's secret information, don't share it with other people",
+  "copyTokenOfferMessage": "If you want to copy application token of this game, click on icon." 
 }

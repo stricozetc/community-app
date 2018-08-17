@@ -24,7 +24,6 @@ export const MuiDialogContent: Partial<StyleRules<DialogContentClassKey>> = {
   root: {
     backgroundColor: defaultDialogContentBgColor,
     width: '430px',
-    height: '100px',
     fontSize: '30px'
   }
 };

@@ -61,7 +61,8 @@
   "noChartsAvailable": "Нет доступных графиков",
   "createdAt": "Дата создания",
   "updatedAt": "Дата обновления",
-
+  "agree": "Подтвердить",
+  "disagree": "Отклонить",
   "appNameRequired": "Пожалуйста, укажите название приложения",
   "applicationNameLengthError": "Длина, названия приложения, должна быть в пределах 3-50 символов",
   "descriptionRequired": "Пожалуйста, укажите описание приложения",
@@ -75,5 +76,11 @@
   "maxWaitingTimeRequired": "Пожалуйста, укажите время ожидания до начала игры",
   "maxWaitingTimeError": "Время ожидания до начала игры должно быть не менее 15 минут",  
   "redirectUrlRequired": "Пожалуйста, укажите redirectUrl ",
-  "redirectUrlError": "Введите корректный redirectUrl"  
+  "redirectUrlError": "Введите корректный redirectUrl",
+  "deleteHeader": "Вы уверены, что хотите удалить игру?",
+  "deleteMainText": "Имейте ввиду, вы не сможете восстановить игру и всю информацию о ней",
+  "deleteApproveQuery": "Если вы все еще хотите удалить игру, нажмите \"Подтвердить\".",
+  "copyTokenHeader": "Токен Приложения",
+  "copyTokenMainText": "Помните, что это секретная информация, не распространяйте ее",
+  "copyTokenOfferMessage": "Если вы хотите скопировать токен приложения, нажмите на иконку." 
 }
