@@ -2,12 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  AuthStatus,
-  GameModel,
-  /* LoadStatus, */
-  RoomInfo,
-  /* SnackbarType, */
-  /* transitionDirection */
+  AuthStatus,  
+  RoomInfo,    
+  GameModel
 } from 'models';
 
 import { CaGameCard, CaSpinner } from 'components';

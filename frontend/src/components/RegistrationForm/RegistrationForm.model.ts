@@ -17,8 +17,7 @@ export interface RegistrationFormState {
   };
   emailErrors: string[];
   passwordErrors: string[];
-  nameErrors: string[];
-  language: string;
+  nameErrors: string[];  
 }
 
 export const initRegistrationFormState: RegistrationFormState = {
@@ -38,8 +37,7 @@ export const initRegistrationFormState: RegistrationFormState = {
   },
   emailErrors: [],
   passwordErrors: [],
-  nameErrors: [],
-  language: 'eng'
+  nameErrors: [],  
 };
 export interface RegistrationFormProps {
   history: any;
