@@ -5,24 +5,20 @@ import { HttpWrapper } from 'services';
 import { AppState, store } from 'store';
 import { FrontEndUser } from 'store/auth';
 import { i18nInstance } from 'utils/i18n';
-
-/* import { GetErrors } from '../errors'; */
 import { OpenSnackbar } from 'store/snackbar';
 import { SnackbarType } from 'models';
 
 import {
   ChangeLanguage,
-  SaveLanguage,
-  /* SaveLanguageError, */
+  SaveLanguage,  
   SaveLanguageSuccess,
   UserSettingsTypes
 } from './user-settings.action';
 
 import {
   ChangePassword,
-  /* ChangePasswordError, */
   ChangePasswordSuccess,
-  SetLanguage,
+  SetLanguage
 } from './user-settings.action';
 
 export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
@@ -82,17 +78,10 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
     })
   );
 
-/* export const saveLanguageError$ = (actions$: ActionsObservable<SaveLanguageError>) =>
-  actions$.pipe(
-    ofType(UserSettingsTypes.SaveLanguageError),
-    map(() => new GetErrors(new Error('Fail save language'))),
-    ignoreElements()
-  ); */
 
 export const UserSettingsEffects = [
   changePassword$,
   setLanguage$,
   changeLanguage$,
-  saveLanguage$,
-  /* saveLanguageError$, */
+  saveLanguage$ 
 ];

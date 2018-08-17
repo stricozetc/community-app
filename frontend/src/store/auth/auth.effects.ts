@@ -36,7 +36,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           return new SetCurrentUser(decoded);
         }),
         catchError((error) => {
-          console.log(error.response.data)
+          
           return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
         }
           
@@ -52,7 +52,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new SuccessRegistration('./login')),
         catchError((error) =>{
-          console.log(error.response.data)
+          
           return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
         } 
         )

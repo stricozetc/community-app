@@ -28,6 +28,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
           return new LoadBestUsersCompleted(bestUsers);
         }),
         catchError((error) => {
+          
           return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))  
         })
       )
@@ -45,6 +46,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
           return new LoadMostPopularGamesCompleted(popGames);
         }),
         catchError((error) => {
+          
           return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
           })
       )
@@ -60,7 +62,8 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
           
           return new LoadRecentGamesCompleted(rg);
         }),
-        catchError((error) => {          
+        catchError((error) => {
+          
           return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
         })
       )
