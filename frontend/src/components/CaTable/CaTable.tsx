@@ -10,6 +10,7 @@ import * as classNames from 'classnames';
 import { CaDelete } from 'components/form-controls/CaDelete';
 import { CaEdit } from 'components/form-controls/CaEdit';
 
+import { CaLock } from 'components/form-controls/CaLock';
 import { HeaderName, ResultStatus, Row, TypeOfColumn } from 'models';
 
 import * as React from 'react';
@@ -77,11 +78,14 @@ export const CaTable = withStyles(styles)(
 
       const isCellHaveEditButton = column.editAction;
       const isCellHaveDeleteButton = column.deleteAction;
+      const isCellHaveLockButton = column.lockAction;
       let buttonContent;
+      const isCellHaveAnyButton = isCellHaveEditButton || isCellHaveDeleteButton || isCellHaveLockButton;
 
-      if (isCellHaveEditButton || isCellHaveDeleteButton) {
+      if (isCellHaveAnyButton) {
         buttonContent =
           <div className={classes.buttonsInCellWithButtons}>
+            {column.lockAction ? <CaLock showAppToken={() => column.lockAction && column.lockAction(row.appToken)}/> : null}
             {column.editAction ? <CaEdit editHandler={() => column.editAction && column.editAction(row.id)} /> : null}
             {column.deleteAction ? <CaDelete deleteHandler={() => column.deleteAction && column.deleteAction(row)} /> : null}
           </div>;

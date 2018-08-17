@@ -8,9 +8,9 @@ export function validateAppDataInput(data: MyGameInterface): { errors: ErrorBloc
   const errors: ErrorBlock[] = [];
 
   data.appName = !isEmpty(data.appName) ? data.appName : '';
-  data.description = !isEmpty(data.description) ? data.appName : '';
-  data.requestUrl = !isEmpty(data.requestUrl) ? data.appName : '';
-  data.redirectUrl = !isEmpty(data.redirectUrl) ? data.appName : '';
+  data.description = !isEmpty(data.description) ? data.description : '';
+  data.requestUrl = !isEmpty(data.requestUrl) ? data.requestUrl : '';
+  data.redirectUrl = !isEmpty(data.redirectUrl) ? data.redirectUrl : '';
 
   if (Validator.isEmpty(data.appName)) {
     errors.push(logicErr.appNameRequired);

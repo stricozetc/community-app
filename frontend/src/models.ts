@@ -172,6 +172,7 @@ export interface GameModel {
   updateRoomsInfoEventName: string;
   notifyCountdown: string;
   approve: boolean;
+  appToken?: string;
 }
 export interface HeaderName {
   headerName: string;
@@ -179,6 +180,7 @@ export interface HeaderName {
   type: TypeOfColumn;
   editAction?(payload: number): void;
   deleteAction?(payload: GameModel): void;
+  lockAction?(payload: string): void;
 }
 
 export interface Row {

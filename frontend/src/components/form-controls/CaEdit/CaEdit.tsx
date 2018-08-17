@@ -11,7 +11,7 @@ export const CaEdit = withStyles(styles)((props: CaEditProps) => {
   const { classes, editHandler } = props;
 
   return (
-      <Tooltip title='Edit' placement='left'>
+      <Tooltip title='Edit' placement='top'>
         <IconButton aria-label='Delete' className={classes.editIconButton} onClick={editHandler} >
           <EditIcon  className={classes.editIcon} />
         </IconButton>

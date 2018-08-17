@@ -13,5 +13,7 @@ export interface MyGameProps {
 
 export interface  MyGameState {
     isDialogOpen: boolean;
+    isPopoverOpen: boolean;
     deletedGame: GameModel | null;
+    appTokenInPopover: string;
 }

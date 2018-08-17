@@ -1,7 +1,7 @@
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 
-import Promise = require("bluebird");
+
 import { inject } from 'inversify';
 import { AppTokenService } from './../service/app-token';
 import {
@@ -21,7 +21,7 @@ export class MyGameController {
     }
 
     @httpPost('/delete-game')
-    public deleteGame(request: Request, response: Response): Promise<void | Response> {
+    public async deleteGame(request: Request, response: Response): Promise<void | Response> {
         const gameThatNeedToDelete: MyGameInterface = request.body;
 
         return this.myGameRepository.deleteGame(gameThatNeedToDelete)
@@ -34,7 +34,7 @@ export class MyGameController {
     }
 
     @httpPost('/edit-game')
-    public editGame(request: Request, response: Response): Promise<void | Response> {
+    public async editGame(request: Request, response: Response): Promise<void | Response> {
 
         const data: MyGameInterface = request.body;
 
@@ -47,10 +47,12 @@ export class MyGameController {
     }
 
     @httpPost('/add-game')
-    public addGame(request: Request, response: Response): Promise<void | Response> | Response {
-        const newGame: MyGameInterface = request.body;
+    public async addGame(request: Request, response: Response): Promise<void | Response> {
+        let newGame: MyGameInterface = request.body;
 
-        this.tokenService.create(newGame);
+        const appToken = await this.tokenService.create(newGame);
+        newGame = Object.assign({}, newGame, {appToken});
+
         const { errors, isValid } = validateAppDataInput(newGame);
 
         if (!isValid) {
@@ -66,7 +68,7 @@ export class MyGameController {
     }
 
     @httpGet('/get-games')
-    public getGames(request: Request, response: Response): Promise<void | Response> {
+    public async getGames(request: Request, response: Response): Promise<void | Response> {
 
         const userId: number = request.query.userId;
 

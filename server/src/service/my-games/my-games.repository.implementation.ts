@@ -68,7 +68,8 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
                     leaveEventName: data.leaveEventName,
                     updateRoomsInfoEventName: data.updateRoomsInfoEventName,
                     notifyCountdown: data.notifyCountdown,
-                    approve: data.approve
+                    approve: data.approve,
+                    appToken: data.appToken
                 }
             );
 
