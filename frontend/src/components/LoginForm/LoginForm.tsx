@@ -7,7 +7,7 @@ import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
 import {
-  AuthStatus,
+  AuthStatus,  
   UserFieldsToLogin,
   UserFieldsToRegister  
 } from 'models';
@@ -223,7 +223,7 @@ export class LoginFormComponent extends React.Component<
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   errors: state.errors,
-  isSnackbarOpen: state.snackbarUi.isOpen,
+  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
