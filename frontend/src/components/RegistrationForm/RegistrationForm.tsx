@@ -288,7 +288,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  isSnackbarOpen: state.snackbarUi.isOpen  
+  isSnackbarOpen: state.snackbarUi.isOpen,
+  language: state.userSettings.language
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
