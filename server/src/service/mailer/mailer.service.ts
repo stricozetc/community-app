@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as format from 'string-template';
 
 import { UserAuthenticationRepository } from '../user-authentication';
+import { technicalErr } from '../../../errors/technicalErr';
 
 // tslint:disable-next-line:no-var-requires
 const mailConfig = require('../../config/mail.config.json');
@@ -32,7 +33,8 @@ export class MailerService {
     try {
       send(letter);
     } catch (error) {
-      throw new Error(error.message); // fix error handling
+      console.log(error);
+      throw technicalErr.mailNotSend;
     }
   }
 }

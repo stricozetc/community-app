@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { MailerService, UserAuthenticationRepository } from '../service';
 import { validateEmail } from '../validation/email';
+import { logicErr } from '../../errors/logicErr';
 
 @controller('/api/restore-password')
 export class RestorePasswordController {
@@ -28,7 +29,7 @@ export class RestorePasswordController {
         this.mailerService.sendRestorePasswordMail(userEmail);
         return response.sendStatus(200);
       } else {
-        return response.status(400).send('User is not found');// fix error handling
+        return response.status(400).send(logicErr.notFoundUser);
       }
     } catch (error) {
       return error.code >= 2000 ?
