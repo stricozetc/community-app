@@ -4,7 +4,6 @@ import * as SocketIO from 'socket.io';
 import { inject } from '../services-registration';
 import { SocketService } from './socket.service';
 import { LoggerService } from '../logger';
-// import { Game } from '../../typing/game';
 import { RoomService } from '../room';
 import { RoomInfo } from '../../typing/room-info';
 import { MyGameInterface, GamesModel } from '../../../models/games';
@@ -13,7 +12,6 @@ import { GamesRepository } from '../games/games.repository';
 
 @injectable()
 export class SocketServiceImplementation extends SocketService {
-  // private games: MyGameInterface[] = require('../../config/games.json').games;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(RoomService) private roomService: RoomService;
   @inject(GamesRepository) private gamesRepository: GamesRepository;
