@@ -12,13 +12,11 @@ import {
 
 import { AppMenuItem, AuthStatus, Languages } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
+import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
 import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
-import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
-import { AppState, CleanStatistic, FrontEndUser, LeaveBattle, LogoutUser, SetCurrentUser, store } from 'store';
-import { getCurrentLanguage, setAuthToken } from 'utils';
 
 import {
   AppState,
@@ -90,11 +88,11 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public redToMainPage(): void {
+  public redToMainPage = (): void => {
     this.props.history.push('/');
   }
 
-  public handleChange = (event: any, i18n: i18n) => {
+  public handleChange = (event: any) => {
     const language = event.target.value;
 
     this.props.changeLanguage(language);
@@ -105,9 +103,9 @@ export class RootComponent extends React.Component<RootProps> {
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>
           <AccountCircle style={{
-              color: 'inherit',
-              fontSize: '42px'
-            }}
+            color: 'inherit',
+            fontSize: '42px'
+          }}
           />
         </div>
         <div className='app-menu__profile-text-block'>
@@ -171,10 +169,10 @@ export class RootComponent extends React.Component<RootProps> {
               <div className='ca-navbar__menu-container'>
                 {
                   isAuthorized
-                  ? <AppMenu appMenuItems={appMenuItems} >
+                    ? <AppMenu appMenuItems={appMenuItems} >
                       {this.getMenuProfilePanel()}
                     </AppMenu>
-                  : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
+                    : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
                 }
               </div>
 
@@ -225,7 +223,7 @@ export class RootComponent extends React.Component<RootProps> {
                 <RegistrationForm {...props} >
                   {this.getNavbar(this.props.status)}
                 </RegistrationForm>
-              )}
+              }
             />
 
             <Route
