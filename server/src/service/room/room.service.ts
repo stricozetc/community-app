@@ -5,7 +5,7 @@ import { TimerService } from './../timer';
 import { RoomStatus, Room } from './models';
 import { RoomInfo } from '../../typing/room-info';
 import { PlayersBindService } from '../players-bind';
-import { MyGameInterface } from '../../../models/games';
+import { Game } from '../../../models/games';
 import { GamesRepository } from '../games/games.repository';
 
 @injectable()
@@ -189,7 +189,7 @@ export class RoomService {
     }
   }
 
-  private startGame(game: MyGameInterface, room: Room, index: number): void {
+  private startGame(game: Game, room: Room, index: number): void {
 
     this.playersBindService.sendPlayerBind(game, room)
       .then(() => {

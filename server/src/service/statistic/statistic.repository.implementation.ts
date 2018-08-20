@@ -10,7 +10,7 @@ import {
   BestUsersFromServer,
   ErrorBlock,
   GamesModel,
-  MyGameInterface
+  Game
 } from './../../../models';
 
 import { GameData } from './../../controller/statistic.controller';
@@ -36,7 +36,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
     return GamesModel.findOne({
       where: { appToken }
-    }).then((tokenRow: MyGameInterface) => {
+    }).then((tokenRow: Game) => {
       const token = tokenRow && tokenRow.appToken;
       if (token) {
         let promises: Array<Promise<boolean>> = [];

@@ -3,7 +3,7 @@ import { db } from './SequelizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
-export interface MyGameInterface {
+export interface Game {
     id?: number;
     userId: number;
     appName: string;

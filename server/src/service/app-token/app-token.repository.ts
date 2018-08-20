@@ -3,7 +3,7 @@ import { injectable, inject } from 'inversify';
 import { technicalErr } from '../../../errors/technicalErr';
 import { logicErr } from '../../../errors/logicErr';
 import { LoggerService } from '../logger/logger.service';
-import { MyGameInterface, GamesModel } from '../../../models/games';
+import { Game, GamesModel } from '../../../models/games';
 
 @injectable()
 export class AppTokenRepository {
@@ -12,7 +12,7 @@ export class AppTokenRepository {
         @inject(LoggerService) private loggerService: LoggerService,
     ) {}
 
-    public async create(app: MyGameInterface): Promise<string> {
+    public async create(app: Game): Promise<string> {
         const token = await this.getByName(app.appName);
 
         if (token) {
@@ -37,7 +37,7 @@ export class AppTokenRepository {
         }
     }
 
-    public async getByName(gameName: string): Promise<MyGameInterface> {
+    public async getByName(gameName: string): Promise<Game> {
         try {
             return await GamesModel.findOne({
                 where: { appName: gameName }

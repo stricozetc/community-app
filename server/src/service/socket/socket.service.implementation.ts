@@ -6,7 +6,7 @@ import { SocketService } from './socket.service';
 import { LoggerService } from '../logger';
 import { RoomService } from '../room';
 import { RoomInfo } from '../../typing/room-info';
-import { MyGameInterface, GamesModel } from '../../../models/games';
+import { Game, GamesModel } from '../../../models/games';
 import { GamesRepository } from '../games/games.repository';
 
 
@@ -15,7 +15,7 @@ export class SocketServiceImplementation extends SocketService {
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(RoomService) private roomService: RoomService;
   @inject(GamesRepository) private gamesRepository: GamesRepository;
-  private games: MyGameInterface[];
+  private games: Game[];
   private clients: SocketIO.Socket[] = [];
   private playersSocketBind: Array<{ playerToken: string, playerSocketId: string }> = [];
 

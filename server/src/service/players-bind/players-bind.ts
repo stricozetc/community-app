@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { AppTokenService } from '../app-token';
 import { LoggerService } from '../logger';
-import { MyGameInterface } from '../../../models/games';
+import { Game } from '../../../models/games';
 
 @injectable()
 export class PlayersBindService {
@@ -41,8 +41,8 @@ export class PlayersBindService {
       .filter((player) => player !== removePlayer);
   }
 
-  public async sendPlayerBind(game: MyGameInterface, room: Room): Promise<boolean> {
-    let app: MyGameInterface;
+  public async sendPlayerBind(game: Game, room: Room): Promise<boolean> {
+    let app: Game;
     try {
       app = await this.tokenService.getByAppName(game.appName);
     } catch (error) {
