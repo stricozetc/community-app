@@ -5,6 +5,7 @@ export interface AddGameComponentProps {
     history: any;
     user: any;
     children?: JSX.Element;
-
-    addGame (payload: GameModel): void;
+    
+    logoutUser: () => void,
+    addGame(payload: GameModel): void;
 }
