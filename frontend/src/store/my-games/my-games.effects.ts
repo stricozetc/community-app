@@ -62,7 +62,7 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
                     return new AddGameSuccess(game);
                 }),
                 catchError(error => of(new AddGameError(error)))
-            )
+            );
             }
         )
     );

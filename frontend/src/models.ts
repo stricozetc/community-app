@@ -78,9 +78,9 @@ export interface FrontEndValidationErrorsLogin {
 }
 
 export interface FrontEndValidationErrorsChangePassword {
-  oldPassword: { required: string, min: string },
-  newPassword: { required: string, min: string },
-  repeatNewPassword: { required: string, min: string, mustMatch: string }
+  oldPassword: { required: string, min: string };
+  newPassword: { required: string, min: string };
+  repeatNewPassword: { required: string, min: string, mustMatch: string };
 }
 export interface UserFieldsToRegister {
   email: string;

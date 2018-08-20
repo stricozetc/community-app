@@ -10,4 +10,4 @@ export const initialState: State = {
     editGameStatus: LoadStatus.Init,
     deleteGameStatus: LoadStatus.Init,
     addGameStatus: LoadStatus.Init
-}
+};

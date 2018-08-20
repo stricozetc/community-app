@@ -1,20 +1,16 @@
-import * as React from 'react';
-
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
-
+import { frontEndValidationErrorsChangePassword as possibleErrors } from 'constes';
+import * as React from 'react';
 import { I18n } from 'react-i18next';
+import { FieldsToChangePassword } from 'store/userSettings/interfaces';
 
 import {
   ChangePasswordFormProps,
   ChangePasswordFormState,
   initState
 } from './CaChangePasswordForm.model';
-
 import './CaChangePasswordForm.scss';
-import { frontEndValidationErrorsChangePassword as possibleErrors } from 'constes';
-
-import { FieldsToChangePassword } from 'store/userSettings/interfaces';
 
 export class CaChangePasswordForm extends React.Component<
   ChangePasswordFormProps,
@@ -155,9 +151,9 @@ export class CaChangePasswordForm extends React.Component<
       }
     });
     this.checkValidation();
-  };
+  }
 
-  public handleSubmit() {
+  public handleSubmit(): void {
     const fields: FieldsToChangePassword = {
       userId: this.props.user && this.props.user.id,
       oldPassword: this.state.oldPassword,
@@ -172,20 +168,20 @@ export class CaChangePasswordForm extends React.Component<
     return (
       <I18n>
         {t => (
-          <div className="ca-change-password-form">
+          <div className='ca-change-password-form'>
             {this.props.children}
             <form
               onSubmit={this.onSubmit}
-              className="ca-change-password-form__container"
+              className='ca-change-password-form__container'
             >
               <FormGroup>
                 <TextField
-                  id="oldPassword"
+                  id='oldPassword'
                   label={t('oldPasswordLabel')}
-                  name="oldPassword"
+                  name='oldPassword'
                   value={this.state.oldPassword}
                   onChange={this.onChange}
-                  type="password"
+                  type='password'
                   onBlur={this.onBlur('oldPassword')}
                   error={
                     !this.state.isOldPasswordValid &&
@@ -197,7 +193,7 @@ export class CaChangePasswordForm extends React.Component<
                   this.state.oldPasswordErrors.map((err, index) => {
                     return (
                       <div
-                        className="ca-change-password-form__error"
+                        className='ca-change-password-form__error'
                         key={index}
                       >
                         {t(err)}
@@ -211,13 +207,13 @@ export class CaChangePasswordForm extends React.Component<
                   style={{
                     marginTop: '20px'
                   }}
-                  className="ca-change-password-form__password-field"
-                  id="newPassword"
+                  className='ca-change-password-form__password-field'
+                  id='newPassword'
                   label={t('newPasswordLabel')}
-                  name="newPassword"
+                  name='newPassword'
                   value={this.state.newPassword}
                   onChange={this.onChange}
-                  type="password"
+                  type='password'
                   onBlur={this.onBlur('newPassword')}
                   error={
                     !this.state.isNewPasswordValid &&
@@ -229,7 +225,7 @@ export class CaChangePasswordForm extends React.Component<
                   this.state.newPasswordErrors.map((err, index) => {
                     return (
                       <div
-                        className="ca-change-password-form__error"
+                        className='ca-change-password-form__error'
                         key={index}
                       >
                         {t(err)}
@@ -243,13 +239,13 @@ export class CaChangePasswordForm extends React.Component<
                   style={{
                     marginTop: '20px'
                   }}
-                  className="ca-change-password-form__password-field"
-                  id="repeatNewPassword"
+                  className='ca-change-password-form__password-field'
+                  id='repeatNewPassword'
                   label={t('repeatNewPasswordLabel')}
-                  name="repeatNewPassword"
+                  name='repeatNewPassword'
                   value={this.state.repeatNewPassword}
                   onChange={this.onChange}
-                  type="password"
+                  type='password'
                   onBlur={this.onBlur('repeatNewPassword')}
                   error={
                     !this.state.isRepeatNewPasswordValid &&
@@ -261,7 +257,7 @@ export class CaChangePasswordForm extends React.Component<
                   this.state.repeatNewPasswordErrors.map((err, index) => {
                     return (
                       <div
-                        className="ca-change-password-form__error"
+                        className='ca-change-password-form__error'
                         key={index}
                       >
                         {t(err)}
@@ -272,9 +268,9 @@ export class CaChangePasswordForm extends React.Component<
 
               <CaButton
                 onClick={() => this.handleSubmit()}
-                color="primary"
-                type="submit"
-                className="ca-change-password-form__login-btn"
+                color='primary'
+                type='submit'
+                className='ca-change-password-form__login-btn'
                 disabled={
                   !this.state.isOldPasswordValid ||
                   !this.state.isNewPasswordValid ||
@@ -284,7 +280,7 @@ export class CaChangePasswordForm extends React.Component<
                 {t('changePasswordLabel')}
               </CaButton>
               {this.props.changePasswordStatus === 2 && (
-              <div className="ca-change-password-form__success">
+              <div className='ca-change-password-form__success'>
                 {t('passwordChangedButton')}
               </div>
             )}

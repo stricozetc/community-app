@@ -135,12 +135,10 @@ export const GamesModel: SequelizeStaticAndInstance['Model'] = db.connect.define
             notEmpty: true
         }
     }
-},                                                                                  {
+},                                                                               {
     // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
     // otherwise, the model name will be pluralized
     freezeTableName: true,
     // defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
     tableName: dbConfig.gamesTable
 });
-
-

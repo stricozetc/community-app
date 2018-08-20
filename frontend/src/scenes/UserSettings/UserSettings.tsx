@@ -21,7 +21,7 @@ import './UserSettings.scss';
 function TabContainer(params: { children: any; dir?: any }): JSX.Element {
   return (
     <Typography
-      component="div"
+      component='div'
       dir={params.dir}
       style={{ padding: 8 * 3, fontSize: '1.6rem' }}
     >
@@ -75,16 +75,16 @@ export class CaUserSettingsComponent extends React.Component<
     return (
       <I18n>
         {t => (
-          <div className="ca-user-settings">
+          <div className='ca-user-settings'>
             {this.props.children}
-            <div className="ca-user-settings__container">
+            <div className='ca-user-settings__container'>
                 <CaTabs
                   value={this.state.value}
                   onChange={this.handleChange}
-                  fullWidth
+                  fullWidth={true}
                 >
-                  <CaTab label="Profile" />
-                  <CaTab label="Security" />
+                  <CaTab label='Profile' />
+                  <CaTab label='Security' />
                 </CaTabs>
 
               <SwipeableViews
@@ -100,7 +100,7 @@ export class CaUserSettingsComponent extends React.Component<
                   </CaButton>
 
                   {this.state.isChangePasswordFormOpen && (
-                    <div className="ca-user-settings__container-for-form">
+                    <div className='ca-user-settings__container-for-form'>
                       <CaChangePasswordForm
                         user={this.props.user}
                         submit={(data: FieldsToChangePassword) =>

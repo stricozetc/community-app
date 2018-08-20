@@ -184,7 +184,6 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
     public handleSubmit(event: any): void {
         event.preventDefault();
 
-
         let game: GameModel = {
           userId: this.props.userId,
           appName: this.state.appName,
@@ -201,7 +200,6 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
 
           approve: true
         };
-
 
         if (this.props.config === SettingFormType.editGame) {
             game = Object.assign(game, {id: this.props.id});

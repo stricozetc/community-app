@@ -1,7 +1,7 @@
 import { controller, httpGet } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import Promise = require("bluebird");
+import Promise = require('bluebird');
 
 import {
   GamesRepository
