@@ -8,7 +8,6 @@ import { logicErr } from '../../../errors/logicErr';
 import { LoggerService } from '../logger/logger.service';
 import { MyGameInterface } from '../../../models/games';
 
-
 @injectable()
 export class AppTokenRepository {
 

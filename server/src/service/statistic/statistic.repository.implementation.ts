@@ -94,7 +94,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 };
 
                 return accumulator.concat(result);
-              }, []);
+              },                               []);
             }
             return recentGames;
           })
@@ -267,4 +267,3 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       });
   }
 }
-

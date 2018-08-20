@@ -6,7 +6,6 @@ import { AppTokenService } from './../service/app-token';
 import { validateChangePassword } from './../validation/change-password';
 import { UserSettingsRepository } from '../service/user-settings/user-settings';
 
-
 @controller('/api/v1')
 export class UserSettingsController {
   public constructor(
@@ -27,14 +26,14 @@ export class UserSettingsController {
 
     return this.userSettingsRepository
       .changePassword(request.body)
-      .then(res => {
+      .then((res) => {
         if (res.result) {
           return response.status(200).json(res.result);
         } else {
           return response.status(400).json(res.errors);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         return response.status(400).json(err);
       });
   }

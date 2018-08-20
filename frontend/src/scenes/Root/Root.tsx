@@ -161,11 +161,11 @@ export class RootComponent extends React.Component<RootProps> {
               ]}
             >
               <CaLogo
-                text="battlenet"
+                text='battlenet'
                 onClick={this.redToMainPage}
               />
 
-              <div className="ca-navbar__menu-container">
+              <div className='ca-navbar__menu-container'>
                 {
                   isAuthorized
                   ? <AppMenu appMenuItems={appMenuItems} >
@@ -193,11 +193,11 @@ export class RootComponent extends React.Component<RootProps> {
   public render(): JSX.Element {
     return (
       <Router>
-        <div className="App">
+        <div className='App'>
           <Switch>
             <Route
               exact={true}
-              path="/"
+              path='/'
               render={props => (
                 <Landing {...props}>
                   {this.getNavbar(this.props.status)}
@@ -207,7 +207,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/register"
+              path='/register'
               render={props => (
                 <RegistrationForm {...props}>
                   {this.getNavbar(this.props.status)}
@@ -217,7 +217,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/login"
+              path='/login'
               render={props => (
                 <LoginForm {...props}>
                   {this.getNavbar(this.props.status)}
@@ -226,13 +226,13 @@ export class RootComponent extends React.Component<RootProps> {
             />
             <Route
               exact={true}
-              path="/homepage"
-              render={props => <Redirect to="/battles" />}
+              path='/homepage'
+              render={props => <Redirect to='/battles' />}
             />
 
             <Route
               exact={true}
-              path="/statistics"
+              path='/statistics'
               render={props => (
                 <CaStatisticPage {...props}>
                   {this.getNavbar(this.props.status)}
@@ -242,7 +242,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/battles"
+              path='/battles'
               render={props => (
                 <CaBattles {...props}>
                   {this.getNavbar(this.props.status)}
@@ -252,7 +252,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/battles/:id"
+              path='/battles/:id'
               render={props => (
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
@@ -262,7 +262,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/my-games"
+              path='/my-games'
               render={props => (
                 <CaMyGames {...props}>
                   {this.getNavbar(this.props.status)}
@@ -272,7 +272,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/my-games/add-game"
+              path='/my-games/add-game'
               render={props => (
                 <CaAddGame {...props}>
                   {this.getNavbar(this.props.status)}
@@ -282,7 +282,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path="/my-games/edit-game/:idOfTheGame"
+              path='/my-games/edit-game/:idOfTheGame'
               render={props => (
                 <CaEditGame {...props}>
                   {this.getNavbar(this.props.status)}
@@ -291,7 +291,7 @@ export class RootComponent extends React.Component<RootProps> {
             />
             <Route
               exact={true}
-              path="/settings"
+              path='/settings'
               render={props => (
                 <CaUserSettings {...props}>
                   {this.getNavbar(this.props.status)}
@@ -299,7 +299,7 @@ export class RootComponent extends React.Component<RootProps> {
               )}
             />
             <Route
-              path="/*"
+              path='/*'
               render={() => (
                 <PageNotFound>{this.getNavbar(this.props.status)}</PageNotFound>
               )}

@@ -7,7 +7,6 @@ export interface RecentGameFromServer {
   result: boolean;
 }
 
-
 export interface PopularGamesFromServer {
   name: string;
   playedTime: number;

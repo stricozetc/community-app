@@ -74,7 +74,7 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
             );
 
             game.save().then(() => resolve(game));
-        })
+        });
 
     }
 

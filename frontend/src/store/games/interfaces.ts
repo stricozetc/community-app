@@ -1,4 +1,4 @@
-import { LoadStatus, GameModel } from 'models';
+import { GameModel, LoadStatus } from 'models';
 
 export interface GamesState {
   games: GameModel[];

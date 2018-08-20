@@ -1,4 +1,4 @@
-import { withStyles, IconButton } from '@material-ui/core';
+import { IconButton, withStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -6,13 +6,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
 import * as React from 'react';
 import * as CopyToClipboard from 'react-copy-to-clipboard';
+import { I18n } from 'react-i18next';
 
 import { CaCopy } from '../CaCopy/CaCopy';
 
 import { CaDialogInfoProps } from './CaDialogInfo.model';
 import './CaDialogInfo.scss';
 import { styles } from './CaDialogInfo.styles';
-import { I18n } from 'react-i18next';
 
 export const CaDialogInfo = withStyles(styles)((props: CaDialogInfoProps) => {
 

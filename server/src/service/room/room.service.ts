@@ -19,7 +19,9 @@ export class RoomService {
   private rooms: Room[] = [];
   private games: any[] = [];
 
-  constructor() {}
+  constructor() {
+    //
+  }
 
   public getRooms(): Room[] {
     return this.rooms;
