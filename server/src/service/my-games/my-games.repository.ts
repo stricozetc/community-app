@@ -1,11 +1,11 @@
-import { MyGameInterface } from '../../../models/games';
+import { Game } from '../../../models/games';
 
 import Promise = require("bluebird");
 
 export abstract class MyGamesRepository {
 
-    public abstract deleteGame(gameThaNeedToDelete: MyGameInterface): Promise<MyGameInterface[]>;
-    public abstract addGame(newGame: MyGameInterface): Promise<MyGameInterface>;
-    public abstract editGame(data: MyGameInterface): Promise<MyGameInterface[]>;
-    public abstract getGames(userId: number):  Promise<MyGameInterface[]>;
+    public abstract deleteGame(gameThaNeedToDelete: Game): Promise<Game[]>;
+    public abstract addGame(newGame: Game): Promise<Game>;
+    public abstract editGame(data: Game): Promise<Game[]>;
+    public abstract getGames(userId: number):  Promise<Game[]>;
 }
