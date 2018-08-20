@@ -2,9 +2,9 @@ import * as Validator from 'validator';
 import { isEmpty } from './is-empty';
 import { logicErr } from './../../errors/logicErr';
 import { ErrorBlock } from '../../models/error';
-import { MyGameInterface } from '../../models/games';
+import { Game } from '../../models/games';
 
-export function validateAppDataInput(data: MyGameInterface): { errors: ErrorBlock[], isValid: boolean } {
+export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isValid: boolean } {
   const errors: ErrorBlock[] = [];
 
   data.appName = !isEmpty(data.appName) ? data.appName : '';

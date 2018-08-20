@@ -5,7 +5,7 @@ import { TimerService } from './../timer';
 import { RoomStatus, Room } from './models';
 import { RoomInfo } from '../../typing/room-info';
 import { PlayersBindService } from '../players-bind';
-import { MyGameInterface } from '../../../models/games';
+import { Game } from '../../../models/games';
 import { GamesRepository } from '../games/games.repository';
 
 @injectable()
@@ -34,6 +34,7 @@ export class RoomService {
   public createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
     return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index])
       .then((roomToken: string) => {
+
         let isCreated = false;
 
         if (roomToken) {
@@ -63,7 +64,7 @@ export class RoomService {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
-    this.games = await this.gamesRepository.getGames();
+    this.games = await this.gamesRepository.getGames().map((game: any) => game.dataValues);
 
     const room: Room | undefined = this.rooms.find((r) => r.id === index);
     let operation$ = Promise.resolve(true);
@@ -76,7 +77,6 @@ export class RoomService {
       this.loggerService.infoLog(`Add player to ${this.games[index].appName} room`);
       this.loggerService.infoLog(`Current count of players is ${room.players.length}`);
     } else {
-
       operation$ = this.createNewRoom(index, client, playerToken).then((result) => {
 
         const newRoom = this.rooms.find((r) => r.id === index);
@@ -191,7 +191,7 @@ export class RoomService {
     }
   }
 
-  private startGame(game: MyGameInterface, room: Room, index: number): void {
+  private startGame(game: Game, room: Room, index: number): void {
 
     this.playersBindService.sendPlayerBind(game, room)
       .then(() => {

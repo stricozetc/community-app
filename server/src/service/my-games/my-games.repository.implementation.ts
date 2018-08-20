@@ -1,14 +1,14 @@
 import Promise = require('bluebird');
 import { injectable } from 'inversify';
 
-import { MyGameInterface, GamesModel } from '../../../models/games';
+import { Game, GamesModel } from '../../../models/games';
 
 import { MyGamesRepository } from './my-games.repository';
 
 @injectable()
 export class MyGamesRepositoryImplementation implements MyGamesRepository {
-    public deleteGame(gameThatNeedToDelete: MyGameInterface): Promise<MyGameInterface[]> {
-        return new Promise<MyGameInterface[]>((resolve, reject) => {
+    public deleteGame(gameThatNeedToDelete: Game): Promise<Game[]> {
+        return new Promise<Game[]>((resolve, reject) => {
             GamesModel.destroy({
                 where: {
                     id: gameThatNeedToDelete.id
@@ -26,7 +26,7 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
 
     }
 
-    public editGame(game: MyGameInterface): Promise<MyGameInterface[]> {
+    public editGame(game: Game): Promise<Game[]> {
         return GamesModel.upsert({
             id: +game.id,
             userId: +game.userId,
@@ -52,8 +52,8 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
 
     }
 
-    public addGame(data: MyGameInterface): Promise<MyGameInterface> {
-        return new Promise<MyGameInterface>((resolve, reject) => {
+    public addGame(data: Game): Promise<Game> {
+        return new Promise<Game>((resolve, reject) => {
             const game = GamesModel.build(
                 {
                     userId: +data.userId,
@@ -78,7 +78,7 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
 
     }
 
-    public getGames(userId: number): Promise<MyGameInterface[]> {
+    public getGames(userId: number): Promise<Game[]> {
         return GamesModel.findAll({
             where: {
                 userId

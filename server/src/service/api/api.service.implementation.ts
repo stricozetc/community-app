@@ -3,7 +3,7 @@ import { decorate, inject, injectable } from 'inversify';
 
 import { ApiService } from './api.service';
 import { AppTokenService } from '../app-token';
-import { MyGameInterface } from '../../../models/games';
+import { Game } from '../../../models/games';
 
 decorate(injectable(), ApiService);
 
@@ -18,13 +18,13 @@ export class ApiServiceImplementation extends ApiService {
         return axios.get(requestUrl);
     }
 
-    public async startNewRoom(requestUrl: string, data: any, game: MyGameInterface): Promise<string> {
+    public async startNewRoom(requestUrl: string, data: any, game: Game): Promise<string> {
         const app = await this.tokenService.getByAppName(game.appName);
 
         if (app) {
             return axios.post<boolean>(requestUrl, data, {
                 headers: {
-                    Authorization: 'Bearer ' + app.token
+                    Authorization: 'Bearer ' + app.appToken
                 }
             }).then((response: AxiosResponse) => {
                 return response.data;

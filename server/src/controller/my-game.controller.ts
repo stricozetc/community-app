@@ -7,7 +7,7 @@ import {
     MyGamesRepository
 } from './../service/my-games';
 
-import { MyGameInterface } from './../../models/games';
+import { Game } from './../../models/games';
 import { validateAppDataInput } from '../validation/register-app';
 
 @controller('/api/v1/my-games')
@@ -20,10 +20,10 @@ export class MyGameController {
 
     @httpPost('/delete-game')
     public async deleteGame(request: Request, response: Response): Promise<void | Response> {
-        const gameThatNeedToDelete: MyGameInterface = request.body;
+        const gameThatNeedToDelete: Game = request.body;
 
         return this.myGameRepository.deleteGame(gameThatNeedToDelete)
-            .then((games: MyGameInterface[]) => {
+            .then((games: Game[]) => {
                 return response.status(200).send(games);
             }).catch((err) => {
                 return response.sendStatus(500);
@@ -34,10 +34,10 @@ export class MyGameController {
     @httpPost('/edit-game')
     public async editGame(request: Request, response: Response): Promise<void | Response> {
 
-        const data: MyGameInterface = request.body;
+        const data: Game = request.body;
 
         return this.myGameRepository.editGame(data)
-            .then((games: MyGameInterface[]) => {
+            .then((games: Game[]) => {
                 return response.status(200).send(games);
             }).catch((err) => {
                 return response.sendStatus(500);
@@ -46,7 +46,7 @@ export class MyGameController {
 
     @httpPost('/add-game')
     public async addGame(request: Request, response: Response): Promise<void | Response> {
-        let newGame: MyGameInterface = request.body;
+        let newGame: Game = request.body;
 
         const appToken = await this.tokenService.create(newGame);
         newGame = Object.assign({}, newGame, {appToken});
@@ -58,7 +58,7 @@ export class MyGameController {
         }
 
         return this.myGameRepository.addGame(newGame)
-            .then((addedGame: MyGameInterface) => {
+            .then((addedGame: Game) => {
                 return response.status(200).json(addedGame);
             }).catch((err) => {
                 return response.status(400).json(err);
@@ -71,7 +71,7 @@ export class MyGameController {
         const userId: number = request.query.userId;
 
         return this.myGameRepository.getGames(userId)
-            .then((games: MyGameInterface[]) => {
+            .then((games: Game[]) => {
                 response.status(200).json(games);
             }).catch((err) => {
                 return response.status(400).json(err);
