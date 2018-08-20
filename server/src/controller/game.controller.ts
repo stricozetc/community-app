@@ -11,13 +11,13 @@ import { MyGameInterface } from '../../models/games';
 @controller('/api/games')
 export class MockController {
 
-  public constructor(@inject(GamesRepository) private mocksRepository: GamesRepository) {
+  public constructor(@inject(GamesRepository) private gameRepository: GamesRepository) {
   }
 
   @httpGet('/get-games')
     public getGames(request: Request, response: Response): Promise<void | Response> {
 
-      return this.mocksRepository.getGames()
+      return this.gameRepository.getGames()
         .then((games: MyGameInterface[]) => {
           response.status(200).json(games);
         }).catch((err) => {

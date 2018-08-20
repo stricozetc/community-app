@@ -1,20 +1,16 @@
 import * as uuid from 'uuid/v4';
 import { injectable, inject } from 'inversify';
-import { AppData } from '../../../Interfaces/AppData';
-import { AppTokenModel } from '../../../models/appToken';
-import { AppToken } from '../../../Interfaces/AppToken';
 import { technicalErr } from '../../../errors/technicalErr';
 import { logicErr } from '../../../errors/logicErr';
 import { LoggerService } from '../logger/logger.service';
-import { MyGameInterface } from '../../../models/games';
-
+import { MyGameInterface, GamesModel } from '../../../models/games';
 
 @injectable()
 export class AppTokenRepository {
 
     constructor(
         @inject(LoggerService) private loggerService: LoggerService,
-    ) { }
+    ) {}
 
     public async create(app: MyGameInterface): Promise<string> {
         const token = await this.getByName(app.appName);
@@ -25,14 +21,8 @@ export class AppTokenRepository {
 
         try {
             const newToken = uuid();
-            const isUpsert: boolean = await AppTokenModel.upsert({
-                token: newToken,
-                appName: app.appName,
-                createAt: Date.now(),
-                updatedAt: Date.now()
-            });
 
-            if (isUpsert) {
+            if (newToken) {
                 return newToken;
             } else {
                 throw technicalErr.applicationTokenIsNotUpsertedInDb;
@@ -47,9 +37,9 @@ export class AppTokenRepository {
         }
     }
 
-    public async getByName(gameName: string): Promise<AppToken> {
+    public async getByName(gameName: string): Promise<MyGameInterface> {
         try {
-            return await AppTokenModel.findOne({
+            return await GamesModel.findOne({
                 where: { appName: gameName }
             });
         } catch (error) {

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import { AppTokenService } from '../app-token';
 import { LoggerService } from '../logger';
-import { AppToken } from '../../../Interfaces/AppToken';
 import { MyGameInterface } from '../../../models/games';
 
 @injectable()
@@ -43,7 +42,7 @@ export class PlayersBindService {
   }
 
   public async sendPlayerBind(game: MyGameInterface, room: Room): Promise<boolean> {
-    let app: AppToken;
+    let app: MyGameInterface;
     try {
       app = await this.tokenService.getByAppName(game.appName);
     } catch (error) {
@@ -55,7 +54,7 @@ export class PlayersBindService {
 
     return axios.post<any>(`${game.requestUrl}/api/set-user-bind`, sendingPlayersBind, {
       headers: {
-        Authorization: 'Bearer ' + app.token
+        Authorization: 'Bearer ' + app.appToken
       }
     }).then((response) => {
       return response.status === 200;

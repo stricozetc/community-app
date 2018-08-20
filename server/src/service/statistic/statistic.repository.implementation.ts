@@ -1,17 +1,16 @@
 import { StatisticRepository } from './statistic.repository';
 import { injectable } from 'inversify';
-import { Game } from '../../typing/game';
 
 import {
   StatisticModel,
-  AppTokenModel,
   UserModel,
   Statistic,
-  TokenFromDb,
   RecentGameFromServer,
   PopularGamesFromServer,
   BestUsersFromServer,
-  ErrorBlock
+  ErrorBlock,
+  GamesModel,
+  MyGameInterface
 } from './../../../models';
 
 import { GameData } from './../../controller/statistic.controller';
@@ -25,7 +24,6 @@ import { logicErr } from '../../../errors/logicErr';
 import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger/logger.service';
 import { ResultStatus } from '../../../models/statistic';
-
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
   public constructor(
@@ -36,10 +34,10 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   public setGameResult(data: GameData[], appToken: string): Promise<boolean | ErrorBlock> {
     const statistic = data;
 
-    return AppTokenModel.findOne({
-      where: { token: appToken }
-    }).then((tokenRow: TokenFromDb) => {
-      const token = tokenRow && tokenRow.token;
+    return GamesModel.findOne({
+      where: { appToken }
+    }).then((tokenRow: MyGameInterface) => {
+      const token = tokenRow && tokenRow.appToken;
       if (token) {
         let promises: Array<Promise<boolean>> = [];
         // statistic = JSON.parse(statistic); // Uncomment to test with PostMan
@@ -76,7 +74,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         }
 
         const promises = recentGames.map((game) => {
-          return AppTokenModel.find({ where: { token: game.appToken } }).then(
+          return GamesModel.find({ where: { appToken: game.appToken } }).then(
             (row) => row.appName
           );
         });
@@ -116,7 +114,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
   public getMostPopularGames(): Promise<PopularGamesFromServer[]> {
     return new Promise<PopularGamesFromServer[]>(
       (resolvePopularGames) => {
-        AppTokenModel.findAll({ attributes: ['token', 'appName'] })
+        GamesModel.findAll({ attributes: ['appToken', 'appName'] })
           .then((gamesAndTokens: Array<{ token: string; appName: string }>) => {
             const tokens = gamesAndTokens.map((row) => row.token);
             const promises = tokens.map((currentToken) => {

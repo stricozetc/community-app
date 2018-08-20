@@ -24,7 +24,7 @@ export class ApiServiceImplementation extends ApiService {
         if (app) {
             return axios.post<boolean>(requestUrl, data, {
                 headers: {
-                    Authorization: 'Bearer ' + app.token
+                    Authorization: 'Bearer ' + app.appToken
                 }
             }).then((response: AxiosResponse) => {
                 return response.data;

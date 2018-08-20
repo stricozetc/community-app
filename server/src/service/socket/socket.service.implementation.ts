@@ -4,20 +4,27 @@ import * as SocketIO from 'socket.io';
 import { inject } from '../services-registration';
 import { SocketService } from './socket.service';
 import { LoggerService } from '../logger';
-import { Game } from '../../typing/game';
+// import { Game } from '../../typing/game';
 import { RoomService } from '../room';
 import { RoomInfo } from '../../typing/room-info';
+import { MyGameInterface, GamesModel } from '../../../models/games';
+import { GamesRepository } from '../games/games.repository';
+
 
 @injectable()
 export class SocketServiceImplementation extends SocketService {
-  private games: Game[] = require('../../config/games.json').games;
+  // private games: MyGameInterface[] = require('../../config/games.json').games;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(RoomService) private roomService: RoomService;
-
+  @inject(GamesRepository) private gamesRepository: GamesRepository;
+  private games: MyGameInterface[];
   private clients: SocketIO.Socket[] = [];
   private playersSocketBind: Array<{ playerToken: string, playerSocketId: string }> = [];
 
-  public setSocket(socketIO: SocketIO.Server): void {
+  public async setSocket(socketIO: SocketIO.Server): Promise<void | Response> {
+
+    this.games = await this.gamesRepository.getGames().map((game: any) => game.dataValues);
+
     socketIO.on('connection', (client: SocketIO.Socket) => {
       this.loggerService.infoLog('Player connection opened');
       this.clients.push(client);
@@ -52,9 +59,9 @@ export class SocketServiceImplementation extends SocketService {
         this.loggerService.infoLog(`isAdded -> ${isAdded}`);
 
         if (isAdded) {
-          this.loggerService.infoLog(`Player registration on ${this.games[index].name}`);
+          this.loggerService.infoLog(`Player registration on ${this.games[index].appName}`);
 
-          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
+          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
           this.notifyAllClients(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
 
           client.emit(this.games[index].notifyCountdown, room.distance);
@@ -72,11 +79,11 @@ export class SocketServiceImplementation extends SocketService {
         this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
 
         if (isRemoved) {
-          this.loggerService.infoLog(`Player leave from ${this.games[index].name}`);
+          this.loggerService.infoLog(`Player leave from ${this.games[index].appName}`);
 
-          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].name}`);
+          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
           this.notifyAllClients(this.games[index].updateRoomsInfoEventName,
-                                this.mapRoomsToRoomsInfo()
+            this.mapRoomsToRoomsInfo()
           );
         }
 
@@ -96,9 +103,9 @@ export class SocketServiceImplementation extends SocketService {
         this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
 
         if (isRemoved && room) {
-          this.loggerService.infoLog(`Sent count wait players in ${this.games[room.id].name}`);
+          this.loggerService.infoLog(`Sent count wait players in ${this.games[room.id].appName}`);
           this.notifyAllClients(this.games[room.id].updateRoomsInfoEventName,
-                                this.mapRoomsToRoomsInfo()
+            this.mapRoomsToRoomsInfo()
           );
         }
       })

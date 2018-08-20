@@ -31,6 +31,7 @@ export class StatisticController {
 
     for (let index = 0; index < data.length; index++) {
       const { errors, isValid } = validateGameDataInput(data[index]);
+
       if (!isValid) {
         return response.status(400).json(errors);
       }
