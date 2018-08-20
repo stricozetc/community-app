@@ -10,12 +10,9 @@ import { logicErr } from '../../../errors/logicErr';
 import { ErrorBlock } from './../../../models/error';
 
 @injectable()
-export class UserSettingsRepositoryImplementation
-  implements UserSettingsRepository {
-  public async changePassword(
-    fields: FieldsToChangePassword
-  ): Promise<{ result: boolean; errors?: ErrorBlock[] }> {
+export class UserSettingsRepositoryImplementation implements UserSettingsRepository {
 
+  public async changePassword(fields: FieldsToChangePassword): Promise<{ result: boolean; errors?: ErrorBlock[] }> {
     try {
       const { oldPassword, newPassword, userId } = fields;
       const errors: ErrorBlock[] = [];
@@ -62,6 +59,37 @@ export class UserSettingsRepositoryImplementation
       }
     } catch (error) {
       throw new Error(error.msg ? error.msg : error.message);
+    }
+  }
+
+  public async setNewPassword(userEmail: string, newPassword: string): Promise<boolean> {
+    try {
+      let salt: string = '';
+      let newHashPassword = '';
+
+      try {
+        salt = await bcrypt.genSalt(10);
+      } catch (error) {
+        console.log(error);
+        throw technicalErr.canNotCreateHash;
+      }
+
+      try {
+        newHashPassword = await bcrypt.hash(newPassword, salt);
+      } catch (error) {
+        console.log(error);
+        throw technicalErr.canNotCreateHash;
+      }
+
+      await UserModel.update({ password: newHashPassword }, { where: { email: userEmail } });
+      return true;
+    } catch (error) {
+      if (error.code) {
+        throw error;
+      } else {
+        console.log(error);
+        throw technicalErr.databaseCrash;
+      }
     }
   }
 }

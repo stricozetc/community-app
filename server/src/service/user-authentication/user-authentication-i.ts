@@ -15,7 +15,6 @@ import { keys } from '../../config/keys';
 import { UserAuthenticationRepository } from './user-authentication';
 import { User } from '../../../Interfaces/User';
 
-import { ErrorBlock } from '../../../models/error';
 import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger';
 
@@ -152,20 +151,11 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             if (user) {
                 return true;
             } else {
-                throw false;
+                throw logicErr.notFoundEmail;
             }
         } catch (error) {
-            throw new Error(error.message);
+            console.log(error);
+            throw technicalErr.databaseCrash;
         }
     }
-
-    public async setNewPassword(userEmail: string, newPassword: string): Promise<boolean> {
-        try {
-            const salt = await bcrypt.genSalt(10);
-            const newHashPassword = await bcrypt.hash(newPassword, salt);
-            await UserModel.update({ password: newHashPassword }, { where: { email: userEmail } });
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }}
+}

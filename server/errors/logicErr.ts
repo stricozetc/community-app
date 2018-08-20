@@ -91,6 +91,11 @@ export const logicErr = {
     msg: 'Can not found recent games'
   },
 
+  notFoundEmail: {
+    code: errCodes.notFoundEmail,
+    msg: 'Can not found email'
+  },
+
   userIsAlreadyRegistered: {
     code: errCodes.userIsAlreadyRegistered,
     msg: 'User is already registered'

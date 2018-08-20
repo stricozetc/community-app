@@ -21,6 +21,7 @@ export enum errCodes {
   notFoundUserRole = 1015,
   notFoundAppToken = 1016,
   notFoundRecentGames = 1017,
+  notFoundEmail = 1017,
 
   userIsAlreadyRegistered = 1018,
   appNameIsAlreadyRegistered = 1019,
@@ -72,4 +73,6 @@ export enum technicalErrCodes {
   applicationTokenIsNotUpsertedInDb = 2005,
   userRoleIsNotSaveInDb = 2006,
   userLanguageIsNotUpdatedInDb = 2007,
+
+  mailNotSend = 2008,
 }

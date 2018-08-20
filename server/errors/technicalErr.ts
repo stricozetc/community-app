@@ -40,4 +40,9 @@ export const technicalErr = {
         code: technicalErrCodes.userLanguageIsNotUpdatedInDb,
         msg: 'User language can not be updated in DB',
     },
+
+    mailNotSend: {
+        code: technicalErrCodes.mailNotSend,
+        msg: 'Mail not send',
+    },
 };

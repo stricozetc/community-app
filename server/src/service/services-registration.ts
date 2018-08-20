@@ -40,4 +40,5 @@ CONTAINER.bind<StatisticService>(StatisticService).to(StatisticService);
 CONTAINER.bind<MyGamesRepository>(MyGamesRepository).to(MyGamesRepositoryImplementation);
 CONTAINER.bind<UserSettingsRepository>(UserSettingsRepository).to(UserSettingsRepositoryImplementation);
 CONTAINER.bind<MailerService>(MailerService).to(MailerService);
+
 export const inject = getDecorators(CONTAINER).lazyInject;
