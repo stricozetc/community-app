@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
+
 
 import {
   AuthStatus,  
@@ -226,7 +228,7 @@ const mapStateToProps = (state: AppState) => ({
   isSnackbarOpen: state.snackbarUi.isOpen
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))  
 });
 

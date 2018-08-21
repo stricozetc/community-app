@@ -10,5 +10,8 @@
   },
   "dependencies": {
     "concurrently": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/history": "^4.7.0"
   }
 }

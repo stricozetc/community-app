@@ -82,6 +82,10 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
   }
 
+  public closeSnackbar = () => {
+    this.props.closeSnackbar();
+  }
+
   public logoutUser = (): void => {
     this.props.logoutUser();
     this.props.cleanStatistic();
@@ -189,7 +193,7 @@ export class RootComponent extends React.Component<RootProps> {
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
-                handleClose={() => this.closeSnackbar()}
+                handleClose={this.closeSnackbar}
                 type={this.props.snackbarType}
                 transitionDirection={transitionDirection.down}
                 message={

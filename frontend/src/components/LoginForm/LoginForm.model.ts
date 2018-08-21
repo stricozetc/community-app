@@ -1,4 +1,5 @@
 import { AuthStatus, UserFieldsToLogin } from 'models';
+import { History } from 'history';
 
 export interface LoginFormState {
   email: string;
@@ -27,9 +28,9 @@ export const initLoginFormState: LoginFormState = {
   emailErrors: [],
   passwordErrors: [],
 };
-export interface LoginFormProps {
+export interface LoginFormProps { 
   status: AuthStatus;
-  history: any;  
+  history: History;
 
-  loginUser(user: UserFieldsToLogin): void;  
+  loginUser(user: UserFieldsToLogin): void;
 }
