@@ -4,14 +4,14 @@ import { action } from '../decorators';
 
 export enum StatisticTypes {
   InitBestUsers = '[statistic] Init Best Users',
-  LoadBestUsersCompleted = '[statistic] Load Best Users Completed',
-  LoadBestUsersError = '[statistics] Load Best Users Completed',
+  LoadBestUsersSuccess = '[statistic] Load Best Users Success',
+  LoadBestUsersError = '[statistics] Load Best Users Error',
   InitMostPopularGames = '[statistic] Init Most Popular Games',
-  LoadMostPopularGamesCompleted = '[statistic] Load Most Popular Games Completed',
-  LoadMostPopularGamesError = '[statistics] Load Most Popular Games Failed',
+  LoadMostPopularGamesSuccess = '[statistic] Load Most Popular Games Success',
+  LoadMostPopularGamesError = '[statistics] Load Most Popular Games Error',
   InitRecentGames = '[statistic] Init Recent Games',
-  LoadRecentGamesCompleted = '[statistic] Load Recent Games Completed',
-  LoadRecentGamesError = '[statistic] Load Recent Games Failed',
+  LoadRecentGamesSuccess = '[statistic] Load Recent Games Success',
+  LoadRecentGamesError = '[statistic] Load Recent Games Error',
   CleanStatistic = '[statistic] Clean Statistic'
 }
 
@@ -22,7 +22,7 @@ export class InitBestUsers {
 
 @action()
 export class LoadBestUsersCompleted {
-  public readonly type = StatisticTypes.LoadBestUsersCompleted;
+  public readonly type = StatisticTypes.LoadBestUsersSuccess;
 
   constructor(public payload: any[]) { }
 }
@@ -41,7 +41,7 @@ export class InitMostPopularGames {
 
 @action()
 export class LoadMostPopularGamesCompleted {
-  public readonly type = StatisticTypes.LoadMostPopularGamesCompleted;
+  public readonly type = StatisticTypes.LoadMostPopularGamesSuccess;
 
   constructor(public payload: any[]) { }
 }
@@ -62,7 +62,7 @@ export class InitRecentGames {
 
 @action()
 export class LoadRecentGamesCompleted {
-  public readonly type = StatisticTypes.LoadRecentGamesCompleted;
+  public readonly type = StatisticTypes.LoadRecentGamesSuccess;
 
   constructor(public payload: any[]) { }
 }
