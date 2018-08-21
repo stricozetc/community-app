@@ -6,9 +6,9 @@ import { UserSettingsState } from './interfaces';
 type State = UserSettingsState;
 
 export const initialState: State = {
-  changePasswordStatus: LoadStatus.Init,
+  changePasswordStatus: LoadStatus.INIT,
   changePasswordErrors: undefined,
-  saveLanguageStatus: LoadStatus.Init,
+  saveLanguageStatus: LoadStatus.INIT,
   saveLanguageErrors: undefined,
   language: getCurrentLanguageFromLocalStorage()
 };

@@ -59,17 +59,17 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
     public render(): JSX.Element {
         const columnDef = [
             { headerName: 'game',
-              field: RowProperty.appName,
-              type: TypeOfColumn.string,
+              field: RowProperty.APP_NAME,
+              type: TypeOfColumn.STRING,
               editAction: (id: number) => history.push(`/my-games/edit-game/${id}`),
               deleteAction: (game: GameModel) => this.handleOpenDialog(game),
               lockAction: (appToken: string) => this.handleOpenPopover(appToken)},
             { headerName: 'createdAt',
-              field: RowProperty.createdAt,
-              type: TypeOfColumn.date},
+              field: RowProperty.CREATED_AT,
+              type: TypeOfColumn.DATE},
             { headerName: 'updatedAt',
-              field: RowProperty.updatedAt,
-              type: TypeOfColumn.date},
+              field: RowProperty.UPDATED_AT,
+              type: TypeOfColumn.DATE},
         ];
 
         const rowData = this.props.games;

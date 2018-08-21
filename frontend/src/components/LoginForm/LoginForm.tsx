@@ -159,9 +159,9 @@ export class LoginFormComponent extends React.Component<
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
                 handleClose={() => this.closeSnackbar()}
-                type={SnackbarType.error}
+                type={SnackbarType.ERROR}
                 //  transitionComponent = {this.transitionUp}
-                transitionDirection={transitionDirection.down}
+                transitionDirection={transitionDirection.DOWN}
                 message={
                   <div>
                     {keys && keys.map((k: string) =>

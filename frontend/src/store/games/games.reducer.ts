@@ -9,20 +9,20 @@ export const gamesReducer = (state = initialState, action: GamesActions) => {
     case GamesTypes.LoadGames: {
       return {
         ...state,
-        gamesStatus: LoadStatus.Fetching
+        gamesStatus: LoadStatus.FETCHING
       };
     }
     case GamesTypes.LoadGamesSuccess: {
       return {
         ...state,
         games: action.payload,
-        gamesStatus: LoadStatus.Success
+        gamesStatus: LoadStatus.SUCCESS
       };
     }
     case GamesTypes.LoadGamesError: {
       return {
         ...state,
-        gamesStatus: LoadStatus.Error
+        gamesStatus: LoadStatus.ERROR
       };
     }
     default:

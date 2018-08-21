@@ -18,7 +18,7 @@ export const CaSnackbar = withStyles(styles)(
         return <Slide {...props} direction={this.props.transitionDirection} />;
       };
 
-      const position: string = type === SnackbarType.info ? classes.positionBottom : classes.positionTop;
+      const position: string = type === SnackbarType.INFO ? classes.positionBottom : classes.positionTop;
 
       return (
         <Snackbar
