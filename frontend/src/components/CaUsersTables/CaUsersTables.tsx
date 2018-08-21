@@ -36,7 +36,7 @@ export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTa
     this.changeContent(StatTab.BEST_USERS);
   }
 
-  public handleRowClick = (item: any) => {
+  public handleRowClick = (item: Row) => {
     switch (this.state.activeTab) {
       case StatTab.THE_MOST_POPULAR_GAMES:
       case StatTab.RECENT_GAMES: {

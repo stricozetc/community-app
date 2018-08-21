@@ -190,7 +190,6 @@ export class RoomService {
   }
 
   private startGame(game: Game, room: Room, index: number): void {
-
     this.playersBindService.sendPlayerBind(game, room)
       .then(() => {
         room.players.forEach((player: SocketIO.Socket) => {
@@ -202,7 +201,7 @@ export class RoomService {
         });
         room.status = RoomStatus.IN_GAME;
       })
-      .catch((error: any) => console.log(error));
+      .catch((error) => this.loggerService.errorLog(error));
   }
 
   private countdown(room: Room, index: number, distance: number): void {
