@@ -4,9 +4,7 @@ import { UserSettingsRepository } from './user-settings';
 
 import { UserModel } from './../../../models/user';
 import { User } from './../../../Interfaces/User';
-import * as bcrypt from 'bcryptjs';
-import * as passport from 'passport';
-import { technicalErr } from '../../../errors/technicalErr';
+import bcrypt from 'bcryptjs';
 import { FieldsToChangePassword } from '../../../models/otherModels';
 import { logicErr } from '../../../errors/logicErr';
 import { ErrorBlock } from './../../../models/error';

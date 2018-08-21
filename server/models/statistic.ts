@@ -1,5 +1,5 @@
 
-import * as Sequelize from 'sequelize';
+import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from './../src/config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
@@ -59,19 +59,19 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
         defaultValue: 2
     }
 
-},                                                                                   {
-    // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
-    // otherwise, the model name will be pluralized
-    freezeTableName: true,
-    // defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
-    tableName: dbConfig.statisticTable,
+}, {
+        // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
+        // otherwise, the model name will be pluralized
+        freezeTableName: true,
+        // defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
+        tableName: dbConfig.statisticTable,
 
-    classMethods: {
-        associate: (models: any) => {
-            // skip associating during working with DB
+        classMethods: {
+            associate: (models: any) => {
+                // skip associating during working with DB
 
-            StatisticModel.belongsTo(models.users, {foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
-            StatisticModel.belongsTo(models.appTokens, {foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE'});
-        }
-    },
-});
+                StatisticModel.belongsTo(models.users, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+                StatisticModel.belongsTo(models.appTokens, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+            }
+        },
+    });

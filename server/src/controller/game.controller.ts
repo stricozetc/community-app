@@ -9,7 +9,7 @@ import {
 import { Game } from '../../models/games';
 
 @controller('/api/games')
-export class MockController {
+export class GameController {
 
   public constructor(@inject(GamesRepository) private gameRepository: GamesRepository) {
   }

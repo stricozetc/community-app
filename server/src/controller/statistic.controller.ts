@@ -1,5 +1,5 @@
 import { controller, httpGet, httpPost } from 'inversify-express-utils';
-import * as passport from 'passport';
+import passport from 'passport';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import Promise = require('bluebird');

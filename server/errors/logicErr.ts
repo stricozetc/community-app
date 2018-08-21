@@ -175,7 +175,7 @@ export const logicErr = {
     code: errCodes.repeatNewPasswordLength,
     msg: 'Password to repeat must be at least 6 characters and not more that 30',
   },
-  /////////////////////////////////////////////////////////////
+
   appNameRequired: {
     code: errCodes.appNameRequired,
     msg: 'User token is required'

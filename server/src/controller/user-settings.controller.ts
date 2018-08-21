@@ -1,7 +1,7 @@
 import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import * as passport from 'passport';
+import passport from 'passport';
 import { AppTokenService } from './../service/app-token';
 import { validateChangePassword } from './../validation/change-password';
 import { UserSettingsRepository } from '../service/user-settings/user-settings';
@@ -11,9 +11,9 @@ export class UserSettingsController {
   public constructor(
     @inject(UserSettingsRepository)
     private userSettingsRepository: UserSettingsRepository
-  ) {}
+  ) { }
 
-  @httpPost('/user-settings/change-password', passport.authenticate('jwt', {session: false}))
+  @httpPost('/user-settings/change-password', passport.authenticate('jwt', { session: false }))
   public postRegister(
     request: Request,
     response: Response

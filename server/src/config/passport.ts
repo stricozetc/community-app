@@ -1,4 +1,4 @@
-import * as jwt from 'passport-jwt';
+import jwt from 'passport-jwt';
 
 const JWTStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
@@ -25,7 +25,7 @@ export let passportConfig = (passport: PassportStatic) => {
                     return done(null, user);
                 }
 
-                return done(null, false, {message: 'User is not found'});
+                return done(null, false, { message: 'User is not found' });
             })
             .catch((err: any) => done(err));
     }));

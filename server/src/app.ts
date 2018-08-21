@@ -2,11 +2,11 @@ import 'reflect-metadata';
 
 import { InversifyExpressServer } from 'inversify-express-utils';
 
-import * as bodyParser from 'body-parser';
-import * as morgan from 'morgan';
-import * as SocketIO from 'socket.io';
-import * as passport from 'passport';
-import * as cors from 'cors';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import SocketIO from 'socket.io';
+import passport from 'passport';
+import cors from 'cors';
 
 import {
     LoggerService,
@@ -24,8 +24,7 @@ import { passportConfig } from './config/passport';
 
 const server = new InversifyExpressServer(CONTAINER);
 
-// tslint:disable-next-line:no-var-requires
-const config = require('./config/app.config.json');
+import config from './config/app.config.json';
 
 server.setConfig((app) => {
     process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));
@@ -59,7 +58,7 @@ db.connect.sync({
         });
     })
     .catch((err) => {
-        console.dir(err);
+        logger.errorLog(err);
     });
 
 const logger: LoggerService = new LoggerServiceImplementation();

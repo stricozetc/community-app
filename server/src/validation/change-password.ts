@@ -1,4 +1,4 @@
-import * as Validator from 'validator';
+import Validator from 'validator';
 import { User } from './../../Interfaces/User';
 import { isEmpty } from './is-empty';
 import {

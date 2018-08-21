@@ -20,9 +20,6 @@ export class ChangePasswordForm extends React.Component<
     super(props);
 
     this.state = initState;
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   public onChange = (event: any) => {
@@ -32,18 +29,6 @@ export class ChangePasswordForm extends React.Component<
     const name = target.name;
 
     this.setState({ [name]: value } as ChangePasswordFormState);
-  }
-
-  public onSubmit(event: any): void {
-    event.preventDefault();
-
-    const fields: any = {
-      oldPassword: this.state.oldPassword,
-      newPassword: this.state.newPassword,
-      repeatNewPassword: this.state.repeatNewPassword
-    };
-
-    console.log(fields);
   }
 
   public checkValidation(): void {
@@ -153,7 +138,9 @@ export class ChangePasswordForm extends React.Component<
     this.checkValidation();
   }
 
-  public handleSubmit = () => {
+  public handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const fields: FieldsToChangePassword = {
       userId: this.props.user && this.props.user.id,
       oldPassword: this.state.oldPassword,
@@ -171,7 +158,7 @@ export class ChangePasswordForm extends React.Component<
           <div className='ca-change-password-form'>
             {this.props.children}
             <form
-              onSubmit={this.onSubmit}
+              onSubmit={this.handleSubmit}
               className='ca-change-password-form__container'
             >
               <FormGroup>
@@ -267,7 +254,6 @@ export class ChangePasswordForm extends React.Component<
               </FormGroup>
 
               <CaButton
-                onClick={this.handleSubmit}
                 color='primary'
                 type='submit'
                 className='ca-change-password-form__login-btn'
