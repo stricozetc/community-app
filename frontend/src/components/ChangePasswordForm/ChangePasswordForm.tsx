@@ -9,10 +9,10 @@ import {
   ChangePasswordFormProps,
   ChangePasswordFormState,
   initState
-} from './CaChangePasswordForm.model';
-import './CaChangePasswordForm.scss';
+} from './ChangePasswordForm.model';
+import './ChangePasswordForm.scss';
 
-export class CaChangePasswordForm extends React.Component<
+export class ChangePasswordForm extends React.Component<
   ChangePasswordFormProps,
   ChangePasswordFormState
 > {

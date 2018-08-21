@@ -1,6 +1,5 @@
 import { Typography } from '@material-ui/core';
-import { CaButton, CaTab, CaTabs } from 'components';
-import { CaChangePasswordForm } from 'components/CaChangePasswordForm';
+import { CaButton, CaTab, CaTabs, ChangePasswordForm } from 'components';
 import { AuthStatus } from 'models';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
@@ -101,7 +100,7 @@ export class CaUserSettingsComponent extends React.Component<
 
                   {this.state.isChangePasswordFormOpen && (
                     <div className='ca-user-settings__container-for-form'>
-                      <CaChangePasswordForm
+                      <ChangePasswordForm
                         user={this.props.user}
                         submit={(data: FieldsToChangePassword) =>
                           this.handleSubmit(data)
