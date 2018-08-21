@@ -58,7 +58,7 @@ db.connect.sync({
         });
     })
     .catch((err) => {
-        console.dir(err);
+        logger.errorLog(err);
     });
 
 const logger: LoggerService = new LoggerServiceImplementation();
