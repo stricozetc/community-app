@@ -5,13 +5,13 @@ import { action } from '../decorators';
 export enum StatisticTypes {
   InitBestUsers = '[statistic] Init Best Users',
   LoadBestUsersCompleted = '[statistic] Load Best Users Completed',
-  LoadBestUsersFailed = '[statistics] Load Best Users Completed',
+  LoadBestUsersError = '[statistics] Load Best Users Completed',
   InitMostPopularGames = '[statistic] Init Most Popular Games',
   LoadMostPopularGamesCompleted = '[statistic] Load Most Popular Games Completed',
-  LoadMostPopularGamesFailed = '[statistics] Load Most Popular Games Failed',
+  LoadMostPopularGamesError = '[statistics] Load Most Popular Games Failed',
   InitRecentGames = '[statistic] Init Recent Games',
   LoadRecentGamesCompleted = '[statistic] Load Recent Games Completed',
-  LoadRecentGamesFailed = '[statistic] Load Recent Games Failed',
+  LoadRecentGamesError = '[statistic] Load Recent Games Failed',
   CleanStatistic = '[statistic] Clean Statistic'
 }
 
@@ -28,8 +28,8 @@ export class LoadBestUsersCompleted {
 }
 
 @action()
-export class LoadBestUsersFailed {
-  public readonly type = StatisticTypes.LoadBestUsersFailed;
+export class LoadBestUsersError {
+  public readonly type = StatisticTypes.LoadBestUsersError;
 
   constructor(public err: ErrorsFromServer) { }
 }
@@ -47,8 +47,8 @@ export class LoadMostPopularGamesCompleted {
 }
 
 @action()
-export class LoadMostPopularGamesFailed {
-  public readonly type = StatisticTypes.LoadMostPopularGamesFailed;
+export class LoadMostPopularGamesError {
+  public readonly type = StatisticTypes.LoadMostPopularGamesError;
 
   constructor(public err: ErrorsFromServer) { }
 }
@@ -68,8 +68,8 @@ export class LoadRecentGamesCompleted {
 }
 
 @action()
-export class LoadRecentGamesFailed {
-  public readonly type = StatisticTypes.LoadRecentGamesFailed;
+export class LoadRecentGamesError {
+  public readonly type = StatisticTypes.LoadRecentGamesError;
 
   constructor(public err: ErrorsFromServer) { }
 }
@@ -82,11 +82,11 @@ export class CleanStatistic {
 export type StatisticAction =
   | InitBestUsers
   | LoadBestUsersCompleted
-  | LoadBestUsersFailed
+  | LoadBestUsersError
   | InitMostPopularGames
   | LoadMostPopularGamesCompleted
-  | LoadMostPopularGamesFailed
+  | LoadMostPopularGamesError
   | InitRecentGames
   | LoadRecentGamesCompleted
-  | LoadRecentGamesFailed
+  | LoadRecentGamesError
   | CleanStatistic;

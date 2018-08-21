@@ -26,7 +26,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadBestUsersFailed: {
+    case StatisticTypes.LoadBestUsersError: {
       return {
         ...state,
         bestUsersStatus: LoadStatus.ERROR
@@ -49,7 +49,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadMostPopularGamesFailed: {
+    case StatisticTypes.LoadMostPopularGamesError: {
       return {
         ...state,
         mostPopularGamesStatus: LoadStatus.ERROR
@@ -72,7 +72,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadRecentGamesFailed: {
+    case StatisticTypes.LoadRecentGamesError: {
       return {
         ...state,
         recentGamesStatus: LoadStatus.ERROR
