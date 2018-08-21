@@ -17,12 +17,12 @@ import { I18n } from 'react-i18next';
 
 import { ChartContainer } from '../ChartContainer';
 
-import { CaUsersTablesProps, CaUsersTablesState } from './CaUsersTables.model';
+import { StatisticTablesProps, StatisticTablesState } from './StatisticTables.model';
 
-import './CaUsersTables.scss';
+import './StatisticTables.scss';
 
-export class CaUsersTables extends React.Component<CaUsersTablesProps, CaUsersTablesState> {
-  constructor(props: CaUsersTablesProps) {
+export class StatisticTables extends React.Component<StatisticTablesProps, StatisticTablesState> {
+  constructor(props: StatisticTablesProps) {
     super(props);
     this.state = {
       activeTab: 0,
