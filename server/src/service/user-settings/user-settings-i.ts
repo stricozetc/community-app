@@ -1,13 +1,13 @@
 import { injectable } from 'inversify';
+import bcrypt from 'bcryptjs';
 
 import { UserSettingsRepository } from './user-settings';
 
 import { UserModel } from './../../../models/user';
-import { User } from './../../../Interfaces/User';
-import bcrypt from 'bcryptjs';
 import { FieldsToChangePassword } from '../../../models/otherModels';
 import { logicErr } from '../../../errors/logicErr';
 import { ErrorBlock } from './../../../models/error';
+import { technicalErr } from '../../../errors/technicalErr';
 
 @injectable()
 export class UserSettingsRepositoryImplementation implements UserSettingsRepository {

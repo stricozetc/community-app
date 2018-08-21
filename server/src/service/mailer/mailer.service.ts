@@ -1,13 +1,12 @@
 import { setApiKey, send } from '@sendgrid/mail';
 import { injectable, inject } from 'inversify';
-import * as fs from 'fs';
-import * as format from 'string-template';
+import fs from 'fs';
+import format from 'string-template';
 
 import { UserAuthenticationRepository } from '../user-authentication';
 import { technicalErr } from '../../../errors/technicalErr';
 
-// tslint:disable-next-line:no-var-requires
-const mailConfig = require('../../config/mail.config.json');
+import mailConfig from '../../config/mail.config.json';
 
 @injectable()
 export class MailerService {
@@ -19,7 +18,13 @@ export class MailerService {
 
   public async sendRestorePasswordMail(userEmail: string): Promise<void> {
     const language = await this.userAuthenticationRepository.getUserLanguage(userEmail);
-    const letterSettings = mailConfig.forgetPassword[language];
+    let letterSettings = null;
+    if (language === 'ru') {
+      letterSettings = mailConfig.forgetPassword.ru;
+    } else {
+      letterSettings = mailConfig.forgetPassword.en;
+    }
+
     const html: string = fs.readFileSync(letterSettings.htmlLink).toString();
     const messageHTML = format(html, { restoreLink: userEmail });
 
