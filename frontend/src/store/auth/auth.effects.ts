@@ -15,7 +15,7 @@ import {
   LogoutUser,
   RegisterUser,
   SetCurrentUser,
-  SuccessRegistration
+  RegistrationSuccess
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
@@ -46,7 +46,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     ofType(AuthTypes.RegisterUser),
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
-        map(() => new SuccessRegistration('./login')),
+        map(() => new RegistrationSuccess('./login')),
         catchError(error => {
           const errors = error.response.data;
           return of(new GetErrors(!Array.isArray(errors) ? errors.msg : errors.map((err: any) => err.msg)));
@@ -55,8 +55,8 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     )
   );
 
-export const successRegistration$ = (action$: ActionsObservable<SuccessRegistration>) =>
-  action$.ofType(AuthTypes.SuccessRegistration).pipe(
+export const successRegistration$ = (action$: ActionsObservable<RegistrationSuccess>) =>
+  action$.ofType(AuthTypes.RegistrationSuccess).pipe(
     map(action => {
       history.push(action.payload);
     }),

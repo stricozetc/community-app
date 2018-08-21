@@ -4,14 +4,14 @@ import { action } from '../decorators';
 
 export enum StatisticTypes {
   InitBestUsers = '[statistic] Init Best Users',
-  LoadBestUsersSuccess = '[statistic] Load Best Users Success',
-  LoadBestUsersError = '[statistics] Load Best Users Error',
+  LoadBestUsersSuccess = '[statistic] Load Best Users (Success)',
+  LoadBestUsersError = '[statistics] Load Best Users (Error)',
   InitMostPopularGames = '[statistic] Init Most Popular Games',
-  LoadMostPopularGamesSuccess = '[statistic] Load Most Popular Games Success',
-  LoadMostPopularGamesError = '[statistics] Load Most Popular Games Error',
+  LoadMostPopularGamesSuccess = '[statistic] Load Most Popular Games(Success)',
+  LoadMostPopularGamesError = '[statistics] Load Most Popular Games (Error)',
   InitRecentGames = '[statistic] Init Recent Games',
-  LoadRecentGamesSuccess = '[statistic] Load Recent Games Success',
-  LoadRecentGamesError = '[statistic] Load Recent Games Error',
+  LoadRecentGamesSuccess = '[statistic] Load Recent Games (Success)',
+  LoadRecentGamesError = '[statistic] Load Recent Games (Error)',
   CleanStatistic = '[statistic] Clean Statistic'
 }
 
