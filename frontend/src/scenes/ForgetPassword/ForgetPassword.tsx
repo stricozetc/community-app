@@ -108,8 +108,8 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
                 handleClose={() => this.closeSnackbar()}
-                type={SnackbarType.error}
-                transitionDirection={transitionDirection.down}
+                type={SnackbarType.Error}
+                transitionDirection={transitionDirection.Down}
                 message={
                   <div>
                     {keys && keys.map((k: string) =>
@@ -122,7 +122,7 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
               />
 
               {this.props.children}
-              {this.props.status === RestorePasswordStatus.INIT ?
+              {this.props.status === RestorePasswordStatus.Init ?
                 <form onSubmit={this.onSubmit} className='ca-forget-password-form__container'>
                   <FormGroup>
                     <TextField
@@ -154,7 +154,7 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
                     {t('login').toUpperCase()}
                   </CaButton>
                 </form> :
-                this.props.status === RestorePasswordStatus.SUCCESS ?
+                this.props.status === RestorePasswordStatus.Success ?
                   <div className='ca-forget-password-form__confirm-message'>
                     <div className='ca-forget-password-form__message'>{t('email-sent')}</div>
                     <div className='ca-forget-password-form__message'>{t('mail')}{this.state.email}</div>

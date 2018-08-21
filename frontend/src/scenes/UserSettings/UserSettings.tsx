@@ -40,13 +40,13 @@ export class CaUserSettingsComponent extends React.Component<
   }
 
   public componentWillReceiveProps(nextProps: UserSettingsProps): void {
-    if (nextProps.status !== AuthStatus.AUTHORIZED) {
+    if (nextProps.status !== AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
   }
 
   public componentDidMount(): void {
-    if (this.props.status !== AuthStatus.AUTHORIZED) {
+    if (this.props.status !== AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
   }

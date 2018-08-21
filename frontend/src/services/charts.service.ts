@@ -17,11 +17,11 @@ export class ChartsService {
     let drawNumber = 0;
 
     gameResults.forEach(result => {
-      if (result === ResultStatus.WIN) {
+      if (result === ResultStatus.Win) {
         winsNumber++;
-      } else if (result === ResultStatus.LOSE) {
+      } else if (result === ResultStatus.Lose) {
         losesNumber++;
-      } else if (result === ResultStatus.DRAW) {
+      } else if (result === ResultStatus.Draw) {
         drawNumber++;
       }
     });
@@ -89,7 +89,7 @@ export class ChartsService {
     };
 
     const diagramData: WinRateDiagramData = {
-      OPTIONS: options
+      Options: options
     };
 
     return diagramData;

@@ -33,20 +33,20 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
   }
 
   public componentWillMount(): void {
-    this.changeContent(StatTab.BEST_USERS);
+    this.changeContent(StatTab.BestUsers);
   }
 
   public handleRowClick = (item: Row) => {
     switch (this.state.activeTab) {
-      case StatTab.THE_MOST_POPULAR_GAMES:
-      case StatTab.RECENT_GAMES: {
+      case StatTab.TheMostPopularGames:
+      case StatTab.RecentGames: {
         this.setState({
           tableItemName: item.game
         });
 
         break;
       }
-      case StatTab.BEST_USERS: {
+      case StatTab.BestUsers: {
         this.setState({
           tableItemName: item.name
         });
@@ -78,7 +78,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         break;
       }
       default: {
-        chartList = [chartsTypes.NO_CHARTS_AVAILABLE];
+        chartList = [chartsTypes.NoChartsAvailable];
 
         break;
       }
@@ -108,15 +108,15 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
                 <CaTabs value={this.state.activeTab}>
                   <CaTab
                     label={t('bestUsersLabel')}
-                    onClick={this.showBestUsers}
+                    onClick={() => this.changeContent(StatTab.BestUsers)}
                   />
                   <CaTab
                     label={t('mostPopularGamesLabel')}
-                    onClick={this.showMostPopularGames}
+                    onClick={() => this.changeContent(StatTab.TheMostPopularGames)}
                   />
                   <CaTab
                     label={t('recentGamesLabel')}
-                    onClick={this.showRecentGames}
+                    onClick={() => this.changeContent(StatTab.RecentGames)}
                   />
                 </CaTabs>
 
@@ -155,23 +155,23 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
   public changeContent(activeTab: number): void {
 
     switch (activeTab) {
-      case StatTab.BEST_USERS: {
+      case StatTab.BestUsers: {
 
         const columnDef = [
           {
             headerName: 'userName',
-            field: RowProperty.NAME,
-            type: TypeOfColumn.STRING
+            field: RowProperty.Name,
+            type: TypeOfColumn.String
           },
           {
             headerName: 'playedTime',
-            field: RowProperty.PLAYED_TIME,
-            type: TypeOfColumn.TIME_COUNT
+            field: RowProperty.PlayedTime,
+            type: TypeOfColumn.TimeCount
           },
           {
             headerName: 'score',
-            field: RowProperty.SCORES,
-            type: TypeOfColumn.POINTS
+            field: RowProperty.Scores,
+            type: TypeOfColumn.Points
           },
         ];
         const bestUsers = [...this.props.statistic.bestUsers];
@@ -196,23 +196,23 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         break;
       }
 
-      case StatTab.THE_MOST_POPULAR_GAMES: {
+      case StatTab.TheMostPopularGames: {
 
         const columnDef = [
           {
             headerName: 'game',
-            field: RowProperty.GAME,
-            type: TypeOfColumn.STRING
+            field: RowProperty.Game,
+            type: TypeOfColumn.String
           },
           {
             headerName: 'playedInWeek',
-            field: RowProperty.PLAYED_IN_WEEK,
-            type: TypeOfColumn.TIME_COUNT
+            field: RowProperty.PlayedInWeek,
+            type: TypeOfColumn.TimeCount
           },
           {
             headerName: 'playedAll',
-            field: RowProperty.PLAYED_TIME,
-            type: TypeOfColumn.TIME_COUNT
+            field: RowProperty.PlayedTime,
+            type: TypeOfColumn.TimeCount
           },
         ];
         const mostPopularGames = [...this.props.statistic.mostPopularGames];
@@ -237,23 +237,23 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         break;
       }
 
-      case StatTab.RECENT_GAMES: {
+      case StatTab.RecentGames: {
 
         const columnDef = [
           {
             headerName: 'game',
-            field: RowProperty.GAME,
-            type: TypeOfColumn.STRING
+            field: RowProperty.Game,
+            type: TypeOfColumn.String
           },
           {
             headerName: 'score',
-            field: RowProperty.SCORES,
-            type: TypeOfColumn.POINTS
+            field: RowProperty.Scores,
+            type: TypeOfColumn.Points
           },
           {
             headerName: 'result',
-            field: RowProperty.RESULT,
-            type: TypeOfColumn.RESULT
+            field: RowProperty.Result,
+            type: TypeOfColumn.Result
           },
         ];
         const recentGames = [...this.props.statistic.recentGames] || [];

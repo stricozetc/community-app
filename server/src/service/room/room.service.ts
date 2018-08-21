@@ -44,7 +44,7 @@ export class RoomService {
             maxPlayersCount: this.games[index].maxRoomPlayer,
             players: [client],
             token: roomToken,
-            status: RoomStatus.WAITING
+            status: RoomStatus.Waiting
           });
 
           this.playersBindService.bindPlayer(roomToken, playerToken);
@@ -69,7 +69,7 @@ export class RoomService {
     const room: Room | undefined = this.rooms.find((r) => r.id === index);
     let operation$ = Promise.resolve(true);
 
-    if (room && room.players.length < room.maxPlayersCount && room.status === RoomStatus.WAITING) {
+    if (room && room.players.length < room.maxPlayersCount && room.status === RoomStatus.Waiting) {
       room.players.push(client);
 
       this.playersBindService.bindPlayer(room.token, playerToken);
@@ -201,7 +201,7 @@ export class RoomService {
           player.emit('redirect', this.games[index].redirectUrl);
           this.loggerService.infoLog(`Redirect players group to ${this.games[index].appName}`);
         });
-        room.status = RoomStatus.IN_GAME;
+        room.status = RoomStatus.InGame;
       })
       .catch((error) => this.loggerService.errorLog(error));
   }

@@ -162,9 +162,9 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
                 handleClose={this.closeSnackbar}
-                type={SnackbarType.ERROR}
+                type={SnackbarType.Error}
                 // transitionComponent = {this.transitionUp}
-                transitionDirection={transitionDirection.DOWN}
+                transitionDirection={transitionDirection.Down}
                 message={
                   <div>
                     {keys && keys.map((k: string) =>

@@ -41,7 +41,7 @@ export class LoginFormComponent extends React.Component<
   }
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
-    if (nextProps.status === AuthStatus.AUTHORIZED) {
+    if (nextProps.status === AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
 
@@ -52,7 +52,7 @@ export class LoginFormComponent extends React.Component<
   }
 
   public componentDidMount(): void {
-    if (this.props.status === AuthStatus.AUTHORIZED) {
+    if (this.props.status === AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
   }
@@ -163,9 +163,9 @@ export class LoginFormComponent extends React.Component<
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
                 handleClose={this.closeSnackbar}
-                type={SnackbarType.ERROR}
+                type={SnackbarType.Error}
                 //  transitionComponent = {this.transitionUp}
-                transitionDirection={transitionDirection.DOWN}
+                transitionDirection={transitionDirection.Down}
                 message={
                   <div>
                     {keys && keys.map((k: string) =>

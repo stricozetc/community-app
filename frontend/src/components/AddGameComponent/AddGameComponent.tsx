@@ -23,7 +23,7 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
     }
 
     public componentWillMount(): void {
-        const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+        const isAuthenticated = this.props.authStatus === AuthStatus.Authorized;
         if (!isAuthenticated) {
             this.props.history.push('/login');
         }
@@ -39,7 +39,7 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
                 {this.props.children}
                <GameForm
                     userId = {this.props.user && this.props.user.id}
-                    config={SettingFormType.ADD_GAME}
+                    config={SettingFormType.AddGame}
                     model={initFormForAddingNewGame}
                     submit={this.onSubmit}
                />

@@ -8,7 +8,7 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
     case BattleActionTypes.JoinBattle: {
       return {
         ...state,
-        status: BattleStatus.WAIT,
+        status: BattleStatus.Wait,
         battleName: action.payload
       };
     }
@@ -16,7 +16,7 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
     case BattleActionTypes.LeaveBattle: {
       return {
         ...state,
-        status: BattleStatus.INIT,
+        status: BattleStatus.Init,
         battleName: action.payload,
         countdown: 0
       };
@@ -26,7 +26,7 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       return {
         ...state,
         roomURL: action.payload,
-        status: BattleStatus.PLAY,
+        status: BattleStatus.Play,
         countdown: 0
       };
     }
@@ -48,7 +48,7 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
     case BattleActionTypes.ErrorBattle: {
       return {
         ...state,
-        status: BattleStatus.ERROR
+        status: BattleStatus.Error
       };
     }
     default:

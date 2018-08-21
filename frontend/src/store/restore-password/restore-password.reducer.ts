@@ -9,26 +9,26 @@ export const restorePasswordReducer = (state = initialState, action: RestorePass
         case RestorePasswordTypes.SendRestoreRequest: {
             return {
                 ...state,
-                status: RestorePasswordStatus.WAIT,
+                status: RestorePasswordStatus.Wait,
                 userEmail: action.payload
             };
         }
         case RestorePasswordTypes.SendRestoreRequestSuccess: {
             return {
                 ...state,
-                status: RestorePasswordStatus.SUCCESS,
+                status: RestorePasswordStatus.Success,
             };
         }
         case RestorePasswordTypes.SendRestoreRequestFail: {
             return {
                 ...state,
-                status: RestorePasswordStatus.FAIL,
+                status: RestorePasswordStatus.Fail,
             };
         }
         case RestorePasswordTypes.ResetRequest: {
             return {
                 ...state,
-                status: RestorePasswordStatus.INIT,
+                status: RestorePasswordStatus.Init,
                 userEmail: ''
             };
         }

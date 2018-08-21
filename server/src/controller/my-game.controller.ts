@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 
 import { inject } from 'inversify';
 import { AppTokenService } from './../service/app-token';
-import { MyGamesRepository } from '../service/my-games';
+import { MyGamesRepository } from './../service/my-games';
 
-import { MyGameInterface } from '../../models/games';
+import { Game } from './../../models/games';
 import { validateAppDataInput } from '../validation/register-app';
 
 @controller('/api/v1/my-games')

@@ -22,13 +22,13 @@ import './Battles.scss';
 class CaBattlesComponent extends React.Component<BattleProps> {
 
   public componentWillReceiveProps(nextProps: BattleProps): void {
-    if (nextProps.status === LoadStatus.ERROR && nextProps.status !== this.props.status) {
+    if (nextProps.status === LoadStatus.Error && nextProps.status !== this.props.status) {
       this.props.openSnackbar();
     }
   }
 
   public componentWillMount(): void {
-    const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+    const isAuthenticated = this.props.authStatus === AuthStatus.Authorized;
 
     if (!isAuthenticated) {
       this.props.history.push('/login');
@@ -68,9 +68,9 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={this.closeSnackbar}
-          type={SnackbarType.ERROR}
+          type={SnackbarType.Error}
           message={<span> Game fetching Failed! </span>}
-          transitionDirection={transitionDirection.DOWN}
+          transitionDirection={transitionDirection.Down}
         />
 
         {!isEmpty(this.props.games) && (

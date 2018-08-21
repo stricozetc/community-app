@@ -121,7 +121,7 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public getNavbar(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+    const isAuthorized = authStatus === AuthStatus.Authorized;
 
     const appMenuItems: AppMenuItem[] = [
       {
@@ -178,7 +178,7 @@ export class RootComponent extends React.Component<RootProps> {
 
               <div className='ca-navbar__select-language'>
                 <CaSelect
-                  values={[Languages.EN, Languages.RU]}
+                  values={[Languages.En, Languages.Ru]}
                   displayedValues={[t('ENToggle'), t('RUToggle')]}
                   handleChange={this.handleChange}
                   currentValue={getCurrentLanguage(i18n)}

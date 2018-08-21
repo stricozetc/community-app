@@ -6,9 +6,8 @@ import { SocketService } from './socket.service';
 import { LoggerService } from '../logger';
 import { RoomService } from '../room';
 import { RoomInfo } from '../../typing/room-info';
-import { Game, GamesModel } from '../../../models/games';
+import { Game } from '../../../models/games';
 import { GamesRepository } from '../games/games.repository';
-
 
 @injectable()
 export class SocketServiceImplementation extends SocketService {
@@ -80,9 +79,7 @@ export class SocketServiceImplementation extends SocketService {
           this.loggerService.infoLog(`Player leave from ${this.games[index].appName}`);
 
           this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
-          this.notifyAllClients(this.games[index].updateRoomsInfoEventName,
-            this.mapRoomsToRoomsInfo()
-          );
+          this.notifyAllClients(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
         }
 
       })
@@ -102,9 +99,7 @@ export class SocketServiceImplementation extends SocketService {
 
         if (isRemoved && room) {
           this.loggerService.infoLog(`Sent count wait players in ${this.games[room.id].appName}`);
-          this.notifyAllClients(this.games[room.id].updateRoomsInfoEventName,
-            this.mapRoomsToRoomsInfo()
-          );
+          this.notifyAllClients(this.games[room.id].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
         }
       })
       .catch((error: Error) => {

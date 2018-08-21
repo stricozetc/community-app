@@ -15,17 +15,16 @@ export interface Statistic {
 }
 
 export enum ResultStatus {
-    INIT,
-    WIN,
-    LOSE,
-
-    DEAD_HEAT
+    Init,
+    Win,
+    Lose,
+    Draw,
 }
 
 export enum ParticipationStatus {
-    INIT,
-    LEAVE,
-    PLAY
+    Init,
+    Leave,
+    play,
 }
 
 export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.statisticModel, {

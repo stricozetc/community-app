@@ -5,6 +5,6 @@ import { RestorePasswordState } from './interfaces';
 type State = RestorePasswordState;
 
 export const initialState: State = {
-  status: RestorePasswordStatus.INIT,
+  status: RestorePasswordStatus.Init,
   userEmail: '',
 };
