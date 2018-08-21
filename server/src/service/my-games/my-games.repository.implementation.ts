@@ -27,9 +27,7 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
     }
 
     public editGame(game: Game): Promise<Game[]> {
-        return GamesModel.upsert({
-            id: +game.id,
-            userId: +game.userId,
+        return GamesModel.update({
             appName: game.appName,
             description: game.description,
             maxRoomPlayer: +game.maxRoomPlayer,
@@ -40,9 +38,10 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
             registrationEventName: game.registrationEventName,
             leaveEventName: game.leaveEventName,
             updateRoomsInfoEventName: game.updateRoomsInfoEventName,
-            notifyCountdown: game.notifyCountdown,
-            approve: game.approve
-        }).then(() => {
+            notifyCountdown: game.notifyCountdown
+        },
+            { where: { id: +game.id } }
+        ).then(() => {
             return GamesModel.findAll({
                 where: {
                     userId: game.userId
