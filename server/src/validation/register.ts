@@ -1,4 +1,4 @@
-import * as Validator from 'validator';
+import Validator from 'validator';
 import { isEmpty } from './is-empty';
 import { UserFieldsToRegister } from './../../Interfaces/UserFieldsToRegister';
 import { logicErr } from './../../errors/logicErr';

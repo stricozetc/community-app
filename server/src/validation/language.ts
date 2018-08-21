@@ -1,4 +1,4 @@
-import * as Validator from 'validator';
+import Validator from 'validator';
 import { isEmpty } from './is-empty';
 import { logicErr } from './../../errors/logicErr';
 import { ErrorBlock } from '../../models/error';

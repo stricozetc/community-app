@@ -1,4 +1,4 @@
-import * as Sequelize from 'sequelize';
+import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from '../src/config/dbconfig';
 
@@ -38,7 +38,7 @@ export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
         allowNull: false,
         // defaultValue: 'en',
     },
-},                                                                              {
+}, {
         // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
         // otherwise, the model name will be pluralized
         freezeTableName: true,
