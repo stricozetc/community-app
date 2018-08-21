@@ -24,6 +24,10 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
         }
     }
 
+    public onSubmit = (data: GameModel) => {
+      this.props.editGame(data);
+    }
+
     public render(): JSX.Element {
         const game = this.getGame();
         const id = this.props.match.params['idOfTheGame'];
@@ -36,7 +40,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
                     userId = {this.props.user && this.props.user.id}
                     config={SettingFormType.EDIT_GAME}
                     model={game}
-                    submit={(data: GameModel) => this.props.editGame(data)}
+                    submit={this.onSubmit}
                />
            </div>
         );

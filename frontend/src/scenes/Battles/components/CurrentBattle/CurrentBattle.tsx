@@ -57,8 +57,13 @@ export class CurrentBattleComponent extends React.Component<Props> {
     return currentRoom ? currentRoom.playersCount : 0;
   }
 
+  public handleLeaveRoom = () => {
+    this.props.leaveBattleAction(this.props.battleName);
+    this.props.history.push('/battles');
+  }
+
   public render(): JSX.Element {
-    const { battleName, countdown, leaveBattleAction } = this.props;
+    const { battleName, countdown } = this.props;
 
     const currentGame = this.props.games && this.props.games.length ?
       this.props.games[this.getGameIndex()] : undefined;
@@ -132,10 +137,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
 
                 <div className='ca-current-battle__leave-button'>
                   <CaButton
-                    onClick={() => {
-                      leaveBattleAction(battleName);
-                      this.props.history.push('/battles');
-                    }}
+                    onClick={this.handleLeaveRoom}
                   >
                     {t('leaveTheRoom')}
                   </CaButton>

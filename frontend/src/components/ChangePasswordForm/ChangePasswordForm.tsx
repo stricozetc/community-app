@@ -25,7 +25,7 @@ export class ChangePasswordForm extends React.Component<
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  public onChange(event: any): void {
+  public onChange = (event: any) => {
     const target = event.target;
 
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -153,7 +153,7 @@ export class ChangePasswordForm extends React.Component<
     this.checkValidation();
   }
 
-  public handleSubmit(): void {
+  public handleSubmit = () => {
     const fields: FieldsToChangePassword = {
       userId: this.props.user && this.props.user.id,
       oldPassword: this.state.oldPassword,
@@ -267,7 +267,7 @@ export class ChangePasswordForm extends React.Component<
               </FormGroup>
 
               <CaButton
-                onClick={() => this.handleSubmit()}
+                onClick={this.handleSubmit}
                 color='primary'
                 type='submit'
                 className='ca-change-password-form__login-btn'

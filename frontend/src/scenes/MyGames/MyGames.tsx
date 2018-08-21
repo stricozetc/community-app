@@ -45,6 +45,10 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
         this.handleCloseDialog();
     }
 
+    public handleAddGame = () => {
+      history.push(`/my-games/add-game`);
+    }
+
     public componentWillMount(): void {
         const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
 
@@ -83,7 +87,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
                         color='primary'
                         type='submit'
                         className='add-button'
-                        onClick={() => history.push(`/my-games/add-game`)}
+                        onClick={this.handleAddGame}
                         >
                         Add New Game
                     </CaButton>
