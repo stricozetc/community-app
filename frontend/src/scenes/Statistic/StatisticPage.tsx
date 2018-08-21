@@ -71,7 +71,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     }
   }
 
-  public closeSnackbar(): void {
+  public closeSnackbar = () => {
     this.props.closeSnackbar();
   }
 
@@ -120,7 +120,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
-          handleClose={() => this.closeSnackbar()}
+          handleClose={this.closeSnackbar}
           type={SnackbarType.ERROR}
           message={
             <React.Fragment>
@@ -136,7 +136,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
-          handleClose={() => this.closeSnackbar()}
+          handleClose={this.closeSnackbar}
           type={SnackbarType.INFO}
           message={
             <React.Fragment>

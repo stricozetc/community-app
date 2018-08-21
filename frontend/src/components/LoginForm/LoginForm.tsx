@@ -142,7 +142,7 @@ export class LoginFormComponent extends React.Component<
     this.checkValidation();
   }
 
-  public closeSnackbar(): void {
+  public closeSnackbar = () => {
     this.props.closeSnackbar();
   }
 
@@ -158,7 +158,7 @@ export class LoginFormComponent extends React.Component<
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={this.props.isSnackbarOpen}
                 autoHideDuration={4000}
-                handleClose={() => this.closeSnackbar()}
+                handleClose={this.closeSnackbar}
                 type={SnackbarType.ERROR}
                 //  transitionComponent = {this.transitionUp}
                 transitionDirection={transitionDirection.DOWN}

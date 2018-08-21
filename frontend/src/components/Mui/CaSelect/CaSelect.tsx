@@ -10,11 +10,15 @@ export const CaSelect = withStyles(styles)((props: CaSelectProps) => {
 
   const { classes, displayedValues, values, handleChange, currentValue } = props;
 
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    handleChange(e, i18nInstance);
+  };
+
   return (
     <FormControl fullWidth={true} >
       <Select
         value={currentValue}
-        onChange={(e) => handleChange(e, i18nInstance)}
+        onChange={onChange}
         input={
           <Input
             name='languages'

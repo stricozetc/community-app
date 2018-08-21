@@ -29,6 +29,10 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
         }
     }
 
+    public onSubmit = (data: GameModel) => {
+      this.props.addGame(data);
+    }
+
     public render(): JSX.Element {
         return(
            <div>
@@ -37,7 +41,7 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
                     userId = {this.props.user && this.props.user.id}
                     config={SettingFormType.ADD_GAME}
                     model={initFormForAddingNewGame}
-                    submit={(data: GameModel) => this.props.addGame(data)}
+                    submit={this.onSubmit}
                />
            </div>
         );

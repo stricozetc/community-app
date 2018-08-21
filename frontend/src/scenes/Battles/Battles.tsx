@@ -37,7 +37,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     this.props.initGames();
   }
 
-  public closeSnackbar(): void {
+  public closeSnackbar = () => {
     this.props.closeSnackbar();
   }
 
@@ -67,7 +67,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
-          handleClose={() => this.closeSnackbar()}
+          handleClose={this.closeSnackbar}
           type={SnackbarType.ERROR}
           message={<span> Game fetching Failed! </span>}
           transitionDirection={transitionDirection.DOWN}

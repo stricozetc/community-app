@@ -57,7 +57,7 @@ export class CaUserSettingsComponent extends React.Component<
     });
   }
 
-  public handleSubmit(data: FieldsToChangePassword): void {
+  public handleSubmit = (data: FieldsToChangePassword) => {
     this.props.changePassword(data);
   }
 
@@ -102,9 +102,7 @@ export class CaUserSettingsComponent extends React.Component<
                     <div className='ca-user-settings__container-for-form'>
                       <ChangePasswordForm
                         user={this.props.user}
-                        submit={(data: FieldsToChangePassword) =>
-                          this.handleSubmit(data)
-                        }
+                        submit={this.handleSubmit}
                         changePasswordStatus={this.props.changePasswordStatus}
                       />
                     </div>

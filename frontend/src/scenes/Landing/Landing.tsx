@@ -16,11 +16,11 @@ class LandingComponent extends React.Component<LandingProps> {
     }
   }
 
-  public redToLogin(): void {
+  public redToLogin = () => {
     this.props.history.push('/login');
   }
 
-  public redToRegister(): void {
+  public redToRegister = () => {
     this.props.history.push('/register');
   }
 
@@ -36,13 +36,13 @@ class LandingComponent extends React.Component<LandingProps> {
                 <div className='ca-landing__buttons-container'>
                   <CaButton
                     className='ca-landing__register-btn'
-                    onClick={() => this.redToRegister()}
+                    onClick={this.redToRegister}
                   >
                     {t('register')}
                   </CaButton>
 
                   <CaButton
-                    onClick={() => this.redToLogin()}
+                    onClick={this.redToLogin}
                   >
                     {t('login')}
                   </CaButton>

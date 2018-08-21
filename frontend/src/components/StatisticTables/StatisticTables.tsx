@@ -87,6 +87,16 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     return chartList;
   }
 
+  public showBestUsers = () => {
+    this.changeContent(StatTab.BEST_USERS);
+  }
+  public showMostPopularGames = () => {
+    this.changeContent(StatTab.THE_MOST_POPULAR_GAMES);
+  }
+  public showRecentGames = () => {
+    this.changeContent(StatTab.RECENT_GAMES);
+  }
+
   public render(): JSX.Element {
     return (
       <I18n>
@@ -98,15 +108,15 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
                 <CaTabs value={this.state.activeTab}>
                   <CaTab
                     label={t('bestUsersLabel')}
-                    onClick={() => this.changeContent(StatTab.BEST_USERS)}
+                    onClick={this.showBestUsers}
                   />
                   <CaTab
                     label={t('mostPopularGamesLabel')}
-                    onClick={() => this.changeContent(StatTab.THE_MOST_POPULAR_GAMES)}
+                    onClick={this.showMostPopularGames}
                   />
                   <CaTab
                     label={t('recentGamesLabel')}
-                    onClick={() => this.changeContent(StatTab.RECENT_GAMES)}
+                    onClick={this.showRecentGames}
                   />
                 </CaTabs>
 
