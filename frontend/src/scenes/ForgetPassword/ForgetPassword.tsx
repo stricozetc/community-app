@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
@@ -14,7 +15,7 @@ import { CaSpinner } from 'components/Spinner';
 import { CaButton } from 'components/form-controls/CaButton';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { RestorePasswordStatus, SnackbarType, transitionDirection } from 'models';
-import { SendRestoreRequest, ResetRequest } from 'store/restore-password';
+import { ResetRequest, SendRestoreRequest } from 'store/restore-password';
 import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { AppState } from 'store/store.config';
 
@@ -46,12 +47,12 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
     this.props.closeSnackbar();
   }
 
-  public onChange(event: any): void {
+  public onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const target = event.target.value;
     this.setState({ email: target });
   }
 
-  public onSubmit(event: any): void {
+  public onSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
     this.props.sendRestoreRequest(this.state.email);
@@ -87,7 +88,7 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
     this.setState({ emailErrors });
   }
 
-  public onBlur = (field: string) => (evt: any) => {
+  public onBlur = (field: string) => (event: React.FormEvent<HTMLSelectElement>) => {
     this.setState({
       isTouched: true
     });
@@ -182,7 +183,7 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeSnackbar: () => dispatch(new CloseSnackbar()),
   sendRestoreRequest: (userEmail: string) => dispatch(new SendRestoreRequest(userEmail)),
   openSnackbar: () => dispatch(new OpenSnackbar()),

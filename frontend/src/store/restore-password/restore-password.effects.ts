@@ -25,15 +25,15 @@ export const sendRestorePasswordRequest$ = (actions$: ActionsObservable<SendRest
     switchMap(action =>
       from(HttpWrapper.post('api/restore-password/send-mail', { userEmail: action.payload })).pipe(
         map(() => new SendRestoreRequestSuccess()),
-        catchError((error) => of(new SendRestoreRequestFail(error)))
+        catchError((error) => of(new SendRestoreRequestFail(error.response.data)))
       )
     )
   );
 
 export const sendRestorePasswordRequestFail$ = (actions$: ActionsObservable<SendRestoreRequestFail>) =>
   actions$.pipe(
-    ofType(RestorePasswordTypes.SendRestoreRequestFail),
-    map((action) => new GetErrors(action.payload.response.data)),
+    ofType(RestorePasswordTypes.SendRestoreRequestError),
+    map((action) => new GetErrors(action.payload)),
   );
 
 export const RestorePasswordEffects = [

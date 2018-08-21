@@ -19,7 +19,7 @@ export const restorePasswordReducer = (state = initialState, action: RestorePass
                 status: RestorePasswordStatus.Success,
             };
         }
-        case RestorePasswordTypes.SendRestoreRequestFail: {
+        case RestorePasswordTypes.SendRestoreRequestError: {
             return {
                 ...state,
                 status: RestorePasswordStatus.Fail,

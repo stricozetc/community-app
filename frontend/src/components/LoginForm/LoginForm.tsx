@@ -26,10 +26,7 @@ import {
 
 import './LoginForm.scss';
 
-export class LoginFormComponent extends React.Component<
-  LoginFormProps,
-  LoginFormState
-  > {
+export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
   constructor(props: LoginFormProps) {
     super(props);
 
@@ -235,7 +232,7 @@ export class LoginFormComponent extends React.Component<
                     {t('login').toUpperCase()}
                   </CaButton>
                   <div className='ca-login-form__forget-password'>
-                    <a href="/#/forget-password" onClick={() => this.redToForgetPassword()}>{t('forget-password')}</a>
+                    <a href='/#/forget-password' onClick={() => this.redToForgetPassword()}>{t('forget-password')}</a>
                   </div>
                 </div>
               </form>

@@ -1,9 +1,11 @@
+import { ErrorBlock } from 'models';
+
 import { action } from '../decorators';
 
 export enum RestorePasswordTypes {
   SendRestoreRequest = '[restore-password] Send Restore Request',
   SendRestoreRequestSuccess = '[restore-password] Send Restore Request Success',
-  SendRestoreRequestFail = '[restore-password] Send Restore Request Fail',
+  SendRestoreRequestError = '[restore-password] Send Restore Request Error',
   ResetRequest = '[restore-password] Reset Request',
 }
 
@@ -17,15 +19,13 @@ export class SendRestoreRequest {
 @action()
 export class SendRestoreRequestSuccess {
   public readonly type = RestorePasswordTypes.SendRestoreRequestSuccess;
-
-  constructor() { }
 }
 
 @action()
 export class SendRestoreRequestFail {
-  public readonly type = RestorePasswordTypes.SendRestoreRequestFail;
+  public readonly type = RestorePasswordTypes.SendRestoreRequestError;
 
-  constructor(public payload: any) { }
+  constructor(public payload: ErrorBlock | ErrorBlock[]) { }
 }
 
 @action()

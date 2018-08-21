@@ -84,7 +84,7 @@ const rootEpic = combineEpics(
   ...SocketEffects,
   ...MyGamesEffects,
   ...UserSettingsEffects,
-...RestorePasswordEffects,
+  ...RestorePasswordEffects,
 );
 
 const epicMiddleware = createEpicMiddleware();

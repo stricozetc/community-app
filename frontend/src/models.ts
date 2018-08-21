@@ -214,3 +214,8 @@ export interface FrontEndValidationErrorsGameRegister {
   maxWaitingTime: { mustBeCorrect: string, required: string };
   redirectUrl: { mustBeCorrect: string, required: string };
 }
+
+export interface ErrorBlock {
+  code: number;
+  msg: string;
+}
