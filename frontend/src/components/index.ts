@@ -1,6 +1,6 @@
 export * from './AppMenu';
 export * from './CaTable';
-export * from './CaUsersTables';
+export * from './StatisticTables';
 export * from './Countdown';
 export * from './form-controls/CaButton';
 export * from './GameCard';
