@@ -17,10 +17,10 @@ export class UserSettingsRepositoryImplementation
   public async changePassword(
     fields: FieldsToChangePassword
   ): Promise<{ result: boolean; errors?: ErrorBlock[] }> {
- 
+
     try {
       const { oldPassword, newPassword, userId } = fields;
-      let errors: ErrorBlock[] = [];
+      const errors: ErrorBlock[] = [];
 
       let isMatch = false;
       let user = null;
@@ -58,7 +58,7 @@ export class UserSettingsRepositoryImplementation
 
         return { result: true };
       } else {
-        errors.push(logicErr.wrongPassword(user.email))
+        errors.push(logicErr.wrongPassword(user.email));
 
         return { result: false, errors };
       }

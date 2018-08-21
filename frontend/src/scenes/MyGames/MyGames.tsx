@@ -19,11 +19,11 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
     };
 
     public handleCloseDialog = () => {
-        this.setState({isDialogOpen: false})
+        this.setState({isDialogOpen: false});
     }
 
     public handleClosePopover = () => {
-        this.setState({isPopoverOpen: false})
+        this.setState({isPopoverOpen: false});
     }
 
     public handleOpenDialog = (game: GameModel) => {

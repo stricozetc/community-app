@@ -36,4 +36,6 @@ CONTAINER.bind<AppTokenRepository>(AppTokenRepository).to(AppTokenRepository);
 CONTAINER.bind<PlayersBindService>(PlayersBindService).to(PlayersBindService);
 CONTAINER.bind<StatisticRepository>(StatisticRepository).to(StatisticRepositoryImplementation);
 CONTAINER.bind<StatisticService>(StatisticService).to(StatisticService);
-CONTAINER.bind<MyGamesRepository>(MyGamesRepository).to(MyGamesRepositoryImplementation);CONTAINER.bind<UserSettingsRepository>(UserSettingsRepository).to(UserSettingsRepositoryImplementation);export const inject = getDecorators(CONTAINER).lazyInject;
+CONTAINER.bind<MyGamesRepository>(MyGamesRepository).to(MyGamesRepositoryImplementation);
+CONTAINER.bind<UserSettingsRepository>(UserSettingsRepository).to(UserSettingsRepositoryImplementation);
+export const inject = getDecorators(CONTAINER).lazyInject;

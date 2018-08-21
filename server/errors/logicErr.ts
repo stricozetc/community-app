@@ -51,7 +51,6 @@ export const logicErr = {
     msg: 'Language is required'
   },
 
-
   emailMustBeValid: {
     code: errCodes.emailMustBeValid,
     msg: 'Email is Invalid'
