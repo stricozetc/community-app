@@ -7,10 +7,8 @@ import {
   withStyles
 } from '@material-ui/core';
 import * as classNames from 'classnames';
-import { CaDelete } from 'components/form-controls/CaDelete';
-import { CaEdit } from 'components/form-controls/CaEdit';
+import { CaDelete, CaEdit, CaLock} from 'components';
 
-import { CaLock } from 'components/form-controls/CaLock';
 import { HeaderName, ResultStatus, Row, TypeOfColumn } from 'models';
 
 import * as React from 'react';

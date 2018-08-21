@@ -1,4 +1,4 @@
-import { CircleDiagram } from 'components/CircleDiagram';
+import { CaSelect, CircleDiagram } from 'components';
 import * as React from 'react';
 import { I18n, TranslationFunction } from 'react-i18next';
 import { ChartsService } from 'services/charts.service';
@@ -6,8 +6,6 @@ import { ChartsService } from 'services/charts.service';
 import { StatisticState } from 'store';
 
 import { chartsTypes } from 'models';
-
-import { CaSelect } from '../form-controls/CaSelect';
 
 import { ChartContainerProps, ChartContainerState } from './ChartContainer.model';
 import './ChartContainer.scss';

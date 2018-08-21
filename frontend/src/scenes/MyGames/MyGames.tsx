@@ -1,5 +1,4 @@
-import { CaButton, CaDialogInfo, CaTable } from 'components';
-import { CaDialog } from 'components/form-controls/CaDialog/CaDialog';
+import { CaButton, CaDialog, CaDialogInfo, CaTable } from 'components';
 import { AuthStatus, GameModel, RowProperty, TypeOfColumn } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
