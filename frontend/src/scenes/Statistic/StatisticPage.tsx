@@ -11,7 +11,7 @@ import {
 
 import { AppState, LogoutUser } from 'store';
 
-import { CaSnackbar, CaSpinner, CaUsersTables } from 'components';
+import { CaSnackbar, CaSpinner, StatisticTables } from 'components';
 import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { isEmpty } from 'utils';
 
@@ -152,7 +152,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
             <CaSpinner isActive={!isDataLoaded} />
           </div>
         ) : (
-            <CaUsersTables statistic={this.props.statistic} />
+            <StatisticTables statistic={this.props.statistic} />
           )}
       </div>
     );
