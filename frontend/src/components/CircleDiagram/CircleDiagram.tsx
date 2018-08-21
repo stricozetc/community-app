@@ -14,7 +14,7 @@ export class CircleDiagram extends React.Component<CircleDiagramProps> {
 
     const myChart = init(document.querySelector('.win-rate-diagram') as HTMLDivElement);
 
-    myChart.setOption(diagramData.options);
+    myChart.setOption(diagramData.OPTIONS);
   }
 
   public componentDidMount(): void {

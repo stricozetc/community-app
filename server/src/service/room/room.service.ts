@@ -44,7 +44,7 @@ export class RoomService {
             maxPlayersCount: this.games[index].maxRoomPlayer,
             players: [client],
             token: roomToken,
-            status: RoomStatus.Waiting
+            status: RoomStatus.WAITING
           });
 
           this.playersBindService.bindPlayer(roomToken, playerToken);
@@ -69,7 +69,7 @@ export class RoomService {
     const room: Room | undefined = this.rooms.find((r) => r.id === index);
     let operation$ = Promise.resolve(true);
 
-    if (room && room.players.length < room.maxPlayersCount && room.status === RoomStatus.Waiting) {
+    if (room && room.players.length < room.maxPlayersCount && room.status === RoomStatus.WAITING) {
       room.players.push(client);
 
       this.playersBindService.bindPlayer(room.token, playerToken);
@@ -192,7 +192,6 @@ export class RoomService {
   }
 
   private startGame(game: Game, room: Room, index: number): void {
-
     this.playersBindService.sendPlayerBind(game, room)
       .then(() => {
         room.players.forEach((player: SocketIO.Socket) => {
@@ -202,9 +201,9 @@ export class RoomService {
           player.emit('redirect', this.games[index].redirectUrl);
           this.loggerService.infoLog(`Redirect players group to ${this.games[index].appName}`);
         });
-        room.status = RoomStatus.InGame;
+        room.status = RoomStatus.IN_GAME;
       })
-      .catch((error: any) => console.log(error));
+      .catch((error) => this.loggerService.errorLog(error));
   }
 
   private countdown(room: Room, index: number, distance: number): void {

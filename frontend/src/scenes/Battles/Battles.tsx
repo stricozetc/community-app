@@ -22,7 +22,7 @@ import './Battles.scss';
 class CaBattlesComponent extends React.Component<BattleProps> {
 
   public componentWillReceiveProps(nextProps: BattleProps): void {
-    if (nextProps.status === LoadStatus.Error && nextProps.status !== this.props.status) {
+    if (nextProps.status === LoadStatus.ERROR && nextProps.status !== this.props.status) {
       this.props.openSnackbar();
     }
   }
@@ -68,9 +68,9 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           open={this.props.isSnackbarOpen}
           autoHideDuration={4000}
           handleClose={() => this.closeSnackbar()}
-          type={SnackbarType.error}
+          type={SnackbarType.ERROR}
           message={<span> Game fetching Failed! </span>}
-          transitionDirection={transitionDirection.down}
+          transitionDirection={transitionDirection.DOWN}
         />
 
         {!isEmpty(this.props.games) && (

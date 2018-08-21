@@ -34,7 +34,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
                <GameForm
                     id = {id}
                     userId = {this.props.user && this.props.user.id}
-                    config={SettingFormType.editGame}
+                    config={SettingFormType.EDIT_GAME}
                     model={game}
                     submit={(data: GameModel) => this.props.editGame(data)}
                />

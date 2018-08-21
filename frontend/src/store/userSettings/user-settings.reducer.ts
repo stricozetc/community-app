@@ -14,20 +14,20 @@ export const userSettingsReducer = (
     case UserSettingsTypes.ChangePassword: {
       return {
         ...state,
-        changePasswordStatus: LoadStatus.Fetching
+        changePasswordStatus: LoadStatus.FETCHING
       };
     }
     case UserSettingsTypes.ChangePasswordSuccess: {
       return {
         ...state,
-        changePasswordStatus: LoadStatus.Success
+        changePasswordStatus: LoadStatus.SUCCESS
       };
     }
     case UserSettingsTypes.ChangePasswordError: {
       return {
         ...state,
         changePasswordErrors: action.payload,
-        changePasswordStatus: LoadStatus.Error
+        changePasswordStatus: LoadStatus.ERROR
       };
     }
     case UserSettingsTypes.ChangeLanguage: {
@@ -39,19 +39,19 @@ export const userSettingsReducer = (
     case UserSettingsTypes.SaveLanguage: {
       return {
         ...state,
-        saveLanguageStatus: LoadStatus.Fetching,
+        saveLanguageStatus: LoadStatus.FETCHING,
       };
     }
     case UserSettingsTypes.SaveLanguageSuccess: {
       return {
         ...state,
-        saveLanguageStatus: LoadStatus.Success,
+        saveLanguageStatus: LoadStatus.SUCCESS,
       };
     }
     case UserSettingsTypes.SaveLanguageError: {
       return {
         ...state,
-        saveLanguageStatus: LoadStatus.Error,
+        saveLanguageStatus: LoadStatus.ERROR,
         saveLanguageErrors: action.payload
       };
     }

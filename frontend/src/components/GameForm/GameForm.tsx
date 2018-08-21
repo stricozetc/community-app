@@ -201,7 +201,8 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
           approve: true
         };
 
-        if (this.props.config === SettingFormType.editGame) {
+
+        if (this.props.config === SettingFormType.EDIT_GAME) {
             game = Object.assign(game, {id: this.props.id});
         }
 

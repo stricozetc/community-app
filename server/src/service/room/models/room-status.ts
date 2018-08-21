@@ -1,5 +1,5 @@
 export enum RoomStatus {
-    Waiting,
-    InGame,
-    Closed
+    WAITING,
+    IN_GAME,
+    CLOSED
 }

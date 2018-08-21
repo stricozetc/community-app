@@ -35,7 +35,7 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
                 {this.props.children}
                <GameForm
                     userId = {this.props.user && this.props.user.id}
-                    config={SettingFormType.addGame}
+                    config={SettingFormType.ADD_GAME}
                     model={initFormForAddingNewGame}
                     submit={(data: GameModel) => this.props.addGame(data)}
                />

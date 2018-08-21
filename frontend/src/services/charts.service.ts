@@ -89,7 +89,7 @@ export class ChartsService {
     };
 
     const diagramData: WinRateDiagramData = {
-      options
+      OPTIONS: options
     };
 
     return diagramData;

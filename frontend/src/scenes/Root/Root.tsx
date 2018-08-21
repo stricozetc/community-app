@@ -10,7 +10,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { AppMenuItem, AuthStatus, languages } from 'models';
+import { AppMenuItem, AuthStatus, Languages } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
@@ -177,7 +177,7 @@ export class RootComponent extends React.Component<RootProps> {
 
               <div className='ca-navbar__select-language'>
                 <CaSelect
-                  values={[languages.en, languages.ru]}
+                  values={[Languages.EN, Languages.RU]}
                   displayedValues={[t('ENToggle'), t('RUToggle')]}
                   handleChange={this.handleChange}
                   currentValue={getCurrentLanguage(i18n)}
