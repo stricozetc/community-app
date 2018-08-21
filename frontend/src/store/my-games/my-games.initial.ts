@@ -11,4 +11,4 @@ export const initialState: State = {
     editGameStatus: LoadStatus.INIT,
     deleteGameStatus: LoadStatus.INIT,
     addGameStatus: LoadStatus.INIT
-
+}
