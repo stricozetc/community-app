@@ -1,4 +1,4 @@
-import * as uuid from 'uuid/v4';
+import uuid from 'uuid/v4';
 import { injectable, inject } from 'inversify';
 import { technicalErr } from '../../../errors/technicalErr';
 import { logicErr } from '../../../errors/logicErr';
@@ -10,7 +10,7 @@ export class AppTokenRepository {
 
     constructor(
         @inject(LoggerService) private loggerService: LoggerService,
-    ) {}
+    ) { }
 
     public async create(app: Game): Promise<string> {
         const token = await this.getByName(app.appName);

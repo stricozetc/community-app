@@ -1,9 +1,9 @@
 
 import { injectable, inject } from 'inversify';
 
-import * as bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
-import * as uuid from 'uuid/v4';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import uuid from 'uuid/v4';
 
 import { UserModel } from '../../../models/user';
 import { UserRoles } from '../../../models/userRoles';

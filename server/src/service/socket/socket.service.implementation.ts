@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import * as SocketIO from 'socket.io';
+import SocketIO from 'socket.io';
 
 import { inject } from '../services-registration';
 import { SocketService } from './socket.service';
