@@ -9,7 +9,7 @@ import {
 
 import { AppState, LogoutUser } from 'store';
 
-import { CaSpinner, CaUsersTables } from 'components';
+import { CaSpinner, StatisticTables } from 'components';
 import { isEmpty } from 'utils';
 
 import {

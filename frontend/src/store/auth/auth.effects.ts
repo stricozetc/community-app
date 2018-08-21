@@ -37,7 +37,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
         }),
         catchError((error) => {
           
-          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
+          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))
         }
           
         )        
@@ -53,7 +53,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
         map(() => new SuccessRegistration('./login')),
         catchError((error) =>{
           
-          return of(new OpenSnackbar({type: SnackbarType.error, message: error.response.data}))
+          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))
         } 
         )
       )

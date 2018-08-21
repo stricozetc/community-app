@@ -75,7 +75,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
     case StatisticTypes.LoadRecentGamesFailed: {
       return {
         ...state,
-        recentGamesStatus: LoadStatus.Error        
+        recentGamesStatus: LoadStatus.ERROR
       };
     }
 

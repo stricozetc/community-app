@@ -5,6 +5,6 @@ type State = SnackbarUiState;
 
 export const initialState: State = {
   isOpen: false,
-  type: SnackbarType.error,
+  type: SnackbarType.ERROR,
   message: ''
 };

@@ -8,7 +8,7 @@ export const initialState: State = {
   bestUsers: [],
   mostPopularGames: [],
   recentGames: [],
-  bestUsersStatus: LoadStatus.Init,
-  mostPopularGamesStatus: LoadStatus.Init,
-  recentGamesStatus: LoadStatus.Init  
+  bestUsersStatus: LoadStatus.INIT,
+  mostPopularGamesStatus: LoadStatus.INIT,
+  recentGamesStatus: LoadStatus.INIT  
 };

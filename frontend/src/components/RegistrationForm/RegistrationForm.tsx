@@ -6,6 +6,7 @@ import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
 import { UserFieldsToRegister } from 'models';
 import { AppState, RegisterUser } from 'store';
+import { I18n } from 'react-i18next';
 
 import {
   RegistrationFormProps,
