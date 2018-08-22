@@ -8,7 +8,7 @@ export interface BattleProps {
   roomsInfo: RoomInfo[];
   games: GameModel[];
   status: LoadStatus;
-  children?: JSX.Element;  
+  children?: JSX.Element;
 
   joinBattleAction(payload: string): void;
 
@@ -17,5 +17,4 @@ export interface BattleProps {
   logoutUser(): void;
 
   initGames(): void;
-  
 }

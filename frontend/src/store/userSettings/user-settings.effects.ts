@@ -1,16 +1,16 @@
+import { SnackbarType } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { Observable, from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
 import { AppState, store } from 'store';
 import { FrontEndUser } from 'store/auth';
-import { i18nInstance } from 'utils/i18n';
 import { OpenSnackbar } from 'store/snackbar';
-import { SnackbarType } from 'models';
+import { i18nInstance } from 'utils/i18n';
 
 import {
   ChangeLanguage,
-  SaveLanguage,  
+  SaveLanguage,
   SaveLanguageSuccess,
   UserSettingsTypes
 } from './user-settings.action';
@@ -30,7 +30,7 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
           return new ChangePasswordSuccess();
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))  
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
         })
       )
     )
@@ -45,7 +45,7 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
           return new ChangeLanguage(res.data);
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))  
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
         })
       );
     })
@@ -72,16 +72,15 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
         catchError((error) => {
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))  
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
         })
       );
     })
   );
 
-
 export const UserSettingsEffects = [
   changePassword$,
   setLanguage$,
   changeLanguage$,
-  saveLanguage$ 
+  saveLanguage$
 ];

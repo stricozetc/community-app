@@ -10,5 +10,5 @@ export const initialState: State = {
   recentGames: [],
   bestUsersStatus: LoadStatus.INIT,
   mostPopularGamesStatus: LoadStatus.INIT,
-  recentGamesStatus: LoadStatus.INIT  
+  recentGamesStatus: LoadStatus.INIT,
 };

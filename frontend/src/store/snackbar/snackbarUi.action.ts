@@ -1,5 +1,6 @@
+import { SnackbarType } from 'models';
+
 import { action } from '../decorators';
-import { SnackbarType } from 'models'
 
 export enum SnackbarUiTypes {
   CloseSnackbar = '[snackbarUi] Close Snackbar',

@@ -4,10 +4,11 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
+import { SnackbarType } from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
+import { OpenSnackbar } from 'store/snackbar';
 import { deleteAuthToken, history, setAuthToken } from 'utils';
-
 
 import {
   AuthTypes,
@@ -19,8 +20,6 @@ import {
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
-import { OpenSnackbar } from 'store/snackbar';
-import { SnackbarType } from 'models';
 
 export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
   actions$.pipe(
@@ -36,11 +35,10 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           return new SetCurrentUser(decoded);
         }),
         catchError((error) => {
-          
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
         }
-          
-        )        
+
+        )
       )
     )
   );
@@ -51,11 +49,9 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new SuccessRegistration('./login')),
-        catchError((error) =>{
-          
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))
-        } 
-        )
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
+        })
       )
     )
   );

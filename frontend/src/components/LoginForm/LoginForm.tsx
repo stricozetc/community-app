@@ -7,15 +7,12 @@ import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
 
-
 import {
-  AuthStatus,  
+  AuthStatus,
   UserFieldsToLogin,
-  UserFieldsToRegister  
+  UserFieldsToRegister
 } from 'models';
 import { I18n } from 'react-i18next';
-
-
 
 import {
   LoginFormProps,
@@ -134,17 +131,15 @@ export class LoginFormComponent extends React.Component<
       }
     });
     this.checkValidation();
-  } 
+  }
 
   public render(): JSX.Element {
-    
-    
     return (
       <I18n>
         {
-          ( t ) => (
+          (t) => (
             <div className='ca-login-form'>
-              
+
               {this.props.children}
               <form onSubmit={this.onSubmit} className='ca-login-form__container'>
                 <FormGroup>
@@ -229,7 +224,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))  
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))
 });
 
 export const LoginForm = connect(

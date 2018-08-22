@@ -1,10 +1,10 @@
-import { AuthStatus, SnackbarType } from 'models';
 import { History } from 'history';
+import { AuthStatus, SnackbarType } from 'models';
 import { FrontEndUser } from 'store';
 
 export interface RootProps {
   status: AuthStatus;
-  user: FrontEndUser  | undefined;
+  user: FrontEndUser | undefined;
   history: History;
   battleName: string;
   isSnackbarOpen: boolean;
@@ -18,7 +18,7 @@ export interface RootProps {
 
   cleanStatistic(): void;
 
-  closeSnackbar(): void,
+  closeSnackbar(): void;
 
   changeLanguage(language: string): void;
 }

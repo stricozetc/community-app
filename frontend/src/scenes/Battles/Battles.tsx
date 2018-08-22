@@ -2,9 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  AuthStatus,  
-  RoomInfo,    
-  GameModel
+  AuthStatus,
+  GameModel,
+  RoomInfo
 } from 'models';
 
 import { CaGameCard, CaSpinner } from 'components';
@@ -16,7 +16,7 @@ import { BattleProps } from './Battles.model';
 import './Battles.scss';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
-    
+
   public componentWillMount(): void {
     const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
 
@@ -26,7 +26,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
     this.props.initGames();
   }
-  
+
   public getGameRooms(game: GameModel): RoomInfo[] {
     return this.props.roomsInfo.filter(r => r.gameId === game.id);
   }
@@ -48,7 +48,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return (
       <div className='ca-homepage'>
         {this.props.children}
-        
+
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
             {this.props.games.map((game: GameModel, index: number) => {
@@ -93,14 +93,14 @@ const mapStateToProps = (state: AppState) => ({
   battleStatus: state.battle.status,
   roomsInfo: state.battle.roomsInfo,
   games: state.games.games,
-  status: state.games.gamesStatus  
+  status: state.games.gamesStatus,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new LoadGames())  
+  initGames: () => dispatch(new LoadGames())
 });
 
 export const CaBattles = connect(

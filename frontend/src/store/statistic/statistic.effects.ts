@@ -2,20 +2,19 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
+import { SnackbarType } from 'models';
 import { HttpWrapper } from 'services';
+import { OpenSnackbar } from 'store/snackbar';
 
 import {
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
-  LoadBestUsersCompleted,  
-  LoadMostPopularGamesCompleted,  
-  LoadRecentGamesCompleted,  
+  LoadBestUsersCompleted,
+  LoadMostPopularGamesCompleted,
+  LoadRecentGamesCompleted,
   StatisticTypes
 } from './statistic.action';
-
-import { OpenSnackbar } from 'store/snackbar';
-import { SnackbarType } from 'models';
 
 export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
   actions$.pipe(
@@ -28,8 +27,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
           return new LoadBestUsersCompleted(bestUsers);
         }),
         catchError((error) => {
-          
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))  
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
         })
       )
     )
@@ -46,9 +44,8 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
           return new LoadMostPopularGamesCompleted(popGames);
         }),
         catchError((error) => {
-          
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))
-          })
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
+        })
       )
     )
   );
@@ -59,16 +56,15 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
       from(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
         map((res: any) => {
           const rg: any[] = res.data;
-          
+
           return new LoadRecentGamesCompleted(rg);
         }),
         catchError((error) => {
-          
-          return of(new OpenSnackbar({type: SnackbarType.ERROR, message: error.response.data}))
+          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
         })
       )
     )
-  );  
+  );
 
 export const StatisticEffects = [
   initBestUsers$,

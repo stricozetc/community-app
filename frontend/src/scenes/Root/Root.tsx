@@ -1,5 +1,8 @@
-import { CaEditGame } from 'components/EditGameComponent/EditGameComponent';
-import { CaSelect } from 'components/Mui/CaSelect';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+import SettingsIcon from '@material-ui/icons/SettingsRounded';
+import AdminIcon from '@material-ui/icons/SupervisorAccount';
+
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
 import * as React from 'react';
@@ -13,26 +16,24 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { AuthStatus, Languages, transitionDirection, AppMenuItem } from 'models';
+import { AppMenuItem, AuthStatus, Languages, transitionDirection } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
 
-import {  
+import {
   AppState,
   ChangeLanguage,
   CleanStatistic,
+  CloseSnackbar,
   FrontEndUser,
   LeaveBattle,
   LogoutUser,
   SetCurrentUser,
-  store  
+  store,
 } from 'store';
-
-import { CloseSnackbar } from 'store/snackbar'
-import { SnackbarErrorMessage } from 'components/Mui/CaSnackbar'
 
 import {
   getCurrentLanguage,
@@ -42,19 +43,17 @@ import {
 
 import {
   AppMenu,
-  CaAddGame,  
+  CaAddGame,
   CaButton,
+  CaEditGame,
   CaLogo,
   CaNavbar,
+  CaSelect,
+  CaSnackbar,
   LoginForm,
-  CaSnackbar
+  RegistrationForm,
+  SnackbarErrorMessage,
 } from 'components';
-
-import { RegistrationForm } from 'components';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import LogoutIcon from '@material-ui/icons/ExitToApp';
-import SettingsIcon from '@material-ui/icons/SettingsRounded';
-import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import { CaMyGames } from '../MyGames/MyGames';
 
@@ -71,7 +70,7 @@ if (token) {
 }
 
 export class RootComponent extends React.Component<RootProps> {
-     
+
   public componentWillMount(): void {
     this.props.changeLanguage(getCurrentLanguageFromLocalStorage());
   }
@@ -136,9 +135,9 @@ export class RootComponent extends React.Component<RootProps> {
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>
           <AccountCircle style={{
-              color: 'inherit',
-              fontSize: '42px'
-            }}
+            color: 'inherit',
+            fontSize: '42px'
+          }}
           />
         </div>
         <div className='app-menu__profile-text-block'>
@@ -177,40 +176,40 @@ export class RootComponent extends React.Component<RootProps> {
     return (
       <I18n>{
         (t, { i18n }) => (
-        <CaNavbar
-          linksToRender={[
-            {
-              text: t('battles'),
-              to: '/battles',
-              activeClassName: 'ca-navbar__nav-item--active',
-              disabled: !isAuthorized
-            },
-            {
-              text: t('statistics'),
-              to: '/statistics',
-              activeClassName: 'ca-navbar__nav-item--active',
-              disabled: !isAuthorized
-            }
-          ]}
-        > 
-          {/* <div className='ca-navbar__logout-btn-container'>
+          <CaNavbar
+            linksToRender={[
+              {
+                text: t('battles'),
+                to: '/battles',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              },
+              {
+                text: t('statistics'),
+                to: '/statistics',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              }
+            ]}
+          >
+            {/* <div className='ca-navbar__logout-btn-container'>
               {this.getButton(this.props.status)}
           </div> */}
 
-          <div className='ca-navbar__menu-container'>
-                {
-                  isAuthorized
+            <div className='ca-navbar__menu-container'>
+              {
+                isAuthorized
                   ? <AppMenu appMenuItems={appMenuItems} >
-                      {this.getMenuProfilePanel()}
-                    </AppMenu>
+                    {this.getMenuProfilePanel()}
+                  </AppMenu>
                   : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
-                }
-              </div>
+              }
+            </div>
 
-          <CaLogo
-                text='battlenet'
-                onClick={this.redToMainPage}
-              />
+            <CaLogo
+              text='battlenet'
+              onClick={this.redToMainPage}
+            />
 
             <div className='ca-navbar__select-language'>
               <CaSelect
@@ -229,18 +228,19 @@ export class RootComponent extends React.Component<RootProps> {
                 transitionDirection={transitionDirection.DOWN}
                 message={
                   <div>
-                    {Array.isArray(this.props.errors) ? 
-                    this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) => <div key={index}>{item.msg}</div>) :
-                    <div>{this.props.errors && this.props.errors.msg}</div>                    
+                    {Array.isArray(this.props.errors) ?
+                      this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) =>
+                        <div key={index}>{item.msg}</div>) :
+                      <div>{this.props.errors && this.props.errors.msg}</div>
                     }
                   </div>
                 }
-              />                           
+              />
             </div>
 
-        </CaNavbar>
+          </CaNavbar>
         )
-      }        
+      }
       </I18n>
     );
   }
@@ -370,7 +370,7 @@ const mapStateToProps = (state: AppState) => ({
   battleName: state.battle.battleName,
   errors: state.snackbarUi.message,
   isSnackbarOpen: state.snackbarUi.isOpen,
-  snackbarType: state.snackbarUi.type,  
+  snackbarType: state.snackbarUi.type,
   user: state.auth.user
 });
 
@@ -379,7 +379,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   cleanStatistic: () => dispatch(new CleanStatistic()),
   leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
-  closeSnackbar: () => dispatch(new CloseSnackbar()),  
+  closeSnackbar: () => dispatch(new CloseSnackbar()),
 });
 
 export const Root = connect(

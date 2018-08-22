@@ -7,3 +7,4 @@ export * from './socket';
 export * from './my-games';
 export * from './statistic';
 export * from './userSettings';
+export * from './snackbar';

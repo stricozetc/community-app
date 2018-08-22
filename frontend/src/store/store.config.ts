@@ -55,10 +55,9 @@ import {
   myGamesReducer
 } from './my-games';
 
-
 const rootReducers = combineReducers({
   battle: battleReducer,
-  auth: authReducer,  
+  auth: authReducer,
   games: gamesReducer,
   statistic: statisticReducer,
   socket: socketReducer,

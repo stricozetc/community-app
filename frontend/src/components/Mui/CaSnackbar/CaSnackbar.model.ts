@@ -12,6 +12,6 @@ export interface CaSnackbarProps extends WithStyles<typeof styles>, Omit<Snackba
 }
 
 export interface SnackbarErrorMessage {
-  code: number,
-  msg: string
+  code: number;
+  msg: string;
 }

@@ -1,5 +1,6 @@
-import { SnackbarUiState } from './interfaces';
 import { SnackbarType } from 'models';
+
+import { SnackbarUiState } from './interfaces';
 
 type State = SnackbarUiState;
 

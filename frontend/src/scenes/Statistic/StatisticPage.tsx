@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   AuthStatus,
   FrontEndSnackbarData,
-  LoadStatus  
+  LoadStatus
 } from 'models';
 
 import { AppState, LogoutUser } from 'store';
@@ -57,10 +57,9 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
         type: 'error',
         msg: 'Most Popular Games Init failed'
       });
-    }    
+    }
   }
 
-  
   public componentWillMount(): void {
     if (isEmpty(this.props.statistic.bestUsers)) {
       this.props.initBestUsers();
@@ -87,7 +86,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
   }
 
   public render(): JSX.Element {
-    
+
     const isDataLoaded =
       this.props.statistic.bestUsersStatus === LoadStatus.SUCCESS &&
       this.props.statistic.recentGamesStatus === LoadStatus.SUCCESS &&
@@ -100,7 +99,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
     return (
       <div className='ca-statistic'>
         {this.props.children}
-        
+
         {!isDataLoaded && !isDataFailed ? (
           <div className='ca-homepage__spinner-container'>
             <CaSpinner isActive={!isDataLoaded} />
@@ -124,7 +123,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   initBestUsers: () => dispatch(new InitBestUsers()),
   initMostPopularGames: () => dispatch(new InitMostPopularGames()),
-  initRecentGames: (userToken: string) => dispatch(new InitRecentGames(userToken))  
+  initRecentGames: (userToken: string) => dispatch(new InitRecentGames(userToken)),
 });
 
 export const CaStatisticPage = connect(
