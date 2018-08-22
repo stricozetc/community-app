@@ -9,8 +9,8 @@ export enum UserSettingsTypes {
   SetLanguage = '[user-settings] Set Language',
   ChangeLanguage = '[user-settings] Change Language',
   SaveLanguage = '[user-settings] Save Language',
-  SaveLanguageSuccess = '[user-settings] Save Language Success',
-  SaveLanguageError = '[user-settings] Save Language Error'
+  SaveLanguageSuccess = '[user-settings] Save Language (Success)',
+  SaveLanguageError = '[user-settings] Save Language (Error)'
 }
 
 @action()

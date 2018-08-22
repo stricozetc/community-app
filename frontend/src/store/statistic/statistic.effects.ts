@@ -9,11 +9,11 @@ import {
   InitMostPopularGames,
   InitRecentGames,
   LoadBestUsersCompleted,
-  LoadBestUsersFailed,
+  LoadBestUsersError,
   LoadMostPopularGamesCompleted,
-  LoadMostPopularGamesFailed,
+  LoadMostPopularGamesError,
   LoadRecentGamesCompleted,
-  LoadRecentGamesFailed,
+  LoadRecentGamesError,
   StatisticTypes
 } from './statistic.action';
 
@@ -27,7 +27,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
 
           return new LoadBestUsersCompleted(bestUsers);
         }),
-        catchError(error => of(new LoadBestUsersFailed(error)))
+        catchError(error => of(new LoadBestUsersError(error)))
       )
     )
   );
@@ -42,7 +42,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
 
           return new LoadMostPopularGamesCompleted(popGames);
         }),
-        catchError(error => of(new LoadMostPopularGamesFailed(error)))
+        catchError(error => of(new LoadMostPopularGamesError(error)))
       )
     )
   );
@@ -56,7 +56,7 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
 
           return new LoadRecentGamesCompleted(rg);
         }),
-        catchError(error => of(new LoadRecentGamesFailed(error)))
+        catchError(error => of(new LoadRecentGamesError(error)))
       )
     )
   );

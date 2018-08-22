@@ -17,7 +17,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadBestUsersCompleted: {
+    case StatisticTypes.LoadBestUsersSuccess: {
       return {
         ...state,
         bestUsers: action.payload,
@@ -26,7 +26,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadBestUsersFailed: {
+    case StatisticTypes.LoadBestUsersError: {
       return {
         ...state,
         bestUsersStatus: LoadStatus.Error
@@ -40,7 +40,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadMostPopularGamesCompleted: {
+    case StatisticTypes.LoadMostPopularGamesSuccess: {
       return {
         ...state,
         mostPopularGames: action.payload,
@@ -49,7 +49,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadMostPopularGamesFailed: {
+    case StatisticTypes.LoadMostPopularGamesError: {
       return {
         ...state,
         mostPopularGamesStatus: LoadStatus.Error
@@ -63,7 +63,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadRecentGamesCompleted: {
+    case StatisticTypes.LoadRecentGamesSuccess: {
       return {
         ...state,
         recentGames: action.payload,
@@ -72,7 +72,7 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
-    case StatisticTypes.LoadRecentGamesFailed: {
+    case StatisticTypes.LoadRecentGamesError: {
       return {
         ...state,
         recentGamesStatus: LoadStatus.Error
