@@ -10,7 +10,7 @@ export const authReducer = (state = initialState, action: AuthActions) => {
         case AuthTypes.SetCurrentUser: {
             return {
                 ...state,
-                status: !isEmpty(action.payload) ? AuthStatus.AUTHORIZED : AuthStatus.NOT_AUTHORIZED,
+                status: !isEmpty(action.payload) ? AuthStatus.Authorized : AuthStatus.NotAuthorized,
                 user: action.payload
             };
         }

@@ -11,7 +11,7 @@ import './landing.scss';
 
 class LandingComponent extends React.Component<LandingProps> {
   public componentDidMount(): void {
-    if (this.props.status === AuthStatus.AUTHORIZED) {
+    if (this.props.status === AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
   }

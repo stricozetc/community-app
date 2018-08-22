@@ -5,6 +5,6 @@ import { AuthState } from './interfaces';
 type State = AuthState;
 
 export const initialState: State = {
-  status: AuthStatus.NOT_AUTHORIZED,
+  status: AuthStatus.NotAuthorized,
   user: undefined
 };

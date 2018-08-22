@@ -8,4 +8,6 @@ export abstract class UserAuthenticationRepository {
     public abstract setUserLanguage(userEmail: string, userLanguage: string): Promise<boolean>;
 
     public abstract getUserLanguage(userEmail: string): Promise<string>;
+
+    public abstract checkUserEmail(userEmail: string): Promise<boolean>;
 }

@@ -1,38 +1,45 @@
 import { EChartOption } from 'echarts/lib/echarts';
 
 export interface WinRateDiagramData {
-  OPTIONS: EChartOption;
+  Options: EChartOption;
 }
 
 export enum BattleStatus {
-  INIT,
-  WAIT,
-  PLAY,
-  ERROR
+  Init,
+  Wait,
+  Play,
+  Error
 }
 
 export enum ResultStatus {
-  INIT,
-  WIN,
-  LOSE,
-  DRAW
+  Init,
+  Win,
+  Lose,
+  Draw
 }
 
 export enum AuthStatus {
-  NOT_AUTHORIZED,
-  REGISTERED,
-  AUTHORIZED
+  NotAuthorized,
+  Registered,
+  Authorized
 }
 
 export enum SocketStatus {
-  OPENED,
-  CLOSED
+  Opened,
+  Closed
 }
 
 export enum RoomStatus {
-  WAITING,
-  IN_GAME,
-  CLOSED
+  Waiting,
+  InGame,
+  Closed
+}
+
+export enum RestorePasswordStatus {
+  Init,
+  Wait,
+  Success,
+  Fail
 }
 
 export interface RoomInfo {
@@ -74,16 +81,16 @@ export interface UserFieldsToLogin {
 }
 
 export enum LoadStatus {
-  INIT,
-  FETCHING,
-  SUCCESS,
-  ERROR
+  Init,
+  Fetching,
+  Success,
+  Error
 }
 
 export enum StatTab {
-  BEST_USERS = 0,
-  THE_MOST_POPULAR_GAMES = 1,
-  RECENT_GAMES = 2
+  BestUsers = 0,
+  TheMostPopularGames = 1,
+  RecentGames = 2
 }
 
 export interface ErrorsFromServer {
@@ -96,42 +103,42 @@ export interface FrontEndSnackbarData {
 }
 
 export enum SnackbarType {
-  ERROR = 'error',
-  WARNING = 'warning',
-  INFO = 'info',
-  SUCCESS = 'success'
+  Error = 'error',
+  Warning = 'warning',
+  Info = 'info',
+  Success = 'success'
 }
 
 export enum transitionDirection {
-  LEFT = 'left',
-  RIGHT = 'right',
-  UP = 'up',
-  DOWN = 'down'
+  Left = 'left',
+  Right = 'right',
+  Up = 'up',
+  Down = 'down'
 }
 
 export enum Languages {
-  EN = 'en',
-  RU = 'ru'
+  En = 'en',
+  Ru = 'ru'
 }
 
 export enum RowProperty {
-  NAME = 'name',
-  PLAYED_TIME = 'playedTime',
-  SCORES = 'scores',
-  PLAYED_IN_WEEK = 'playedInWeek',
-  GAME = 'game',
-  APP_NAME = 'appName',
-  RESULT = 'result',
-  CREATED_AT = 'createdAt',
-  UPDATED_AT = 'updatedAt'
+  Name = 'name',
+  PlayedTime = 'playedTime',
+  Scores = 'scores',
+  PlayedInWeek = 'playedInWeek',
+  Game = 'game',
+  AppName = 'appName',
+  Result = 'result',
+  CreatedAt = 'createdAt',
+  UpdatedAt = 'updatedAt'
 }
 
 export enum TypeOfColumn {
-  STRING = 'String',
-  TIME_COUNT = 'Spent Time',
-  POINTS = 'Points',
-  RESULT = 'Result',
-  DATE = 'Date'
+  String = 'String',
+  TimeCount = 'Spent Time',
+  Points = 'Points',
+  Result = 'Result',
+  Date = 'Date'
 }
 export interface GameModel {
   id?: number;
@@ -176,18 +183,18 @@ export interface GameForSettingForm {
 }
 
 export enum SettingFormType {
-  EDIT_GAME = 'Edit Game',
-  ADD_GAME = 'Add Game'
+  EditGame = 'Edit Game',
+  AddGame = 'Add Game'
 }
 
 export enum chartsTypes {
-  WIN_RATE = 'winRate',
-  NO_CHARTS_AVAILABLE = 'noChartsAvailable'
+  WinRate = 'winRate',
+  NoChartsAvailable = 'noChartsAvailable'
 }
 
-export const JsMarathonCharts: string[] = [chartsTypes.WIN_RATE];
+export const JsMarathonCharts: string[] = [chartsTypes.WinRate];
 
-export const MyGameCharts: string[] = [chartsTypes.WIN_RATE];
+export const MyGameCharts: string[] = [chartsTypes.WinRate];
 export interface Errors {
   [key: string]: [{ code: number; msg: string }];
 }
@@ -206,4 +213,9 @@ export interface FrontEndValidationErrorsGameRegister {
   requestUrl: { mustBeCorrect: string, required: string };
   maxWaitingTime: { mustBeCorrect: string, required: string };
   redirectUrl: { mustBeCorrect: string, required: string };
+}
+
+export interface ErrorBlock {
+  code: number;
+  msg: string;
 }

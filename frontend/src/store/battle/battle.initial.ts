@@ -5,7 +5,7 @@ import { BattleState } from './interfaces';
 type State = BattleState;
 
 export const initialState: State = {
-  status: BattleStatus.INIT,
+  status: BattleStatus.Init,
   roomsInfo: [],
   roomURL: '',
   battleName: '',

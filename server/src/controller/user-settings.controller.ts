@@ -2,7 +2,7 @@ import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import passport from 'passport';
-import { AppTokenService } from './../service/app-token';
+
 import { validateChangePassword } from './../validation/change-password';
 import { UserSettingsRepository } from '../service/user-settings/user-settings';
 
