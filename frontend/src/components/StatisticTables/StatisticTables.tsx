@@ -88,13 +88,13 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
   }
 
   public showBestUsers = () => {
-    this.changeContent(StatTab.BEST_USERS);
+    this.changeContent(StatTab.BestUsers);
   }
   public showMostPopularGames = () => {
-    this.changeContent(StatTab.THE_MOST_POPULAR_GAMES);
+    this.changeContent(StatTab.TheMostPopularGames);
   }
   public showRecentGames = () => {
-    this.changeContent(StatTab.RECENT_GAMES);
+    this.changeContent(StatTab.RecentGames);
   }
 
   public render(): JSX.Element {

@@ -9,8 +9,10 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
+import { SnackbarType } from 'models';
 import { HttpWrapper } from 'services';
-import { GetErrors } from 'store/errors';
+
+import { OpenSnackbar } from '../snackbar';
 
 import {
   RestorePasswordTypes,
@@ -33,7 +35,10 @@ export const sendRestorePasswordRequest$ = (actions$: ActionsObservable<SendRest
 export const sendRestorePasswordRequestFail$ = (actions$: ActionsObservable<SendRestoreRequestFail>) =>
   actions$.pipe(
     ofType(RestorePasswordTypes.SendRestoreRequestError),
-    map((action) => new GetErrors(action.payload)),
+    map((action) => new OpenSnackbar({
+      type: SnackbarType.Error,
+      message: action.payload
+    })),
   );
 
 export const RestorePasswordEffects = [

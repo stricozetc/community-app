@@ -1,4 +1,4 @@
-import { ErrorsFromServer, RestorePasswordStatus } from 'models';
+import { RestorePasswordStatus } from 'models';
 
 export interface ForgetPasswordState {
   email: string;
@@ -16,10 +16,6 @@ export const initForgetPasswordState: ForgetPasswordState = {
 
 export interface ForgetPasswordProps {
   status: RestorePasswordStatus;
-  errors: ErrorsFromServer;
-  isSnackbarOpen: boolean;
   sendRestoreRequest(userEmail: string): void;
-  closeSnackbar(): void;
-  openSnackbar(): void;
   resetRequest(): void;
 }

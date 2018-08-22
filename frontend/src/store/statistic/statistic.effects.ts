@@ -11,11 +11,8 @@ import {
   InitMostPopularGames,
   InitRecentGames,
   LoadBestUsersCompleted,
-  LoadBestUsersError,
   LoadMostPopularGamesCompleted,
-  LoadMostPopularGamesError,
   LoadRecentGamesCompleted,
-  LoadRecentGamesError,
   StatisticTypes
 } from './statistic.action';
 
@@ -30,7 +27,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
           return new LoadBestUsersCompleted(bestUsers);
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
       )
     )
@@ -47,7 +44,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
           return new LoadMostPopularGamesCompleted(popGames);
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
       )
     )
@@ -63,7 +60,7 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
           return new LoadRecentGamesCompleted(rg);
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.ERROR, message: error.response.data }));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
       )
     )

@@ -107,30 +107,6 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.changeLanguage(language);
   }
 
-  /* public getButton(authStatus: number): JSX.Element {
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
-
-    return (
-      <div className='app-menu__profile'>
-        <div className='app-menu__profile-icon-block'>
-          <AccountCircle style={{
-            color: 'inherit',
-            fontSize: '42px'
-          }}
-          />
-        </div>
-        <div className='app-menu__profile-text-block'>
-          <div className='app-menu__profile-name'>
-            {this.props.user && this.props.user.name}
-          </div>
-          <div className='app-menu__profile-email'>
-            {this.props.user && this.props.user.email}
-          </div>
-        </div>
-      </div>
-    );
-  } */
-
   public getMenuProfilePanel = (): JSX.Element => {
     return (
       <div className='app-menu__profile'>
@@ -155,7 +131,7 @@ export class RootComponent extends React.Component<RootProps> {
 
   public getNavbar(authStatus: number): JSX.Element {
 
-    const isAuthorized = authStatus === AuthStatus.AUTHORIZED;
+    const isAuthorized = authStatus === AuthStatus.Authorized;
     const appMenuItems: AppMenuItem[] = [
       {
         icon: <SettingsIcon />,
@@ -193,17 +169,13 @@ export class RootComponent extends React.Component<RootProps> {
               }
             ]}
           >
-            {/* <div className='ca-navbar__logout-btn-container'>
-              {this.getButton(this.props.status)}
-          </div> */}
-
             <div className='ca-navbar__menu-container'>
               {
                 isAuthorized
-                    ? <AppMenu appMenuItems={appMenuItems} >
+                  ? <AppMenu appMenuItems={appMenuItems} >
                     {this.getMenuProfilePanel()}
                   </AppMenu>
-                    : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
+                  : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
               }
             </div>
 
@@ -214,42 +186,33 @@ export class RootComponent extends React.Component<RootProps> {
 
             <div className='ca-navbar__select-language'>
               <CaSelect
-                values={[Languages.EN, Languages.RU]}
+                values={[Languages.En, Languages.Ru]}
                 displayedValues={[t('ENToggle'), t('RUToggle')]}
                 handleChange={this.handleChange}
                 currentValue={getCurrentLanguage(i18n)}
               />
-
-              <CaSnackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={this.props.isSnackbarOpen}
-                autoHideDuration={4000}
-                handleClose={() => this.closeSnackbar()}
-                type={this.props.snackbarType}
-                transitionDirection={transitionDirection.DOWN}
-                message={
-                  <div>
-                    {Array.isArray(this.props.errors) ?
-                      this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) =>
-                        <div key={index}>{item.msg}</div>) :
-                      <div>{this.props.errors && this.props.errors.msg}</div>
-                    }
-                  </div>
-                }
-              />
             </div>
 
-              <div className='ca-navbar__select-language'>
-                <CaSelect
-                  values={[Languages.En, Languages.Ru]}
-                  displayedValues={[t('ENToggle'), t('RUToggle')]}
-                  handleChange={this.handleChange}
-                  currentValue={getCurrentLanguage(i18n)}
-                />
-              </div>
-            </CaNavbar>
-          )
-        }
+            <CaSnackbar
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+              open={this.props.isSnackbarOpen}
+              autoHideDuration={4000}
+              handleClose={() => this.closeSnackbar()}
+              type={this.props.snackbarType}
+              transitionDirection={transitionDirection.Down}
+              message={
+                <div>
+                  {Array.isArray(this.props.errors) ?
+                    this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) =>
+                      <div key={index}>{item.msg}</div>) :
+                    <div>{this.props.errors && this.props.errors.msg}</div>
+                  }
+                </div>
+              }
+            />
+          </CaNavbar>
+        )
+      }
       </I18n>
     );
   }
