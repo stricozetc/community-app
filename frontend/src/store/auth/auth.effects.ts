@@ -4,9 +4,10 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
+import { SnackbarType } from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
-import { GetErrors } from 'store/errors';
+import { OpenSnackbar } from 'store/snackbar';
 import { deleteAuthToken, history, setAuthToken } from 'utils';
 
 import {
@@ -14,7 +15,6 @@ import {
   LoginUser,
   LogoutUser,
   RegisterUser,
-  RegistrationError,
   RegistrationSuccess,
   SetCurrentUser
 } from './auth.action';
@@ -34,9 +34,8 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
 
           return new SetCurrentUser(decoded);
         }),
-        catchError(error => {
-          const errors = error.response.data;
-          return of(new RegistrationError(errors));
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
       )
     )
@@ -48,9 +47,8 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new RegistrationSuccess('./login')),
-        catchError(error => {
-          const errors = error.response.data;
-          return of(new GetErrors(!Array.isArray(errors) ? errors.msg : errors.map((err: any) => err.msg)));
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
       )
     )
@@ -70,7 +68,7 @@ export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) =>
     map(() => {
       Cookies.remove('jwtToken');
       deleteAuthToken();
-
+      console.log(`logout`);
       return new SetCurrentUser(undefined);
     })
   );

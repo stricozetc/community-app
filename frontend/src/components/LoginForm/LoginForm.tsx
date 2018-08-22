@@ -1,22 +1,18 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
-import { CaButton, CaSnackbar } from 'components';
+import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { AppState, LoginUser } from 'store';
-import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
-import { isObjectsEqual } from 'utils/isObjectsEqual';
 
 import {
   AuthStatus,
-  SnackbarType,
   UserFieldsToLogin,
-  transitionDirection
+  UserFieldsToRegister
 } from 'models';
 import { I18n } from 'react-i18next';
-
-import { isEmpty } from './../../utils/isEmpty';
 
 import {
   LoginFormProps,
@@ -41,11 +37,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     if (nextProps.status === AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
-
-    if (!isEmpty(nextProps.errors) && !isObjectsEqual(this.props.errors, nextProps.errors)) {
-      this.props.openSnackbar();
-    }
-
   }
 
   public componentDidMount(): void {
@@ -139,40 +130,16 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.checkValidation();
   }
 
-  public closeSnackbar = () => {
-    this.props.closeSnackbar();
-  }
-
   public redToForgetPassword(): void {
     this.props.history.push('/forget-password');
   }
 
   public render(): JSX.Element {
-    const { errors } = this.props;
-    const keys = errors && Object.keys(errors);
     return (
       <I18n>
         {
           (t) => (
             <div className='ca-login-form'>
-              <CaSnackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={this.props.isSnackbarOpen}
-                autoHideDuration={4000}
-                handleClose={this.closeSnackbar}
-                type={SnackbarType.Error}
-                //  transitionComponent = {this.transitionUp}
-                transitionDirection={transitionDirection.Down}
-                message={
-                  <div>
-                    {keys && keys.map((k: string) =>
-                      (
-                        <div>* {errors[k].msg} </div>
-                      )
-                    )}
-                  </div>
-                }
-              />
 
               {this.props.children}
               <form onSubmit={this.onSubmit} className='ca-login-form__container'>
@@ -200,9 +167,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 
                 <FormGroup>
                   <TextField
-                    style={{
-                      marginTop: '20px'
-                    }}
+                    className='ca-login-form__password-field'
                     id='password'
                     label={t('passwordLabel')}
                     name='password'
@@ -263,10 +228,8 @@ const mapStateToProps = (state: AppState) => ({
   isSnackbarOpen: state.snackbarUi.isOpen
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToLogin) => dispatch(new LoginUser(user)),
-  closeSnackbar: () => dispatch(new CloseSnackbar()),
-  openSnackbar: () => dispatch(new OpenSnackbar())
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))
 });
 
 export const LoginForm = connect(

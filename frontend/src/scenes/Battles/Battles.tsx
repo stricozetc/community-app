@@ -4,28 +4,18 @@ import { connect } from 'react-redux';
 import {
   AuthStatus,
   GameModel,
-  LoadStatus,
-  RoomInfo,
-  SnackbarType,
-  transitionDirection
+  RoomInfo
 } from 'models';
 
-import { CaGameCard, CaSnackbar, CaSpinner } from 'components';
+import { CaGameCard, CaSpinner } from 'components';
 import { AppState, LogoutUser } from 'store';
 import { JoinBattle, LeaveBattle, LoadGames } from 'store';
-import { CloseSnackbar, OpenSnackbar } from 'store/snackbar';
 import { isEmpty } from 'utils/isEmpty';
 
 import { BattleProps } from './Battles.model';
 import './Battles.scss';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
-
-  public componentWillReceiveProps(nextProps: BattleProps): void {
-    if (nextProps.status === LoadStatus.Error && nextProps.status !== this.props.status) {
-      this.props.openSnackbar();
-    }
-  }
 
   public componentWillMount(): void {
     const isAuthenticated = this.props.authStatus === AuthStatus.Authorized;
@@ -35,10 +25,6 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     }
 
     this.props.initGames();
-  }
-
-  public closeSnackbar = () => {
-    this.props.closeSnackbar();
   }
 
   public getGameRooms(game: GameModel): RoomInfo[] {
@@ -62,16 +48,6 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return (
       <div className='ca-homepage'>
         {this.props.children}
-
-        <CaSnackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={this.props.isSnackbarOpen}
-          autoHideDuration={4000}
-          handleClose={this.closeSnackbar}
-          type={SnackbarType.Error}
-          message={<span> Game fetching Failed! </span>}
-          transitionDirection={transitionDirection.Down}
-        />
 
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
@@ -118,16 +94,13 @@ const mapStateToProps = (state: AppState) => ({
   roomsInfo: state.battle.roomsInfo,
   games: state.games.games,
   status: state.games.gamesStatus,
-  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
-  initGames: () => dispatch(new LoadGames()),
-  closeSnackbar: () => dispatch(new CloseSnackbar()),
-  openSnackbar: () => dispatch(new OpenSnackbar())
+  initGames: () => dispatch(new LoadGames())
 });
 
 export const CaBattles = connect(

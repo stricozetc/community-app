@@ -55,8 +55,6 @@ import {
   myGamesReducer
 } from './my-games';
 
-import { errorsReducer } from './errors';
-
 import {
   RestorePasswordEffects,
   RestorePasswordState,
@@ -66,7 +64,6 @@ import {
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
-  errors: errorsReducer,
   games: gamesReducer,
   statistic: statisticReducer,
   socket: socketReducer,

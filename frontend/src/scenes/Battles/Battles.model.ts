@@ -9,17 +9,12 @@ export interface BattleProps {
   games: GameModel[];
   status: LoadStatus;
   children?: JSX.Element;
-  isSnackbarOpen: boolean;
 
-  joinBattleAction(payload: string): any;
+  joinBattleAction(payload: string): void;
 
-  leaveBattleAction(payload: string): any;
+  leaveBattleAction(payload: string): void;
 
   logoutUser(): void;
 
   initGames(): void;
-
-  closeSnackbar(): void;
-
-  openSnackbar(): void;
 }

@@ -22,7 +22,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
   public getBattleButton = (
     status: BattleStatus
   ): JSX.Element => {
-    if (status === BattleStatus.INIT) {
+    if (status === BattleStatus.Init) {
       return (
         <I18n>
           {

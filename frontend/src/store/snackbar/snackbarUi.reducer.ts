@@ -6,7 +6,9 @@ export const snackbarUiReducer = (state = initialState, action: SnackbarUiAction
     case SnackbarUiTypes.OpenSnackbar: {
       return {
         ...state,
-        isOpen: true
+        isOpen: true,
+        type: action.payload.type,
+        message: action.payload.message
       };
     }
     case SnackbarUiTypes.CloseSnackbar: {

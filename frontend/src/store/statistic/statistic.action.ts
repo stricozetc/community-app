@@ -71,7 +71,7 @@ export class LoadRecentGamesCompleted {
 export class LoadRecentGamesError {
   public readonly type = StatisticTypes.LoadRecentGamesError;
 
-  constructor(public err: ErrorsFromServer) { }
+  constructor(public payload: any ) { }
 }
 
 @action()

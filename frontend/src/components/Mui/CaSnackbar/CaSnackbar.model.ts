@@ -10,3 +10,8 @@ export interface CaSnackbarProps extends WithStyles<typeof styles>, Omit<Snackba
   transitionDirection: transitionDirection;
   handleClose?: () => void;
 }
+
+export interface SnackbarErrorMessage {
+  code: number;
+  msg: string;
+}

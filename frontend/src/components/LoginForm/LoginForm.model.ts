@@ -1,11 +1,12 @@
+import { History } from 'history';
 import { AuthStatus, UserFieldsToLogin } from 'models';
-import { ErrorsFromServer } from 'models';
 
 export interface LoginFormState {
   email: string;
   password: string;
   isPasswordValid: boolean;
   isEmailValid: boolean;
+  isSnackbarOpen: boolean;
   touched: {
     email: boolean;
     password: boolean;
@@ -19,6 +20,7 @@ export const initLoginFormState: LoginFormState = {
   password: '',
   isPasswordValid: false,
   isEmailValid: false,
+  isSnackbarOpen: false,
   touched: {
     email: false,
     password: false
@@ -26,15 +28,10 @@ export const initLoginFormState: LoginFormState = {
   emailErrors: [],
   passwordErrors: [],
 };
+
 export interface LoginFormProps {
   status: AuthStatus;
-  history: any;
-  errors: ErrorsFromServer;
-  isSnackbarOpen: boolean;
+  history: History;
 
   loginUser(user: UserFieldsToLogin): void;
-
-  closeSnackbar(): void;
-
-  openSnackbar(): void;
 }

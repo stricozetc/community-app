@@ -2,18 +2,17 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
+import { SnackbarType } from 'models';
 import { HttpWrapper } from 'services';
+import { OpenSnackbar } from 'store/snackbar';
 
 import {
   InitBestUsers,
   InitMostPopularGames,
   InitRecentGames,
   LoadBestUsersCompleted,
-  LoadBestUsersError,
   LoadMostPopularGamesCompleted,
-  LoadMostPopularGamesError,
   LoadRecentGamesCompleted,
-  LoadRecentGamesError,
   StatisticTypes
 } from './statistic.action';
 
@@ -27,7 +26,9 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
 
           return new LoadBestUsersCompleted(bestUsers);
         }),
-        catchError(error => of(new LoadBestUsersError(error)))
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        })
       )
     )
   );
@@ -42,7 +43,9 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
 
           return new LoadMostPopularGamesCompleted(popGames);
         }),
-        catchError(error => of(new LoadMostPopularGamesError(error)))
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        })
       )
     )
   );
@@ -56,7 +59,9 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
 
           return new LoadRecentGamesCompleted(rg);
         }),
-        catchError(error => of(new LoadRecentGamesError(error)))
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        })
       )
     )
   );
