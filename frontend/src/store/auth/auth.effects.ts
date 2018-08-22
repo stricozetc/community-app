@@ -14,8 +14,9 @@ import {
   LoginUser,
   LogoutUser,
   RegisterUser,
-  SetCurrentUser,
-  RegistrationSuccess
+  RegistrationError,
+  RegistrationSuccess,
+  SetCurrentUser
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
@@ -35,7 +36,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
         }),
         catchError(error => {
           const errors = error.response.data;
-          return of(new GetErrors(!Array.isArray(errors) ? errors.msg : errors.map((err: any) => err.msg)));
+          return of(new RegistrationError(errors));
         })
       )
     )
