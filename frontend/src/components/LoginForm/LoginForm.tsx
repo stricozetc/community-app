@@ -22,10 +22,7 @@ import {
 
 import './LoginForm.scss';
 
-export class LoginFormComponent extends React.Component<
-  LoginFormProps,
-  LoginFormState
-  > {
+export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
   constructor(props: LoginFormProps) {
     super(props);
 
@@ -37,13 +34,13 @@ export class LoginFormComponent extends React.Component<
   }
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
-    if (nextProps.status === AuthStatus.AUTHORIZED) {
+    if (nextProps.status === AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
   }
 
   public componentDidMount(): void {
-    if (this.props.status === AuthStatus.AUTHORIZED) {
+    if (this.props.status === AuthStatus.Authorized) {
       this.props.history.push('/homepage');
     }
   }
@@ -133,6 +130,10 @@ export class LoginFormComponent extends React.Component<
     this.checkValidation();
   }
 
+  public redToForgetPassword(): void {
+    this.props.history.push('/forget-password');
+  }
+
   public render(): JSX.Element {
     return (
       <I18n>
@@ -186,15 +187,19 @@ export class LoginFormComponent extends React.Component<
                       );
                     })}
                 </FormGroup>
-
-                <CaButton
-                  color='primary'
-                  type='submit'
-                  className='ca-login-form__login-btn'
-                  disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
-                >
-                  {t('login').toUpperCase()}
-                </CaButton>
+                <div className='ca-login-form__footer'>
+                  <CaButton
+                    color='primary'
+                    type='submit'
+                    className='ca-login-form__login-btn'
+                    disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
+                  >
+                    {t('login').toUpperCase()}
+                  </CaButton>
+                  <div className='ca-login-form__forget-password'>
+                    <a href='/#/forget-password' onClick={() => this.redToForgetPassword()}>{t('forget-password')}</a>
+                  </div>
+                </div>
               </form>
             </div>
           )

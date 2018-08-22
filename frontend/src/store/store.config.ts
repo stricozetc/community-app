@@ -55,6 +55,12 @@ import {
   myGamesReducer
 } from './my-games';
 
+import {
+  RestorePasswordEffects,
+  RestorePasswordState,
+  restorePasswordReducer
+} from './restore-password';
+
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
@@ -63,7 +69,8 @@ const rootReducers = combineReducers({
   socket: socketReducer,
   snackbarUi: snackbarUiReducer,
   myGames: myGamesReducer,
-  userSettings: userSettingsReducer
+  userSettings: userSettingsReducer,
+  restorePassword: restorePasswordReducer,
 });
 
 const rootEpic = combineEpics(
@@ -74,6 +81,7 @@ const rootEpic = combineEpics(
   ...SocketEffects,
   ...MyGamesEffects,
   ...UserSettingsEffects,
+  ...RestorePasswordEffects,
 );
 
 const epicMiddleware = createEpicMiddleware();
@@ -86,6 +94,7 @@ export interface AppState {
   errors: {};
   socket: SocketState;
   snackbarUi: SnackbarUiState;
+  restorePassword: RestorePasswordState;
   userSettings: UserSettingsState;
   myGames: MyGamesState;
 }

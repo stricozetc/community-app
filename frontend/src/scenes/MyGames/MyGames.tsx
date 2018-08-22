@@ -50,7 +50,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
     }
 
     public componentWillMount(): void {
-        const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+        const isAuthenticated = this.props.authStatus === AuthStatus.Authorized;
 
         if (!isAuthenticated) {
             this.props.history.push('/login');
@@ -62,17 +62,17 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
     public render(): JSX.Element {
         const columnDef = [
             { headerName: 'game',
-              field: RowProperty.APP_NAME,
-              type: TypeOfColumn.STRING,
+              field: RowProperty.AppName,
+              type: TypeOfColumn.String,
               editAction: (id: number) => history.push(`/my-games/edit-game/${id}`),
               deleteAction: (game: GameModel) => this.handleOpenDialog(game),
               lockAction: (appToken: string) => this.handleOpenPopover(appToken)},
             { headerName: 'createdAt',
-              field: RowProperty.CREATED_AT,
-              type: TypeOfColumn.DATE},
+              field: RowProperty.CreatedAt,
+              type: TypeOfColumn.Date},
             { headerName: 'updatedAt',
-              field: RowProperty.UPDATED_AT,
-              type: TypeOfColumn.DATE},
+              field: RowProperty.UpdatedAt,
+              type: TypeOfColumn.Date},
         ];
 
         const rowData = this.props.games;

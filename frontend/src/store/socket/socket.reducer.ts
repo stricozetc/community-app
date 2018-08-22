@@ -8,7 +8,7 @@ export const socketReducer = (state = initialState, action: SocketActions) => {
     case SocketActionTypes.CloseSocket: {
       return {
         ...state,
-        status: SocketStatus.CLOSED
+        status: SocketStatus.Closed
       };
     }
 

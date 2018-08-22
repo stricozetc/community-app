@@ -11,8 +11,11 @@ import {
   InitMostPopularGames,
   InitRecentGames,
   LoadBestUsersCompleted,
+  LoadBestUsersError,
   LoadMostPopularGamesCompleted,
+  LoadMostPopularGamesError,
   LoadRecentGamesCompleted,
+  LoadRecentGamesError,
   StatisticTypes
 } from './statistic.action';
 

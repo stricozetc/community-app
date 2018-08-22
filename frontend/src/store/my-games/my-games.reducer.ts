@@ -12,78 +12,78 @@ export const myGamesReducer = (state = initialState, action: MyGameActions) => {
         case MyGamesActionTypes.InitMyGames : {
             return {
                 ...state,
-                myGamesStatus: LoadStatus.FETCHING
+                myGamesStatus: LoadStatus.Fetching
             };
         }
         case MyGamesActionTypes.LoadMyGamesSuccess : {
             return {
                 ...state,
                 myGames: action.payload,
-                myGamesStatus: LoadStatus.SUCCESS
+                myGamesStatus: LoadStatus.Success
             };
         }
         case MyGamesActionTypes.LoadMyGamesError : {
             return {
                 ...state,
-                myGamesStatus: LoadStatus.ERROR
+                myGamesStatus: LoadStatus.Error
             };
         }
         case MyGamesActionTypes.AddGame : {
             return {
                 ...state,
-                addGameStatus: LoadStatus.FETCHING
+                addGameStatus: LoadStatus.Fetching
             };
         }
         case MyGamesActionTypes.AddGameSuccess : {
             return {
                 ...state,
                 myGames: [...state.myGames, action.payload],
-                addGameStatus: LoadStatus.SUCCESS
+                addGameStatus: LoadStatus.Success
             };
         }
         case MyGamesActionTypes.AddGameError : {
             return {
                 ...state,
-                addGameStatus: LoadStatus.ERROR
+                addGameStatus: LoadStatus.Error
             };
         }
 
         case MyGamesActionTypes.DeleteGame : {
             return {
                 ...state,
-                deleteGameStatus: LoadStatus.FETCHING
+                deleteGameStatus: LoadStatus.Fetching
             };
         }
         case MyGamesActionTypes.DeleteGameSuccess : {
             return {
                 ...state,
                 myGames: action.payload,
-                deleteGameStatus: LoadStatus.SUCCESS
+                deleteGameStatus: LoadStatus.Success
             };
         }
         case MyGamesActionTypes.DeleteGameError : {
             return {
                 ...state,
-                deleteGameStatus: LoadStatus.ERROR
+                deleteGameStatus: LoadStatus.Error
             };
         }
         case MyGamesActionTypes.EditGame : {
             return {
                 ...state,
-                editGameStatus: LoadStatus.FETCHING
+                editGameStatus: LoadStatus.Fetching
             };
         }
         case MyGamesActionTypes.EditGameSuccess : {
             return {
                 ...state,
                 myGames: action.payload,
-                editGameStatus: LoadStatus.SUCCESS
+                editGameStatus: LoadStatus.Success
             };
         }
         case MyGamesActionTypes.EditGameError : {
             return {
                 ...state,
-                editGameStatus: LoadStatus.ERROR
+                editGameStatus: LoadStatus.Error
             };
         }
 

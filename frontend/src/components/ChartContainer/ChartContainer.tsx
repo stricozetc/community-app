@@ -44,7 +44,7 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
     let chartComponent: JSX.Element;
 
     switch (chartName) {
-      case chartsTypes.WIN_RATE: {
+      case chartsTypes.WinRate: {
         const diagramData = ChartsService.getWinRateData(itemName, statistics.recentGames);
 
         chartComponent = <CircleDiagram diagramData={diagramData} />;

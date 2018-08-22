@@ -37,30 +37,30 @@ export const CaTable = withStyles(styles)(
       const text = row[`${column.field}`];
 
       switch (column.type) {
-        case TypeOfColumn.STRING: {
+        case TypeOfColumn.String: {
           textContent = text;
           break;
         }
-        case TypeOfColumn.TIME_COUNT: {
+        case TypeOfColumn.TimeCount: {
           textContent = t('minutes', { count: text });
           break;
         }
-        case TypeOfColumn.POINTS: {
+        case TypeOfColumn.Points: {
           textContent = text;
           break;
         }
-        case TypeOfColumn.RESULT: {
-          if (text === ResultStatus.WIN) {
+        case TypeOfColumn.Result: {
+          if (text === ResultStatus.Win) {
             textContent = t('win');
-          } else if (text === ResultStatus.LOSE) {
+          } else if (text === ResultStatus.Lose) {
             textContent = t('lose');
-          } else if (text === ResultStatus.DRAW) {
+          } else if (text === ResultStatus.Draw) {
             textContent = t('draw');
           }
 
           break;
         }
-        case TypeOfColumn.DATE: {
+        case TypeOfColumn.Date: {
           textContent = new Date(text).toLocaleString(i18nInstance.language, options);
           break;
         }

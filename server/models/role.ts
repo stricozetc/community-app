@@ -25,6 +25,6 @@ export const RoleModel = db.connect.define(dbConfig.rolesModel, {
     });
 
 export enum Roles {
-    admin = 'admin',
-    user = 'user'
+    Admin = 'admin',
+    User = 'user'
 }

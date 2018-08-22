@@ -3,9 +3,7 @@ import { Request, Response } from 'express';
 
 import { inject } from 'inversify';
 import { AppTokenService } from './../service/app-token';
-import {
-    MyGamesRepository
-} from './../service/my-games';
+import { MyGamesRepository } from './../service/my-games';
 
 import { Game } from './../../models/games';
 import { validateAppDataInput } from '../validation/register-app';
@@ -49,7 +47,7 @@ export class MyGameController {
         let newGame: Game = request.body;
 
         const appToken = await this.tokenService.create(newGame);
-        newGame = Object.assign({}, newGame, {appToken});
+        newGame = Object.assign({}, newGame, { appToken });
 
         const { errors, isValid } = validateAppDataInput(newGame);
 

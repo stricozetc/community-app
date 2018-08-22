@@ -15,7 +15,6 @@ import { keys } from '../../config/keys';
 import { UserAuthenticationRepository } from './user-authentication';
 import { User } from '../../../Interfaces/User';
 
-import { ErrorBlock } from '../../../models/error';
 import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger';
 
@@ -142,6 +141,20 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
             }
         } catch (error) {
             this.loggerService.errorLog(error);
+            throw technicalErr.databaseCrash;
+        }
+    }
+
+    public async checkUserEmail(userEmail: string): Promise<boolean> {
+        try {
+            const user: User = await UserModel.findOne({ where: { email: userEmail } });
+            if (user) {
+                return true;
+            } else {
+                throw logicErr.notFoundEmail;
+            }
+        } catch (error) {
+            console.log(error);
             throw technicalErr.databaseCrash;
         }
     }

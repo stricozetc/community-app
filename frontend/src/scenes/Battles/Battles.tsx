@@ -18,7 +18,7 @@ import './Battles.scss';
 class CaBattlesComponent extends React.Component<BattleProps> {
 
   public componentWillMount(): void {
-    const isAuthenticated = this.props.authStatus === AuthStatus.AUTHORIZED;
+    const isAuthenticated = this.props.authStatus === AuthStatus.Authorized;
 
     if (!isAuthenticated) {
       this.props.history.push('/login');

@@ -13,69 +13,69 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
     case StatisticTypes.InitBestUsers: {
       return {
         ...state,
-        bestUsersStatus: LoadStatus.FETCHING
+        bestUsersStatus: LoadStatus.Fetching
       };
     }
 
-    case StatisticTypes.LoadBestUsersCompleted: {
+    case StatisticTypes.LoadBestUsersSuccess: {
       return {
         ...state,
         bestUsers: action.payload,
 
-        bestUsersStatus: LoadStatus.SUCCESS
+        bestUsersStatus: LoadStatus.Success
       };
     }
 
-    case StatisticTypes.LoadBestUsersFailed: {
+    case StatisticTypes.LoadBestUsersError: {
       return {
         ...state,
-        bestUsersStatus: LoadStatus.ERROR
+        bestUsersStatus: LoadStatus.Error
       };
     }
 
     case StatisticTypes.InitMostPopularGames: {
       return {
         ...state,
-        mostPopularGamesStatus: LoadStatus.FETCHING
+        mostPopularGamesStatus: LoadStatus.Fetching
       };
     }
 
-    case StatisticTypes.LoadMostPopularGamesCompleted: {
+    case StatisticTypes.LoadMostPopularGamesSuccess: {
       return {
         ...state,
         mostPopularGames: action.payload,
 
-        mostPopularGamesStatus: LoadStatus.SUCCESS
+        mostPopularGamesStatus: LoadStatus.Success
       };
     }
 
-    case StatisticTypes.LoadMostPopularGamesFailed: {
+    case StatisticTypes.LoadMostPopularGamesError: {
       return {
         ...state,
-        mostPopularGamesStatus: LoadStatus.ERROR
+        mostPopularGamesStatus: LoadStatus.Error
       };
     }
 
     case StatisticTypes.InitRecentGames: {
       return {
         ...state,
-        recentGamesStatus: LoadStatus.FETCHING
+        recentGamesStatus: LoadStatus.Fetching
       };
     }
 
-    case StatisticTypes.LoadRecentGamesCompleted: {
+    case StatisticTypes.LoadRecentGamesSuccess: {
       return {
         ...state,
         recentGames: action.payload,
 
-        recentGamesStatus: LoadStatus.SUCCESS
+        recentGamesStatus: LoadStatus.Success
       };
     }
 
-    case StatisticTypes.LoadRecentGamesFailed: {
+    case StatisticTypes.LoadRecentGamesError: {
       return {
         ...state,
-        recentGamesStatus: LoadStatus.ERROR
+        recentGamesStatus: LoadStatus.Error
       };
     }
 

@@ -45,14 +45,14 @@ db.connect.sync({
 })
     .then(() => {
         return RoleModel.upsert({
-            name: Roles.admin,
+            name: Roles.Admin,
             createAt: Date.now(),
             updatedAt: Date.now()
         });
     })
     .then(() => {
         return RoleModel.upsert({
-            name: Roles.user,
+            name: Roles.User,
             createAt: Date.now(),
             updatedAt: Date.now()
         });

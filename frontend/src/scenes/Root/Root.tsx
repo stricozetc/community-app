@@ -18,6 +18,7 @@ import {
 
 import { AppMenuItem, AuthStatus, Languages, transitionDirection } from 'models';
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
+import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
 import { Landing } from 'scenes/Landing';
 import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
@@ -96,11 +97,11 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/login');
   }
 
-  public redToMainPage = () => {
+  public redToMainPage = (): void => {
     this.props.history.push('/');
   }
 
-  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  public handleChange = (event: any) => {
     const language = event.target.value;
 
     this.props.changeLanguage(language);
@@ -199,10 +200,10 @@ export class RootComponent extends React.Component<RootProps> {
             <div className='ca-navbar__menu-container'>
               {
                 isAuthorized
-                  ? <AppMenu appMenuItems={appMenuItems} >
+                    ? <AppMenu appMenuItems={appMenuItems} >
                     {this.getMenuProfilePanel()}
                   </AppMenu>
-                  : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
+                    : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
               }
             </div>
 
@@ -238,9 +239,17 @@ export class RootComponent extends React.Component<RootProps> {
               />
             </div>
 
-          </CaNavbar>
-        )
-      }
+              <div className='ca-navbar__select-language'>
+                <CaSelect
+                  values={[Languages.En, Languages.Ru]}
+                  displayedValues={[t('ENToggle'), t('RUToggle')]}
+                  handleChange={this.handleChange}
+                  currentValue={getCurrentLanguage(i18n)}
+                />
+              </div>
+            </CaNavbar>
+          )
+        }
       </I18n>
     );
   }
@@ -261,12 +270,22 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
+              path='/forget-password'
+              render={props =>
+                <CaForgetPasswordPage {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaForgetPasswordPage>
+              }
+            />
+
+            <Route
+              exact={true}
               path='/register'
-              render={props => (
-                <RegistrationForm {...props}>
+              render={props =>
+                <RegistrationForm {...props} >
                   {this.getNavbar(this.props.status)}
                 </RegistrationForm>
-              )}
+              }
             />
 
             <Route

@@ -23,11 +23,11 @@ interface Props {
 
 export class CurrentBattleComponent extends React.Component<Props> {
   public componentWillMount(): void {
-    if (this.props.authStatus === AuthStatus.NOT_AUTHORIZED) {
+    if (this.props.authStatus === AuthStatus.NotAuthorized) {
       this.props.history.push('/battles');
     }
 
-    if (this.props.gameStatus === BattleStatus.INIT) {
+    if (this.props.gameStatus === BattleStatus.Init) {
       this.props.history.push('/login');
     }
   }
