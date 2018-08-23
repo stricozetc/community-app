@@ -1,3 +1,5 @@
+import { History } from 'history';
+
 import { AuthStatus, UserFieldsToRegister } from 'models';
 
 export interface RegistrationFormState {
@@ -42,7 +44,7 @@ export const initRegistrationFormState: RegistrationFormState = {
   language: 'eng'
 };
 export interface RegistrationFormProps {
-  history: any;
+  history: History;
   status: AuthStatus;
 
   language: string;

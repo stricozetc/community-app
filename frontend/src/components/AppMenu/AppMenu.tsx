@@ -31,7 +31,7 @@ export const AppMenu = withStyles(styles)(
       };
     }
 
-    public handleIconClick = (event: any) => {
+    public handleIconClick = (event: React.MouseEvent<HTMLElement>) => {
       if (!this.state.anchorEl) {
         this.handleOpen(event);
       } else {

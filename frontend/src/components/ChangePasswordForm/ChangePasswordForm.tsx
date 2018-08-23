@@ -15,20 +15,33 @@ import './ChangePasswordForm.scss';
 export class ChangePasswordForm extends React.Component<
   ChangePasswordFormProps,
   ChangePasswordFormState
-> {
+  > {
   constructor(props: ChangePasswordFormProps) {
     super(props);
 
     this.state = initState;
   }
 
-  public onChange = (event: any) => {
-    const target = event.target;
+  public onChangeOldPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+    const oldPassword = event.target.value;
 
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    this.setState({ oldPassword });
+  }
 
-    this.setState({ [name]: value } as ChangePasswordFormState);
+  public onChangeNewPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+    const newPassword = event.target.value;
+
+    this.setState({ newPassword });
+  }
+
+  public onChangeRepeatNewPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+    const repeatNewPassword = event.target.value;
+
+    this.setState({ repeatNewPassword });
+  }
+
+  public onSubmit(event: React.FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
   }
 
   public checkValidation(): void {
@@ -128,7 +141,7 @@ export class ChangePasswordForm extends React.Component<
     });
   }
 
-  public onBlur = (field: string) => (evt: any) => {
+  public onBlur = (field: string) => (evt: React.FormEvent<HTMLElement>) => {
     this.setState({
       touched: {
         ...this.state.touched,
@@ -167,7 +180,7 @@ export class ChangePasswordForm extends React.Component<
                   label={t('oldPasswordLabel')}
                   name='oldPassword'
                   value={this.state.oldPassword}
-                  onChange={this.onChange}
+                  onChange={this.onChangeOldPassword}
                   type='password'
                   onBlur={this.onBlur('oldPassword')}
                   error={
@@ -199,7 +212,7 @@ export class ChangePasswordForm extends React.Component<
                   label={t('newPasswordLabel')}
                   name='newPassword'
                   value={this.state.newPassword}
-                  onChange={this.onChange}
+                  onChange={this.onChangeNewPassword}
                   type='password'
                   onBlur={this.onBlur('newPassword')}
                   error={
@@ -231,7 +244,7 @@ export class ChangePasswordForm extends React.Component<
                   label={t('repeatNewPasswordLabel')}
                   name='repeatNewPassword'
                   value={this.state.repeatNewPassword}
-                  onChange={this.onChange}
+                  onChange={this.onChangeRepeatNewPassword}
                   type='password'
                   onBlur={this.onBlur('repeatNewPassword')}
                   error={
@@ -266,10 +279,10 @@ export class ChangePasswordForm extends React.Component<
                 {t('changePasswordLabel')}
               </CaButton>
               {this.props.changePasswordStatus === 2 && (
-              <div className='ca-change-password-form__success'>
-                {t('passwordChangedButton')}
-              </div>
-            )}
+                <div className='ca-change-password-form__success'>
+                  {t('passwordChangedButton')}
+                </div>
+              )}
             </form>
           </div>
         )}
