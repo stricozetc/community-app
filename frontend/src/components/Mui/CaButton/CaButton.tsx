@@ -1,20 +1,20 @@
 import * as React from 'react';
 
-import { withStyles } from '@material-ui/core';
+import { ButtonProps } from '@material-ui/core/Button';
 import Button from '@material-ui/core/Button';
 import * as classNames from 'classnames';
+import { createStyled } from 'utils';
 
-import { CaButtonProps } from './CaButton.model';
 import { styles } from './CaButton.styles';
 
-export const CaButton = withStyles(styles)((props: CaButtonProps) => {
-  const { classes, children, className, ...otherProps } = props;
+const Styled = createStyled(styles);
 
-  return (
+export const CaButton = ({ children, className, ...otherProps }: ButtonProps) => (
+  <Styled>{({ classes }) => (
     <div className={classNames(classes.button, className)}>
       <Button {...otherProps}>
         {children}
       </Button>
     </div>
-  );
-});
+  )}</Styled>
+);
