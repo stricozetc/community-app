@@ -27,10 +27,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     super(props);
 
     this.state = initLoginFormState;
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.checkValidation = this.checkValidation.bind(this);
   }
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
@@ -45,16 +41,19 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     }
   }
 
-  public onChange(event: any): void {
-    const target = event.target;
+  public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const email = event.target.value;
 
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({ [name]: value } as LoginFormState);
+    this.setState({ email });
   }
 
-  public onSubmit(event: any): void {
+  public onChangePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const password = event.target.value;
+
+    this.setState({ password });
+  }
+
+  public onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const user: UserFieldsToLogin = {
@@ -65,7 +64,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.props.loginUser(user);
   }
 
-  public checkValidation(): void {
+  public checkValidation = (): void => {
     let emailErrors: string[] = [];
     let passwordErrors: string[] = [];
 
@@ -120,7 +119,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.setState({ emailErrors, passwordErrors });
   }
 
-  public onBlur = (field: string) => (evt: any) => {
+  public onBlur = (field: string) => (event: React.FormEvent<HTMLSelectElement>) => {
     this.setState({
       touched: {
         ...this.state.touched,
@@ -149,7 +148,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     label={t('emailLabel')}
                     name='email'
                     value={this.state.email}
-                    onChange={this.onChange}
+                    onChange={this.onChangeEmail}
                     type='email'
                     onBlur={this.onBlur('email')}
                     error={!this.state.isEmailValid && this.state.touched.email}
@@ -172,7 +171,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     label={t('passwordLabel')}
                     name='password'
                     value={this.state.password}
-                    onChange={this.onChange}
+                    onChange={this.onChangePassword}
                     type='password'
                     onBlur={this.onBlur('password')}
                     error={!this.state.isPasswordValid && this.state.touched.password}

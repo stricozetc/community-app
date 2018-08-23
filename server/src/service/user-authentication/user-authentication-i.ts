@@ -69,7 +69,6 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                                 return reject(technicalErr.databaseCrash);
                             });
                         }).catch(() => {
-                            // (Mikalai) I'm not sure about type the error (logic or technical)
                             return reject(technicalErr.userRoleIsNotSaveInDb);
                         });
                     });
@@ -100,9 +99,9 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                                     email: user.email,
                                     token: user.token
                                 };
-                                jwt.sign(payload, keys.secretOrKey, (err: any, token: string) => {
-                                    if (err) {
-                                        throw err;
+                                jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
+                                    if (error) {
+                                        throw error;
                                     }
                                     resolve({
                                         success: true,

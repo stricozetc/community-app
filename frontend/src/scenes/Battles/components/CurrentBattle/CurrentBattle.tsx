@@ -1,11 +1,18 @@
+import { History } from 'history';
 import * as React from 'react';
+import { I18n } from 'react-i18next';
 
 import clockImage from 'assets/clock-small.svg';
 import swordImage from 'assets/sword.svg';
 import userImage from 'assets/user-small.svg';
 import { CaButton, Countdown } from 'components';
-import { AuthStatus, BattleStatus, GameModel, RoomInfo } from 'models';
-import { I18n } from 'react-i18next';
+
+import {
+  AuthStatus,
+  BattleStatus,
+  GameModel,
+  RoomInfo
+} from 'models';
 
 import './current-battle.scss';
 
@@ -13,7 +20,7 @@ interface Props {
   roomsInfo: RoomInfo[];
   battleName: string;
   countdown: number;
-  history: any;
+  history: History;
   games: GameModel[];
   gameStatus: number;
   authStatus: number;
@@ -73,7 +80,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
     return (
       <I18n>
         {
-          ( t ) => (
+          (t) => (
             <section className='ca-current-battle'>
               {this.props.children}
               <div className='ca-current-battle__content'>

@@ -7,7 +7,7 @@ import {
   withStyles
 } from '@material-ui/core';
 import * as classNames from 'classnames';
-import { CaDelete, CaEdit, CaLock} from 'components';
+import { CaDelete, CaEdit, CaLock } from 'components';
 
 import { HeaderName, ResultStatus, Row, TypeOfColumn } from 'models';
 
@@ -32,7 +32,7 @@ const options = {
 export const CaTable = withStyles(styles)(
   class extends React.Component<CaTableProps> {
 
-    public getTextContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
+    public getTextContentOfTheCell = (column: HeaderName, row: Row, t: TranslationFunction) => {
       let textContent;
       const text = row[`${column.field}`];
 
@@ -83,7 +83,7 @@ export const CaTable = withStyles(styles)(
       if (isCellHaveAnyButton) {
         buttonContent =
           <div className={classes.buttonsInCellWithButtons}>
-            {column.lockAction ? <CaLock showAppToken={() => column.lockAction && column.lockAction(row.appToken)}/> : null}
+            {column.lockAction ? <CaLock showAppToken={() => column.lockAction && column.lockAction(row.appToken)} /> : null}
             {column.editAction ? <CaEdit editHandler={() => column.editAction && column.editAction(row.id)} /> : null}
             {column.deleteAction ? <CaDelete deleteHandler={() => column.deleteAction && column.deleteAction(row)} /> : null}
           </div>;
@@ -92,7 +92,7 @@ export const CaTable = withStyles(styles)(
       return buttonContent;
     }
 
-    public getContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
+    public getContentOfTheCell = (column: HeaderName, row: Row, t: TranslationFunction) => {
       const { classes } = this.props;
 
       const textContent = this.getTextContentOfTheCell(column, row, t);

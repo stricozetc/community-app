@@ -3,7 +3,7 @@ import axios from 'axios';
 export class HttpWrapper {
     private static baseUrl: string = 'http://localhost:3030/';
 
-    public static post(url: string, data: any): Promise<any> {
+    public static post<T>(url: string, data: T): Promise<any> {
         return axios.post(`${this.baseUrl}${url}`, data);
     }
 
