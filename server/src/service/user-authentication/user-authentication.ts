@@ -1,4 +1,4 @@
-import { User } from './../../../Interfaces/User';
+import { User } from 'interfaces/User';
 
 export abstract class UserAuthenticationRepository {
     public abstract registerUser(newUser: User): Promise<User>;

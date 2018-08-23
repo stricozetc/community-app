@@ -11,19 +11,18 @@ import {
   ErrorBlock,
   GamesModel,
   Game
-} from './../../../models';
+} from 'models';
 
-import { GameData } from './../../controller/statistic.controller';
+import { GameData } from 'controller/statistic.controller';
 
 import Promise = require('bluebird');
-import { isEmpty } from './../../validation/is-empty';
+import { isEmpty } from 'validation/is-empty';
 
 import { inject } from 'inversify';
 import { StatisticService } from './statistic.service';
-import { logicErr } from '../../../errors/logicErr';
-import { technicalErr } from '../../../errors/technicalErr';
+import { logicErr, technicalErr } from 'errors';
 import { LoggerService } from '../logger/logger.service';
-import { ResultStatus } from '../../../models/statistic';
+
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
   public constructor(

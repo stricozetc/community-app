@@ -1,7 +1,6 @@
-import { Game } from '../../typing/game';
-import { GameData } from './../../controller/statistic.controller';
+import { GameData } from 'controller/statistic.controller';
 
-import { RecentGameFromServer } from './../../../models/otherModels';
+import { RecentGameFromServer } from 'models/otherModels';
 import Promise = require('bluebird');
 
 export abstract class StatisticRepository {

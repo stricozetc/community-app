@@ -5,17 +5,13 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import uuid from 'uuid/v4';
 
-import { UserModel } from '../../../models/user';
-import { UserRoles } from '../../../models/userRoles';
-import { RoleModel } from '../../../models/role';
-import { Role } from '../../../Interfaces/Role';
-import { logicErr } from '../../../errors/logicErr';
+import { RoleModel, UserModel, UserRoles } from 'models';
+import { Role, User } from 'interfaces';
+import { logicErr, technicalErr } from 'errors';
 
-import { keys } from '../../config/keys';
+import { keys } from 'config/keys';
 import { UserAuthenticationRepository } from './user-authentication';
-import { User } from '../../../Interfaces/User';
 
-import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger';
 
 @injectable()

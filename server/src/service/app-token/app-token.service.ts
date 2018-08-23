@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { AppTokenRepository } from './app-token.repository';
-import { ErrorBlock } from '../../../models/error';
-import { Game } from '../../../models/games';
+import { Game } from 'models/games';
 @injectable()
 export class AppTokenService {
 

@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import { dbConfig } from './../src/config/dbconfig';
+import { dbConfig } from 'config/dbconfig';
 
 export interface Db {
     dbConfig: any;

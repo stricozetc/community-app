@@ -4,9 +4,9 @@ import fs from 'fs';
 import format from 'string-template';
 
 import { UserAuthenticationRepository } from '../user-authentication';
-import { technicalErr } from '../../../errors/technicalErr';
+import { technicalErr } from 'errors/technicalErr';
 
-import mailConfig from '../../config/mail.config.json';
+import mailConfig from 'config/mail.config.json';
 
 @injectable()
 export class MailerService {

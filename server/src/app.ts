@@ -18,8 +18,7 @@ import {
 import './controller';
 import { CONTAINER } from './service/services-registration';
 
-import { db } from './../models/SequelizeConnect';
-import { RoleModel, Roles } from './../models/role';
+import { db, RoleModel, Roles } from 'models';
 import { passportConfig } from './config/passport';
 
 const server = new InversifyExpressServer(CONTAINER);

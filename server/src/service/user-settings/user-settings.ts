@@ -1,5 +1,4 @@
-import { FieldsToChangePassword } from '../../../models/otherModels';
-import { ErrorBlock } from './../../../models/error';
+import { ErrorBlock, FieldsToChangePassword } from 'models';
 
 export abstract class UserSettingsRepository {
     public abstract changePassword(fields: FieldsToChangePassword): Promise<{ result: boolean; errors?: ErrorBlock[] }>;

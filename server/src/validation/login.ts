@@ -1,8 +1,8 @@
 import Validator from 'validator';
-import { User } from './../../Interfaces/User';
+import { User } from 'interfaces/User';
 import { isEmpty } from './is-empty';
-import { logicErr } from './../../errors/logicErr';
-import { ErrorBlock } from '../../models/error';
+import { logicErr } from 'errors/logicErr';
+import { ErrorBlock } from 'models/error';
 
 export function validateLoginInput(data: User): { errors: ErrorBlock[], isValid: boolean } {
     const errors: ErrorBlock[] = [];
