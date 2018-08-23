@@ -13,8 +13,7 @@ export const CaSnackbar = withStyles(styles)(
 
       const { classes, type, handleClose, message, ...otherProps } = this.props;
 
-      const transition = (props: any): JSX.Element => {
-
+      const transition = (props: CaSnackbarProps): JSX.Element => {
         return <Slide {...props} direction={this.props.transitionDirection} />;
       };
 

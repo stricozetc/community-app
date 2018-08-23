@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   AuthStatus,
@@ -7,16 +8,18 @@ import {
   LoadStatus
 } from 'models';
 
-import { AppState, LogoutUser } from 'store';
+import { } from 'store';
 
 import { CaSpinner, StatisticTables } from 'components';
 import { isEmpty } from 'utils';
 
 import {
+  AppState,
   InitBestUsers,
   InitMostPopularGames,
-  InitRecentGames
-} from 'store/statistic';
+  InitRecentGames,
+  LogoutUser
+} from 'store';
 
 import { StatisticProps } from './Statistic.model';
 
@@ -119,7 +122,7 @@ const mapStateToProps = (state: AppState) => ({
   isSnackbarOpen: state.snackbarUi.isOpen
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   initBestUsers: () => dispatch(new InitBestUsers()),
   initMostPopularGames: () => dispatch(new InitMostPopularGames()),

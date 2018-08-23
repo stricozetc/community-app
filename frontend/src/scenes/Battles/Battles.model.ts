@@ -1,10 +1,18 @@
-import { AuthStatus, BattleStatus, GameModel, LoadStatus, RoomInfo } from 'models';
+import { History } from 'history';
+
+import {
+  AuthStatus,
+  BattleStatus,
+  GameModel,
+  LoadStatus,
+  RoomInfo
+} from 'models';
 
 export interface BattleProps {
 
   authStatus: AuthStatus;
   battleStatus: BattleStatus;
-  history: any;
+  history: History;
   roomsInfo: RoomInfo[];
   games: GameModel[];
   status: LoadStatus;

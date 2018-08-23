@@ -1,5 +1,11 @@
 import { connect } from 'react-redux';
-import { AppState, LeaveBattle, LogoutUser } from 'store';
+import { Dispatch } from 'redux';
+
+import {
+  AppState,
+  LeaveBattle,
+  LogoutUser
+} from 'store';
 
 import { CurrentBattleComponent } from './CurrentBattle';
 
@@ -12,7 +18,7 @@ const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
   logoutUser: () => dispatch(new LogoutUser())
 });

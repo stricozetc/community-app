@@ -1,20 +1,32 @@
 import { Typography } from '@material-ui/core';
-import { CaButton, CaTab, CaTabs, ChangePasswordForm } from 'components';
-import { AuthStatus } from 'models';
+
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
-import { AppState } from 'store';
-import { ChangePassword } from 'store/userSettings/user-settings.action';
+import { Dispatch } from 'redux';
 
-import { FieldsToChangePassword } from '../../store/userSettings/interfaces';
+import { AuthStatus } from 'models';
+
+import {
+  AppState,
+  ChangePassword,
+  FieldsToChangePassword
+} from 'store';
+
+import {
+  CaButton,
+  CaTab,
+  CaTabs,
+  ChangePasswordForm
+} from 'components';
 
 import {
   UserSettingsProps,
   UserSettingsState,
   initState
 } from './UserSettings.model';
+
 import './UserSettings.scss';
 
 function TabContainer(params: { children: any; dir?: any }): JSX.Element {
@@ -32,7 +44,7 @@ function TabContainer(params: { children: any; dir?: any }): JSX.Element {
 export class CaUserSettingsComponent extends React.Component<
   UserSettingsProps,
   UserSettingsState
-> {
+  > {
   constructor(props: UserSettingsProps) {
     super(props);
 
@@ -77,14 +89,14 @@ export class CaUserSettingsComponent extends React.Component<
           <div className='ca-user-settings'>
             {this.props.children}
             <div className='ca-user-settings__container'>
-                <CaTabs
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                  fullWidth={true}
-                >
-                  <CaTab label='Profile' />
-                  <CaTab label='Security' />
-                </CaTabs>
+              <CaTabs
+                value={this.state.value}
+                onChange={this.handleChange}
+                fullWidth={true}
+              >
+                <CaTab label='Profile' />
+                <CaTab label='Security' />
+              </CaTabs>
 
               <SwipeableViews
                 axis='x'
@@ -123,7 +135,7 @@ const mapStateToProps = (state: AppState) => ({
   changePasswordStatus: state.userSettings.changePasswordStatus
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   changePassword: (data: FieldsToChangePassword) =>
     dispatch(new ChangePassword(data))
 });
