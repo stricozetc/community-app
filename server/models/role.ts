@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
-import { dbConfig } from './../src/config/dbconfig';
+import { dbConfig } from 'config/dbconfig';
 
 export const RoleModel = db.connect.define(dbConfig.rolesModel, {
     id: {

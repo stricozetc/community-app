@@ -1,9 +1,8 @@
 import { controller, httpGet } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import { AppTokenService } from './../service/app-token';
-import { LoggerService } from '../service/logger';
-import { validateAppDataInput } from '../validation/register-app';
+import { AppTokenService } from 'service/app-token';
+import { validateAppDataInput } from 'validation/register-app';
 
 @controller('/api/v1')
 export class RegisterAppController {

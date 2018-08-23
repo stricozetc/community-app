@@ -5,8 +5,8 @@ import { inject } from '../services-registration';
 import { SocketService } from './socket.service';
 import { LoggerService } from '../logger';
 import { RoomService } from '../room';
-import { RoomInfo } from '../../typing/room-info';
-import { Game } from '../../../models/games';
+import { RoomInfo } from 'typing/room-info';
+import { Game } from 'models/games';
 import { GamesRepository } from '../games/games.repository';
 
 @injectable()

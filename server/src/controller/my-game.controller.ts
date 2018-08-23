@@ -2,11 +2,10 @@ import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 
 import { inject } from 'inversify';
-import { AppTokenService } from './../service/app-token';
-import { MyGamesRepository } from './../service/my-games';
+import { AppTokenService, MyGamesRepository } from 'service';
 
-import { Game } from './../../models/games';
-import { validateAppDataInput } from '../validation/register-app';
+import { Game } from 'models/games';
+import { validateAppDataInput } from 'validation/register-app';
 
 @controller('/api/v1/my-games')
 export class MyGameController {

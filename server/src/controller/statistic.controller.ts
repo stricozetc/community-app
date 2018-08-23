@@ -4,12 +4,11 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import Promise = require('bluebird');
 
-import { StatisticRepository } from './../service/statistic';
+import { StatisticRepository } from 'service/statistic';
 
-import { ResultStatus } from '../../models';
-import { ParticipationStatus } from '../../models';
-import { logicErr } from '../../errors/logicErr';
-import { validateGameDataInput } from '../validation/statistic';
+import { ParticipationStatus, ResultStatus } from 'models';
+import { logicErr } from 'errors/logicErr';
+import { validateGameDataInput } from 'validation/statistic';
 
 export interface GameData {
   userToken: string;

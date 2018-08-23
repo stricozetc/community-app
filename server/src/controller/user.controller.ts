@@ -2,15 +2,17 @@ import { controller, httpPost, httpGet } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 
-import { UserAuthenticationRepository } from '../service/user-authentication';
+import { UserAuthenticationRepository } from 'service/user-authentication';
 
-import { validateRegisterInput } from '../validation/register';
-import { validateLoginInput } from '../validation/login';
+import {
+  validateEmail,
+  validateLoginInput,
+  validateRegisterInput,
+  validateSetLanguage
+} from 'validation';
 
-import { User } from '../../Interfaces/User';
-import { technicalErr } from '../../errors/technicalErr';
-import { validateSetLanguage } from '../validation/language';
-import { validateEmail } from '../validation/email';
+import { User } from 'interfaces/User';
+import { technicalErr } from 'errors/technicalErr';
 
 @controller('/api/users')
 export class UserController {

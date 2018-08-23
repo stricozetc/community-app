@@ -3,9 +3,9 @@ import { ApiService } from '../api';
 import { LoggerService } from '../logger';
 import { TimerService } from './../timer';
 import { RoomStatus, Room } from './models';
-import { RoomInfo } from '../../typing/room-info';
+import { RoomInfo } from 'typing/room-info';
 import { PlayersBindService } from '../players-bind';
-import { Game } from '../../../models/games';
+import { Game } from 'models/games';
 import { GamesRepository } from '../games/games.repository';
 
 @injectable()
