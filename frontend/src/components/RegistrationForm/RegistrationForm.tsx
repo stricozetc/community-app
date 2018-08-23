@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
@@ -17,26 +18,37 @@ import {
 import './RegistrationForm.scss';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
-  constructor(props: any) {
+  constructor(props: RegistrationFormProps) {
     super(props);
     this.state = initRegistrationFormState;
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.checkValidation = this.checkValidation.bind(this);
   }
 
-  public handleChange(event: any): void {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+  public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const email = event.target.value;
 
-    this.setState({ [name]: value } as RegistrationFormState);
-    this.checkValidation();
-
+    this.setState({ email });
   }
 
-  public handleSubmit(event: any): void {
+  public onChangeName = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const name = event.target.value;
+
+    this.setState({ name });
+  }
+
+  public onChangePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const password = event.target.value;
+
+    this.setState({ password });
+  }
+
+  public onChangePasswordToRepeat = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const passwordToRepeat = event.target.value;
+
+    this.setState({ passwordToRepeat });
+  }
+
+  public handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const user: UserFieldsToRegister = {
@@ -50,7 +62,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.props.registerUser(user);
   }
 
-  public checkValidation(): void {
+  public checkValidation = (): void => {
     let emailErrors: string[] = [];
     let passwordErrors: string[] = [];
     let nameErrors: string[] = [];
@@ -124,7 +136,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.setState({ emailErrors, passwordErrors, nameErrors });
   }
 
-  public handleBlur = (field: string) => (evt: any) => {
+  public handleBlur = (field: string) => (event: React.FormEvent<HTMLElement>) => {
     this.setState({
       touched: {
         ...this.state.touched,
@@ -151,7 +163,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                     label={t('emailLabel')}
                     name='email'
                     value={this.state.email}
-                    onChange={this.handleChange}
+                    onChange={this.onChangeEmail}
                     type='email'
                     className='ca-Registration-form__field'
                     onBlur={this.handleBlur('email')}
@@ -177,7 +189,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                     label={t('nameLabel')}
                     name='name'
                     value={this.state.name}
-                    onChange={this.handleChange}
+                    onChange={this.onChangeName}
                     type='text'
                     className='ca-Registration-form__field'
                     onBlur={this.handleBlur('name')}
@@ -203,7 +215,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                     label={t('passwordLabel')}
                     name='password'
                     value={this.state.password}
-                    onChange={this.handleChange}
+                    onChange={this.onChangePassword}
                     type='password'
                     className='ca-Registration-form__field'
                     onBlur={this.handleBlur('password')}
@@ -227,7 +239,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                     label={t('repeatPasswordLabel')}
                     name='passwordToRepeat'
                     value={this.state.passwordToRepeat}
-                    onChange={this.handleChange}
+                    onChange={this.onChangePasswordToRepeat}
                     type='password'
                     className='ca-Registration-form__field'
                     onBlur={this.handleBlur('passwordToRepeat')}
@@ -287,7 +299,7 @@ const mapStateToProps = (state: AppState) => ({
   language: state.userSettings.language
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user)),
 });
 

@@ -1,8 +1,8 @@
 import Validator from 'validator';
 import { isEmpty } from './is-empty';
-import { UserFieldsToRegister } from './../../Interfaces/UserFieldsToRegister';
-import { logicErr } from './../../errors/logicErr';
-import { ErrorBlock } from '../../models/error';
+import { UserFieldsToRegister } from 'interfaces/UserFieldsToRegister';
+import { logicErr } from 'errors/logicErr';
+import { ErrorBlock } from 'models/error';
 
 export function validateRegisterInput(data: UserFieldsToRegister): { errors: ErrorBlock[], isValid: boolean } {
     const errors: ErrorBlock[] = [];

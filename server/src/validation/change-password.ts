@@ -1,11 +1,7 @@
 import Validator from 'validator';
-import { User } from './../../Interfaces/User';
 import { isEmpty } from './is-empty';
-import {
-  FieldsToChangePassword,
-} from '../../models/otherModels';
-import { ErrorBlock } from './../../models/error';
-import { logicErr } from '../../errors/logicErr';
+import { ErrorBlock, FieldsToChangePassword } from 'models';
+import { logicErr } from 'errors/logicErr';
 
 export function validateChangePassword(
   data: FieldsToChangePassword

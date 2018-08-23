@@ -1,9 +1,9 @@
 import { controller, httpPost } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import { MailerService, UserAuthenticationRepository } from '../service';
-import { validateEmail } from '../validation/email';
-import { logicErr } from '../../errors/logicErr';
+import { MailerService, UserAuthenticationRepository } from 'service';
+import { validateEmail } from 'validation/email';
+import { logicErr } from 'errors/logicErr';
 
 @controller('/api/restore-password')
 export class RestorePasswordController {

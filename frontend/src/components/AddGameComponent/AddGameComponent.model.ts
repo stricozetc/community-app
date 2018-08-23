@@ -1,11 +1,12 @@
+import { History } from 'history';
 import { AuthStatus, GameModel } from 'models';
+import { FrontEndUser } from 'store';
 
 export interface AddGameComponentProps {
     authStatus: AuthStatus;
-    history: any;
-    user: any;
+    history: History;
+    user: FrontEndUser | undefined;
     children?: JSX.Element;
 
-    logoutUser: () => void;
     addGame(payload: GameModel): void;
 }

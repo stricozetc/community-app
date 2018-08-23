@@ -1,13 +1,13 @@
-import { AuthStatus, LoadStatus } from 'models';
-import { FieldsToChangePassword } from 'store/userSettings/interfaces';
+import { History } from 'history';
 
-import { FrontEndUser } from 'store/auth';
+import { AuthStatus, LoadStatus } from 'models';
+import { FieldsToChangePassword, FrontEndUser } from 'store';
 
 export interface UserSettingsProps {
   status: AuthStatus;
   user: FrontEndUser | undefined;
   changePasswordStatus: LoadStatus;
-  history: any;
+  history: History;
   changePassword(data: FieldsToChangePassword): void;
 }
 

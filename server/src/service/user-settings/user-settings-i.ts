@@ -3,11 +3,8 @@ import bcrypt from 'bcryptjs';
 
 import { UserSettingsRepository } from './user-settings';
 
-import { UserModel } from './../../../models/user';
-import { FieldsToChangePassword } from '../../../models/otherModels';
-import { logicErr } from '../../../errors/logicErr';
-import { ErrorBlock } from './../../../models/error';
-import { technicalErr } from '../../../errors/technicalErr';
+import { ErrorBlock, FieldsToChangePassword, UserModel } from 'models';
+import { logicErr, technicalErr } from 'errors';
 
 @injectable()
 export class UserSettingsRepositoryImplementation implements UserSettingsRepository {

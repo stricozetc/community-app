@@ -1,7 +1,5 @@
 import { LoadStatus } from 'models';
-import { FrontEndUser } from 'store';
-
-import { FieldsToChangePassword } from '../../store/userSettings/interfaces';
+import { FieldsToChangePassword, FrontEndUser } from 'store';
 
 export interface ChangePasswordFormState {
   oldPassword: string;
@@ -19,7 +17,6 @@ export interface ChangePasswordFormState {
   oldPasswordErrors: string[];
   newPasswordErrors: string[];
   repeatNewPasswordErrors: string[];
-
 }
 
 export const initState: ChangePasswordFormState = {

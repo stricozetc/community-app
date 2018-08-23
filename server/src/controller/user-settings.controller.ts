@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import passport from 'passport';
 
-import { validateChangePassword } from './../validation/change-password';
-import { UserSettingsRepository } from '../service/user-settings/user-settings';
+import { validateChangePassword } from 'validation/change-password';
+import { UserSettingsRepository } from 'service/user-settings/user-settings';
 
 @controller('/api/v1')
 export class UserSettingsController {

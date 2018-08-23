@@ -1,6 +1,10 @@
 import { History } from 'history';
-import { AuthStatus, SnackbarType } from 'models';
 import { FrontEndUser } from 'store';
+
+import {
+  AuthStatus,
+  SnackbarType
+} from 'models';
 
 export interface RootProps {
   status: AuthStatus;

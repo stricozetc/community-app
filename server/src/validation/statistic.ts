@@ -1,8 +1,8 @@
 import Validator from 'validator';
 import { isEmpty } from './is-empty';
-import { logicErr } from './../../errors/logicErr';
-import { ErrorBlock } from '../../models/error';
-import { GameData } from '../controller/statistic.controller';
+import { logicErr } from 'errors/logicErr';
+import { ErrorBlock } from 'models/error';
+import { GameData } from 'controller/statistic.controller';
 
 export function validateGameDataInput(data: GameData): { errors: ErrorBlock[], isValid: boolean } {
   const errors: ErrorBlock[] = [];

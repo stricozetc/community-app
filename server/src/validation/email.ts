@@ -1,7 +1,7 @@
 import Validator from 'validator';
 import { isEmpty } from './is-empty';
-import { logicErr } from './../../errors/logicErr';
-import { ErrorBlock } from '../../models/error';
+import { logicErr } from 'errors/logicErr';
+import { ErrorBlock } from 'models/error';
 
 export function validateEmail(email: string): { errors: ErrorBlock[], isValid: boolean } {
   const errors: ErrorBlock[] = [];

@@ -1,10 +1,16 @@
-import { AuthStatus, GameForSettingForm, GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { GameForm } from 'components/GameForm';
-import { AddGame, LogoutUser } from 'store';
-import { AppState } from 'store/store.config';
+import { GameForm } from 'components';
+import { AddGame, AppState } from 'store';
+
+import {
+    AuthStatus,
+    GameForSettingForm,
+    GameModel,
+    SettingFormType
+} from 'models';
 
 import { AddGameComponentProps } from './AddGameComponent.model';
 
@@ -30,20 +36,22 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
     }
 
     public onSubmit = (data: GameModel) => {
-      this.props.addGame(data);
+        this.props.addGame(data);
     }
 
     public render(): JSX.Element {
-        return(
-           <div>
+        return (
+            <div>
                 {this.props.children}
-               <GameForm
-                    userId = {this.props.user && this.props.user.id}
-                    config={SettingFormType.AddGame}
-                    model={initFormForAddingNewGame}
-                    submit={this.onSubmit}
-               />
-           </div>
+                {this.props.user &&
+                    < GameForm
+                        userId={this.props.user && this.props.user.id}
+                        config={SettingFormType.AddGame}
+                        model={initFormForAddingNewGame}
+                        submit={(data: GameModel) => this.props.addGame(data)}
+                    />
+                }
+            </div>
         );
     }
 }
@@ -53,8 +61,7 @@ const mapStateToProps = (state: AppState) => ({
     user: state.auth.user
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-    logoutUser: () => dispatch(new LogoutUser()),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     addGame: (data: GameModel) => dispatch(new AddGame(data)),
 });
 

@@ -7,8 +7,8 @@ import {
     transports
 } from 'winston';
 
-import appConfig from '../../config/app.config.json';
-import loggerConfig from '../../config/logger.config.json';
+import appConfig from 'config/app.config.json';
+import loggerConfig from 'config/logger.config.json';
 
 import { LoggerService } from './logger.service';
 
