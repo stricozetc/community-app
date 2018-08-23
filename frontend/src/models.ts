@@ -205,6 +205,11 @@ export interface AppMenuItem {
   action: () => void;
 }
 
+export interface MoreMenuItem {
+  title: string;
+  action: () => void;
+}
+
 export interface FrontEndValidationErrorsGameRegister {
   appName: { length: string, required: string };
   description: { length: string, required: string };

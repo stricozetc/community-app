@@ -23,3 +23,4 @@ export * from './Mui/CaTabs';
 export * from './Mui/CaTab';
 export * from './CircleDiagram';
 export * from './ChangePasswordForm';
+export * from './MoreMenu';
