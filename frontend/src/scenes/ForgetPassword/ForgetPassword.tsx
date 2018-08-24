@@ -7,11 +7,8 @@ import { Dispatch } from 'redux';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 
-import { isEmpty } from 'utils/isEmpty';
-import { isObjectsEqual } from 'utils/isObjectsEqual';
 
 import { CaButton } from 'components/Mui/CaButton';
-import { CaSnackbar } from 'components/Mui/CaSnackbar';
 import { CaSpinner } from 'components/Spinner';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { RestorePasswordStatus } from 'models';

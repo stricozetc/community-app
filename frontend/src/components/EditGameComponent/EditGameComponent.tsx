@@ -18,7 +18,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
     constructor(props: EditGameComponentProps) {
         super(props);
     }
-
+    
     public componentWillMount(): void {
         const isAuthenticated = this.props.authStatus === AuthStatus.Authorized;
 

@@ -11,10 +11,10 @@ import { CaSnackbarContent } from './CaSnackbarContent';
 const Styled = createStyled(styles);
 
 const transition = (props: CaSnackbarProps): JSX.Element => {
-  return <Slide {...props} direction={this.props.transitionDirection} />;
+  return <Slide {...props} direction={props.transitionDirection} />;
 };
 
-export const CaSnackbar = ({ type, handleClose, message, ...otherProps }: CaSnackbarProps) => (
+export const CaSnackbar = ({ type, handleClose, message, transitionDirection, ...otherProps }: CaSnackbarProps) => (
   <Styled>{({ classes }) => (
     <Snackbar
       className={type === SnackbarType.Info ? classes.positionBottom : classes.positionTop}
