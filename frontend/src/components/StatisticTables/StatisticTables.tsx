@@ -257,24 +257,4 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
   public isArrayEmpty<T>(arrayOfData: T[]): boolean {
     return !Array.isArray(arrayOfData) || !arrayOfData.length;
   }
-
-  // public getNecessaryProperty(columnDef: HeaderName[]): string[] {
-  //   return columnDef.map(column => column.field);
-  // }
-
-  // public checkPropertyOfObject(arrayOfData: Row[], arrayOfNecessaryProperty: string[]): any[] {
-
-  //   const newArrayOfData = arrayOfData.map(userStatistic => {
-  //     const newUserStatistic = { ...userStatistic };
-  //     arrayOfNecessaryProperty.forEach(necessaryProperty => {
-  //       if (newUserStatistic[necessaryProperty] === undefined || newUserStatistic[necessaryProperty] === null) {
-  //         newUserStatistic[necessaryProperty] = '-';
-  //       }
-
-  //     });
-  //     return newUserStatistic;
-  //   });
-
-  //   return [...newArrayOfData];
-  // }
 }
