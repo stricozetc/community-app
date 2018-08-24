@@ -335,6 +335,15 @@ export class RootComponent extends React.Component<RootProps> {
                 </CaUserSettings>
               )}
             />
+
+            <Route
+              exact={true}
+              path='/leaders/:gameName'
+              render={props => (
+                <div style={{color: 'white'}} >Leaders</div>
+              )}
+            />
+
             <Route
               path='/*'
               render={() => (

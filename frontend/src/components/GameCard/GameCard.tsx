@@ -1,16 +1,17 @@
 import * as React from 'react';
 
 import {CaButton, GameCardProps} from 'components';
-import {BattleStatus, MoreMenuItem} from 'models';
+import {BattleStatus} from 'models';
 
 import clockImage from 'assets/clock.svg';
 import userImage from 'assets/user.svg';
 import { I18n } from 'react-i18next';
 
+import { MoreMenu } from '../MoreMenu';
+
 import './GameCard.scss';
 import './GameCardFooter.scss';
 import './IconWithInfo.scss';
-import { MoreMenu } from '../MoreMenu';
 
 export class CaGameCard extends React.Component<GameCardProps> {
   public joinGame = () => {
@@ -75,30 +76,15 @@ export class CaGameCard extends React.Component<GameCardProps> {
       : 'ca-game-card--grey-background';
     const classes = [topBorderClass, backgroundClass];
 
-    const moreMenuItems: MoreMenuItem[] = [
-      {
-        title: 'Leaders',
-        action: () => {}
-      },
-      {
-        title: 'Share links',
-        action: () => {}
-      },
-      {
-        title: 'Vote',
-        action: () => {}
-      }
-    ];
-
     return (
       <I18n>
         {
           ( t ) => (
             <div className={['ca-game-card', ...classes].join(' ')}>
               <div className='ca-game-card__container'>
-                <div className="ca-game-card__header">
+                <div className='ca-game-card__header'>
                   <h1 className='ca-game-card__game-title'>{appName}</h1>
-                  <MoreMenu moreMenuItems={moreMenuItems} />
+                  <MoreMenu moreMenuItems={this.props.moreMenuItems} />
                 </div>
                 <h2 className='ca-game-card__game-desc'>{description}</h2>
 

@@ -85,5 +85,6 @@
   "restore": "Restore",
   "email-sent": "Email sent.",
   "mail": "An email with a link to restore access has been sent to ",
-  "forget-password": "Forget password?"
+  "forget-password": "Forget password?",
+  "leaders": "Leaders"
 }
