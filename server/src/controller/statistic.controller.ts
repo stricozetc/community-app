@@ -9,7 +9,7 @@ import { ResultStatus } from '../../models';
 import { ParticipationStatus } from '../../models';
 import { logicErr } from '../../errors/logicErr';
 import { validateGameDataInput } from '../validation/statistic';
-import { Leaders } from '../../models/otherModels';
+import { Leaders, RecentGameFromServer, BestUsersFromServer, PopularGamesFromServer } from '../../models/otherModels';
 
 export interface GameData {
   userToken: string;
@@ -57,7 +57,7 @@ export class StatisticController {
     }
 
     return this.statisticRepository.getRecentGames(userId)
-      .then((recentGames: any[]) => {
+      .then((recentGames: RecentGameFromServer[]) => {
         return response.status(200).json(recentGames);
       }).catch((error) => {
         return error.code >= 2000 ?
@@ -69,7 +69,7 @@ export class StatisticController {
   @httpGet('/most-popular-games', passport.authenticate('jwt', { session: false }))
   public async getMostPopularGames(request: Request, response: Response): Promise<void | Response> {
     return this.statisticRepository.getMostPopularGames()
-      .then((mpg: any[]) => {
+      .then((mpg: PopularGamesFromServer[]) => {
         response.status(200).json(mpg);
       }).catch((error) => {
         return error.code >= 2000 ?
@@ -81,7 +81,7 @@ export class StatisticController {
   @httpGet('/best-users', passport.authenticate('jwt', { session: false }))
   public async getBestUsers(request: Request, response: Response): Promise<void | Response> {
     return this.statisticRepository.getBestUsers()
-      .then((bestUsers: any[]) => {
+      .then((bestUsers: BestUsersFromServer[]) => {
         response.status(200).json(bestUsers);
       }).catch((error) => {
         return error.code >= 2000 ?
@@ -90,17 +90,17 @@ export class StatisticController {
       });
   }
 
-  @httpGet('/statistic', passport.authenticate('jwt', { session: false }))
-  public async getStatistic(request: Request, response: Response): Promise<void | Response> {
-    return this.statisticRepository.getMostPopularGames()
-      .then((mpg: any[]) => {
-        response.status(200).json(mpg);
-      }).catch((error) => {
-        return error.code >= 2000 ?
-          response.status(500).json(error) :
-          response.status(400).json(error);
-      });
-  }
+  // @httpGet('/statistic', passport.authenticate('jwt', { session: false }))
+  // public async getStatistic(request: Request, response: Response): Promise<void | Response> {
+  //   return this.statisticRepository.getMostPopularGames()
+  //     .then((mpg: any[]) => {
+  //       response.status(200).json(mpg);
+  //     }).catch((error) => {
+  //       return error.code >= 2000 ?
+  //         response.status(500).json(error) :
+  //         response.status(400).json(error);
+  //     });
+  // }
 
   @httpGet('/get-leaders')
   public async getGames(request: Request, response: Response): Promise<void | Response> {

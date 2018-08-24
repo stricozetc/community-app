@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   AuthStatus,
@@ -100,7 +101,7 @@ const mapStateToProps = (state: AppState) => ({
   isSnackbarOpen: state.snackbarUi.isOpen
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   initLeaders: (appName: string) => dispatch(new InitLeaders(appName))
 });

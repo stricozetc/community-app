@@ -36,7 +36,7 @@ export class CaTable extends React.Component<CaTableProps> {
       let textContent;
       const text = row[`${column.field}`];
 
-      if (!row[`${column.field}`] && column.type !== TypeOfColumn.Increment) {
+      if (row[`${column.field}`] === 'undefined' || row[`${column.field}`] === null && column.type !== TypeOfColumn.Increment) {
         return '-';
       }
 

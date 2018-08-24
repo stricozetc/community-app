@@ -1,4 +1,4 @@
-import { ErrorsFromServer } from 'models';
+import {  BestUser, Leaders, MostPopularGames, RecentGames } from 'models';
 
 import { action } from '../decorators';
 
@@ -27,14 +27,12 @@ export class InitBestUsers {
 export class LoadBestUsersCompleted {
   public readonly type = StatisticTypes.LoadBestUsersSuccess;
 
-  constructor(public payload: any[]) { }
+  constructor(public payload: BestUser[]) { }
 }
 
 @action()
 export class LoadBestUsersError {
   public readonly type = StatisticTypes.LoadBestUsersError;
-
-  constructor(public err: ErrorsFromServer) { }
 }
 
 @action()
@@ -46,14 +44,12 @@ export class InitMostPopularGames {
 export class LoadMostPopularGamesCompleted {
   public readonly type = StatisticTypes.LoadMostPopularGamesSuccess;
 
-  constructor(public payload: any[]) { }
+  constructor(public payload: MostPopularGames[]) { }
 }
 
 @action()
 export class LoadMostPopularGamesError {
   public readonly type = StatisticTypes.LoadMostPopularGamesError;
-
-  constructor(public err: ErrorsFromServer) { }
 }
 
 @action()
@@ -67,14 +63,12 @@ export class InitRecentGames {
 export class LoadRecentGamesCompleted {
   public readonly type = StatisticTypes.LoadRecentGamesSuccess;
 
-  constructor(public payload: any[]) { }
+  constructor(public payload: RecentGames[]) { }
 }
 
 @action()
 export class LoadRecentGamesError {
   public readonly type = StatisticTypes.LoadRecentGamesError;
-
-  constructor(public payload: any ) { }
 }
 @action()
 export class InitLeaders {
@@ -87,14 +81,12 @@ export class InitLeaders {
 export class LoadLeadersCompleted {
   public readonly type = StatisticTypes.LoadLeadersCompleted;
 
-  constructor(public payload: any[]) { }
+  constructor(public payload: Leaders[]) { }
 }
 
 @action()
 export class LoadLeadersError {
   public readonly type = StatisticTypes.LoadLeadersError;
-
-  constructor(public payload: any ) { }
 }
 @action()
 export class CleanStatistic {

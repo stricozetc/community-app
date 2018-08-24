@@ -1,9 +1,9 @@
-import { Leaders, LoadStatus } from 'models';
+import { BestUser, Leaders, LoadStatus, MostPopularGames, RecentGames } from 'models';
 
 export interface StatisticState {
-  bestUsers: any[];
-  mostPopularGames: any[];
-  recentGames: any[];
+  bestUsers: BestUser[];
+  mostPopularGames: MostPopularGames[];
+  recentGames: RecentGames[];
   leaders: Leaders[];
   bestUsersStatus: LoadStatus;
   mostPopularGamesStatus: LoadStatus;

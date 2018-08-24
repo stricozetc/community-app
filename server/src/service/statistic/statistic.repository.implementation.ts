@@ -320,7 +320,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         throw logicErr.notFoundAppToken;
       }
     })
-      .catch((error: any) => {
+      .catch((error) => {
         if (error.code) {
           throw error;
         } else {

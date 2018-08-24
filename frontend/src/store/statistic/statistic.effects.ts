@@ -2,7 +2,7 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { SnackbarType } from 'models';
+import { BestUser, Leaders, MostPopularGames, RecentGames, SnackbarType, } from 'models';
 import { HttpWrapper } from 'services';
 import { OpenSnackbar } from 'store/snackbar';
 
@@ -24,8 +24,8 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
     ofType(StatisticTypes.InitBestUsers),
     switchMap(() =>
       from(HttpWrapper.get('api/v1/statistic/best-users')).pipe(
-        map((res: any) => {
-          const bestUsers: any[] = res.data;
+        map((res) => {
+          const bestUsers: BestUser[] = res.data;
 
           return new LoadBestUsersCompleted(bestUsers);
         }),
@@ -41,8 +41,8 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
     ofType(StatisticTypes.InitMostPopularGames),
     switchMap(() =>
       from(HttpWrapper.get('api/v1/statistic/most-popular-games')).pipe(
-        map((res: any) => {
-          const popGames: any[] = res.data;
+        map((res) => {
+          const popGames: MostPopularGames[] = res.data;
 
           return new LoadMostPopularGamesCompleted(popGames);
         }),
@@ -57,8 +57,8 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
   actions$.ofType(StatisticTypes.InitRecentGames).pipe(
     switchMap((action) =>
       from(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
-        map((res: any) => {
-          const rg: any[] = res.data;
+        map((res) => {
+          const rg: RecentGames[] = res.data;
 
           return new LoadRecentGamesCompleted(rg);
         }),
@@ -73,8 +73,8 @@ export const initLeaders$ = (actions$: ActionsObservable<InitLeaders>) =>
   actions$.ofType(StatisticTypes.InitLeaders).pipe(
     switchMap((action) =>
       from(HttpWrapper.get(`api/v1/statistic/get-leaders?appName=${action.appName}`)).pipe(
-        map((res: any) => {
-          const leaders: any[] = res.data;
+        map((res) => {
+          const leaders: Leaders[] = res.data;
 
           return new LoadLeadersCompleted(leaders);
         }),

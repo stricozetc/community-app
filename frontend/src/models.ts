@@ -226,3 +226,22 @@ export interface Leaders {
   name: number;
   scores: number;
 }
+
+export interface BestUser {
+  userToken: string;
+  playedTime: number;
+  name: number;
+  scores: number;
+}
+
+export interface MostPopularGames {
+  game: string;
+  playedTime: number;
+  playedInWeek: number;
+}
+
+export interface RecentGames {
+  game: string;
+  scores: number;
+  result: number;
+}
