@@ -258,3 +258,11 @@ export interface SnackbarPayload {
   type: SnackbarType;
   message: ErrorBlock | ErrorBlock[];
 }
+
+export interface SocialNetworksUser {
+  email: string;
+  language: string;
+  name: string;
+  accessToken: string;
+}
+

@@ -1,8 +1,6 @@
-import Sequelize from 'sequelize';
+import Sequelize, { SequelizeStaticAndInstance } from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from 'config/dbconfig';
-
-import { SequelizeStaticAndInstance } from 'sequelize';
 
 export const RoleModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.rolesModel, {
     id: {

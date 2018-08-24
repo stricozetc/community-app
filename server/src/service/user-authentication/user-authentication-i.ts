@@ -97,20 +97,19 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                         const payload = {
                             id: user.id,
                             name: user.name,
-
-                            email: user.email,
-                            token: user.token
-                        };
-                        jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
-                            if (error) {
-                                throw error;
-                            }
-                            resolve({
-                                success: true,
-                                token: 'Bearer ' + token
-                            });
-                        });
-                        } else {
+                                    email: user.email,
+                                    token: user.token,
+                                };
+                                jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
+                                    if (error) {
+                                        throw error;
+                                    }
+                                    resolve({
+                                        success: true,
+                                        token: 'Bearer ' + token
+                                    });
+                                });
+                            } else {
                                 return reject(logicErr.wrongPassword(user.email));
                             }
 
@@ -141,8 +140,12 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                 throw logicErr.notFoundUser;
             }
         } catch (error) {
-            this.loggerService.errorLog(error);
-            throw technicalErr.databaseCrash;
+            if (error.code) {
+                throw error;
+            } else {
+                this.loggerService.errorLog(error);
+                throw technicalErr.databaseCrash;
+            }
         }
     }
 
@@ -155,8 +158,82 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                 throw logicErr.notFoundEmail;
             }
         } catch (error) {
-            console.log(error);
+            this.loggerService.errorLog(error);
             throw technicalErr.databaseCrash;
         }
+    }
+
+    public async socialNetworksLogin(
+        email: string,
+        name: string,
+        language: string,
+        accessToken: string
+    ): Promise<any> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user: User = await UserModel.findOne({ where: { email } });
+                if (user) {
+                    const payload = {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        token: user.token,
+                    };
+                    jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
+                        if (error) {
+                            throw error;
+                        }
+                        resolve({
+                            success: true,
+                            token: 'Bearer ' + token
+                        });
+                    });
+                } else {
+                    const uuidToken = uuid();
+                    const newUserDate = UserModel.build({
+                        name,
+                        email,
+                        token: uuidToken,
+                        language,
+                        accessToken,
+                    });
+                    const savedUser = await newUserDate.save();
+
+                    const userRole: Role = await RoleModel.findOne();
+                    const isUpsert = await UserRoles.upsert({
+                        userId: savedUser.id,
+                        roleId: userRole.id
+                    });
+                    if (isUpsert) {
+                        const payload = {
+                            id: savedUser.id,
+                            name: savedUser.name,
+                            email: savedUser.email,
+                            token: savedUser.token,
+                        };
+                        console.log('AAAAAAAAAAAAA', payload);
+
+                        jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
+                            if (error) {
+                                throw error;
+                            }
+                            resolve({
+                                success: true,
+                                token: 'Bearer ' + token
+                            });
+                        });
+                    } else {
+                        throw technicalErr.userRoleIsNotUpsertedInDb;
+                    }
+                }
+            } catch (error) {
+                if (error.code) {
+                    throw error;
+                } else {
+                    this.loggerService.errorLog(error);
+                    throw technicalErr.databaseCrash;
+                }
+            }
+        });
     }
 }

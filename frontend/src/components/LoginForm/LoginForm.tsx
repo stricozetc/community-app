@@ -1,18 +1,22 @@
 import * as React from 'react';
+import FacebookLogin from 'react-facebook-login';
+import { GoogleLogin } from 'react-google-login';
+import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
-import { AppState, LoginUser } from 'store';
+import { SocialNetworksUser } from 'models';
+import { AppState, LoginUser, SocialNetworksLogin } from 'store';
+import { getCurrentLanguageFromLocalStorage } from 'utils';
 
 import {
   AuthStatus,
   UserFieldsToLogin,
-  UserFieldsToRegister
+  UserFieldsToRegister,
 } from 'models';
-import { I18n } from 'react-i18next';
 
 import {
   LoginFormProps,
@@ -133,13 +137,38 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.props.history.push('/forget-password');
   }
 
+  public responseSuccess = (response: any) => {
+    const user: SocialNetworksUser = {
+      email: response.profileObj.email,
+      language: getCurrentLanguageFromLocalStorage(),
+      name: response.profileObj.name,
+      accessToken: response.accessToken,
+    };
+
+    this.props.socialNetworksLogin(user);
+  }
+
+  public responseError = (response: any) => {
+    console.log(response);
+  }
+
+  public responseFacebook = (response: any) => {
+    const user: SocialNetworksUser = {
+      email: response.email,
+      language: getCurrentLanguageFromLocalStorage(),
+      name: response.name,
+      accessToken: response.accessToken,
+    };
+
+    this.props.socialNetworksLogin(user);
+  }
+
   public render(): JSX.Element {
     return (
       <I18n>
         {
           (t) => (
             <div className='ca-login-form'>
-
               {this.props.children}
               <form onSubmit={this.onSubmit} className='ca-login-form__container'>
                 <FormGroup>
@@ -188,14 +217,28 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     })}
                 </FormGroup>
                 <div className='ca-login-form__footer'>
-                  <CaButton
-                    color='primary'
-                    type='submit'
-                    className='ca-login-form__login-btn'
-                    disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
-                  >
-                    {t('login').toUpperCase()}
-                  </CaButton>
+                  <div>
+                    <CaButton
+                      color='primary'
+                      type='submit'
+                      className='ca-login-form__login-btn'
+                      disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
+                    >
+                      {t('login').toUpperCase()}
+                    </CaButton>
+                    <GoogleLogin
+                      className='fab fa-google'
+                      tag='i'
+                      buttonText=''
+                      clientId='900518225558-n6fviqu9tkht7teu1cujr2rednsshmaq.apps.googleusercontent.com'
+                      onSuccess={this.responseSuccess}
+                      onFailure={this.responseError}
+                    />
+                    <FacebookLogin
+                      appId='328331921069724'
+                      fields='name,email'
+                      callback={this.responseFacebook} />
+                  </div>
                   <div className='ca-login-form__forget-password'>
                     <a href='/#/forget-password' onClick={() => this.redToForgetPassword()}>{t('forget-password')}</a>
                   </div>
@@ -229,7 +272,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user)),
+  socialNetworksLogin: (socialNetworksUser: SocialNetworksUser) => dispatch(new SocialNetworksLogin(socialNetworksUser))
 });
 
 export const LoginForm = connect(
