@@ -90,17 +90,17 @@ export class StatisticController {
       });
   }
 
-  // @httpGet('/statistic', passport.authenticate('jwt', { session: false }))
-  // public async getStatistic(request: Request, response: Response): Promise<void | Response> {
-  //   return this.statisticRepository.getMostPopularGames()
-  //     .then((mpg: any[]) => {
-  //       response.status(200).json(mpg);
-  //     }).catch((error) => {
-  //       return error.code >= 2000 ?
-  //         response.status(500).json(error) :
-  //         response.status(400).json(error);
-  //     });
-  // }
+  @httpGet('/statistic', passport.authenticate('jwt', { session: false }))
+  public async getStatistic(request: Request, response: Response): Promise<void | Response> {
+    return this.statisticRepository.getMostPopularGames()
+      .then((mpg: any[]) => {
+        response.status(200).json(mpg);
+      }).catch((error) => {
+        return error.code >= 2000 ?
+          response.status(500).json(error) :
+          response.status(400).json(error);
+      });
+  }
 
   @httpGet('/get-leaders')
   public async getGames(request: Request, response: Response): Promise<void | Response> {
