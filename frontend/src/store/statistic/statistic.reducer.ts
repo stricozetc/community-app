@@ -85,6 +85,29 @@ export const statisticReducer = (state = initialState, action: StatisticAction) 
       };
     }
 
+    case StatisticTypes.InitLeaders: {
+      return {
+        ...state,
+        leadersStatus: LoadStatus.Fetching
+      };
+    }
+
+    case StatisticTypes.LoadLeadersCompleted: {
+      return {
+        ...state,
+        leaders: action.payload,
+
+        leadersStatus: LoadStatus.Success
+      };
+    }
+
+    case StatisticTypes.LoadLeadersError: {
+      return {
+        ...state,
+        leadersStatus: LoadStatus.Error
+      };
+    }
+
     default:
       return state;
   }

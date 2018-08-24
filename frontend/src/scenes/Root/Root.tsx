@@ -21,9 +21,11 @@ import { AppMenuItem, AuthStatus, Languages, transitionDirection } from 'models'
 import { CaBattles, CurrentBattle } from 'scenes/Battles';
 import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
 import { Landing } from 'scenes/Landing';
+import { CaLeadersPage } from 'scenes/Leaders';
 import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
+
 
 import {
   AppState,
@@ -336,11 +338,13 @@ export class RootComponent extends React.Component<RootProps> {
               )}
             />
 
-            <Route
+             <Route
               exact={true}
-              path='/leaders/:gameName'
+              path='/leaders/:appName'
               render={props => (
-                <div style={{color: 'white'}} >Leaders</div>
+                <CaLeadersPage {...props}>
+                  {this.getNavbar(this.props.status)}
+                </CaLeadersPage>
               )}
             />
 

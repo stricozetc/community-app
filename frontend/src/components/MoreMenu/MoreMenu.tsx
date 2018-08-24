@@ -18,6 +18,8 @@ import { I18n } from 'react-i18next';
 import { MoreMenuProps, MoreMenuState } from './MoreMenu.model';
 import { styles } from './MoreMenu.styles';
 
+import './MoreMenu.scss';
+
 export const MoreMenu = withStyles(styles)(
   class extends React.Component<MoreMenuProps, MoreMenuState> {
     public constructor(props: MoreMenuProps) {
@@ -56,7 +58,7 @@ export const MoreMenu = withStyles(styles)(
           {
             (t) => (
               <ClickAwayListener onClickAway={this.handleClose}>
-                <div style={{ display: 'inline-block' }}>
+                <div className='more-menu' >
                   <IconButton
                     onClick={this.handleIconClick}
                     className={classes.iconButton}

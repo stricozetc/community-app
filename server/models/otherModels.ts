@@ -24,3 +24,9 @@ export interface FieldsToChangePassword {
   newPassword: string;
   repeatNewPassword: string;
 }
+
+export interface Leaders {
+  userToken: string;
+  name: number;
+  scores: number;
+}

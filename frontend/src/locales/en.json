@@ -52,6 +52,7 @@
   "playedInWeek": "Played in week",
   "playedAll": "Played all",
   "result": "Result",
+  "position": "Position",
   "emptyChartMessage": "Choose game to display charts",
   "win": "Win",
   "lose": "Lose",
