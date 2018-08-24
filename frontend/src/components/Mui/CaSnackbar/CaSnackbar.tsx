@@ -11,10 +11,10 @@ export const CaSnackbar = withStyles(styles)(
   class extends React.Component<CaSnackbarProps> {
     public render(): JSX.Element {
 
-      const { classes, type, handleClose, message, ...otherProps } = this.props;
+      const { classes, type, handleClose, message, transitionDirection, ...otherProps } = this.props;
 
       const transition = (props: CaSnackbarProps): JSX.Element => {
-        return <Slide {...props} direction={this.props.transitionDirection} />;
+        return <Slide {...props} direction={transitionDirection} />;
       };
 
       const position: string = type === SnackbarType.Info ? classes.positionBottom : classes.positionTop;
