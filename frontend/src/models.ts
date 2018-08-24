@@ -138,7 +138,8 @@ export enum TypeOfColumn {
   TimeCount = 'Spent Time',
   Points = 'Points',
   Result = 'Result',
-  Date = 'Date'
+  Date = 'Date',
+  Increment = 'Increment'
 }
 export interface GameModel {
   id?: number;
@@ -161,7 +162,7 @@ export interface GameModel {
 }
 export interface HeaderName {
   headerName: string;
-  field: RowProperty;
+  field?: RowProperty;
   type: TypeOfColumn;
   editAction?(payload: number): void;
   deleteAction?(payload: GameModel): void;
@@ -218,4 +219,10 @@ export interface FrontEndValidationErrorsGameRegister {
 export interface ErrorBlock {
   code: number;
   msg: string;
+}
+
+export interface Leaders {
+  userToken: string;
+  name: number;
+  scores: number;
 }

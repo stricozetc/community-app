@@ -2,7 +2,6 @@ import { controller, httpGet, httpPost } from 'inversify-express-utils';
 import passport from 'passport';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import Promise = require('bluebird');
 
 import { StatisticRepository } from './../service/statistic';
 
@@ -10,6 +9,7 @@ import { ResultStatus } from '../../models';
 import { ParticipationStatus } from '../../models';
 import { logicErr } from '../../errors/logicErr';
 import { validateGameDataInput } from '../validation/statistic';
+import { Leaders } from '../../models/otherModels';
 
 export interface GameData {
   userToken: string;
@@ -26,7 +26,7 @@ export class StatisticController {
   }
 
   @httpPost('/set-game-result')
-  public setGameResult(request: Request, response: Response): Promise<void | Response> | Response {
+  public async setGameResult(request: Request, response: Response): Promise<void | Response> {
     const data: GameData[] = request.body;
 
     for (let index = 0; index < data.length; index++) {
@@ -49,7 +49,7 @@ export class StatisticController {
   }
 
   @httpGet('/recent-games', passport.authenticate('jwt', { session: false }))
-  public getRecentGames(request: Request, response: Response): Promise<void | Response> | Response {
+  public async getRecentGames(request: Request, response: Response): Promise<void | Response> {
     const userId = request.query.userId;
 
     if (!userId) {
@@ -67,7 +67,7 @@ export class StatisticController {
   }
 
   @httpGet('/most-popular-games', passport.authenticate('jwt', { session: false }))
-  public getMostPopularGames(request: Request, response: Response): Promise<void | Response> {
+  public async getMostPopularGames(request: Request, response: Response): Promise<void | Response> {
     return this.statisticRepository.getMostPopularGames()
       .then((mpg: any[]) => {
         response.status(200).json(mpg);
@@ -79,7 +79,7 @@ export class StatisticController {
   }
 
   @httpGet('/best-users', passport.authenticate('jwt', { session: false }))
-  public getBestUsers(request: Request, response: Response): Promise<void | Response> {
+  public async getBestUsers(request: Request, response: Response): Promise<void | Response> {
     return this.statisticRepository.getBestUsers()
       .then((bestUsers: any[]) => {
         response.status(200).json(bestUsers);
@@ -91,7 +91,7 @@ export class StatisticController {
   }
 
   @httpGet('/statistic', passport.authenticate('jwt', { session: false }))
-  public getStatistic(request: Request, response: Response): Promise<void | Response> {
+  public async getStatistic(request: Request, response: Response): Promise<void | Response> {
     return this.statisticRepository.getMostPopularGames()
       .then((mpg: any[]) => {
         response.status(200).json(mpg);
@@ -99,6 +99,19 @@ export class StatisticController {
         return error.code >= 2000 ?
           response.status(500).json(error) :
           response.status(400).json(error);
+      });
+  }
+
+  @httpGet('/get-leaders')
+  public async getGames(request: Request, response: Response): Promise<void | Response> {
+
+    const appName: string = request.query.appName;
+
+    return this.statisticRepository.getLeaders(appName)
+      .then((leaders: Leaders[]) => {
+        response.status(200).json(leaders);
+      }).catch((err) => {
+        return response.status(400).json(err);
       });
   }
 }

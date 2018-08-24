@@ -12,7 +12,10 @@ export enum StatisticTypes {
   InitRecentGames = '[statistic] Init Recent Games',
   LoadRecentGamesSuccess = '[statistic] Load Recent Games (Success)',
   LoadRecentGamesError = '[statistic] Load Recent Games (Error)',
-  CleanStatistic = '[statistic] Clean Statistic'
+  CleanStatistic = '[statistic] Clean Statistic',
+  InitLeaders = '[statistic] Init Leaders',
+  LoadLeadersCompleted = '[statistic] Load Leaders (Success)',
+  LoadLeadersError = '[statistic] Load Leaders (Error)'
 }
 
 @action()
@@ -73,7 +76,26 @@ export class LoadRecentGamesError {
 
   constructor(public payload: any ) { }
 }
+@action()
+export class InitLeaders {
+  public readonly type = StatisticTypes.InitLeaders;
 
+  constructor(public appName: string) { }
+}
+
+@action()
+export class LoadLeadersCompleted {
+  public readonly type = StatisticTypes.LoadLeadersCompleted;
+
+  constructor(public payload: any[]) { }
+}
+
+@action()
+export class LoadLeadersError {
+  public readonly type = StatisticTypes.LoadLeadersError;
+
+  constructor(public payload: any ) { }
+}
 @action()
 export class CleanStatistic {
   public readonly type = StatisticTypes.CleanStatistic;
@@ -89,4 +111,7 @@ export type StatisticAction =
   | InitRecentGames
   | LoadRecentGamesCompleted
   | LoadRecentGamesError
-  | CleanStatistic;
+  | CleanStatistic
+  | InitLeaders
+  | LoadLeadersCompleted
+  | LoadLeadersError;

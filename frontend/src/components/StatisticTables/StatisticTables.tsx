@@ -3,7 +3,6 @@ import * as React from 'react';
 import { CaTab, CaTable, CaTabs } from 'components';
 
 import {
-  HeaderName,
   JsMarathonCharts,
   MyGameCharts,
   Row,
@@ -174,22 +173,13 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
             type: TypeOfColumn.Points
           },
         ];
-        const bestUsers = [...this.props.statistic.bestUsers];
+        const rowData = [...this.props.statistic.bestUsers];
 
-        if (!this.isArrayEmpty(bestUsers)) {
-          const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);
-
-          const rowData = this.checkPropertyOfObject(bestUsers, arrayOfNecessaryProperty);
+        if (!this.isArrayEmpty(rowData)) {
 
           this.setState({
             activeTab,
             rowData,
-            columnDef
-          });
-        } else {
-          this.setState({
-            activeTab,
-            rowData: [],
             columnDef
           });
         }
@@ -215,22 +205,13 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
             type: TypeOfColumn.TimeCount
           },
         ];
-        const mostPopularGames = [...this.props.statistic.mostPopularGames];
+        const rowData = [...this.props.statistic.mostPopularGames] || [];
 
-        if (!this.isArrayEmpty(mostPopularGames)) {
-          const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);
-
-          const rowData = this.checkPropertyOfObject(mostPopularGames, arrayOfNecessaryProperty);
+        if (!this.isArrayEmpty(rowData)) {
 
           this.setState({
             activeTab,
             rowData,
-            columnDef
-          });
-        } else {
-          this.setState({
-            activeTab,
-            rowData: [],
             columnDef
           });
         }
@@ -256,22 +237,13 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
             type: TypeOfColumn.Result
           },
         ];
-        const recentGames = [...this.props.statistic.recentGames] || [];
+        const rowData = [...this.props.statistic.recentGames] || [];
 
-        if (!this.isArrayEmpty(recentGames)) {
-          const arrayOfNecessaryProperty = this.getNecessaryProperty(columnDef);
-
-          const rowData = this.checkPropertyOfObject(recentGames, arrayOfNecessaryProperty);
+        if (!this.isArrayEmpty(rowData)) {
 
           this.setState({
             activeTab,
             rowData,
-            columnDef
-          });
-        } else {
-          this.setState({
-            activeTab,
-            rowData: [],
             columnDef
           });
         }
@@ -286,23 +258,23 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     return !Array.isArray(arrayOfData) || !arrayOfData.length;
   }
 
-  public getNecessaryProperty(columnDef: HeaderName[]): string[] {
-    return columnDef.map(column => column.field);
-  }
+  // public getNecessaryProperty(columnDef: HeaderName[]): string[] {
+  //   return columnDef.map(column => column.field);
+  // }
 
-  public checkPropertyOfObject(arrayOfData: Row[], arrayOfNecessaryProperty: string[]): any[] {
+  // public checkPropertyOfObject(arrayOfData: Row[], arrayOfNecessaryProperty: string[]): any[] {
 
-    const newArrayOfData = arrayOfData.map(userStatistic => {
-      const newUserStatistic = { ...userStatistic };
-      arrayOfNecessaryProperty.forEach(necessaryProperty => {
-        if (newUserStatistic[necessaryProperty] === undefined || newUserStatistic[necessaryProperty] === null) {
-          newUserStatistic[necessaryProperty] = '-';
-        }
+  //   const newArrayOfData = arrayOfData.map(userStatistic => {
+  //     const newUserStatistic = { ...userStatistic };
+  //     arrayOfNecessaryProperty.forEach(necessaryProperty => {
+  //       if (newUserStatistic[necessaryProperty] === undefined || newUserStatistic[necessaryProperty] === null) {
+  //         newUserStatistic[necessaryProperty] = '-';
+  //       }
 
-      });
-      return newUserStatistic;
-    });
+  //     });
+  //     return newUserStatistic;
+  //   });
 
-    return [...newArrayOfData];
-  }
+  //   return [...newArrayOfData];
+  // }
 }

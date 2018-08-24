@@ -8,12 +8,15 @@ import { OpenSnackbar } from 'store/snackbar';
 
 import {
   InitBestUsers,
+  InitLeaders,
   InitMostPopularGames,
   InitRecentGames,
   LoadBestUsersCompleted,
+  LoadLeadersCompleted,
   LoadMostPopularGamesCompleted,
   LoadRecentGamesCompleted,
-  StatisticTypes
+  StatisticTypes,
+
 } from './statistic.action';
 
 export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
@@ -66,8 +69,25 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
     )
   );
 
+export const initLeaders$ = (actions$: ActionsObservable<InitLeaders>) =>
+  actions$.ofType(StatisticTypes.InitLeaders).pipe(
+    switchMap((action) =>
+      from(HttpWrapper.get(`api/v1/statistic/get-leaders?appName=${action.appName}`)).pipe(
+        map((res: any) => {
+          const leaders: any[] = res.data;
+
+          return new LoadLeadersCompleted(leaders);
+        }),
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        })
+      )
+    )
+  );
+
 export const StatisticEffects = [
   initBestUsers$,
   initMostPopularGames$,
   initRecentGames$,
+  initLeaders$
 ];

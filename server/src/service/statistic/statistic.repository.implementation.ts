@@ -10,7 +10,8 @@ import {
   BestUsersFromServer,
   ErrorBlock,
   GamesModel,
-  Game
+  Game,
+  Leaders
 } from './../../../models';
 
 import { GameData } from './../../controller/statistic.controller';
@@ -24,16 +25,21 @@ import { logicErr } from '../../../errors/logicErr';
 import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger/logger.service';
 import { ResultStatus } from '../../../models/statistic';
+
+import SocketIO from 'socket.io';
+import { SocketService } from '../socket/socket.service';
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
+  private socket: SocketIO.Socket;
+
   public constructor(
     @inject(StatisticService) private statisticService: StatisticService,
     @inject(LoggerService) private loggerService: LoggerService,
+    // @inject(SocketService) private socketService: SocketService,
   ) { }
 
   public setGameResult(data: GameData[], appToken: string): Promise<boolean | ErrorBlock> {
     const statistic = data;
-
     return GamesModel.findOne({
       where: { appToken }
     }).then((tokenRow: Game) => {
@@ -44,9 +50,14 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         promises = statistic.map((stat: Statistic) => this.saveStatistic(token, stat));
         return Promise.all(promises)
           .then(() => {
+            //this.socketService.notifyAllClients('on' + tokenRow.appName + 'StatisticChanged', true);
+            console.log('=============EMIT=============')
+            console.log('on' + tokenRow.appName + 'StatisticChanged');
+            console.log('===========================')
             return true;
           })
           .catch((error) => {
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', error);
             throw error;
           });
       } else {
@@ -92,7 +103,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                 };
 
                 return accumulator.concat(result);
-              },                               []);
+              }, []);
             }
             return recentGames;
           })
@@ -244,6 +255,79 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
           }
         });
     });
+  }
+
+  public getLeaders(appName: string): Promise<Leaders[]> {
+    return GamesModel.findOne({
+      where: { appName }
+    }).then((tokenRow: Game) => {
+      const token = tokenRow && tokenRow.appToken;
+      if (token) {
+        return new Promise<Leaders[]>((resolveBestUsers, reject) => {
+
+          UserModel.findAll({ attributes: ['token', 'name', 'isActive'] })
+            .then((users) => {
+              const promises = users.map((currentUser) => {
+                if (currentUser.isActive) {
+                  return StatisticModel.findAll({
+                    where: { userToken: currentUser.token, appToken: token }
+                  })
+                    .then((historyRows) => {
+                      const scoresArray = historyRows.map((row) => {
+                        return row.scores;
+                      });
+                      let scores = 0;
+                      if (!isEmpty(scoresArray)) {
+                        scores = scoresArray.reduce((a, b) => a > b ? a : b);
+                      }
+
+                      const result = {
+                        userToken: currentUser.token,
+                        name: currentUser.name,
+                        scores
+                      };
+                      return result;
+                    })
+                    .catch((error) => {
+                      this.loggerService.errorLog(error);
+                      throw technicalErr.databaseCrash;
+                    });
+                } else {
+                  throw logicErr.userShouldBeActive;
+                }
+              });
+              return Promise.all(promises)
+                .then((allUsersStatistic) => {
+                  const bestUsers = this.statisticService
+                    .sortBy(allUsersStatistic, 'scores')
+                    .filter((user) => user.scores > 0);
+                  return resolveBestUsers(bestUsers);
+                })
+                .catch((error) => {
+                  throw error;
+                });
+            })
+            .catch((error) => {
+              if (error.code) {
+                throw error;
+              } else {
+                this.loggerService.errorLog(error);
+                throw technicalErr.databaseCrash;
+              }
+            });
+        });
+      } else {
+        throw logicErr.notFoundAppToken;
+      }
+    })
+      .catch((error: any) => {
+        if (error.code) {
+          throw error;
+        } else {
+          this.loggerService.errorLog(error);
+          throw technicalErr.databaseCrash;
+        }
+      });
   }
 
   private saveStatistic(token: string, stat: Statistic): Promise<boolean> {

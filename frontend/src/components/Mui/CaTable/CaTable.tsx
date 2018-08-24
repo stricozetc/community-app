@@ -32,9 +32,13 @@ const options = {
 export const CaTable = withStyles(styles)(
   class extends React.Component<CaTableProps> {
 
-    public getTextContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
+    public getTextContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction, rowData: Row[]) => {
       let textContent;
       const text = row[`${column.field}`];
+
+      if (!row[`${column.field}`] && column.type !== TypeOfColumn.Increment) {
+        return '-';
+      }
 
       switch (column.type) {
         case TypeOfColumn.String: {
@@ -62,6 +66,10 @@ export const CaTable = withStyles(styles)(
         }
         case TypeOfColumn.Date: {
           textContent = new Date(text).toLocaleString(i18nInstance.language, options);
+          break;
+        }
+        case TypeOfColumn.Increment: {
+          textContent = rowData.findIndex(currentRow => currentRow === row) + 1;
           break;
         }
         default: {
@@ -92,10 +100,10 @@ export const CaTable = withStyles(styles)(
       return buttonContent;
     }
 
-    public getContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
+    public getContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction, rowData: Row[]) => {
       const { classes } = this.props;
 
-      const textContent = this.getTextContentOfTheCell(column, row, t);
+      const textContent = this.getTextContentOfTheCell(column, row, t, rowData);
 
       const buttonContent = this.getButtonContentOfTheCell(column, row, t);
 
@@ -150,7 +158,7 @@ export const CaTable = withStyles(styles)(
                               key={propertyIndex}
                               className={classes.columnCell}
                             >
-                              {this.getContentOfTheCell(column, row, t)}
+                              {this.getContentOfTheCell(column, row, t, rowData)}
                             </TableCell>
                           );
                         }
