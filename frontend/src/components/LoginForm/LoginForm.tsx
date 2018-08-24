@@ -167,6 +167,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 <FormGroup>
                   <TextField
                     className='ca-login-form__password-field'
+                    style={{ marginTop: '20px' }}
                     id='password'
                     label={t('passwordLabel')}
                     name='password'
