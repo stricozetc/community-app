@@ -1,7 +1,6 @@
-
 import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
-import { dbConfig } from './../src/config/dbconfig';
+import { dbConfig } from 'config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
 
 export interface Statistic {

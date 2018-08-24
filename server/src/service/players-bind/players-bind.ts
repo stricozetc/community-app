@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { AppTokenService } from '../app-token';
 import { LoggerService } from '../logger';
-import { Game } from '../../../models/games';
+import { Game } from 'models/games';
 
 @injectable()
 export class PlayersBindService {

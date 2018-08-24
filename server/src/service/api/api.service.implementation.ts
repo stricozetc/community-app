@@ -3,7 +3,7 @@ import { decorate, inject, injectable } from 'inversify';
 
 import { ApiService } from './api.service';
 import { AppTokenService } from '../app-token';
-import { Game } from '../../../models/games';
+import { Game } from 'models/games';
 
 decorate(injectable(), ApiService);
 

@@ -1,5 +1,3 @@
-import { ErrorBlock } from './error';
-
 export interface RecentGameFromServer {
   game: string;
   playedTime: number;

@@ -8,6 +8,7 @@ import * as jwt_decode from 'jwt-decode';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   HashRouter as Router,
@@ -103,7 +104,7 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/');
   }
 
-  public handleChange = (event: any) => {
+  public handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const language = event.target.value;
 
     this.props.changeLanguage(language);
@@ -369,7 +370,7 @@ const mapStateToProps = (state: AppState) => ({
   user: state.auth.user
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
   leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),

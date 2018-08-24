@@ -1,5 +1,5 @@
-import { inject, injectable } from 'inversify';
-import { isEmpty } from '../../validation/is-empty';
+import { injectable } from 'inversify';
+import { isEmpty } from 'validation/is-empty';
 
 @injectable()
 export class StatisticService {

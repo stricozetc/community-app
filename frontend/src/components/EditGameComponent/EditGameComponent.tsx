@@ -1,9 +1,16 @@
-import { GameForm } from 'components/GameForm';
-import { AuthStatus, GameForSettingForm, GameModel, SettingFormType } from 'models';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { EditGame } from 'store';
-import { AppState } from 'store/store.config';
+import { Dispatch } from 'redux';
+
+import { GameForm } from 'components';
+import { AppState, EditGame } from 'store';
+
+import {
+    AuthStatus,
+    GameForSettingForm,
+    GameModel,
+    SettingFormType
+} from 'models';
 
 import { EditGameComponentProps } from './EditGameComponent.model';
 
@@ -25,24 +32,26 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
     }
 
     public onSubmit = (data: GameModel) => {
-      this.props.editGame(data);
+        this.props.editGame(data);
     }
 
     public render(): JSX.Element {
         const game = this.getGame();
         const id = this.props.match.params['idOfTheGame'];
 
-        return(
-           <div>
-               {this.props.children}
-               <GameForm
-                    id = {id}
-                    userId = {this.props.user && this.props.user.id}
-                    config={SettingFormType.EditGame}
-                    model={game}
-                    submit={this.onSubmit}
-               />
-           </div>
+        return (
+            <div>
+                {this.props.children}
+                {this.props.user &&
+                    <GameForm
+                        id={id}
+                        userId={this.props.user && this.props.user.id}
+                        config={SettingFormType.EditGame}
+                        model={game}
+                        submit={(data: GameModel) => this.props.editGame(data)}
+                    />
+                }
+            </div>
         );
     }
 
@@ -76,7 +85,7 @@ const mapStateToProps = (state: AppState) => ({
     games: state.myGames.myGames
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     editGame: (data: GameModel) => dispatch(new EditGame(data)),
 });
 

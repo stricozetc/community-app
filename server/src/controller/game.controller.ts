@@ -3,10 +3,8 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import Promise = require('bluebird');
 
-import {
-  GamesRepository
-} from '../service/games';
-import { Game } from '../../models/games';
+import { GamesRepository } from 'service/games';
+import { Game } from 'models/games';
 
 @controller('/api/games')
 export class GameController {

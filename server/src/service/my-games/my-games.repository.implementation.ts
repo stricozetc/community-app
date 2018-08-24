@@ -1,7 +1,7 @@
 import Promise = require('bluebird');
 import { injectable } from 'inversify';
 
-import { Game, GamesModel } from '../../../models/games';
+import { Game, GamesModel } from 'models/games';
 
 import { MyGamesRepository } from './my-games.repository';
 

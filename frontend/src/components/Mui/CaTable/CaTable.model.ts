@@ -1,10 +1,7 @@
-import { WithStyles } from '@material-ui/core';
 import { HeaderName, Row } from 'models';
 
-import { styles } from './CaTable.styles';
-
-export interface CaTableProps extends WithStyles<typeof styles> {
+export interface CaTableProps {
   rowData: Row[];
   columnDef: HeaderName[];
-  handleRowClick?: (item: any) => void;
+  handleRowClick?: (item: Row) => void;
 }

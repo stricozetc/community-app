@@ -1,10 +1,6 @@
-import { WithStyles } from '@material-ui/core';
-
 import { AppMenuItem } from 'models';
 
-import { styles } from './AppMenu.styles';
-
-export interface AppMenuProps extends WithStyles<typeof styles> {
+export interface AppMenuProps {
   appMenuItems: AppMenuItem[];
   children?: JSX.Element;
 }

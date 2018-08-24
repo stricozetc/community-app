@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   AuthStatus,
@@ -8,11 +9,18 @@ import {
 } from 'models';
 
 import { CaGameCard, CaSpinner } from 'components';
-import { AppState, LogoutUser } from 'store';
-import { JoinBattle, LeaveBattle, LoadGames } from 'store';
-import { isEmpty } from 'utils/isEmpty';
+import { isEmpty } from 'utils';
+
+import {
+  AppState,
+  JoinBattle,
+  LeaveBattle,
+  LoadGames,
+  LogoutUser
+} from 'store';
 
 import { BattleProps } from './Battles.model';
+
 import './Battles.scss';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
@@ -37,8 +45,8 @@ class CaBattlesComponent extends React.Component<BattleProps> {
       .filter(d => !!d);
 
     const sortedRooms = mappedRooms && mappedRooms.length ? mappedRooms
-      .sort((a: any, b: any) => {
-        return a - b;
+      .sort((a: number | undefined, b: number | undefined) => {
+        return a && b ? a - b : 1 - 2;
       }) as number[] : [];
 
     return sortedRooms && sortedRooms[0] ? sortedRooms[0] : 0;
@@ -96,7 +104,7 @@ const mapStateToProps = (state: AppState) => ({
   status: state.games.gamesStatus,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
   leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),

@@ -1,20 +1,21 @@
-import { withStyles } from '@material-ui/core';
+import * as React from 'react';
+
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import CopyIcon from '@material-ui/icons/Description';
-import * as React from 'react';
+import { createStyled } from 'utils';
 
 import { CaCopyProps } from './CaCopy.model';
 import { styles } from './CaCopy.styles';
 
-export const CaCopy = withStyles(styles)((props: CaCopyProps) => {
-  const { classes, copyHandler } = props;
+const Styled = createStyled(styles);
 
-  return (
+export const CaCopy = ({ copyHandler }: CaCopyProps) => (
+  <Styled>{({ classes }) => (
     <Tooltip title='Copy' placement='right'>
       <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={copyHandler} >
-        <CopyIcon  className={classes.copyIcon} />
+        <CopyIcon className={classes.copyIcon} />
       </IconButton>
     </Tooltip>
-  );
-});
+  )}</Styled>
+);

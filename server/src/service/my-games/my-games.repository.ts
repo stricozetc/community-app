@@ -1,4 +1,4 @@
-import { Game } from '../../../models/games';
+import { Game } from 'models/games';
 
 import Promise = require('bluebird');
 

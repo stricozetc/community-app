@@ -1,15 +1,14 @@
 import * as React from 'react';
 
-import { withStyles } from '@material-ui/core';
-import Tab from '@material-ui/core/Tab';
+import Tab, { TabProps } from '@material-ui/core/Tab';
+import { createStyled } from 'utils';
 
-import { CaTabProps } from './CaTab.model';
 import { styles } from './CaTab.styles';
 
-export const CaTab = withStyles(styles)((props: CaTabProps) => {
-  const { classes, ...otherProps } = props;
+const Styled = createStyled(styles);
 
-  return (
-    <Tab {...otherProps} classes={{ label: classes.label }}/>
-  );
-});
+export const CaTab = (props: TabProps) => (
+  <Styled>{({ classes }) => (
+    <Tab {...props} classes={{ label: classes.label }} />
+  )}</Styled>
+);

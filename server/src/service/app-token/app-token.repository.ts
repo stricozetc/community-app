@@ -1,9 +1,8 @@
 import uuid from 'uuid/v4';
 import { injectable, inject } from 'inversify';
-import { technicalErr } from '../../../errors/technicalErr';
-import { logicErr } from '../../../errors/logicErr';
+import { logicErr, technicalErr } from 'errors';
 import { LoggerService } from '../logger/logger.service';
-import { Game, GamesModel } from '../../../models/games';
+import { Game, GamesModel } from 'models/games';
 
 @injectable()
 export class AppTokenRepository {

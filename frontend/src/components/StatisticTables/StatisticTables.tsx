@@ -100,7 +100,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     return (
       <I18n>
         {
-          ( t ) => (
+          (t) => (
             <div className='ca-users-tables'>
               <div className='ca-users-tables__statistics'>
                 <h2 className='ca-users-tables__statistics-title'>{t('statistics')}</h2>
@@ -254,7 +254,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     }
   }
 
-  public isArrayEmpty(arrayOfData: any[]): boolean {
+  public isArrayEmpty<T>(arrayOfData: T[]): boolean {
     return !Array.isArray(arrayOfData) || !arrayOfData.length;
   }
 

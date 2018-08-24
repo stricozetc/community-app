@@ -1,4 +1,4 @@
-import { RoomStatus } from './../service/room/models/room-status';
+import { RoomStatus } from 'service/room/models/room-status';
 
 export interface RoomInfo {
   id: number;
