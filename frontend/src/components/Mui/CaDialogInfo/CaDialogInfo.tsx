@@ -18,8 +18,8 @@ import { styles } from './CaDialogInfo.styles';
 
 const Styled = createStyled(styles);
 
-const handleFocus = (event: any) => {
-  event.target.select();
+const handleFocus = (event: React.FocusEvent<HTMLDivElement | HTMLInputElement>) => {
+  (event.target as HTMLInputElement).select();
 };
 
 export const CaDialogInfo = ({ open, onClose, appToken }: CaDialogInfoProps) => (
