@@ -1,6 +1,6 @@
 import { History } from 'history';
 import { FrontEndUser } from 'store';
-import { SnackbarErrorMessage } from 'components'
+/* import { SnackbarErrorMessage } from 'components' */
 
 
 import {
@@ -16,7 +16,7 @@ export interface RootProps {
   currentPlayerRoom: RoomInfo | undefined;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
-  errors: SnackbarErrorMessage[];
+  errors: any;
   language?: string;
 
   leaveRoom(battleName: string): void;
