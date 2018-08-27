@@ -138,7 +138,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     );
   }
 
-  public getNameOfHeaders(tableHeadersName: any, statistic: object): string[] {
+  public getNameOfHeaders(tableHeadersName: {}, statistic: object): string[] {
     const propertyNames = Object.keys(statistic);
     const headersName: string[] = [];
 

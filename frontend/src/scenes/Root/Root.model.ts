@@ -1,5 +1,7 @@
 import { History } from 'history';
 import { FrontEndUser } from 'store';
+import { SnackbarErrorMessage } from 'components'
+
 
 import {
   AuthStatus,
@@ -14,7 +16,7 @@ export interface RootProps {
   currentPlayerRoom: RoomInfo | undefined;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
-  errors: any;
+  errors: SnackbarErrorMessage[];
   language?: string;
 
   leaveRoom(battleName: string): void;
