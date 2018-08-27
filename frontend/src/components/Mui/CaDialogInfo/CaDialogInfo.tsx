@@ -50,7 +50,7 @@ export const CaDialogInfo = ({ open, onClose, appToken, onSuccess }: CaDialogInf
           />
           <CopyToClipboard text={appToken}>
             <IconButton>
-              <CaCopy copyHandler={onClose} successHandler={(data: SnackbarPayload) => onSuccess(data)}/>
+              <CaCopy copyHandler={(data: SnackbarPayload) => onSuccess(data)}/>
             </IconButton>
           </CopyToClipboard>
         </div>

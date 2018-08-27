@@ -10,25 +10,25 @@ import { CaCopyProps } from './CaCopy.model';
 import { styles } from './CaCopy.styles';
 
 const Styled = createStyled(styles);
-
-export const CaCopy = ({ copyHandler, successHandler }: CaCopyProps) => {
-  const handleClick = () => {
-    copyHandler();
-    successHandler({
+export class CaCopy extends React.Component<CaCopyProps> {
+  public handleClick = () => {
+    this.props.copyHandler({
       type: SnackbarType.Success,
       message: {
         msg: 'Application token was successful copied'
       }
     });
-  };
+  }
 
-  return(
-    <Styled>{({ classes }) => (
-      <Tooltip title='Copy' placement='right'>
-        <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={handleClick} >
-          <CopyIcon className={classes.copyIcon} />
-        </IconButton>
-      </Tooltip>
-    )}</Styled>
-  );
-};
+  public render(): JSX.Element {
+    return (
+      <Styled>{({ classes }) => (
+        <Tooltip title='Copy' placement='right'>
+          <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={this.handleClick} >
+            <CopyIcon className={classes.copyIcon} />
+          </IconButton>
+        </Tooltip>
+      )}</Styled>
+    );
+  }
+}

@@ -54,6 +54,12 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
         });
     }
 
+    public handleSuccessCopy = (data: SnackbarPayload) => {
+        this.handleClosePopover();
+
+        this.props.successCopyToken(data);
+    }
+
     public handleOpenPopover = (appToken: string) => {
         this.setState({
             isPopoverOpen: true,
@@ -131,7 +137,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
                     onClose={this.handleClosePopover}
                     open={this.state.isPopoverOpen}
                     appToken={this.state.appTokenInPopover}
-                    onSuccess={(data: SnackbarPayload) => this.props.successCopyToken(data)}
+                    onSuccess={(data: SnackbarPayload) => this.handleSuccessCopy(data)}
                 />
             </div>
         );
