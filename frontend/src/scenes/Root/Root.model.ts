@@ -1,6 +1,6 @@
 import { History } from 'history';
 import { FrontEndUser } from 'store';
-import { SnackbarErrorMessage } from 'components'
+/* import { SnackbarErrorMessage } from 'components' */
 
 
 import {
@@ -15,7 +15,7 @@ export interface RootProps {
   battleName: string;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
-  errors: SnackbarErrorMessage[];
+  errors: any;
   language?: string;
 
   leaveBattle(battleName: string): void;

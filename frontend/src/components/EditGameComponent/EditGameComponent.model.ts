@@ -8,7 +8,7 @@ export interface EditGameComponentProps {
     user: FrontEndUser | undefined;
     games: GameModel[];
     children?: JSX.Element;
-    match: any;
+    match: { params: string};
 
     editGame(payload: GameModel): void;
 }

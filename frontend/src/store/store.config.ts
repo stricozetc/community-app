@@ -61,7 +61,7 @@ import {
   restorePasswordReducer
 } from './restore-password';
 
-import { SnackbarErrorMessage } from 'components'
+import { SnackbarErrorMessage } from 'components';
 
 const rootReducers = combineReducers({
   battle: battleReducer,
@@ -93,7 +93,7 @@ export interface AppState {
   auth: AuthState;
   games: GamesState;
   statistic: StatisticState;
-  errors: SnackbarErrorMessage[];
+  errors: SnackbarErrorMessage;
   socket: SocketState;
   snackbarUi: SnackbarUiState;
   restorePassword: RestorePasswordState;

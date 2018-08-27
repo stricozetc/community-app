@@ -21,7 +21,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>, state$: Obs
       const game = state.games.games
         .find((info: GameModel) => info.appName === action.payload);
 
-      let args: any = '';
+      let args: string = '';
       const user = state.auth.user;
       if (user) {
         args = user.token;
