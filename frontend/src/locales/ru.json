@@ -75,7 +75,7 @@
   "requestUrlRequired": "Пожалуйста, укажите requestUrl ",
   "requestUrlError": "Введите корректный requestUrl",
   "maxWaitingTimeRequired": "Пожалуйста, укажите время ожидания до начала игры",
-  "maxWaitingTimeError": "Время ожидания до начала игры должно быть не менее 15 минут",  
+  "maxWaitingTimeError": "Время ожидания до начала игры должно быть не менее 15 минут",
   "redirectUrlRequired": "Пожалуйста, укажите redirectUrl ",
   "redirectUrlError": "Введите корректный redirectUrl",
   "deleteHeader": "Вы уверены, что хотите удалить игру?",
@@ -87,5 +87,6 @@
   "restore": "Востановить",
   "email-sent": "Письмо отправлено.",
   "mail": "Письмо с сылкой для востановления доступа было отправлено на ",
-  "forget-password": "Забыли пароль?"
+  "forget-password": "Забыли пароль?",
+  "leaders": "Лидеры"
 }

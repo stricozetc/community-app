@@ -75,7 +75,7 @@ class CaLeadersComponent extends React.Component<StatisticProps, any> {
           ( t ) => (
           <div className='ca-statistic'>
             {this.props.children}
-            <h2 className='leaders__statistics-title'>{'Leaders'}</h2>
+            <h2 className='leaders__statistics-title'>{t('leaders')}</h2>
             <div className='leaders__app-name'>
               {appName}
             </div>

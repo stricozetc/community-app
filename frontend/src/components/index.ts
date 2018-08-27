@@ -11,5 +11,6 @@ export * from './AddGameComponent';
 export * from './EditGameComponent';
 export * from './CircleDiagram';
 export * from './ChangePasswordForm';
+export * from './MoreMenu';
 export * from './GameForm';
 export * from './Mui';

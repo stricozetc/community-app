@@ -126,8 +126,8 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     return new Promise<PopularGamesFromServer[]>(
       (resolvePopularGames) => {
         GamesModel.findAll({ attributes: ['appToken', 'appName'] })
-          .then((gamesAndTokens: Array<{ token: string; appName: string }>) => {
-            const tokens = gamesAndTokens.map((row) => row.token);
+          .then((gamesAndTokens: Array<{ appToken: string; appName: string }>) => {
+            const tokens = gamesAndTokens.map((row) => row.appToken);
             const promises = tokens.map((currentToken) => {
               return StatisticModel.findAll({
                 where: { appToken: currentToken }
@@ -161,7 +161,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                   let mostPopularGames = allGamesAndItsPlayedTime.reduce(
                     (accumulator, game) => {
                       const gameName = gamesAndTokens.find(
-                        (el) => el.token === game.token
+                        (el) => el.appToken === game.token
                       ).appName;
 
                       const result = {

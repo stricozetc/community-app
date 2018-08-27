@@ -7,6 +7,8 @@ import clockImage from 'assets/clock.svg';
 import userImage from 'assets/user.svg';
 import { I18n } from 'react-i18next';
 
+import { MoreMenu } from '../MoreMenu';
+
 import './GameCard.scss';
 import './GameCardFooter.scss';
 import './IconWithInfo.scss';
@@ -80,7 +82,10 @@ export class CaGameCard extends React.Component<GameCardProps> {
           ( t ) => (
             <div className={['ca-game-card', ...classes].join(' ')}>
               <div className='ca-game-card__container'>
-                <h1 className='ca-game-card__game-title'>{appName}</h1>
+                <div className='ca-game-card__header'>
+                  <h1 className='ca-game-card__game-title'>{appName}</h1>
+                  <MoreMenu items={this.props.moreMenuItems} />
+                </div>
                 <h2 className='ca-game-card__game-desc'>{description}</h2>
 
                 <div className='ca-game-card__btn-container'>
