@@ -8,101 +8,101 @@ import {
   MenuItem,
   MenuList,
   Paper,
-  Popper,
-  withStyles
- } from '@material-ui/core';
+  Popper
+} from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import { I18n } from 'react-i18next';
+
+import { createStyled } from 'utils';
 
 import { MoreMenuProps, MoreMenuState } from './MoreMenu.model';
 import { styles } from './MoreMenu.styles';
 
 import './MoreMenu.scss';
 
-export const MoreMenu = withStyles(styles)(
-  class extends React.Component<MoreMenuProps, MoreMenuState> {
-    public constructor(props: MoreMenuProps) {
-      super(props);
+const Styled = createStyled(styles);
 
-      this.state = {
-        anchorEl: null,
-      };
+export class MoreMenu extends React.Component<MoreMenuProps, MoreMenuState> {
+  public constructor(props: MoreMenuProps) {
+    super(props);
+
+    this.state = {
+      anchorEl: null,
+    };
+  }
+
+  public handleIconClick = (event: any) => {
+    if (!this.state.anchorEl) {
+      this.handleOpen(event);
+    } else {
+      this.handleClose();
     }
+  }
 
-    public handleIconClick = (event: any) => {
-      if (!this.state.anchorEl) {
-        this.handleOpen(event);
-      } else {
-        this.handleClose();
-      }
-    }
+  public handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+    this.setState({ anchorEl: event.currentTarget });
+  }
 
-    public handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-      this.setState({ anchorEl: event.currentTarget });
-    }
+  public handleClose = () => {
+    this.setState({ anchorEl: null });
+  }
 
-    public handleClose = () => {
-      this.setState({ anchorEl: null });
-    }
+  public render(): JSX.Element {
+    const { moreMenuItems } = this.props;
 
-    public render(): JSX.Element {
-      const { moreMenuItems, classes } = this.props;
+    const { anchorEl } = this.state;
 
-      const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
-      const open = Boolean(anchorEl);
+    return (
+      <Styled>{({ classes }) => (
+        <I18n>{t => (
+          <ClickAwayListener onClickAway={this.handleClose}>
+            <div className='more-menu' >
+              <IconButton
+                onClick={this.handleIconClick}
+                className={classes.iconButton}
+              >
+                <MoreHorizIcon className={classes.moreIcon} />
+              </IconButton>
 
-      return (
-        <I18n>
-          {
-            (t) => (
-              <ClickAwayListener onClickAway={this.handleClose}>
-                <div className='more-menu' >
-                  <IconButton
-                    onClick={this.handleIconClick}
-                    className={classes.iconButton}
+              <Popper
+                open={open}
+                anchorEl={anchorEl}
+                transition={true}
+                disablePortal={true}
+                className={classes.popper}
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin: placement === 'bottom'
+                        ? 'center top'
+                        : 'center bottom'
+                    }}
                   >
-                    <MoreHorizIcon className={classes.moreIcon} />
-                  </IconButton>
-
-                  <Popper
-                    open={open}
-                    anchorEl={anchorEl}
-                    transition={true}
-                    disablePortal={true}
-                    className={classes.popper}
-                  >
-                    {({ TransitionProps, placement }) => (
-                      <Grow
-                        {...TransitionProps}
-                        style={{
-                          transformOrigin: placement === 'bottom'
-                            ? 'center top'
-                            : 'center bottom'
-                        }}
-                      >
-                        <Paper className={classes.paper}>
-                          <MenuList>
-                            {
-                              moreMenuItems.map(item => {
-                                return (
-                                  <MenuItem key={item.title} onClick={item.action} className={classes.menuItem} >
-                                    <ListItemText primary={t(item.title)} classes={{ primary: classes.listItemText }} />
-                                  </MenuItem>
-                                );
-                              })
-                            }
-                          </MenuList>
-                        </Paper>
-                      </Grow>
-                    )}
-                  </Popper>
-                </div>
-              </ClickAwayListener>
-            )
-          }
-        </I18n>
-      );
-    }
-  });
+                    <Paper className={classes.paper}>
+                      <MenuList>
+                        {
+                          moreMenuItems.map(item => {
+                            return (
+                              <MenuItem key={item.title} onClick={item.action} className={classes.menuItem} >
+                                <ListItemText primary={t(item.title)} classes={{ primary: classes.listItemText }} />
+                              </MenuItem>
+                            );
+                          })
+                        }
+                      </MenuList>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </div>
+          </ClickAwayListener>
+        )}</I18n>
+      )}</Styled>
+    );
+  }
+}

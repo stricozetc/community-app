@@ -21,7 +21,7 @@ import { styles } from './AppMenu.styles';
 
 import './AppMenu.scss';
 
-export const Styled = createStyled(styles);
+const Styled = createStyled(styles);
 
 export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
 
