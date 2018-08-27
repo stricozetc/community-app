@@ -91,7 +91,7 @@ export interface AppState {
   auth: AuthState;
   games: GamesState;
   statistic: StatisticState;
-  errors: SnackbarErrorMessage[];
+  errors: SnackbarErrorMessage;
   socket: SocketState;
   snackbarUi: SnackbarUiState;
   restorePassword: RestorePasswordState;
