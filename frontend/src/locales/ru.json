@@ -67,7 +67,7 @@
   "appNameRequired": "Пожалуйста, укажите название приложения",
   "applicationNameLengthError": "Длина, названия приложения, должна быть в пределах 3-50 символов",
   "descriptionRequired": "Пожалуйста, укажите описание приложения",
-  "descriptionApplicationLengthError": "Длина, описания приложения, должна быть в пределах 10-250 символов",
+  "descriptionApplicationLengthError": "Длина, описания приложения, должна быть в пределах 10-100 символов",
   "maxRoomPlayerRequired": "Пожалуйста, укажите количество игроков в комнате",
   "maxRoomPlayerCountError": "Количество игроков в комнате должно быть не менее 2",
   "maxRoomsRequired": "Пожалуйста, укажите количество комнат",

@@ -66,7 +66,7 @@
   "appNameRequired": "Application name should be required",
   "applicationNameLengthError": "The length of application name should be in interval of 3-50 symbols",
   "descriptionRequired": "Application description should be required",
-  "descriptionApplicationLengthError": "The length of application description should be in interval of 3-50 symbols",
+  "descriptionApplicationLengthError": "The length of application description should be in interval of 10-100 symbols",
   "maxRoomPlayerRequired": "Count of players in room should be required",
   "maxRoomPlayerCountError": "Count of players in room should be more than 2",
   "maxRoomsRequired": "Count of rooms should be required",

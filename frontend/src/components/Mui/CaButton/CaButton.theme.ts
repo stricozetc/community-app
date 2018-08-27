@@ -10,13 +10,13 @@ import {
 export const MuiButton: Partial<StyleRules<ButtonClassKey>> = {
   root: {
     width: '184px',
-    height: '35px',
+    height: '34px',
     border: '1px solid #f4b33a',
     borderRadius: 0,
     backgroundColor: 'transparent',
     color: defaultButtonTextColor,
     textTransform: 'none',
-    fontSize: '1.5rem',
+    fontSize: '1.6rem',
     fontWeight: 600,
 
     '&$disabled': {

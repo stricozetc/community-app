@@ -3,13 +3,14 @@
 
 .ca-homepage {
   &__container {
-    margin: 0 10.6rem;
+    margin: 0 8rem;
     @include flexbox();
   }
 
   &__container-for-games {
     margin-top: 6rem;
-    margin-right: 5rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
   }
 
   &__spinner-container {
@@ -20,5 +21,36 @@
     width: 100vw;
     height: 100vh;
     @include flexbox-center-all();
+  }
+}
+@media(max-width:1024px) {
+  .ca-homepage {
+    &__container {
+      margin: 0;
+      @include flexbox-center-all();
+    }
+  }
+}
+@media(max-width: 768px) {
+  .ca-homepage {
+    &__container {
+      margin: 0 6rem;
+    }
+
+    &__container-for-games {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+}
+@media(max-width:600px) {
+  .ca-homepage {
+    &__container {
+      margin: 0 4rem;
+    }
+
+    &__container-for-games {
+      margin-top: 4rem;
+    }
   }
 }
