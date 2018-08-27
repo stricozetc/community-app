@@ -10,20 +10,18 @@ import { CaCopyProps } from './CaCopy.model';
 import { styles } from './CaCopy.styles';
 
 const Styled = createStyled(styles);
-export class CaCopy extends React.Component<CaCopyProps> {
-  public handleClick = () => {
-    this.props.copyHandler();
-  }
+export const  CaCopy = (props: CaCopyProps) => {
+  const handleClick = () => {
+    props.copyHandler();
+  };
 
-  public render(): JSX.Element {
-    return (
-      <Styled>{({ classes }) => (
-        <Tooltip title='Copy' placement='right'>
-          <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={this.handleClick} >
-            <CopyIcon className={classes.copyIcon} />
-          </IconButton>
-        </Tooltip>
-      )}</Styled>
-    );
-  }
-}
+  return (
+    <Styled>{({ classes }) => (
+      <Tooltip title='Copy' placement='right'>
+        <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={handleClick} >
+          <CopyIcon className={classes.copyIcon} />
+        </IconButton>
+      </Tooltip>
+    )}</Styled>
+  );
+};
