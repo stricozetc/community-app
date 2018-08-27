@@ -84,7 +84,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
               <div className='ca-game-card__container'>
                 <div className='ca-game-card__header'>
                   <h1 className='ca-game-card__game-title'>{appName}</h1>
-                  <MoreMenu moreMenuItems={this.props.moreMenuItems} />
+                  <MoreMenu items={this.props.moreMenuItems} />
                 </div>
                 <h2 className='ca-game-card__game-desc'>{description}</h2>
 

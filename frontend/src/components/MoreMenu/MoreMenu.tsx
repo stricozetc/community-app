@@ -19,20 +19,14 @@ import { createStyled } from 'utils';
 import { MoreMenuProps, MoreMenuState } from './MoreMenu.model';
 import { styles } from './MoreMenu.styles';
 
-import './MoreMenu.scss';
-
 const Styled = createStyled(styles);
 
 export class MoreMenu extends React.Component<MoreMenuProps, MoreMenuState> {
-  public constructor(props: MoreMenuProps) {
-    super(props);
+  public state = {
+    anchorEl: null,
+  };
 
-    this.state = {
-      anchorEl: null,
-    };
-  }
-
-  public handleIconClick = (event: any) => {
+  public handleIconClick = (event: React.MouseEvent<HTMLElement>) => {
     if (!this.state.anchorEl) {
       this.handleOpen(event);
     } else {
@@ -49,7 +43,7 @@ export class MoreMenu extends React.Component<MoreMenuProps, MoreMenuState> {
   }
 
   public render(): JSX.Element {
-    const { moreMenuItems } = this.props;
+    const { items } = this.props;
 
     const { anchorEl } = this.state;
 
@@ -59,7 +53,7 @@ export class MoreMenu extends React.Component<MoreMenuProps, MoreMenuState> {
       <Styled>{({ classes }) => (
         <I18n>{t => (
           <ClickAwayListener onClickAway={this.handleClose}>
-            <div className='more-menu' >
+            <div>
               <IconButton
                 onClick={this.handleIconClick}
                 className={classes.iconButton}
@@ -86,7 +80,7 @@ export class MoreMenu extends React.Component<MoreMenuProps, MoreMenuState> {
                     <Paper className={classes.paper}>
                       <MenuList>
                         {
-                          moreMenuItems.map(item => {
+                          items.map(item => {
                             return (
                               <MenuItem key={item.title} onClick={item.action} className={classes.menuItem} >
                                 <ListItemText primary={t(item.title)} classes={{ primary: classes.listItemText }} />

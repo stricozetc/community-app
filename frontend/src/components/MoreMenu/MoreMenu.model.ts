@@ -1,7 +1,7 @@
 import { MoreMenuItem } from 'models';
 
 export interface MoreMenuProps {
-  moreMenuItems: MoreMenuItem[];
+  items: MoreMenuItem[];
 }
 
 export interface MoreMenuState {
