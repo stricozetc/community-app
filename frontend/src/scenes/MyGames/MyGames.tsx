@@ -14,6 +14,7 @@ import {
     AuthStatus,
     GameModel,
     RowProperty,
+    SnackbarPayload,
     TypeOfColumn
 } from 'models';
 
@@ -21,9 +22,9 @@ import {
     AddGame,
     AppState,
     DeleteGame,
-    InitMyGames
+    InitMyGames,
+    OpenSnackbar
 } from 'store';
-
 import { history } from 'utils';
 
 import { MyGameProps, MyGameState } from './MyGames.model';
@@ -126,7 +127,12 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
                     onClose={this.handleCloseDialog}
                     onAccept={this.handleDeleteConfirmation}
                 />
-                <CaDialogInfo onClose={this.handleClosePopover} open={this.state.isPopoverOpen} appToken={this.state.appTokenInPopover} />
+                <CaDialogInfo
+                    onClose={this.handleClosePopover}
+                    open={this.state.isPopoverOpen}
+                    appToken={this.state.appTokenInPopover}
+                    onSuccess={(data: SnackbarPayload) => this.props.successCopyToken(data)}
+                />
             </div>
         );
     }
@@ -141,7 +147,8 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     deleteGame: (gameThatNeedToDelete: GameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
     addGame: (data: GameModel) => dispatch(new AddGame(data)),
-    getMyGames: (userId: number) => dispatch(new InitMyGames(userId))
+    getMyGames: (userId: number) => dispatch(new InitMyGames(userId)),
+    successCopyToken: (data: SnackbarPayload) => dispatch(new OpenSnackbar(data))
 });
 
 export const CaMyGames = connect(

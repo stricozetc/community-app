@@ -1,4 +1,4 @@
-import { SnackbarType } from 'models';
+import { SnackbarPayload } from 'models';
 
 import { action } from '../decorators';
 
@@ -17,10 +17,7 @@ export class CloseSnackbar {
 export class OpenSnackbar {
   public readonly type = SnackbarUiTypes.OpenSnackbar;
 
-  public constructor(public payload: {
-    type: SnackbarType,
-    message: any
-  }) { }
+  public constructor(public payload: SnackbarPayload) { }
 }
 
 @action()
