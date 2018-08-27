@@ -11,14 +11,10 @@ import { styles } from './CaCopy.styles';
 
 const Styled = createStyled(styles);
 export const  CaCopy = (props: CaCopyProps) => {
-  const handleClick = () => {
-    props.copyHandler();
-  };
-
   return (
     <Styled>{({ classes }) => (
       <Tooltip title='Copy' placement='right'>
-        <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={handleClick} >
+        <IconButton aria-label='Copy' className={classes.copyIconButton} onClick={props.copyHandler} >
           <CopyIcon className={classes.copyIcon} />
         </IconButton>
       </Tooltip>
