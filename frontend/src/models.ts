@@ -222,7 +222,7 @@ export interface FrontEndValidationErrorsGameRegister {
 }
 
 export interface ErrorBlock {
-  code: number;
+  code?: number;
   msg: string;
 }
 
@@ -249,4 +249,10 @@ export interface RecentGames {
   game: string;
   scores: number;
   result: number;
+}
+
+
+export interface SnackbarPayload {
+  type: SnackbarType;
+  message: ErrorBlock | ErrorBlock[];
 }

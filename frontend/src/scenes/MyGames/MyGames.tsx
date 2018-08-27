@@ -14,6 +14,8 @@ import {
     AuthStatus,
     GameModel,
     RowProperty,
+    SnackbarPayload,
+    SnackbarType,
     TypeOfColumn
 } from 'models';
 
@@ -21,9 +23,9 @@ import {
     AddGame,
     AppState,
     DeleteGame,
-    InitMyGames
+    InitMyGames,
+    OpenSnackbar
 } from 'store';
-
 import { history } from 'utils';
 
 import { MyGameProps, MyGameState } from './MyGames.model';
@@ -51,6 +53,19 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
             isDialogOpen: true,
             deletedGame: game
         });
+    }
+
+    public handleSuccessCopy = () => {
+        this.handleClosePopover();
+
+        this.props.successCopyToken(
+            {
+                type: SnackbarType.Success,
+                message: {
+                    msg: 'Application token was successful copied'
+                }
+            }
+        );
     }
 
     public handleOpenPopover = (appToken: string) => {
@@ -126,7 +141,12 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
                     onClose={this.handleCloseDialog}
                     onAccept={this.handleDeleteConfirmation}
                 />
-                <CaDialogInfo onClose={this.handleClosePopover} open={this.state.isPopoverOpen} appToken={this.state.appTokenInPopover} />
+                <CaDialogInfo
+                    onClose={this.handleClosePopover}
+                    open={this.state.isPopoverOpen}
+                    appToken={this.state.appTokenInPopover}
+                    onSuccess={this.handleSuccessCopy}
+                />
             </div>
         );
     }
@@ -141,7 +161,8 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     deleteGame: (gameThatNeedToDelete: GameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
     addGame: (data: GameModel) => dispatch(new AddGame(data)),
-    getMyGames: (userId: number) => dispatch(new InitMyGames(userId))
+    getMyGames: (userId: number) => dispatch(new InitMyGames(userId)),
+    successCopyToken: (data: SnackbarPayload) => dispatch(new OpenSnackbar(data))
 });
 
 export const CaMyGames = connect(
