@@ -32,7 +32,7 @@ export function action(): ClassDecorator {
 
       return returnC;
     }
-    const f: any = (...args: any[]) => {
+    const f: Function = (...args: any[]) => {
       return construct(original, args);
     };
     f.prototype = original.prototype;
