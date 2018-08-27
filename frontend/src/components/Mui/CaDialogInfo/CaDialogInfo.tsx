@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
-import { SnackbarPayload } from 'models';
+
 import { createStyled } from 'utils';
 
 import { CaCopy } from '../CaCopy/CaCopy';
@@ -50,7 +50,7 @@ export const CaDialogInfo = ({ open, onClose, appToken, onSuccess }: CaDialogInf
           />
           <CopyToClipboard text={appToken}>
             <IconButton>
-              <CaCopy copyHandler={(data: SnackbarPayload) => onSuccess(data)}/>
+              <CaCopy copyHandler={onSuccess}/>
             </IconButton>
           </CopyToClipboard>
         </div>

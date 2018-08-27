@@ -3,7 +3,7 @@ import * as React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import CopyIcon from '@material-ui/icons/Description';
-import { SnackbarType } from 'models';
+
 import { createStyled } from 'utils';
 
 import { CaCopyProps } from './CaCopy.model';
@@ -12,12 +12,7 @@ import { styles } from './CaCopy.styles';
 const Styled = createStyled(styles);
 export class CaCopy extends React.Component<CaCopyProps> {
   public handleClick = () => {
-    this.props.copyHandler({
-      type: SnackbarType.Success,
-      message: {
-        msg: 'Application token was successful copied'
-      }
-    });
+    this.props.copyHandler();
   }
 
   public render(): JSX.Element {

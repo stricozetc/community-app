@@ -15,6 +15,7 @@ import {
     GameModel,
     RowProperty,
     SnackbarPayload,
+    SnackbarType,
     TypeOfColumn
 } from 'models';
 
@@ -54,10 +55,17 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
         });
     }
 
-    public handleSuccessCopy = (data: SnackbarPayload) => {
+    public handleSuccessCopy = () => {
         this.handleClosePopover();
 
-        this.props.successCopyToken(data);
+        this.props.successCopyToken(
+            {
+                type: SnackbarType.Success,
+                message: {
+                    msg: 'Application token was successful copied'
+                }
+            }
+        );
     }
 
     public handleOpenPopover = (appToken: string) => {
@@ -137,7 +145,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
                     onClose={this.handleClosePopover}
                     open={this.state.isPopoverOpen}
                     appToken={this.state.appTokenInPopover}
-                    onSuccess={(data: SnackbarPayload) => this.handleSuccessCopy(data)}
+                    onSuccess={this.handleSuccessCopy}
                 />
             </div>
         );
