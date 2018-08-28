@@ -56,7 +56,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         if (error.code) {
           throw error;
         } else {
-          this.loggerService.errorLog(error);
+          this.loggerService.errorLog(error.msg);
           throw technicalErr.databaseCrash;
         }
     }
