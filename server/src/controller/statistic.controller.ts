@@ -9,6 +9,7 @@ import { StatisticRepository } from 'service/statistic';
 import { ParticipationStatus, ResultStatus } from 'models';
 import { logicErr } from 'errors/logicErr';
 import { validateGameDataInput } from 'validation/statistic';
+import { User } from 'interfaces';
 
 export interface GameData {
   userToken: string;
@@ -80,7 +81,7 @@ export class StatisticController {
   @httpGet('/best-users', passport.authenticate('jwt', { session: false }))
   public getBestUsers(request: Request, response: Response): Promise<void | Response> {
     return this.statisticRepository.getBestUsers()
-      .then((bestUsers: any[]) => {
+      .then((bestUsers: User[]) => {
         response.status(200).json(bestUsers);
       }).catch((error) => {
         return error.code >= 2000 ?

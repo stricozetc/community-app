@@ -17,7 +17,7 @@ export class RoomService {
   @inject(GamesRepository) private gamesRepository: GamesRepository;
 
   private rooms: Room[] = [];
-  private games: any[] = [];
+  private games: Game[] = [];
 
   constructor() {
     //
