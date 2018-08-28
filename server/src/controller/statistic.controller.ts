@@ -11,6 +11,7 @@ import { logicErr } from '../../errors/logicErr';
 import { validateGameDataInput } from '../validation/statistic';
 import { Leaders, RecentGameFromServer, BestUsersFromServer, PopularGamesFromServer } from '../../models/otherModels';
 import { User } from 'interfaces';
+import { User } from 'interfaces';
 
 export interface GameData {
   userToken: string;
