@@ -2,10 +2,10 @@ import * as openSocket from 'socket.io-client';
 
 import { GameModel, RoomInfo } from 'models';
 import { Subject } from 'rxjs';
-
 export class SocketService {
   public roomsInfo: Subject<RoomInfo[]> = new Subject();
   public notifyCountdown: Subject<number> = new Subject();
+  public updateLeadersBoard: Subject<string> = new Subject();
 
   private socket: SocketIOClient.Socket;
 
@@ -24,6 +24,7 @@ export class SocketService {
         (distance: number) => this.notifyCountdown.next(distance)
       );
     }
+    this.socket.on('updateLeaders', (appName: string) => this.updateLeadersBoard.next(appName));
   }
 
   public emitEvent(eventName: string): void {
@@ -37,12 +38,6 @@ export class SocketService {
   public getRoomUrl(): Promise<string> {
     return new Promise((res, rej) => {
       this.socket.on('redirect', (redirectUrl: string) => res(redirectUrl));
-    });
-  }
-
-  public updateLeaders(): Promise<string> {
-    return new Promise((res, rej) => {
-      this.socket.on('updateLeaders', (appName: string) => res(appName));
     });
   }
 }

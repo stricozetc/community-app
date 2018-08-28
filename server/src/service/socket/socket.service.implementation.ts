@@ -18,13 +18,19 @@ export class SocketServiceImplementation implements SocketService {
   private games: Game[];
   private clients: SocketIO.Socket[] = [];
   private playersSocketBind: Array<{ playerToken: string, playerSocketId: string }> = [];
+
+  private constructor() {
+    if (SocketServiceImplementation.instance) {
+      throw new Error('You try to destroy singleton');
+    }
+  }
+
   public static getInstance() {
     if (!SocketServiceImplementation.instance) {
       SocketServiceImplementation.instance = new SocketServiceImplementation();
-        // ... any one time initialization goes here ...
     }
     return SocketServiceImplementation.instance;
-}
+  }
   public async setSocket(socketIO: SocketIO.Server): Promise<void | Response> {
 
     this.games = await this.gamesRepository.getGames().map((game: any) => game.dataValues);

@@ -15,11 +15,9 @@ socketService
   .getRoomUrl()
   .then((url: string) => store.dispatch(new RedirectToBattle(url)));
 
-socketService
-  .updateLeaders()
-  .then((appName: string) => {
-    store.dispatch(new InitLeaders(appName))
-  }) //store.dispatch(new InitLeaders(appName)));
+socketService.updateLeadersBoard.subscribe((appName: string) => {
+  store.dispatch(new InitLeaders(appName));
+});
 
 socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) =>
   store.dispatch(new SetRoomsInfo(roomsInfo))
