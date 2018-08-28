@@ -10,7 +10,8 @@ import { Game } from 'models/games';
 import { GamesRepository } from '../games/games.repository';
 
 @injectable()
-export class SocketServiceImplementation extends SocketService {
+export class SocketServiceImplementation implements SocketService {
+  private static instance: SocketServiceImplementation;
   @inject(LoggerService) private loggerService: LoggerService;
   @inject(RoomService) private roomService: RoomService;
   @inject(GamesRepository) private gamesRepository: GamesRepository;
@@ -18,6 +19,18 @@ export class SocketServiceImplementation extends SocketService {
   private clients: SocketIO.Socket[] = [];
   private playersSocketBind: Array<{ playerToken: string, playerSocketId: string }> = [];
 
+  private constructor() {
+    if (SocketServiceImplementation.instance) {
+      throw new Error('You try to destroy singleton');
+    }
+  }
+
+  public static getInstance() {
+    if (!SocketServiceImplementation.instance) {
+      SocketServiceImplementation.instance = new SocketServiceImplementation();
+    }
+    return SocketServiceImplementation.instance;
+  }
   public async setSocket(socketIO: SocketIO.Server): Promise<void | Response> {
 
     this.games = await this.gamesRepository.getGames().map((game: any) => game.dataValues);
@@ -44,7 +57,7 @@ export class SocketServiceImplementation extends SocketService {
     });
   }
 
-  public notifyAllClients(eventName: string, payload: RoomInfo[]): void {
+  public notifyAllClients(eventName: string, payload: RoomInfo[] | string): void {
     this.clients.forEach((client) => {
       client.emit(eventName, payload);
     });

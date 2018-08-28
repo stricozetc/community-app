@@ -68,5 +68,5 @@ const serverInstance = application.listen(config.port, () => {
     logger.infoLog('Press CTRL+C to stop\n');
 });
 
-const socketService: SocketService = new SocketServiceImplementation();
+const socketService: SocketServiceImplementation = SocketServiceImplementation.getInstance();
 socketService.setSocket(SocketIO(serverInstance));
