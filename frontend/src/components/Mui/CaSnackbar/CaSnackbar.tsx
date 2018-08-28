@@ -11,7 +11,7 @@ import { CaSnackbarContent } from './CaSnackbarContent';
 const Styled = createStyled(styles);
 
 const transition = (props: CaSnackbarProps): JSX.Element => {
-  return <Slide {...props} direction={this.props.transitionDirection} />;
+  return <Slide {...props} direction={props.transitionDirection} />;
 };
 
 export const CaSnackbar = ({ type, handleClose, message, ...otherProps }: CaSnackbarProps) => (
