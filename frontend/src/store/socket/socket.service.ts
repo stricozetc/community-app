@@ -39,4 +39,10 @@ export class SocketService {
       this.socket.on('redirect', (redirectUrl: string) => res(redirectUrl));
     });
   }
+
+  public updateLeaders(): Promise<string> {
+    return new Promise((res, rej) => {
+      this.socket.on('updateLeaders', (appName: string) => res(appName));
+    });
+  }
 }

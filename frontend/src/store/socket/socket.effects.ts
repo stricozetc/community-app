@@ -7,12 +7,19 @@ import { EmitEventWithOptions } from 'store/socket';
 
 import { EmitEvent, InitEvents, SocketActionTypes } from './socket.action';
 import { SocketService } from './socket.service';
+import { InitLeaders } from '../statistic/statistic.action';
 
 const socketService = new SocketService();
 
 socketService
   .getRoomUrl()
   .then((url: string) => store.dispatch(new RedirectToBattle(url)));
+
+socketService
+  .updateLeaders()
+  .then((appName: string) => {
+    store.dispatch(new InitLeaders(appName))
+  }) //store.dispatch(new InitLeaders(appName)));
 
 socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) =>
   store.dispatch(new SetRoomsInfo(roomsInfo))
