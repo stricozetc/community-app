@@ -21,10 +21,10 @@ export function mapDispatchToProps<T>(
 
 export function action(): ClassDecorator {
   // tslint:disable-next-line:only-arrow-functions
-  return function (target: any): any {
+  return function (target: Function): any {
     const original = target;
-    function construct(constructor: any, args: any): any {
-      const c: any = function (): any {
+    function construct(constructor: Function, args: any): any {
+      const c: any = function (): Function {
         return constructor.apply(this, args);
       };
       c.prototype = constructor.prototype;
