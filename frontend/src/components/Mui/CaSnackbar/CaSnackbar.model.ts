@@ -8,6 +8,6 @@ export interface CaSnackbarProps extends SnackbarProps {
 }
 
 export interface SnackbarErrorMessage {
-  code: number;
+  code?: number;
   msg: string;
 }

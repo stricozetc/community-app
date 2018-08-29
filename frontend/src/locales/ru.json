@@ -53,6 +53,7 @@
   "playedInWeek": "Сыграно за неделю",
   "playedAll": "Сыграно всего",
   "result": "Результат",
+  "position": "Позиция",
   "emptyChartMessage": "Выберите игру чтобы показать графики",
   "win": "Победа",
   "lose": "Поражение",
@@ -66,7 +67,7 @@
   "appNameRequired": "Пожалуйста, укажите название приложения",
   "applicationNameLengthError": "Длина, названия приложения, должна быть в пределах 3-50 символов",
   "descriptionRequired": "Пожалуйста, укажите описание приложения",
-  "descriptionApplicationLengthError": "Длина, описания приложения, должна быть в пределах 10-250 символов",
+  "descriptionApplicationLengthError": "Длина, описания приложения, должна быть в пределах 10-100 символов",
   "maxRoomPlayerRequired": "Пожалуйста, укажите количество игроков в комнате",
   "maxRoomPlayerCountError": "Количество игроков в комнате должно быть не менее 2",
   "maxRoomsRequired": "Пожалуйста, укажите количество комнат",
@@ -74,7 +75,7 @@
   "requestUrlRequired": "Пожалуйста, укажите requestUrl ",
   "requestUrlError": "Введите корректный requestUrl",
   "maxWaitingTimeRequired": "Пожалуйста, укажите время ожидания до начала игры",
-  "maxWaitingTimeError": "Время ожидания до начала игры должно быть не менее 15 минут",  
+  "maxWaitingTimeError": "Время ожидания до начала игры должно быть не менее 15 минут",
   "redirectUrlRequired": "Пожалуйста, укажите redirectUrl ",
   "redirectUrlError": "Введите корректный redirectUrl",
   "deleteHeader": "Вы уверены, что хотите удалить игру?",
@@ -86,5 +87,6 @@
   "restore": "Востановить",
   "email-sent": "Письмо отправлено.",
   "mail": "Письмо с сылкой для востановления доступа было отправлено на ",
-  "forget-password": "Забыли пароль?"
+  "forget-password": "Забыли пароль?",
+  "leaders": "Лидеры"
 }

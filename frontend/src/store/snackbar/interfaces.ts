@@ -1,7 +1,7 @@
-import { SnackbarType } from 'models';
+import { ErrorBlock, SnackbarType } from 'models';
 
 export interface SnackbarUiState {
   isOpen: boolean;
   type: SnackbarType;
-  message: string;
+  message: ErrorBlock | ErrorBlock[];
 }

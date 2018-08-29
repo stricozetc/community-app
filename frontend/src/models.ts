@@ -138,7 +138,8 @@ export enum TypeOfColumn {
   TimeCount = 'Spent Time',
   Points = 'Points',
   Result = 'Result',
-  Date = 'Date'
+  Date = 'Date',
+  Increment = 'Increment'
 }
 export interface GameModel {
   id?: number;
@@ -161,7 +162,7 @@ export interface GameModel {
 }
 export interface HeaderName {
   headerName: string;
-  field: RowProperty;
+  field?: RowProperty;
   type: TypeOfColumn;
   editAction?(payload: number): void;
   deleteAction?(payload: GameModel): void;
@@ -205,6 +206,11 @@ export interface AppMenuItem {
   action: () => void;
 }
 
+export interface MoreMenuItem {
+  title: string;
+  action: () => void;
+}
+
 export interface FrontEndValidationErrorsGameRegister {
   appName: { length: string, required: string };
   description: { length: string, required: string };
@@ -216,11 +222,37 @@ export interface FrontEndValidationErrorsGameRegister {
 }
 
 export interface ErrorBlock {
-  code: number;
+  code?: number;
   msg: string;
 }
 
-export interface GameData {
+export interface Leaders {
+  userToken: string;
+  name: number;
+  scores: number;
+}
+
+export interface BestUser {
+  userToken: string;
+  playedTime: number;
+  name: number;
+  scores: number;
+}
+
+export interface MostPopularGames {
   game: string;
+  playedTime: number;
+  playedInWeek: number;
+}
+
+export interface RecentGames {
+  game: string;
+  scores: number;
   result: number;
+}
+
+
+export interface SnackbarPayload {
+  type: SnackbarType;
+  message: ErrorBlock | ErrorBlock[];
 }

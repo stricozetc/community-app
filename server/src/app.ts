@@ -44,14 +44,14 @@ db.connect.sync({
 })
     .then(() => {
         return RoleModel.upsert({
-            name: Roles.Admin,
+            name: Roles.User,
             createAt: Date.now(),
             updatedAt: Date.now()
         });
     })
     .then(() => {
         return RoleModel.upsert({
-            name: Roles.User,
+            name: Roles.Admin,
             createAt: Date.now(),
             updatedAt: Date.now()
         });
@@ -68,5 +68,5 @@ const serverInstance = application.listen(config.port, () => {
     logger.infoLog('Press CTRL+C to stop\n');
 });
 
-const socketService: SocketService = new SocketServiceImplementation();
+const socketService: SocketServiceImplementation = SocketServiceImplementation.getInstance();
 socketService.setSocket(SocketIO(serverInstance));

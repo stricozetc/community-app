@@ -1,5 +1,5 @@
 import { StatisticRepository } from './statistic.repository';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 
 import {
   StatisticModel,
@@ -10,29 +10,30 @@ import {
   BestUsersFromServer,
   ErrorBlock,
   GamesModel,
-  Game
-} from 'models';
+  Game,
+  Leaders
+} from './../../../models';
 
-import { GameData } from 'controller/statistic.controller';
+import { GameData } from './../../controller/statistic.controller';
 
 import Promise = require('bluebird');
-import { isEmpty } from 'validation/is-empty';
+import { isEmpty } from './../../validation/is-empty';
 
-import { inject } from 'inversify';
 import { StatisticService } from './statistic.service';
-import { logicErr, technicalErr } from 'errors';
+import { logicErr } from '../../../errors/logicErr';
+import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger/logger.service';
+import { ResultStatus } from '../../../models/statistic';
 
+import { SocketServiceImplementation } from '../socket/socket.service.implementation';
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
-  public constructor(
-    @inject(StatisticService) private statisticService: StatisticService,
-    @inject(LoggerService) private loggerService: LoggerService,
-  ) { }
+  @inject(StatisticService) private statisticService: StatisticService;
+  @inject(LoggerService) private loggerService: LoggerService;
+  private socketService: SocketServiceImplementation = SocketServiceImplementation.getInstance();
 
   public setGameResult(data: GameData[], appToken: string): Promise<boolean | ErrorBlock> {
     const statistic = data;
-
     return GamesModel.findOne({
       where: { appToken }
     }).then((tokenRow: Game) => {
@@ -43,6 +44,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         promises = statistic.map((stat: Statistic) => this.saveStatistic(token, stat));
         return Promise.all(promises)
           .then(() => {
+            this.socketService.notifyAllClients('updateLeaders', tokenRow.appName);
             return true;
           })
           .catch((error) => {
@@ -114,8 +116,8 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     return new Promise<PopularGamesFromServer[]>(
       (resolvePopularGames) => {
         GamesModel.findAll({ attributes: ['appToken', 'appName'] })
-          .then((gamesAndTokens: Array<{ token: string; appName: string }>) => {
-            const tokens = gamesAndTokens.map((row) => row.token);
+          .then((gamesAndTokens: Array<{ appToken: string; appName: string }>) => {
+            const tokens = gamesAndTokens.map((row) => row.appToken);
             const promises = tokens.map((currentToken) => {
               return StatisticModel.findAll({
                 where: { appToken: currentToken }
@@ -149,7 +151,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                   let mostPopularGames = allGamesAndItsPlayedTime.reduce(
                     (accumulator, game) => {
                       const gameName = gamesAndTokens.find(
-                        (el) => el.token === game.token
+                        (el) => el.appToken === game.token
                       ).appName;
 
                       const result = {
@@ -243,6 +245,79 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
           }
         });
     });
+  }
+
+  public getLeaders(appName: string): Promise<Leaders[]> {
+    return GamesModel.findOne({
+      where: { appName }
+    }).then((tokenRow: Game) => {
+      const token = tokenRow && tokenRow.appToken;
+      if (token) {
+        return new Promise<Leaders[]>((resolveBestUsers, reject) => {
+
+          UserModel.findAll({ attributes: ['token', 'name', 'isActive'] })
+            .then((users) => {
+              const promises = users.map((currentUser) => {
+                if (currentUser.isActive) {
+                  return StatisticModel.findAll({
+                    where: { userToken: currentUser.token, appToken: token }
+                  })
+                    .then((historyRows) => {
+                      const scoresArray = historyRows.map((row) => {
+                        return row.scores;
+                      });
+                      let scores = 0;
+                      if (!isEmpty(scoresArray)) {
+                        scores = scoresArray.reduce((a, b) => a > b ? a : b);
+                      }
+
+                      const result = {
+                        userToken: currentUser.token,
+                        name: currentUser.name,
+                        scores
+                      };
+                      return result;
+                    })
+                    .catch((error) => {
+                      this.loggerService.errorLog(error);
+                      throw technicalErr.databaseCrash;
+                    });
+                } else {
+                  throw logicErr.userShouldBeActive;
+                }
+              });
+              return Promise.all(promises)
+                .then((allUsersStatistic) => {
+                  const bestUsers = this.statisticService
+                    .sortBy(allUsersStatistic, 'scores')
+                    .filter((user) => user.scores > 0);
+                  return resolveBestUsers(bestUsers);
+                })
+                .catch((error) => {
+                  throw error;
+                });
+            })
+            .catch((error) => {
+              if (error.code) {
+                throw error;
+              } else {
+                this.loggerService.errorLog(error);
+                throw technicalErr.databaseCrash;
+              }
+            });
+        });
+      } else {
+        throw logicErr.notFoundAppToken;
+      }
+    })
+      .catch((error) => {
+        if (error.code) {
+          throw error;
+        } else {
+          this.loggerService.errorLog(error);
+          throw technicalErr.databaseCrash;
+        }
+      });
   }
 
   private saveStatistic(token: string, stat: Statistic): Promise<boolean> {

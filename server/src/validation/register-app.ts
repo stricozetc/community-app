@@ -23,7 +23,7 @@ export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isVali
     errors.push(logicErr.descriptionRequired);
   }
 
-  if (!Validator.isLength(data.description, { min: 10, max: 250 })) {
+  if (!Validator.isLength(data.description, { min: 10, max: 100 })) {
     errors.push(logicErr.descriptionApplicationLengthError);
   }
 

@@ -1,4 +1,4 @@
-import { BattleStatus, GameModel } from 'models';
+import { BattleStatus, GameModel, MoreMenuItem } from 'models';
 
 export interface GameCardProps {
   game: GameModel;

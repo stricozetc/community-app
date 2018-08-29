@@ -196,7 +196,7 @@ export const logicErr = {
   },
   descriptionApplicationLengthError: {
     code: LogicErrCodes.DescriptionApplicationLengthError,
-    msg: 'The length of application description should be in interval of 3-50 symbols',
+    msg: 'The length of application description should be in interval of 10-150 symbols',
   },
 
   maxRoomPlayerRequired: {

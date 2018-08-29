@@ -4,4 +4,5 @@ export interface CaDialogInfoProps extends IconButtonProps {
   open: boolean;
   onClose: () => void;
   appToken: string;
+  onSuccess: () => void;
 }

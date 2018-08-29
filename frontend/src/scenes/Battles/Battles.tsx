@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import {
   AuthStatus,
   GameModel,
+  MoreMenuItem,
   RoomInfo
 } from 'models';
 
@@ -60,6 +61,13 @@ class CaBattlesComponent extends React.Component<BattleProps> {
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
             {this.props.games.map((game: GameModel, index: number) => {
+              const moreMenuItems: MoreMenuItem[] = [
+                {
+                  title: 'leaders',
+                  action: () => this.props.history.push(`/leaders/${game.appName}`)
+                }
+              ];
+
               const gameRooms = this.getGameRooms(game);
               const waitBattlePlayersCount = gameRooms && gameRooms.length ? gameRooms
                 .map(r => r.playersCount)
@@ -73,6 +81,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                       this.props.joinBattleAction($event);
                       this.props.history.push(`/battles/${index}`);
                     }}
+                    moreMenuItems={moreMenuItems}
                     leaveGame={this.props.leaveBattleAction}
                     status={this.props.battleStatus}
                     battleStatus={this.props.battleStatus}
