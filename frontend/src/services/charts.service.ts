@@ -1,12 +1,9 @@
-import { ResultStatus, WinRateDiagramData } from 'models';
+import { ResultStatus, WinRateDiagramData, GameData } from 'models';
 import { i18nInstance } from 'utils/i18n';
 
 import { EChartOption } from 'echarts';
-/* Remove to models*/
-interface GameData {
-  game: string;
-  result: number
-}
+
+
 
 export class ChartsService {
   private constructor() {

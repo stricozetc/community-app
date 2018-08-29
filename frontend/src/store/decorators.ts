@@ -23,7 +23,7 @@ export function action(): ClassDecorator {
   // tslint:disable-next-line:only-arrow-functions
   return function (target: Function): any {
     const original = target;
-    function construct(constructor: Function, args: any): any {
+    function construct(constructor: Function, args: any): Function {
       const c: any = function (): Function {
         return constructor.apply(this, args);
       };
