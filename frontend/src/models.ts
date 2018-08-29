@@ -219,3 +219,8 @@ export interface ErrorBlock {
   code: number;
   msg: string;
 }
+
+export interface GameData {
+  game: string;
+  result: number;
+}

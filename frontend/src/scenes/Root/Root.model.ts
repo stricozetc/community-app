@@ -1,7 +1,5 @@
 import { History } from 'history';
 import { FrontEndUser } from 'store';
-/* import { SnackbarErrorMessage } from 'components' */
-
 
 import {
   AuthStatus,
