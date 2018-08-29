@@ -1,11 +1,9 @@
-import { RoomInfo } from 'models';
 import { action } from 'store/decorators';
 
 export enum BattleActionTypes {
   JoinBattle = '[battle] Join Battle',
   RedirectToBattle = '[battle] Redirect To Battle',
   LeaveBattle = '[battle] Leave Battle',
-  SetRoomsInfo = '[battle] Set Rooms Info',
   NotifyCountdown = '[battle] Notify Countdown',
   ErrorBattle = '[battle] Error Battle'
 }
@@ -32,13 +30,6 @@ export class LeaveBattle {
 }
 
 @action()
-export class SetRoomsInfo {
-  public readonly type = BattleActionTypes.SetRoomsInfo;
-
-  constructor(public payload: RoomInfo[]) { }
-}
-
-@action()
 export class NotifyCountdown {
   public readonly type = BattleActionTypes.NotifyCountdown;
 
@@ -54,6 +45,5 @@ export type BattleActions =
   | JoinBattle
   | RedirectToBattle
   | LeaveBattle
-  | SetRoomsInfo
   | NotifyCountdown
   | ErrorBattle;

@@ -108,7 +108,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
   battleStatus: state.battle.status,
-  roomsInfo: state.battle.roomsInfo,
+  roomsInfo: state.room.roomsInfo,
   games: state.games.games,
   status: state.games.gamesStatus,
 });

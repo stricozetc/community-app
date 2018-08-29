@@ -10,7 +10,7 @@ import {
 import { CurrentBattleComponent } from './CurrentBattle';
 
 const mapStateToProps = (state: AppState) => ({
-  roomsInfo: state.battle.roomsInfo,
+  roomsInfo: state.room.roomsInfo,
   battleName: state.battle.battleName,
   countdown: state.battle.countdown,
   games: state.games.games,

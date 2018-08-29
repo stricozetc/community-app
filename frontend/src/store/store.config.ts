@@ -61,6 +61,8 @@ import {
   restorePasswordReducer
 } from './restore-password';
 
+import { RoomState, roomReducer } from './room';
+
 const rootReducers = combineReducers({
   battle: battleReducer,
   auth: authReducer,
@@ -71,6 +73,7 @@ const rootReducers = combineReducers({
   myGames: myGamesReducer,
   userSettings: userSettingsReducer,
   restorePassword: restorePasswordReducer,
+  room: roomReducer,
 });
 
 const rootEpic = combineEpics(
@@ -97,6 +100,7 @@ export interface AppState {
   restorePassword: RestorePasswordState;
   userSettings: UserSettingsState;
   myGames: MyGamesState;
+  room: RoomState;
 }
 
 const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();

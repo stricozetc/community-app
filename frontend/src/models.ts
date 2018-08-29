@@ -251,7 +251,6 @@ export interface RecentGames {
   result: number;
 }
 
-
 export interface SnackbarPayload {
   type: SnackbarType;
   message: ErrorBlock | ErrorBlock[];

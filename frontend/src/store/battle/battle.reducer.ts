@@ -31,13 +31,6 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       };
     }
 
-    case BattleActionTypes.SetRoomsInfo: {
-      return {
-        ...state,
-        roomsInfo: action.payload
-      };
-    }
-
     case BattleActionTypes.NotifyCountdown: {
       return {
         ...state,

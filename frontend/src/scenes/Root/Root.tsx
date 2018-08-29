@@ -27,7 +27,6 @@ import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
 
-
 import {
   AppState,
   ChangeLanguage,

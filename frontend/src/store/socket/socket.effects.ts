@@ -2,12 +2,15 @@ import { RoomInfo } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { ignoreElements, tap } from 'rxjs/operators';
 import { store } from 'store';
-import { NotifyCountdown, RedirectToBattle, SetRoomsInfo } from 'store/battle';
+import { NotifyCountdown, RedirectToBattle } from 'store/battle';
 import { EmitEventWithOptions } from 'store/socket';
+
+// toDo: fix imports
+import { SetRoomsInfo } from '../room';
+import { InitLeaders } from '../statistic/statistic.action';
 
 import { EmitEvent, InitEvents, SocketActionTypes } from './socket.action';
 import { SocketService } from './socket.service';
-import { InitLeaders } from '../statistic/statistic.action';
 
 const socketService = new SocketService();
 
