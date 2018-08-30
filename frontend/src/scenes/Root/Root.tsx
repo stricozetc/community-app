@@ -18,7 +18,6 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { AppMenuItem, AuthStatus, Languages, transitionDirection } from 'models';
 import { CaBattles } from 'scenes/Battles';
 import { CurrentBattle } from 'scenes/CurrentBattle';
 import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
@@ -34,6 +33,7 @@ import {
   CleanStatistic,
   CloseSnackbar,
   FrontEndUser,
+  LeaveBattle,
   LogoutUser,
   SetCurrentUser,
   store,
@@ -57,6 +57,14 @@ import {
   RegistrationForm,
   SnackbarErrorMessage,
 } from 'components';
+
+import {
+  AppMenuItem,
+  AuthStatus,
+  Languages,
+  RoomInfo,
+  transitionDirection,
+} from 'models';
 
 import { CaMyGames } from '../MyGames/MyGames';
 
@@ -87,11 +95,10 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.cleanStatistic();
     this.props.history.push('/');
 
-    // const userInBattle = !!this.props.battleName;
-
-    // if (userInBattle) {
-    //   this.props.leaveBattle(this.props.battleName);
-    // }
+    if (!!this.props.roomId) {
+      const room: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
+      this.props.leaveBattle(room ? room.gameName : '');
+    }
   }
 
   public redToLogin = (): void => {
@@ -292,7 +299,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/current-battles'
+              path='/wait-battle'
               render={props => (
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
@@ -364,17 +371,18 @@ export class RootComponent extends React.Component<RootProps> {
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  // battleName: state.battle.battleName,
+  roomId: state.battle.roomId,
   errors: state.snackbarUi.message,
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
-  user: state.auth.user
+  user: state.auth.user,
+  roomsInfo: state.room.roomsInfo,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
-  // leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
+  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
 });

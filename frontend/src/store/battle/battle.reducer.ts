@@ -16,6 +16,8 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       return {
         ...state,
         status: BattleStatus.Init,
+        roomId: undefined,
+        gameId: undefined,
       };
     }
 

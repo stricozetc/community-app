@@ -89,7 +89,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                     game={game}
                     joinGame={($event) => {
                       this.props.joinBattleAction($event);
-                      this.props.history.push(`/current-battles`);
+                      this.props.history.push(`/wait-battle`);
                     }}
                     moreMenuItems={moreMenuItems}
                     leaveGame={this.props.leaveBattleAction}
