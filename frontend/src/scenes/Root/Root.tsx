@@ -49,7 +49,6 @@ import {
 import {
   AppMenu,
   CaAddGame,
-  CaButton,
   CaEditGame,
   CaLogo,
   CaNavbar,
@@ -178,11 +177,10 @@ export class RootComponent extends React.Component<RootProps> {
           >
             <div className='ca-navbar__menu-container'>
               {
-                isAuthorized
-                  ? <AppMenu appMenuItems={appMenuItems} >
+                isAuthorized &&
+                  <AppMenu appMenuItems={appMenuItems} >
                     {this.getMenuProfilePanel()}
                   </AppMenu>
-                  : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
               }
             </div>
 
