@@ -146,7 +146,7 @@ export class RootComponent extends React.Component<RootProps> {
       // {
       //   icon: <AdminIcon />,
       //   title: 'adminPage',
-      //   action: () => this.props.history.push('/my-games')
+      //   action: () => this.props.history.push('/_admin_console')
       // },
       {
         icon: <LogoutIcon />,
@@ -313,7 +313,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/my-games/add-game'
+              path='/_admin_console/add-game'
               render={props => (
                 <CaAddGame {...props}>
                   {this.getNavbar(this.props.status)}
@@ -323,7 +323,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/my-games/edit-game/:idOfTheGame'
+              path='/_admin_console/edit-game/:idOfTheGame'
               render={props => (
                 <CaEditGame {...props}>
                   {this.getNavbar(this.props.status)}

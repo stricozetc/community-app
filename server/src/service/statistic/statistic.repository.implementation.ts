@@ -68,9 +68,6 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         where: { userToken },
         order: [['createdAt', 'DESC']]
       });
-      if (isEmpty(recentGames)) {
-          throw logicErr.notFoundRecentGames;
-      }
 
       const promises = recentGames.map((game) => {
         return GamesModel.find({ where: { appToken: game.appToken } }).then(
