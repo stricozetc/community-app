@@ -4,6 +4,8 @@ export enum BattleActionTypes {
   JoinBattle = '[battle] Join Battle',
   RedirectToBattle = '[battle] Redirect To Battle',
   LeaveBattle = '[battle] Leave Battle',
+  SetRoomId = '[battle] Set Room Id',
+  SetGameId = '[battle] Set Game Id',
   NotifyCountdown = '[battle] Notify Countdown',
   ErrorBattle = '[battle] Error Battle'
 }
@@ -30,6 +32,20 @@ export class LeaveBattle {
 }
 
 @action()
+export class SetRoomId {
+  public readonly type = BattleActionTypes.SetRoomId;
+
+  constructor(public payload: number) { }
+}
+
+@action()
+export class SetGameId {
+  public readonly type = BattleActionTypes.SetGameId;
+
+  constructor(public payload: number) { }
+}
+
+@action()
 export class NotifyCountdown {
   public readonly type = BattleActionTypes.NotifyCountdown;
 
@@ -46,4 +62,6 @@ export type BattleActions =
   | RedirectToBattle
   | LeaveBattle
   | NotifyCountdown
-  | ErrorBattle;
+  | ErrorBattle
+  | SetRoomId
+  | SetGameId;

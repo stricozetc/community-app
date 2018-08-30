@@ -9,7 +9,6 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       return {
         ...state,
         status: BattleStatus.Wait,
-        battleName: action.payload
       };
     }
 
@@ -17,24 +16,33 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       return {
         ...state,
         status: BattleStatus.Init,
-        battleName: action.payload,
-        countdown: 0
       };
     }
 
     case BattleActionTypes.RedirectToBattle: {
       return {
         ...state,
-        roomURL: action.payload,
         status: BattleStatus.Play,
-        countdown: 0
+      };
+    }
+
+    case BattleActionTypes.SetRoomId: {
+      return {
+        ...state,
+        roomId: action.payload,
+      };
+    }
+
+    case BattleActionTypes.SetGameId: {
+      return {
+        ...state,
+        gameId: action.payload,
       };
     }
 
     case BattleActionTypes.NotifyCountdown: {
       return {
         ...state,
-        countdown: action.payload
       };
     }
 

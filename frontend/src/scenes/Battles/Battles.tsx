@@ -36,11 +36,11 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     this.props.initGames();
   }
 
-  public getGameRooms(game: GameModel): RoomInfo[] {
+  public getGameRooms = (game: GameModel): RoomInfo[] => {
     return this.props.roomsInfo.filter(r => r.gameId === game.id);
   }
 
-  public getNearestCountdown(rooms: RoomInfo[]): number {
+  public getNearestCountdown = (rooms: RoomInfo[]): number => {
     const mappedRooms = rooms
       .map(r => r.distance)
       .filter(d => !!d);
@@ -53,6 +53,16 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return sortedRooms && sortedRooms[0] ? sortedRooms[0] : 0;
   }
 
+  // ?????
+  public getRoomId = (rooms: RoomInfo[]): number => {
+    for (let index = 0; index < rooms.length; index++) {
+      if (rooms[index].playersCount !== rooms[index].maxPlayersCount) {
+        return rooms[index].id;
+      }
+    }
+    return Math.random();
+  }
+
   public render(): JSX.Element {
     return (
       <div className='ca-homepage'>
@@ -60,7 +70,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
-            {this.props.games.map((game: GameModel, index: number) => {
+            {this.props.games.map((game: GameModel) => {
               const moreMenuItems: MoreMenuItem[] = [
                 {
                   title: 'leaders',
@@ -74,22 +84,21 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                 .reduce((accumulator, currentValue: number) => accumulator + currentValue) : 0;
 
               return (
-                <div className='ca-homepage__container-for-games' key={index}>
+                <div className='ca-homepage__container-for-games' key={this.getRoomId(gameRooms)}>
                   <CaGameCard
                     game={game}
                     joinGame={($event) => {
                       this.props.joinBattleAction($event);
-                      this.props.history.push(`/battles/${index}`);
+                      this.props.history.push(`/current-battles`);
                     }}
                     moreMenuItems={moreMenuItems}
                     leaveGame={this.props.leaveBattleAction}
                     status={this.props.battleStatus}
                     battleStatus={this.props.battleStatus}
                     waitBattlePlayersCountAction={waitBattlePlayersCount}
-                    isFull={waitBattlePlayersCount === game.maxRoomPlayer * game.maxRooms}
+                    isFull={waitBattlePlayersCount === game.maxRoomPlayer}
                     battleStartTime={new Date((new Date()).getTime() + this.getNearestCountdown(gameRooms))}
                   />
-
                 </div>
               );
             })}

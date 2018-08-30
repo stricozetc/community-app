@@ -129,7 +129,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
                           <div
                             className={'ca-game-footer__second-line ' + secondLineColor}
                           >
-                            {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer * maxRooms)}`}
+                            {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer)}`}
                           </div>
                         </div>
                       </div>

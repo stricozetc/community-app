@@ -17,11 +17,7 @@ export class RoomService {
   @inject(GamesRepository) private gamesRepository: GamesRepository;
 
   private rooms: Room[] = [];
-  private games: any[] = [];
-
-  constructor() {
-    //
-  }
+  private games: Game[] = [];
 
   public getRooms(): Room[] {
     return this.rooms;
@@ -39,15 +35,18 @@ export class RoomService {
 
     let isCreated = false;
 
-    if (roomToken) {
-      this.rooms.push({
-        id: index,
-        gameId: this.games[index].id,
-        maxPlayersCount: this.games[index].maxRoomPlayer,
-        players: [client],
-        token: roomToken,
-          status: RoomStatus.Waiting
-      });
+        if (roomToken) {
+          this.rooms.push({
+            id: index,
+            gameId: this.games[index].id,
+            gameName: this.games[index].appName,
+            description: this.games[index].description,
+            maxWaitingTime: this.games[index].maxWaitingTime,
+            maxPlayersCount: this.games[index].maxRoomPlayer,
+            players: [client],
+            token: roomToken,
+            status: RoomStatus.Waiting
+          });
 
       this.playersBindService.bindPlayer(roomToken, playerToken);
       this.loggerService.infoLog(`New room was added for ${this.games[index].appName}`);
@@ -221,6 +220,9 @@ export class RoomService {
       return {
         id: r.id,
         gameId: r.gameId,
+        gameName: r.gameName,
+        description: r.description,
+        maxWaitingTime: r.maxWaitingTime,
         distance: r.distance,
         maxPlayersCount: r.maxPlayersCount,
         playersCount: r.players.length,

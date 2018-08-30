@@ -9,7 +9,11 @@ import { EmitEventWithOptions } from 'store/socket';
 import { SetRoomsInfo } from '../room';
 import { InitLeaders } from '../statistic/statistic.action';
 
-import { EmitEvent, InitEvents, SocketActionTypes } from './socket.action';
+import {
+  EmitEvent,
+  InitEvents,
+  SocketActionTypes,
+} from './socket.action';
 import { SocketService } from './socket.service';
 
 const socketService = new SocketService();
@@ -22,9 +26,10 @@ socketService.updateLeadersBoard.subscribe((appName: string) => {
   store.dispatch(new InitLeaders(appName));
 });
 
-socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) =>
-  store.dispatch(new SetRoomsInfo(roomsInfo))
-);
+socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) => {
+  console.log('ROOM INFO', roomsInfo);
+  return store.dispatch(new SetRoomsInfo(roomsInfo));
+});
 
 socketService.notifyCountdown.subscribe((distance: number) => {
   console.dir('Synchronization from server...');

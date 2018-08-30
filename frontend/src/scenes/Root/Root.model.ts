@@ -10,13 +10,13 @@ export interface RootProps {
   status: AuthStatus;
   user: FrontEndUser | undefined;
   history: History;
-  battleName: string;
+  // battleName: string;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
   errors: any;
   language?: string;
 
-  leaveBattle(battleName: string): void;
+  // leaveBattle(battleName: string): void;
 
   logoutUser(): void;
 

@@ -61,7 +61,11 @@ import {
   restorePasswordReducer
 } from './restore-password';
 
-import { RoomState, roomReducer } from './room';
+import {
+  RoomEffects,
+  RoomState,
+  roomReducer
+} from './room';
 
 const rootReducers = combineReducers({
   battle: battleReducer,
@@ -85,6 +89,7 @@ const rootEpic = combineEpics(
   ...MyGamesEffects,
   ...UserSettingsEffects,
   ...RestorePasswordEffects,
+  ...RoomEffects,
 );
 
 const epicMiddleware = createEpicMiddleware();

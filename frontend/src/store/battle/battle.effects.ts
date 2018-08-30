@@ -1,7 +1,7 @@
 import { GameModel } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
-import { Observable } from 'rxjs';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from 'store';
 import { EmitEventWithOptions } from 'store/socket';
 
@@ -10,15 +10,16 @@ import {
   ErrorBattle,
   JoinBattle,
   LeaveBattle,
-  RedirectToBattle
+  RedirectToBattle,
+  SetGameId
 } from './battle.action';
 
 export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>, state$: Observable<AppState>) =>
   actions$.pipe(
     ofType(BattleActionTypes.JoinBattle),
     withLatestFrom(state$),
-    map(([action, state]) => {
-      const game = state.games.games
+    switchMap(([action, state]) => {
+      const game: GameModel | undefined = state.games.games
         .find((info: GameModel) => info.appName === action.payload);
 
       let args: any = '';
@@ -32,7 +33,7 @@ export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>, state$: Obs
       }
       const options = args;
 
-      return new EmitEventWithOptions({ eventName, options });
+      return of(new SetGameId(game && game.id ? game.id : NaN), new EmitEventWithOptions({ eventName, options }));
     })
   );
 

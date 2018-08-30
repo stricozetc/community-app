@@ -19,7 +19,8 @@ import {
 } from 'react-router-dom';
 
 import { AppMenuItem, AuthStatus, Languages, transitionDirection } from 'models';
-import { CaBattles, CurrentBattle } from 'scenes/Battles';
+import { CaBattles } from 'scenes/Battles';
+import { CurrentBattle } from 'scenes/CurrentBattle';
 import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
 import { Landing } from 'scenes/Landing';
 import { CaLeadersPage } from 'scenes/Leaders';
@@ -33,7 +34,6 @@ import {
   CleanStatistic,
   CloseSnackbar,
   FrontEndUser,
-  LeaveBattle,
   LogoutUser,
   SetCurrentUser,
   store,
@@ -87,11 +87,11 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.cleanStatistic();
     this.props.history.push('/');
 
-    const userInBattle = !!this.props.battleName;
+    // const userInBattle = !!this.props.battleName;
 
-    if (userInBattle) {
-      this.props.leaveBattle(this.props.battleName);
-    }
+    // if (userInBattle) {
+    //   this.props.leaveBattle(this.props.battleName);
+    // }
   }
 
   public redToLogin = (): void => {
@@ -292,7 +292,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/battles/:id'
+              path='/current-battles'
               render={props => (
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
@@ -339,7 +339,7 @@ export class RootComponent extends React.Component<RootProps> {
               )}
             />
 
-             <Route
+            <Route
               exact={true}
               path='/leaders/:appName'
               render={props => (
@@ -364,7 +364,7 @@ export class RootComponent extends React.Component<RootProps> {
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  battleName: state.battle.battleName,
+  // battleName: state.battle.battleName,
   errors: state.snackbarUi.message,
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
@@ -374,7 +374,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
-  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
+  // leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
 });
