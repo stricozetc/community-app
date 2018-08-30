@@ -175,14 +175,12 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         ];
         const rowData = [...this.props.statistic.bestUsers];
 
-        if (!this.isArrayEmpty(rowData)) {
+        this.setState({
+          activeTab,
+          rowData,
+          columnDef
+        });
 
-          this.setState({
-            activeTab,
-            rowData,
-            columnDef
-          });
-        }
         break;
       }
 
@@ -207,14 +205,12 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         ];
         const rowData = [...this.props.statistic.mostPopularGames] || [];
 
-        if (!this.isArrayEmpty(rowData)) {
+        this.setState({
+          activeTab,
+          rowData,
+          columnDef
+        });
 
-          this.setState({
-            activeTab,
-            rowData,
-            columnDef
-          });
-        }
         break;
       }
 
@@ -239,22 +235,16 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         ];
         const rowData = [...this.props.statistic.recentGames] || [];
 
-        if (!this.isArrayEmpty(rowData)) {
+        this.setState({
+          activeTab,
+          rowData,
+          columnDef
+        });
 
-          this.setState({
-            activeTab,
-            rowData,
-            columnDef
-          });
-        }
         break;
       }
       default:
         break;
     }
-  }
-
-  public isArrayEmpty<T>(arrayOfData: T[]): boolean {
-    return !Array.isArray(arrayOfData) || !arrayOfData.length;
   }
 }
