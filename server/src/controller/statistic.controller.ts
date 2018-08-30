@@ -56,62 +56,61 @@ export class StatisticController {
       return response.status(400).json(logicErr.userIdIsRequired);
     }
 
-    return this.statisticRepository.getRecentGames(userId)
-      .then((recentGames: RecentGameFromServer[]) => {
-        return response.status(200).json(recentGames);
-      }).catch((error) => {
-        return error.code >= 2000 ?
-          response.status(500).json(error) :
-          response.status(400).json(error);
-      });
+    try {
+      const recentGames = await this.statisticRepository.getRecentGames(userId);
+      return response.status(200).json(recentGames);
+    } catch (error) {
+      return error.code >= 2000 ?
+        response.status(500).json(error) :
+        response.status(400).json(error);
+    }
   }
 
   @httpGet('/most-popular-games', passport.authenticate('jwt', { session: false }))
   public async getMostPopularGames(request: Request, response: Response): Promise<void | Response> {
-    return this.statisticRepository.getMostPopularGames()
-      .then((mpg: PopularGamesFromServer[]) => {
-        response.status(200).json(mpg);
-      }).catch((error) => {
+    try {
+      const mpg = await this.statisticRepository.getMostPopularGames();
+      return response.status(200).json(mpg);
+    } catch (error) {
         return error.code >= 2000 ?
           response.status(500).json(error) :
           response.status(400).json(error);
-      });
+    }
   }
 
   @httpGet('/best-users', passport.authenticate('jwt', { session: false }))
   public async getBestUsers(request: Request, response: Response): Promise<void | Response> {
-    return this.statisticRepository.getBestUsers()
-      .then((bestUsers: BestUsersFromServer[]) => {
-        response.status(200).json(bestUsers);
-      }).catch((error) => {
+    try {
+      const bestUsers = await this.statisticRepository.getBestUsers();
+      return response.status(200).json(bestUsers);
+    } catch (error) {
         return error.code >= 2000 ?
           response.status(500).json(error) :
           response.status(400).json(error);
-      });
+    }
   }
 
   @httpGet('/statistic', passport.authenticate('jwt', { session: false }))
   public async getStatistic(request: Request, response: Response): Promise<void | Response> {
-    return this.statisticRepository.getMostPopularGames()
-      .then((mpg: any[]) => {
-        response.status(200).json(mpg);
-      }).catch((error) => {
+    try {
+      const mpg = await this.statisticRepository.getMostPopularGames();
+      return response.status(200).json(mpg);
+    } catch (error) {
         return error.code >= 2000 ?
           response.status(500).json(error) :
           response.status(400).json(error);
-      });
+    }
   }
 
   @httpGet('/get-leaders')
   public async getGames(request: Request, response: Response): Promise<void | Response> {
 
     const appName: string = request.query.appName;
-
-    return this.statisticRepository.getLeaders(appName)
-      .then((leaders: Leaders[]) => {
-        response.status(200).json(leaders);
-      }).catch((err) => {
+    try {
+      const leaders = await this.statisticRepository.getLeaders(appName);
+      return response.status(200).json(leaders);
+    } catch (err) {
         return response.status(400).json(err);
-      });
+    }
   }
 }

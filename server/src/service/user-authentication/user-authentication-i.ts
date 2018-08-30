@@ -21,10 +21,12 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
     ) { }
 
     public registerUser(data: User): Promise<User> {
-        return new Promise<User>((resolve, reject) => {
-            return UserModel.findOne({
-                where: { email: data.email }
-            }).then((user: User) => {
+        return new Promise<User>(async (resolve, reject) => {
+            try {
+                const user = await UserModel.findOne({
+                    where: { email: data.email }
+                });
+
                 if (user) {
                     return reject(logicErr.userIsAlreadyRegistered);
                 }
@@ -42,77 +44,81 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                     if (err) {
                         return reject(technicalErr.saltIsNotGenerated);
                     }
-                    bcrypt.hash(data.password, salt, (hashErr, hash) => {
+                    bcrypt.hash(data.password, salt, async (hashErr, hash) => {
                         if (hashErr) {
                             return reject(technicalErr.canNotCreateHash);
                         }
                         newUserDate.password = hash;
-                        newUserDate.save().then((savedUser: User) => {
-                            RoleModel.findOne().then((role: Role) => {
-                                UserRoles.upsert({
-                                    userId: savedUser.id,
-                                    roleId: role.id
-                                }).then((isUpsert) => {
+                        try {
+                            const savedUser: User = await newUserDate.save();
+                            try {
+                                const role: Role = await RoleModel.findOne();
+                                try {
+                                    const isUpsert = await UserRoles.upsert({
+                                        userId: savedUser.id,
+                                        roleId: role.id
+                                    });
+
                                     return isUpsert ?
                                         resolve(savedUser) :
                                         reject(technicalErr.userRoleIsNotUpsertedInDb);
-                                }).catch((error) => {
+                                } catch (error) {
                                     this.loggerService.errorLog(error);
                                     return reject(technicalErr.databaseCrash);
-                                });
-                            }).catch((error) => {
+                                }
+                            } catch (error) {
                                 this.loggerService.errorLog(error);
                                 return reject(technicalErr.databaseCrash);
-                            });
-                        }).catch(() => {
+                            }
+                        } catch {
                             return reject(technicalErr.userRoleIsNotSaveInDb);
-                        });
+                        }
                     });
                 });
-            }).catch((error) => {
+            } catch (error) {
                 this.loggerService.errorLog(error);
                 return reject(technicalErr.databaseCrash);
-            });
+            }
         });
     }
 
     public loginUser(data: User): Promise<{ success: boolean, token: string }> {
-        return new Promise<{ success: boolean, token: string }>((resolve, reject) => {
+        return new Promise<{ success: boolean, token: string }>(async (resolve, reject) => {
             const email = data.email;
             const password = data.password;
 
-            UserModel.findOne({ where: { email } }).then((user: User) => {
+            try {
+                const user = await UserModel.findOne({ where: { email } });
                 if (!user) {
                     return reject(logicErr.notFoundUser);
                 } else {
-                    bcrypt.compare(password, user.password)
-                        .then((isMatch) => {
-                            if (isMatch) {
-                                const payload = {
-                                    id: user.id,
-                                    name: user.name,
+                    const isMatch = await bcrypt.compare(password, user.password);
+                    if (isMatch) {
+                        const payload = {
+                            id: user.id,
+                            name: user.name,
 
-                                    email: user.email,
-                                    token: user.token
-                                };
-                                jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
-                                    if (error) {
-                                        throw error;
-                                    }
-                                    resolve({
-                                        success: true,
-                                        token: 'Bearer ' + token
-                                    });
-                                });
-                            } else {
+                            email: user.email,
+                            token: user.token
+                        };
+                        jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
+                            if (error) {
+                                throw error;
+                            }
+                            resolve({
+                                success: true,
+                                token: 'Bearer ' + token
+                            });
+                        });
+                        } else {
                                 return reject(logicErr.wrongPassword(user.email));
                             }
-                        });
+
                 }
-            }).catch((error) => {
+            } catch (error) {
                 this.loggerService.errorLog(error);
                 return reject(technicalErr.databaseCrash);
-            });
+            }
         });
     }
 

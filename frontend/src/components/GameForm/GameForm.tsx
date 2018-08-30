@@ -203,7 +203,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
     }
 
     this.props.submit(game);
-    history.push('/my-games');
+    history.push('/_admin_console');
   }
 
   public handleBlur = (field: string) => (event: React.FormEvent<HTMLElement>) => {

@@ -1,7 +1,8 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-import SettingsIcon from '@material-ui/icons/SettingsRounded';
-import AdminIcon from '@material-ui/icons/SupervisorAccount';
+// Yegor: comment icons imports cuz of temporary removed nav links
+// import SettingsIcon from '@material-ui/icons/SettingsRounded';
+// import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
@@ -48,7 +49,6 @@ import {
 import {
   AppMenu,
   CaAddGame,
-  CaButton,
   CaEditGame,
   CaLogo,
   CaNavbar,
@@ -136,16 +136,18 @@ export class RootComponent extends React.Component<RootProps> {
 
     const isAuthorized = authStatus === AuthStatus.Authorized;
     const appMenuItems: AppMenuItem[] = [
-      {
-        icon: <SettingsIcon />,
-        title: 'settings',
-        action: () => this.props.history.push('/settings')
-      },
-      {
-        icon: <AdminIcon />,
-        title: 'adminPage',
-        action: () => this.props.history.push('/my-games')
-      },
+      // Yegor: temporary hide settings cuz they aren't ready yet
+      // {
+      //   icon: <SettingsIcon />,
+      //   title: 'settings',
+      //   action: () => this.props.history.push('/settings')
+      // },
+      // Yegor: hide nav link to admin page
+      // {
+      //   icon: <AdminIcon />,
+      //   title: 'adminPage',
+      //   action: () => this.props.history.push('/_admin_console')
+      // },
       {
         icon: <LogoutIcon />,
         title: 'logout',
@@ -163,22 +165,22 @@ export class RootComponent extends React.Component<RootProps> {
                 to: '/battles',
                 activeClassName: 'ca-navbar__nav-item--active',
                 disabled: !isAuthorized
-              },
-              {
-                text: t('statistics'),
-                to: '/statistics',
-                activeClassName: 'ca-navbar__nav-item--active',
-                disabled: !isAuthorized
-              }
+              }/* , */
+              // Yegor: temporary hide statistics cuz of bad adaptiveness for mobile
+              // {
+              //   text: t('statistics'),
+              //   to: '/statistics',
+              //   activeClassName: 'ca-navbar__nav-item--active',
+              //   disabled: !isAuthorized
+              // }
             ]}
           >
             <div className='ca-navbar__menu-container'>
               {
-                isAuthorized
-                  ? <AppMenu appMenuItems={appMenuItems} >
+                isAuthorized &&
+                  <AppMenu appMenuItems={appMenuItems} >
                     {this.getMenuProfilePanel()}
                   </AppMenu>
-                  : <CaButton onClick={this.redToLogin}>{t('login')}</CaButton>
               }
             </div>
 
@@ -301,7 +303,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/my-games'
+              path='/_admin_console'
               render={props => (
                 <CaMyGames {...props}>
                   {this.getNavbar(this.props.status)}
@@ -311,7 +313,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/my-games/add-game'
+              path='/_admin_console/add-game'
               render={props => (
                 <CaAddGame {...props}>
                   {this.getNavbar(this.props.status)}
@@ -321,7 +323,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/my-games/edit-game/:idOfTheGame'
+              path='/_admin_console/edit-game/:idOfTheGame'
               render={props => (
                 <CaEditGame {...props}>
                   {this.getNavbar(this.props.status)}
