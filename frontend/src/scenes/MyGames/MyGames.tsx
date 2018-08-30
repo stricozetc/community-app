@@ -82,7 +82,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
     }
 
     public handleAddGame = () => {
-        history.push(`/my-games/add-game`);
+        history.push(`/_admin_console/add-game`);
     }
 
     public componentWillMount(): void {
@@ -103,7 +103,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
                 headerName: 'game',
                 field: RowProperty.AppName,
                 type: TypeOfColumn.String,
-                editAction: (id: number) => history.push(`/my-games/edit-game/${id}`),
+                editAction: (id: number) => history.push(`/_admin_console/edit-game/${id}`),
                 deleteAction: (game: GameModel) => this.handleOpenDialog(game),
                 lockAction: (appToken: string) => this.handleOpenPopover(appToken)
             },
