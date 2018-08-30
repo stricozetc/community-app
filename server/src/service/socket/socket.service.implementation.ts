@@ -20,7 +20,8 @@ export class SocketServiceImplementation extends SocketService {
 
   public async setSocket(socketIO: SocketIO.Server): Promise<void | Response> {
 
-    this.games = await this.gamesRepository.getGames().map((game: any) => game.dataValues);
+    this.games = await this.gamesRepository.getGames();
+    this.games.map((game: any) => game.dataValues);
 
     socketIO.on('connection', (client: SocketIO.Socket) => {
       this.loggerService.infoLog('Player connection opened');
@@ -50,9 +51,9 @@ export class SocketServiceImplementation extends SocketService {
     });
   }
 
-  private onRegister(index: number, client: SocketIO.Socket, token: string): void {
-    this.roomService.addPlayerToRoom(index, client, token)
-      .then(([isAdded, room]) => {
+  private async onRegister(index: number, client: SocketIO.Socket, token: string): Promise<void> {
+    const [ isAdded, room ] = await this.roomService.addPlayerToRoom(index, client, token);
+    try {
         this.loggerService.infoLog(`isAdded -> ${isAdded}`);
 
         if (isAdded) {
@@ -64,47 +65,43 @@ export class SocketServiceImplementation extends SocketService {
           client.emit(this.games[index].notifyCountdown, room.distance);
         }
 
-      })
-      .catch((error: Error) => {
+      } catch (error) {
         this.loggerService.infoLog(error.message);
-      });
+      }
   }
 
-  private onLeave(index: number, client: SocketIO.Socket): void {
-    this.roomService.removePlayerFromRoom(index, client, this.getPlayerToken(client))
-      .then(([isRemoved, room]) => {
-        this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
+  private async onLeave(index: number, client: SocketIO.Socket): Promise<void> {
+    try {
+      const [isRemoved, room] = await this.roomService.removePlayerFromRoom(index, client, this.getPlayerToken(client));
+      this.roomService.removePlayerFromRoom(index, client, this.getPlayerToken(client));
+      this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
 
-        if (isRemoved) {
-          this.loggerService.infoLog(`Player leave from ${this.games[index].appName}`);
+      if (isRemoved) {
+        this.loggerService.infoLog(`Player leave from ${this.games[index].appName}`);
 
-          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
-          this.notifyAllClients(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
-        }
-
-      })
-      .catch((error: Error) => {
+        this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
+        this.notifyAllClients(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
+      }
+    } catch (error) {
         this.loggerService.infoLog(error.message);
-      });
+    }
   }
 
-  private onDisconnect(client: SocketIO.Socket): void {
+  private async onDisconnect(client: SocketIO.Socket): Promise<void> {
     this.loggerService.infoLog('Player connection closed');
     this.clients.splice(this.clients.indexOf(client), 1);
     this.loggerService.infoLog(`Count of clients = ${this.clients.length}`);
 
-    this.roomService.removePlayer(client, this.getPlayerToken(client))
-      .then(([isRemoved, room]) => {
-        this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
-
-        if (isRemoved && room) {
+    try {
+      const [isRemoved, room] = await this.roomService.removePlayer(client, this.getPlayerToken(client));
+      this.loggerService.infoLog(`isRemoved -> ${isRemoved}`);
+      if (isRemoved && room) {
           this.loggerService.infoLog(`Sent count wait players in ${this.games[room.id].appName}`);
           this.notifyAllClients(this.games[room.id].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
         }
-      })
-      .catch((error: Error) => {
+    } catch (error) {
         this.loggerService.infoLog(error.message);
-      });
+    }
   }
 
   private mapRoomsToRoomsInfo(): RoomInfo[] {

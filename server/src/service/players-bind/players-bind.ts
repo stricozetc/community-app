@@ -52,16 +52,16 @@ export class PlayersBindService {
     const sendingPlayersBind = this.playersBinds
       .find((playersBind: PlayersBind) => playersBind.room === room.token);
 
-    return axios.post<any>(`${game.requestUrl}/api/set-user-bind`, sendingPlayersBind, {
+    try {
+      const response = await axios.post<any>(`${game.requestUrl}/api/set-user-bind`, sendingPlayersBind, {
       headers: {
         Authorization: 'Bearer ' + app.appToken
       }
-    }).then((response) => {
-      return response.status === 200;
-    }).catch((error) => {
-      this.loggerService.errorLog(error);
-
-      return false;
     });
+      return response.status === 200;
+    } catch (error) {
+      this.loggerService.errorLog(error);
+      return false;
+    }
   }
 }

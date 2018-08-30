@@ -1,6 +1,4 @@
-import Promise = require('bluebird');
 import { injectable } from 'inversify';
-
 import { Game, GamesModel } from 'models/games';
 
 import { MyGamesRepository } from './my-games.repository';
@@ -26,8 +24,8 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
 
     }
 
-    public editGame(game: Game): Promise<Game[]> {
-        return GamesModel.update({
+    public async editGame(game: Game): Promise<Game[]> {
+            await GamesModel.update({
             appName: game.appName,
             description: game.description,
             maxRoomPlayer: +game.maxRoomPlayer,
@@ -40,16 +38,15 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
             updateRoomsInfoEventName: game.updateRoomsInfoEventName,
             notifyCountdown: game.notifyCountdown
         },
-            { where: { id: +game.id } }
-        ).then(() => {
+                                    { where: { id: +game.id } }
+        );
+
             return GamesModel.findAll({
                 where: {
                     userId: game.userId
                 }
             });
-        });
-
-    }
+        }
 
     public addGame(data: Game): Promise<Game> {
         return new Promise<Game>((resolve, reject) => {
@@ -77,8 +74,8 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
 
     }
 
-    public getGames(userId: number): Promise<Game[]> {
-        return GamesModel.findAll({
+    public async getGames(userId: number): Promise<Game[]> {
+        return await GamesModel.findAll({
             where: {
                 userId
             }

@@ -16,7 +16,6 @@ import {
 
 import { GameData } from './../../controller/statistic.controller';
 
-import Promise = require('bluebird');
 import { isEmpty } from './../../validation/is-empty';
 
 import { inject } from 'inversify';
@@ -38,299 +37,289 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     // @inject(SocketService) private socketService: SocketService,
   ) { }
 
-  public setGameResult(data: GameData[], appToken: string): Promise<boolean | ErrorBlock> {
+  public async setGameResult(data: GameData[], appToken: string): Promise<boolean | ErrorBlock> {
     const statistic = data;
-    return GamesModel.findOne({
-      where: { appToken }
-    }).then((tokenRow: Game) => {
+    try {
+      const tokenRow = await GamesModel.findOne({
+        where: { appToken }
+      });
       const token = tokenRow && tokenRow.appToken;
       if (token) {
         let promises: Array<Promise<boolean>> = [];
         // statistic = JSON.parse(statistic); // Uncomment to test with PostMan
         promises = statistic.map((stat: Statistic) => this.saveStatistic(token, stat));
-        return Promise.all(promises)
-          .then(() => {
-            //this.socketService.notifyAllClients('on' + tokenRow.appName + 'StatisticChanged', true);
-            console.log('=============EMIT=============')
-            console.log('on' + tokenRow.appName + 'StatisticChanged');
-            console.log('===========================')
-            return true;
-          })
-          .catch((error) => {
-            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', error);
-            throw error;
-          });
+        try {
+          await Promise.all(promises);
+          //this.socketService.notifyAllClients('on' + tokenRow.appName + 'StatisticChanged', true);
+          console.log('=============EMIT=============')
+          console.log('on' + tokenRow.appName + 'StatisticChanged');
+          console.log('===========================')
+          return true;
+        } catch (error) {
+           console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', error);
+           throw error;
+        }
       } else {
         throw logicErr.notFoundAppToken;
       }
-    })
-      .catch((error: any) => {
+    } catch (error)  {
         if (error.code) {
           throw error;
         } else {
           this.loggerService.errorLog(error);
           throw technicalErr.databaseCrash;
         }
-      });
+    }
   }
 
-  public getRecentGames(userToken: string): Promise<RecentGameFromServer[]> {
-    return StatisticModel.findAll({
-      where: { userToken },
-      order: [['createdAt', 'DESC']]
-    })
-      .then((recentGames) => {
-        if (isEmpty(recentGames)) {
+  public async getRecentGames(userToken: string): Promise<RecentGameFromServer[]> {
+    try {
+      let recentGames = await StatisticModel.findAll({
+        where: { userToken },
+        order: [['createdAt', 'DESC']]
+      });
+      if (isEmpty(recentGames)) {
           throw logicErr.notFoundRecentGames;
+      }
+
+      const promises = recentGames.map((game) => {
+        return GamesModel.find({ where: { appToken: game.appToken } }).then(
+          (row) => row.appName
+        );
+      });
+
+      try {
+        const appNames = await Promise.all(promises);
+        if (!isEmpty(recentGames)) {
+          recentGames = recentGames.reduce((accumulator, game, index) => {
+            const gameName = appNames[index];
+
+            const result = {
+              game: gameName,
+              scores: game.scores,
+              result: game.resultStatus
+            };
+
+            return accumulator.concat(result);
+          },                               []);
         }
 
-        const promises = recentGames.map((game) => {
-          return GamesModel.find({ where: { appToken: game.appToken } }).then(
-            (row) => row.appName
-          );
-        });
+        return recentGames;
 
-        return Promise.all(promises)
-          .then((appNames) => {
-            if (!isEmpty(recentGames)) {
-              recentGames = recentGames.reduce((accumulator, game, index) => {
-                const gameName = appNames[index];
+      } catch (error) {
+        this.loggerService.errorLog(error);
+        throw technicalErr.databaseCrash;
+      }
 
-                const result = {
-                  game: gameName,
-                  scores: game.scores,
-                  result: game.resultStatus
-                };
-
-                return accumulator.concat(result);
-              }, []);
-            }
-            return recentGames;
-          })
-          .catch((error) => {
-            this.loggerService.errorLog(error);
-            throw technicalErr.databaseCrash;
-          });
-      })
-      .catch((error) => {
+    } catch (error) {
         if (error.code) {
           throw error;
         } else {
           this.loggerService.errorLog(error);
           throw technicalErr.databaseCrash;
         }
-      });
+    }
   }
 
   public getMostPopularGames(): Promise<PopularGamesFromServer[]> {
     return new Promise<PopularGamesFromServer[]>(
-      (resolvePopularGames) => {
-        GamesModel.findAll({ attributes: ['appToken', 'appName'] })
-          .then((gamesAndTokens: Array<{ token: string; appName: string }>) => {
-            const tokens = gamesAndTokens.map((row) => row.token);
-            const promises = tokens.map((currentToken) => {
-              return StatisticModel.findAll({
+      async (resolvePopularGames) => {
+        try {
+          const gamesAndTokens = await GamesModel.findAll({ attributes: ['appToken', 'appName'] });
+          const tokens = gamesAndTokens.map((row) => row.token);
+          const promises = tokens.map(async (currentToken) => {
+            try {
+              const historyRows = await StatisticModel.findAll({
                 where: { appToken: currentToken }
-              }).then((historyRows) => {
-                const playedTime = this.statisticService.calculatePlayedTime(historyRows);
-                const playedInWeek = this.statisticService.calculatePlayedInWeek(
-                  historyRows
-                );
-                const result = {
-                  token: currentToken,
-                  playedTime,
-                  playedInWeek
-                };
-
-                return result;
-              }).catch((error) => {
-                this.loggerService.errorLog(error);
-                throw technicalErr.databaseCrash;
               });
-            });
 
-            return Promise.all(promises)
-              .then(
-                (
-                  allGamesAndItsPlayedTime: Array<{
-                    token: string;
-                    playedTime: number;
-                    playedInWeek: number;
-                  }>
-                ) => {
-                  let mostPopularGames = allGamesAndItsPlayedTime.reduce(
-                    (accumulator, game) => {
-                      const gameName = gamesAndTokens.find(
-                        (el) => el.token === game.token
-                      ).appName;
+              const playedTime = this.statisticService.calculatePlayedTime(historyRows);
+              const playedInWeek = this.statisticService.calculatePlayedInWeek(
+                historyRows
+              );
+              const result = {
+                token: currentToken,
+                playedTime,
+                playedInWeek
+              };
 
-                      const result = {
-                        game: gameName,
-                        playedTime: game.playedTime,
-                        playedInWeek: game.playedInWeek
-                      };
-
-                      return accumulator.concat(result);
-                    },
-                    []
-                  );
-                  mostPopularGames = this.statisticService.sortBy(
-                    mostPopularGames,
-                    'playedTime'
-                  );
-
-                  return resolvePopularGames(mostPopularGames);
-                }
-              )
-              .catch((error) => {
-                throw error;
-              });
-          })
-          .catch((error) => {
-            if (error.code) {
-              throw error;
-            } else {
+              return result;
+            } catch (error) {
               this.loggerService.errorLog(error);
               throw technicalErr.databaseCrash;
             }
           });
-      }
-    );
-  }
 
-  public getBestUsers(): Promise<BestUsersFromServer[]> {
-    return new Promise<BestUsersFromServer[]>((resolveBestUsers, reject) => {
+          try {
+            const allGamesAndItsPlayedTime = await Promise.all(promises);
+            let mostPopularGames = allGamesAndItsPlayedTime.reduce(
+              (accumulator, game) => {
+                const gameName = gamesAndTokens.find(
+                  (el) => el.token === game.token
+                ).appName;
+                const result = {
+                  game: gameName,
+                  playedTime: game.playedTime,
+                  playedInWeek: game.playedInWeek
+                };
+                return accumulator.concat(result);
+              },
+              []
+            );
+            mostPopularGames = this.statisticService.sortBy(
+              mostPopularGames,
+              'playedTime'
+            );
 
-      UserModel.findAll({ attributes: ['token', 'name', 'isActive'] })
-        .then((users) => {
-          const promises = users.map((currentUser) => {
-            if (currentUser.isActive) {
-              return StatisticModel.findAll({
-                where: { userToken: currentUser.token }
-              })
-                .then((historyRows) => {
-                  const playedTime = this.statisticService.calculatePlayedTime(historyRows);
-                  const scoresArray = historyRows.map((row) => {
-                    return row.scores;
-                  });
-                  let scores = 0;
-                  if (!isEmpty(scoresArray)) {
-                    scores = scoresArray.reduce((a, b) => a + b);
-                  }
+            return resolvePopularGames(mostPopularGames);
+          } catch (error) {
+            throw error;
+          }
 
-                  const result = {
-                    userToken: currentUser.token,
-                    name: currentUser.name,
-                    playedTime,
-                    scores
-                  };
-                  return result;
-                })
-                .catch((error) => {
-                  this.loggerService.errorLog(error);
-                  throw technicalErr.databaseCrash;
-                });
-            } else {
-              throw logicErr.userShouldBeActive;
-            }
-          });
-          return Promise.all(promises)
-            .then((allUsersStatistic) => {
-              const bestUsers = this.statisticService
-                .sortBy(allUsersStatistic, 'scores')
-                .filter((user) => user.scores > 0);
-
-              return resolveBestUsers(bestUsers);
-            })
-            .catch((error) => {
-              throw error;
-            });
-        })
-        .catch((error) => {
+        } catch (error) {
           if (error.code) {
             throw error;
           } else {
             this.loggerService.errorLog(error);
             throw technicalErr.databaseCrash;
           }
-        });
-    });
+        }
+      }
+    );
   }
 
-  public getLeaders(appName: string): Promise<Leaders[]> {
-    return GamesModel.findOne({
-      where: { appName }
-    }).then((tokenRow: Game) => {
-      const token = tokenRow && tokenRow.appToken;
-      if (token) {
-        return new Promise<Leaders[]>((resolveBestUsers, reject) => {
-
-          UserModel.findAll({ attributes: ['token', 'name', 'isActive'] })
-            .then((users) => {
-              const promises = users.map((currentUser) => {
-                if (currentUser.isActive) {
-                  return StatisticModel.findAll({
-                    where: { userToken: currentUser.token, appToken: token }
-                  })
-                    .then((historyRows) => {
-                      const scoresArray = historyRows.map((row) => {
-                        return row.scores;
-                      });
-                      let scores = 0;
-                      if (!isEmpty(scoresArray)) {
-                        scores = scoresArray.reduce((a, b) => a > b ? a : b);
-                      }
-
-                      const result = {
-                        userToken: currentUser.token,
-                        name: currentUser.name,
-                        scores
-                      };
-                      return result;
-                    })
-                    .catch((error) => {
-                      this.loggerService.errorLog(error);
-                      throw technicalErr.databaseCrash;
-                    });
-                } else {
-                  throw logicErr.userShouldBeActive;
-                }
-              });
-              return Promise.all(promises)
-                .then((allUsersStatistic) => {
-                  const bestUsers = this.statisticService
-                    .sortBy(allUsersStatistic, 'scores')
-                    .filter((user) => user.scores > 0);
-                  return resolveBestUsers(bestUsers);
-                })
-                .catch((error) => {
-                  throw error;
+  public getBestUsers(): Promise<BestUsersFromServer[]> {
+    return new Promise<BestUsersFromServer[]>(
+      async (resolveBestUsers, reject) => {
+        try {
+          const users = await UserModel.findAll({ attributes: ['token', 'name', 'isActive'] });
+          const promises = users.map(async (currentUser) => {
+            if (currentUser.isActive) {
+              try {
+                const historyRows = await StatisticModel.findAll({
+                  where: { userToken: currentUser.token }
                 });
-            })
-            .catch((error) => {
-              if (error.code) {
-                throw error;
-              } else {
+
+                const playedTime = this.statisticService.calculatePlayedTime(historyRows);
+                const scoresArray = historyRows.map((row) => {
+                  return row.scores;
+                });
+                let scores = 0;
+                if (!isEmpty(scoresArray)) {
+                  scores = scoresArray.reduce((a, b) => a + b);
+                }
+
+                const result = {
+                  userToken: currentUser.token,
+                  name: currentUser.name,
+                  playedTime,
+                  scores
+                };
+                return result;
+              } catch (error) {
                 this.loggerService.errorLog(error);
                 throw technicalErr.databaseCrash;
               }
+            } else {
+              throw logicErr.userShouldBeActive;
+            }
+          });
+
+          try {
+            const allUsersStatistic = await Promise.all(promises);
+
+            const bestUsers = this.statisticService
+              .sortBy(allUsersStatistic, 'scores')
+              .filter((user) => user.scores > 0);
+
+            return resolveBestUsers(bestUsers);
+          } catch (error) {
+            throw error;
+          }
+        } catch (error) {
+          if (error.code) {
+            throw error;
+          } else {
+            this.loggerService.errorLog(error);
+            throw technicalErr.databaseCrash;
+          }
+        }
+    });
+  }
+
+  public async getLeaders(appName: string): Promise<Leaders[]> {
+    try {
+      const tokenRow = await GamesModel.findOne({
+        where: { appName }
+      });
+      const token = tokenRow && tokenRow.appToken;
+      if (token) {
+        return new Promise<Leaders[]>(async (resolveBestUsers, reject) => {
+
+          try {
+            const users = await UserModel.findAll({ attributes: ['token', 'name', 'isActive'] });
+            const promises = users.map( async (currentUser) => {
+              if (currentUser.isActive) {
+                try {
+                  const historyRows = await StatisticModel.findAll({
+                    where: { userToken: currentUser.token, appToken: token }
+                  });
+
+                  const scoresArray = historyRows.map((row) => {
+                    return row.scores;
+                  });
+                  let scores = 0;
+                  if (!isEmpty(scoresArray)) {
+                    scores = scoresArray.reduce((a, b) => a > b ? a : b);
+                  }
+
+                  const result = {
+                    userToken: currentUser.token,
+                    name: currentUser.name,
+                    scores
+                  };
+                  return result;
+                } catch (error) {
+                  this.loggerService.errorLog(error);
+                  throw technicalErr.databaseCrash;
+                }
+              } else {
+                throw logicErr.userShouldBeActive;
+              }
             });
+
+            try {
+              const allUsersStatistic = await Promise.all(promises);
+              const bestUsers = this.statisticService
+                .sortBy(allUsersStatistic, 'scores')
+                .filter((user) => user.scores > 0);
+              return resolveBestUsers(bestUsers);
+            } catch (error) {
+              throw error;
+            }
+          } catch (error) {
+            if (error.code) {
+              throw error;
+            } else {
+              this.loggerService.errorLog(error);
+              throw technicalErr.databaseCrash;
+            }
+            }
         });
       } else {
         throw logicErr.notFoundAppToken;
       }
-    })
-      .catch((error) => {
-        if (error.code) {
-          throw error;
-        } else {
-          this.loggerService.errorLog(error);
-          throw technicalErr.databaseCrash;
-        }
-      });
+    } catch (error) {
+      if (error.code) {
+        throw error;
+      } else {
+        this.loggerService.errorLog(error);
+        throw technicalErr.databaseCrash;
+      }
+    }
   }
 
-  private saveStatistic(token: string, stat: Statistic): Promise<boolean> {
+  private async saveStatistic(token: string, stat: Statistic): Promise<boolean> {
     const newStatistic = StatisticModel.build({
       appToken: token,
       userToken: stat.userToken,
@@ -340,12 +329,12 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       participationStatus: stat.participationStatus
     });
 
-    return newStatistic
-      .save()
-      .then(() => true)
-      .catch((error: any) => {
-        this.loggerService.errorLog(error);
-        throw technicalErr.databaseCrash;
-      });
+    try {
+      await newStatistic.save();
+      return true;
+    } catch (error) {
+      this.loggerService.errorLog(error);
+      throw technicalErr.databaseCrash;
+    }
   }
 }
