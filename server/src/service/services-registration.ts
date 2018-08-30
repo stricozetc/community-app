@@ -24,7 +24,6 @@ import { MailerService } from './mailer';
 export const CONTAINER = new Container();
 
 CONTAINER.bind<LoggerService>(LoggerService).to(LoggerServiceImplementation);
-CONTAINER.bind<SocketService>(SocketService).to(SocketServiceImplementation);
 
 CONTAINER.bind<ErrorService>(ErrorService).to(ErrorServiceImplementation);
 CONTAINER.bind<RoomService>(RoomService).to(RoomService);

@@ -206,6 +206,11 @@ export interface AppMenuItem {
   action: () => void;
 }
 
+export interface MoreMenuItem {
+  title: string;
+  action: () => void;
+}
+
 export interface FrontEndValidationErrorsGameRegister {
   appName: { length: string, required: string };
   description: { length: string, required: string };
@@ -217,7 +222,7 @@ export interface FrontEndValidationErrorsGameRegister {
 }
 
 export interface ErrorBlock {
-  code: number;
+  code?: number;
   msg: string;
 }
 
@@ -244,4 +249,10 @@ export interface RecentGames {
   game: string;
   scores: number;
   result: number;
+}
+
+
+export interface SnackbarPayload {
+  type: SnackbarType;
+  message: ErrorBlock | ErrorBlock[];
 }

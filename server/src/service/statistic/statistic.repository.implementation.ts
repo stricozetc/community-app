@@ -1,5 +1,5 @@
 import { StatisticRepository } from './statistic.repository';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 
 import {
   StatisticModel,
@@ -18,24 +18,18 @@ import { GameData } from './../../controller/statistic.controller';
 
 import { isEmpty } from './../../validation/is-empty';
 
-import { inject } from 'inversify';
 import { StatisticService } from './statistic.service';
 import { logicErr } from '../../../errors/logicErr';
 import { technicalErr } from '../../../errors/technicalErr';
 import { LoggerService } from '../logger/logger.service';
 import { ResultStatus } from '../../../models/statistic';
 
-import SocketIO from 'socket.io';
-import { SocketService } from '../socket/socket.service';
+import { SocketServiceImplementation } from '../socket/socket.service.implementation';
 @injectable()
 export class StatisticRepositoryImplementation implements StatisticRepository {
-  private socket: SocketIO.Socket;
-
-  public constructor(
-    @inject(StatisticService) private statisticService: StatisticService,
-    @inject(LoggerService) private loggerService: LoggerService,
-    // @inject(SocketService) private socketService: SocketService,
-  ) { }
+  @inject(StatisticService) private statisticService: StatisticService;
+  @inject(LoggerService) private loggerService: LoggerService;
+  private socketService: SocketServiceImplementation = SocketServiceImplementation.getInstance();
 
   public async setGameResult(data: GameData[], appToken: string): Promise<boolean | ErrorBlock> {
     const statistic = data;
@@ -50,13 +44,9 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         promises = statistic.map((stat: Statistic) => this.saveStatistic(token, stat));
         try {
           await Promise.all(promises);
-          //this.socketService.notifyAllClients('on' + tokenRow.appName + 'StatisticChanged', true);
-          console.log('=============EMIT=============')
-          console.log('on' + tokenRow.appName + 'StatisticChanged');
-          console.log('===========================')
+          this.socketService.notifyAllClients('updateLeaders', tokenRow.appName);
           return true;
         } catch (error) {
-           console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', error);
            throw error;
         }
       } else {
@@ -125,8 +115,12 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
     return new Promise<PopularGamesFromServer[]>(
       async (resolvePopularGames) => {
         try {
-          const gamesAndTokens = await GamesModel.findAll({ attributes: ['appToken', 'appName'] });
-          const tokens = gamesAndTokens.map((row) => row.token);
+          const gamesAndTokens: Array<{
+            appToken: string;
+            appName: string }> = await GamesModel.findAll({
+              attributes: ['appToken', 'appName'] });
+
+          const tokens = gamesAndTokens.map((row) => row.appToken);
           const promises = tokens.map(async (currentToken) => {
             try {
               const historyRows = await StatisticModel.findAll({
@@ -155,7 +149,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
             let mostPopularGames = allGamesAndItsPlayedTime.reduce(
               (accumulator, game) => {
                 const gameName = gamesAndTokens.find(
-                  (el) => el.token === game.token
+                  (el) => el.appToken === game.token
                 ).appName;
                 const result = {
                   game: gameName,

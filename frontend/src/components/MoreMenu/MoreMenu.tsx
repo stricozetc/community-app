@@ -1,31 +1,28 @@
 import * as React from 'react';
-import { I18n } from 'react-i18next';
 
 import {
   ClickAwayListener,
   Grow,
   IconButton,
-  ListItemIcon,
   ListItemText,
   MenuItem,
   MenuList,
   Paper,
-  Popper,
+  Popper
 } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import { I18n } from 'react-i18next';
+
 import { createStyled } from 'utils';
 
-import { AppMenuProps, AppMenuState } from './AppMenu.model';
-import { styles } from './AppMenu.styles';
-
-import './AppMenu.scss';
+import { MoreMenuProps, MoreMenuState } from './MoreMenu.model';
+import { styles } from './MoreMenu.styles';
 
 const Styled = createStyled(styles);
 
-export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
-
-  public state: AppMenuState = {
+export class MoreMenu extends React.Component<MoreMenuProps, MoreMenuState> {
+  public state = {
     anchorEl: null,
   };
 
@@ -46,7 +43,8 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
   }
 
   public render(): JSX.Element {
-    const { appMenuItems, children } = this.props;
+    const { items } = this.props;
+
     const { anchorEl } = this.state;
 
     const open = Boolean(anchorEl);
@@ -58,12 +56,18 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
             <div>
               <IconButton
                 onClick={this.handleIconClick}
-                className={classes.icon}
+                className={classes.iconButton}
               >
-                <AccountCircle className={classes.avatarSm} />
+                <MoreHorizIcon className={classes.moreIcon} />
               </IconButton>
 
-              <Popper open={open} anchorEl={anchorEl} transition={true} disablePortal={true}>
+              <Popper
+                open={open}
+                anchorEl={anchorEl}
+                transition={true}
+                disablePortal={true}
+                className={classes.popper}
+              >
                 {({ TransitionProps, placement }) => (
                   <Grow
                     {...TransitionProps}
@@ -73,17 +77,13 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
                         : 'center bottom'
                     }}
                   >
-                    <Paper>
-                      {children}
+                    <Paper className={classes.paper}>
                       <MenuList>
                         {
-                          appMenuItems.map(item => {
+                          items.map(item => {
                             return (
                               <MenuItem key={item.title} onClick={item.action} className={classes.menuItem} >
-                                <ListItemIcon className={classes.icon}>
-                                  {item.icon}
-                                </ListItemIcon>
-                                <ListItemText inset={true} primary={t(item.title)} classes={{ primary: classes.listItemText }} />
+                                <ListItemText primary={t(item.title)} classes={{ primary: classes.listItemText }} />
                               </MenuItem>
                             );
                           })

@@ -48,3 +48,31 @@
     margin-left: 20px;
   }
 }
+@media(max-width: 800px) {
+  .ca-navbar {
+    &__nav-item:last-child {
+      display: none;
+    }
+  }
+}
+@media(max-width:320px) {
+  .ca-navbar {
+    &__items-container {
+      width: auto;
+      margin-left: 1rem;
+    }
+
+    &__nav-item {
+      margin: .5rem;
+    }
+
+    &__menu-container {
+      margin-left: 0;
+      }
+
+    &__select-language {
+      width: 55px;
+      margin-left: 16px;
+    }
+  }
+}

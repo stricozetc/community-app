@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
+
 import { createStyled } from 'utils';
 
 import { CaCopy } from '../CaCopy/CaCopy';
@@ -22,7 +23,7 @@ const handleFocus = (event: any) => {
   event.target.select();
 };
 
-export const CaDialogInfo = ({ open, onClose, appToken }: CaDialogInfoProps) => (
+export const CaDialogInfo = ({ open, onClose, appToken, onSuccess }: CaDialogInfoProps) => (
   <Styled>{({ classes }) => (
     <I18n>{t => (
       <Dialog
@@ -49,7 +50,7 @@ export const CaDialogInfo = ({ open, onClose, appToken }: CaDialogInfoProps) => 
           />
           <CopyToClipboard text={appToken}>
             <IconButton>
-              <CaCopy copyHandler={onClose} />
+              <CaCopy copyHandler={onSuccess}/>
             </IconButton>
           </CopyToClipboard>
         </div>
