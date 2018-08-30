@@ -1,6 +1,6 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-// Yegor: temporary hide navigations for RS meet-up
+// Yegor: comment icons imports cuz of temporary removed nav links
 // import SettingsIcon from '@material-ui/icons/SettingsRounded';
 // import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
@@ -137,12 +137,13 @@ export class RootComponent extends React.Component<RootProps> {
 
     const isAuthorized = authStatus === AuthStatus.Authorized;
     const appMenuItems: AppMenuItem[] = [
-      // Yegor: temporary hide navigations for RS meet-up
+      // Yegor: temporary hide settings cuz they aren't ready yet
       // {
       //   icon: <SettingsIcon />,
       //   title: 'settings',
       //   action: () => this.props.history.push('/settings')
       // },
+      // Yegor: hide nav link to admin page
       // {
       //   icon: <AdminIcon />,
       //   title: 'adminPage',
@@ -166,7 +167,7 @@ export class RootComponent extends React.Component<RootProps> {
                 activeClassName: 'ca-navbar__nav-item--active',
                 disabled: !isAuthorized
               }/* , */
-              // Yegor: temporary hide navigations for RS meet-up
+              // Yegor: temporary hide statistics cuz of bad adaptiveness for mobile
               // {
               //   text: t('statistics'),
               //   to: '/statistics',
