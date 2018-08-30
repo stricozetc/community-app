@@ -18,7 +18,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
     constructor(props: EditGameComponentProps) {
         super(props);
     }
-    
+
     public componentWillMount(): void {
         const isAuthenticated = this.props.authStatus === AuthStatus.Authorized;
 
@@ -27,7 +27,7 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
         }
 
         if (this.props.games.length === 0) {
-            this.props.history.push('/my-games');
+            this.props.history.push('/_admin_console');
         }
     }
 
