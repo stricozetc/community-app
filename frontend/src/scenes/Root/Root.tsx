@@ -1,7 +1,8 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-import SettingsIcon from '@material-ui/icons/SettingsRounded';
-import AdminIcon from '@material-ui/icons/SupervisorAccount';
+// Yegor: temporary hide navigations for RS meet-up
+// import SettingsIcon from '@material-ui/icons/SettingsRounded';
+// import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
@@ -136,16 +137,17 @@ export class RootComponent extends React.Component<RootProps> {
 
     const isAuthorized = authStatus === AuthStatus.Authorized;
     const appMenuItems: AppMenuItem[] = [
-      {
-        icon: <SettingsIcon />,
-        title: 'settings',
-        action: () => this.props.history.push('/settings')
-      },
-      {
-        icon: <AdminIcon />,
-        title: 'adminPage',
-        action: () => this.props.history.push('/my-games')
-      },
+      // Yegor: temporary hide navigations for RS meet-up
+      // {
+      //   icon: <SettingsIcon />,
+      //   title: 'settings',
+      //   action: () => this.props.history.push('/settings')
+      // },
+      // {
+      //   icon: <AdminIcon />,
+      //   title: 'adminPage',
+      //   action: () => this.props.history.push('/my-games')
+      // },
       {
         icon: <LogoutIcon />,
         title: 'logout',
@@ -163,13 +165,14 @@ export class RootComponent extends React.Component<RootProps> {
                 to: '/battles',
                 activeClassName: 'ca-navbar__nav-item--active',
                 disabled: !isAuthorized
-              },
-              {
-                text: t('statistics'),
-                to: '/statistics',
-                activeClassName: 'ca-navbar__nav-item--active',
-                disabled: !isAuthorized
-              }
+              }/* , */
+              // Yegor: temporary hide navigations for RS meet-up
+              // {
+              //   text: t('statistics'),
+              //   to: '/statistics',
+              //   activeClassName: 'ca-navbar__nav-item--active',
+              //   disabled: !isAuthorized
+              // }
             ]}
           >
             <div className='ca-navbar__menu-container'>
@@ -301,7 +304,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/my-games'
+              path='/_admin_console'
               render={props => (
                 <CaMyGames {...props}>
                   {this.getNavbar(this.props.status)}
