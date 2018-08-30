@@ -13,18 +13,17 @@ const options: PassportOptions = {
 };
 
 export let passportConfig = (passport: PassportStatic) => {
-    passport.use(new JWTStrategy(options, (jwt_payload, done) => {
-        db.connect.sync()
-            .then(() => {
-                return UserModel.findById(jwt_payload.id);
-            })
-            .then((user: User) => {
-                if (user) {
-                    return done(null, user);
-                }
-
-                return done(null, false, { message: 'User is not found' });
-            })
-            .catch((err: any) => done(err));
+    passport.use(new JWTStrategy(options, async (jwt_payload, done) => {
+        try {
+            await db.connect.sync();
+            const user = await UserModel.findById(jwt_payload.id);
+            if (user) {
+                return done(null, user);
+            } else {
+                done(null, false, { message: 'User is not found' });
+            }
+        } catch {
+            return (err: any) => done(err);
+        }
     }));
 };

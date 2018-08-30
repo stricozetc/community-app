@@ -18,27 +18,23 @@ export class MyGameController {
     @httpPost('/delete-game')
     public async deleteGame(request: Request, response: Response): Promise<void | Response> {
         const gameThatNeedToDelete: Game = request.body;
-
-        return this.myGameRepository.deleteGame(gameThatNeedToDelete)
-            .then((games: Game[]) => {
-                return response.status(200).send(games);
-            }).catch((err) => {
-                return response.sendStatus(500);
-            });
-
+        try {
+            const games = await this.myGameRepository.deleteGame(gameThatNeedToDelete);
+            return response.status(200).send(games);
+        } catch (err) {
+            return response.sendStatus(500);
+        }
     }
 
     @httpPost('/edit-game')
     public async editGame(request: Request, response: Response): Promise<void | Response> {
-
         const data: Game = request.body;
-
-        return this.myGameRepository.editGame(data)
-            .then((games: Game[]) => {
-                return response.status(200).send(games);
-            }).catch((err) => {
-                return response.sendStatus(500);
-            });
+        try {
+            const games = await this.myGameRepository.editGame(data);
+            return response.status(200).send(games);
+        } catch (err)  {
+            return response.sendStatus(500);
+        }
     }
 
     @httpPost('/add-game')
@@ -53,25 +49,23 @@ export class MyGameController {
         if (!isValid) {
             return response.status(400).json(errors);
         }
-
-        return this.myGameRepository.addGame(newGame)
-            .then((addedGame: Game) => {
-                return response.status(200).json(addedGame);
-            }).catch((err) => {
-                return response.status(400).json(err);
-            });
+        try {
+            const addedGame = await this.myGameRepository.addGame(newGame);
+            return response.status(200).json(addedGame);
+        } catch (err)  {
+            return response.status(400).json(err);
+        }
     }
 
     @httpGet('/get-games')
     public async getGames(request: Request, response: Response): Promise<void | Response> {
 
         const userId: number = request.query.userId;
-
-        return this.myGameRepository.getGames(userId)
-            .then((games: Game[]) => {
-                response.status(200).json(games);
-            }).catch((err) => {
-                return response.status(400).json(err);
-            });
+        try {
+            const games = await this.myGameRepository.getGames(userId);
+            return response.status(200).json(games);
+        } catch (err) {
+            return response.status(400).json(err);
+        }
     }
 }

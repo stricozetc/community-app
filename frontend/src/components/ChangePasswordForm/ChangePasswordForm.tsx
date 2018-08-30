@@ -22,29 +22,25 @@ export class ChangePasswordForm extends React.Component<
     this.state = initState;
   }
 
-  public onChangeOldPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+  public onChangeOldPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     const oldPassword = event.target.value;
 
     this.setState({ oldPassword });
   }
 
-  public onChangeNewPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+  public onChangeNewPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.target.value;
 
     this.setState({ newPassword });
   }
 
-  public onChangeRepeatNewPassword(event: React.ChangeEvent<HTMLInputElement>): void {
+  public onChangeRepeatNewPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     const repeatNewPassword = event.target.value;
 
     this.setState({ repeatNewPassword });
   }
 
-  public onSubmit(event: React.FormEvent<HTMLFormElement>): void {
-    event.preventDefault();
-  }
-
-  public checkValidation(): void {
+  public checkValidation = () => {
     let oldPasswordErrors: string[] = [];
     let newPasswordErrors: string[] = [];
     let repeatNewPasswordErrors: string[] = [];

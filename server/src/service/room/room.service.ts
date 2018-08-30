@@ -31,40 +31,43 @@ export class RoomService {
     return this.rooms.find((r) => r.id === index);
   }
 
-  public createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
-    return this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index])
-      .then((roomToken: string) => {
+  public async createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
+    const roomToken = await this.apiService.startNewRoom(`
+      ${this.games[index].requestUrl}/api/start-new-room`,
+                                                         {},
+                                                         this.games[index]);
 
-        let isCreated = false;
+    let isCreated = false;
 
-        if (roomToken) {
-          this.rooms.push({
-            id: index,
-            gameId: this.games[index].id,
-            maxPlayersCount: this.games[index].maxRoomPlayer,
-            players: [client],
-            token: roomToken,
-            status: RoomStatus.Waiting
-          });
-
-          this.playersBindService.bindPlayer(roomToken, playerToken);
-          this.loggerService.infoLog(`New room was added for ${this.games[index].appName}`);
-          this.loggerService.infoLog(`Current count of players is 1`);
-
-          isCreated = true;
-        } else {
-          this.loggerService.errorLog(`New room was not added for ${this.games[index].appName}`);
-        }
-
-        return isCreated;
+    if (roomToken) {
+      this.rooms.push({
+        id: index,
+        gameId: this.games[index].id,
+        maxPlayersCount: this.games[index].maxRoomPlayer,
+        players: [client],
+        token: roomToken,
+          status: RoomStatus.Waiting
       });
+
+      this.playersBindService.bindPlayer(roomToken, playerToken);
+      this.loggerService.infoLog(`New room was added for ${this.games[index].appName}`);
+      this.loggerService.infoLog(`Current count of players is 1`);
+
+      isCreated = true;
+    } else {
+      this.loggerService.errorLog(`New room was not added for ${this.games[index].appName}`);
+    }
+
+    return isCreated;
+
   }
 
   public async addPlayerToRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<[boolean, Room]> {
     /*
     * @todo refactor for lock async operations (multiple users)
     * */
-    this.games = await this.gamesRepository.getGames().map((game: any) => game.dataValues);
+    this.games = await this.gamesRepository.getGames();
+    this.games.map((game: any) => game.dataValues);
 
     const room: Room | undefined = this.rooms.find((r) => r.id === index);
     let operation$ = Promise.resolve(true);
@@ -191,19 +194,20 @@ export class RoomService {
     }
   }
 
-  private startGame(game: Game, room: Room, index: number): void {
-    this.playersBindService.sendPlayerBind(game, room)
-      .then(() => {
-        room.players.forEach((player: SocketIO.Socket) => {
-          player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
-          this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
+  private async startGame(game: Game, room: Room, index: number): Promise<void> {
+    try {
+      await this.playersBindService.sendPlayerBind(game, room);
+      room.players.forEach((player: SocketIO.Socket) => {
+            player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
+            this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
 
-          player.emit('redirect', this.games[index].redirectUrl);
-          this.loggerService.infoLog(`Redirect players group to ${this.games[index].appName}`);
-        });
-        room.status = RoomStatus.InGame;
-      })
-      .catch((error) => this.loggerService.errorLog(error));
+            player.emit('redirect', this.games[index].redirectUrl);
+            this.loggerService.infoLog(`Redirect players group to ${this.games[index].appName}`);
+          });
+      room.status = RoomStatus.InGame;
+    } catch (error) {
+      this.loggerService.errorLog(error);
+    }
   }
 
   private countdown(room: Room, index: number, distance: number): void {

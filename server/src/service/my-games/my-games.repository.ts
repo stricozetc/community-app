@@ -1,7 +1,5 @@
 import { Game } from 'models/games';
 
-import Promise = require('bluebird');
-
 export abstract class MyGamesRepository {
 
     public abstract deleteGame(gameThaNeedToDelete: Game): Promise<Game[]>;

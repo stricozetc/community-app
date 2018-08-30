@@ -2,7 +2,9 @@ import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from 'config/dbconfig';
 
-export const RoleModel = db.connect.define(dbConfig.rolesModel, {
+import { SequelizeStaticAndInstance } from 'sequelize';
+
+export const RoleModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.rolesModel, {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
