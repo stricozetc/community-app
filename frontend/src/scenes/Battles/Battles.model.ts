@@ -21,8 +21,6 @@ export interface BattleProps {
 
   joinBattleAction(payload: string): void;
 
-  leaveBattleAction(payload: string): void;
-
   logoutUser(): void;
 
   initGames(): void;

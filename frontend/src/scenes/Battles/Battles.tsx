@@ -15,7 +15,6 @@ import { isEmpty } from 'utils';
 import {
   AppState,
   JoinBattle,
-  LeaveBattle,
   LoadGames,
   LogoutUser
 } from 'store';
@@ -53,6 +52,10 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return sortedRooms && sortedRooms[0] ? sortedRooms[0] : 0;
   }
 
+  public redToWaitRoom = (): void => {
+    this.props.history.push('/wait-battle');
+  }
+
   public render(): JSX.Element {
     return (
       <div className='ca-homepage'>
@@ -82,11 +85,12 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                       this.props.history.push(`/wait-battle`);
                     }}
                     moreMenuItems={moreMenuItems}
-                    leaveGame={this.props.leaveBattleAction}
+                    leaveGame={this.redToWaitRoom}
                     status={this.props.battleStatus}
                     battleStatus={this.props.battleStatus}
                     waitBattlePlayersCountAction={waitBattlePlayersCount}
-                    isFull={waitBattlePlayersCount === game.maxRoomPlayer}
+                    // (Mikalai) add logic if we don't have empty place for new player
+                    isFull={!!this.props.gameId && this.props.gameId !== game.id}
                     isWaitBattle={this.props.gameId === game.id ? true : false}
                     battleStartTime={new Date((new Date()).getTime() + this.getNearestCountdown(gameRooms))}
                   />
@@ -117,7 +121,6 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
-  leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
   initGames: () => dispatch(new LoadGames())
 });
 
