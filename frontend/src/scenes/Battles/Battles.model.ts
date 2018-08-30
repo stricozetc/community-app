@@ -13,6 +13,7 @@ export interface BattleProps {
   authStatus: AuthStatus;
   battleStatus: BattleStatus;
   history: History;
+  gameId: number | undefined;
   roomsInfo: RoomInfo[];
   games: GameModel[];
   status: LoadStatus;

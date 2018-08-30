@@ -35,16 +35,6 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
     }
   }
 
-  // public getGameIndex(): number {
-  //   const currentRoute = this.props.history.location.pathname;
-  //   const test = new RegExp(/\d+/);
-  //   const foundNumber = test.exec(currentRoute) || ['0'];
-
-  //   return parseInt(foundNumber[0], 0);
-  // }
-
-  // edit get current Room
-
   public isGameFull(): boolean {
     const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
 

@@ -21,10 +21,8 @@ export class CaGameCard extends React.Component<GameCardProps> {
     this.props.leaveGame(this.props.game.appName);
   }
 
-  public getBattleButton = (
-    status: BattleStatus
-  ): JSX.Element => {
-    if (status === BattleStatus.Init) {
+  public getBattleButton = (status: BattleStatus, isWaitBattle: boolean): JSX.Element => {
+    if (!isWaitBattle) {
       return (
         <I18n>{(t) => (
           <CaButton
@@ -50,7 +48,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
   }
 
   public render(): JSX.Element {
-    const { status, waitBattlePlayersCountAction, isFull, battleStartTime } = this.props;
+    const { status, waitBattlePlayersCountAction, isFull, battleStartTime, isWaitBattle } = this.props;
 
     const { appName, description, maxRoomPlayer, maxRooms } = this.props.game;
 
@@ -86,7 +84,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
                   {description}
                 </div>
                 <div className='ca-game-card__btn-container'>
-                  {!isFull ? this.getBattleButton(status) : <span />}
+                  {!isFull ? this.getBattleButton(status, isWaitBattle) : <span />}
                 </div>
               </div>
             </div>

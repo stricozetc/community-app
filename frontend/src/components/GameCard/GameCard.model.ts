@@ -5,6 +5,7 @@ export interface GameCardProps {
   status: BattleStatus;
   battleStatus: BattleStatus;
   waitBattlePlayersCountAction: number;
+  isWaitBattle: boolean;
   isFull?: boolean;
   battleStartTime: Date;
   moreMenuItems: MoreMenuItem[];

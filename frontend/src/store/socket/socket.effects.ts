@@ -27,7 +27,6 @@ socketService.updateLeadersBoard.subscribe((appName: string) => {
 });
 
 socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) => {
-  console.log('ROOM INFO', roomsInfo);
   return store.dispatch(new SetRoomsInfo(roomsInfo));
 });
 

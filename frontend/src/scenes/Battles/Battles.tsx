@@ -53,16 +53,6 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     return sortedRooms && sortedRooms[0] ? sortedRooms[0] : 0;
   }
 
-  // ?????
-  public getRoomId = (rooms: RoomInfo[]): number => {
-    for (let index = 0; index < rooms.length; index++) {
-      if (rooms[index].playersCount !== rooms[index].maxPlayersCount) {
-        return rooms[index].id;
-      }
-    }
-    return Math.random();
-  }
-
   public render(): JSX.Element {
     return (
       <div className='ca-homepage'>
@@ -70,7 +60,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
-            {this.props.games.map((game: GameModel) => {
+            {this.props.games.map((game: GameModel, index: number) => {
               const moreMenuItems: MoreMenuItem[] = [
                 {
                   title: 'leaders',
@@ -84,7 +74,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                 .reduce((accumulator, currentValue: number) => accumulator + currentValue) : 0;
 
               return (
-                <div className='ca-homepage__container-for-games' key={this.getRoomId(gameRooms)}>
+                <div className='ca-homepage__container-for-games' key={index}>
                   <CaGameCard
                     game={game}
                     joinGame={($event) => {
@@ -97,6 +87,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                     battleStatus={this.props.battleStatus}
                     waitBattlePlayersCountAction={waitBattlePlayersCount}
                     isFull={waitBattlePlayersCount === game.maxRoomPlayer}
+                    isWaitBattle={this.props.gameId === game.id ? true : false}
                     battleStartTime={new Date((new Date()).getTime() + this.getNearestCountdown(gameRooms))}
                   />
                 </div>
@@ -117,6 +108,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
   battleStatus: state.battle.status,
+  gameId: state.battle.gameId,
   roomsInfo: state.room.roomsInfo,
   games: state.games.games,
   status: state.games.gamesStatus,
