@@ -101,7 +101,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
                 <div className={'ca-game-footer ' + backgroundFooterColor}>
 
                   {maxRoomPlayer === 1
-                    ? (<div className='ca-game-footer__container-single-player'>Single Player</div>)
+                    ? (<div className='ca-game-footer__container-single-player'>{t('singlePlayer')}</div>)
                     : (
                       <div className='ca-game-footer__container'>
                         <div className='ca-game-footer__container-item'>

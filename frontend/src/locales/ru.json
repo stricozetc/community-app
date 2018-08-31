@@ -47,6 +47,7 @@
   "minutes_1": "{{count}} минуты",
   "minutes_2": "{{count}} минут",
   "userName": "Имя пользователя",
+  "singlePlayer": "Одиночная игра",
   "playedTime": "Общее время",
   "score": "Счет",
   "game": "Игра",
