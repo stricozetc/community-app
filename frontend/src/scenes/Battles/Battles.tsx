@@ -22,7 +22,6 @@ import {
 import { BattleProps } from './Battles.model';
 
 import './Battles.scss';
-import {  } from 'store/room';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
 

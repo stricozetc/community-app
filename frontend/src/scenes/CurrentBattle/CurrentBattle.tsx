@@ -40,29 +40,13 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
       false;
   }
 
-  public getPlayersCount(): number {
-    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.playersCount : 0;
-  }
-
   public getGameName = (): string => {
     return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.gameName : '';
   }
 
-  public getGameDescription = (): string => {
-    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.description : '';
-  }
-
-  public getGameCountdown = (): number => {
-    return this.props.currentPlayerRoom && this.props.currentPlayerRoom.distance ? this.props.currentPlayerRoom.distance : 0;
-  }
-
-  public getGameMaxRoomPlayer = (): number => {
-    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.maxPlayersCount : 0;
-  }
-
-  public getGameMaxWaitingTime = (): number => {
-    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.maxWaitingTime : 0;
-  }
+  // public getGameCountdown = (): number => {
+  //   return this.props.currentPlayerRoom && this.props.currentPlayerRoom.distance ? this.props.currentPlayerRoom.distance : 0;
+  // }
 
   public handleLeaveRoom = () => {
     this.props.leaveBattleAction(this.getGameName());
@@ -70,6 +54,8 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
   }
 
   public render(): JSX.Element {
+    const { currentPlayerRoom } = this.props;
+
     return (
       < I18n >
         {
@@ -86,7 +72,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                       {this.getGameName()}
                     </div>
                     <div className='ca-current-battle__sub-title'>
-                      {this.getGameDescription()}
+                      {currentPlayerRoom ? currentPlayerRoom.description : ''}
                     </div>
                   </div>
                 </div>
@@ -94,7 +80,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                 <div className='ca-current-battle__time-line'>
                   <div className='ca-current-battle__time'>
                     <span className='ca-current-battle__time-description'>{t('startingIn') + ':'}</span>
-                    <Countdown time={this.getGameCountdown()} />
+                    <Countdown time={currentPlayerRoom && currentPlayerRoom.distance ? currentPlayerRoom.distance : 0} />
                   </div>
                   <div className='ca-current-battle__start-button'>
 
@@ -113,7 +99,9 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                   </div>
                   <span className='ca-current-battle__info-text'>{t('players') + ':'}</span>
                   <span
-                    className='ca-current-battle__info-count'>{this.getPlayersCount()}/{this.getGameMaxRoomPlayer()}</span>
+                    className='ca-current-battle__info-count'>
+                    {currentPlayerRoom ? currentPlayerRoom.playersCount : 0}/{currentPlayerRoom ? currentPlayerRoom.maxPlayersCount : 0}
+                  </span>
                 </div>
 
                 <div className='ca-current-battle__info'>
@@ -122,7 +110,9 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                   </div>
                   <span className='ca-current-battle__info-text'>{t('battleTime') + ':'} </span>
                   <span
-                    className='ca-current-battle__info-count'>{t('minutes', { count: this.getGameMaxWaitingTime() })}</span>
+                    className='ca-current-battle__info-count'>
+                    {t('minutes', { count: currentPlayerRoom ? currentPlayerRoom.maxWaitingTime : 0 })}
+                  </span>
                 </div>
 
                 <div className='ca-current-battle__invite-button'>

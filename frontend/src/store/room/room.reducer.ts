@@ -37,6 +37,8 @@ export const roomReducer = (state = initialState, action: RoomActions) => {
       return {
         ...state,
         battleStatus: BattleStatus.Init,
+        currentPlayerRoom: undefined,
+        currentGameId: undefined,
       };
     }
 
