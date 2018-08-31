@@ -9,6 +9,7 @@ export interface GameCardProps {
   isFull?: boolean;
   battleStartTime: Date;
   moreMenuItems: MoreMenuItem[];
+
   joinGame($event: string): void;
 
   leaveGame($event: string): void;

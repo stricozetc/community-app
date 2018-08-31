@@ -1,4 +1,4 @@
-import { ResultStatus, WinRateDiagramData, GameData } from 'models';
+import { ResultStatus, WinRateDiagramData  } from 'models';
 import { i18nInstance } from 'utils/i18n';
 
 import { EChartOption } from 'echarts';
@@ -9,7 +9,7 @@ export class ChartsService {
   private constructor() {
   }
 
-  public static getWinRateData(gameName: string, gameData: GameData[]): WinRateDiagramData {
+  public static getWinRateData(gameName: string, gameData: any[]): WinRateDiagramData {
     const gameResults = gameData
       .filter(item => item.game === gameName)
       .map(game => game.result);
