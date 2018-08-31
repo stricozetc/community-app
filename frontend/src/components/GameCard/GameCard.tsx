@@ -26,30 +26,24 @@ export class CaGameCard extends React.Component<GameCardProps> {
   ): JSX.Element => {
     if (status === BattleStatus.Init) {
       return (
-        <I18n>
-          {
-            (t) => (
-              <CaButton
-                onClick={this.joinGame}
-              >
-                {t('joinTheBattle')}
-              </CaButton>
-            )
-          }
+        <I18n>{(t) => (
+          <CaButton
+            onClick={this.joinGame}
+          >
+            {t('joinTheBattle')}
+          </CaButton>
+        )}
         </I18n>
       );
     } else {
       return (
-        <I18n>
-          {
-            (t) => (
-              <CaButton
-                onClick={this.leaveGame}
-              >
-                {t('leaveTheBattle')}
-              </CaButton>
-            )
-          }
+        <I18n>{(t) => (
+          <CaButton
+            onClick={this.leaveGame}
+          >
+            {t('leaveTheBattle')}
+          </CaButton>
+        )}
         </I18n>
       );
     }
@@ -77,80 +71,77 @@ export class CaGameCard extends React.Component<GameCardProps> {
     const classes = [topBorderClass, backgroundClass];
 
     return (
-      <I18n>
-        {
-          (t) => (
-            <div className={['ca-game-card', ...classes].join(' ')}>
-              <div className='ca-game-card__container'>
-                <div className='ca-game-card__content'>
-                  <div className='ca-game-card__text'>
-                    <div className='ca-game-card__title'>
-                      <div className='ca-game-card__game-name'>
-                        {appName}
-                      </div>
-                      <MoreMenu items={this.props.moreMenuItems} />
-                    </div>
-                    <div className='ca-game-card__description'>
-                      {description}
-                    </div>
-                    <div className='ca-game-card__btn-container'>
-                      {!isFull ? this.getBattleButton(status) : <span />}
-                    </div>
+      <I18n>{(t) => (
+        <div className={['ca-game-card', ...classes].join(' ')}>
+          <div className='ca-game-card__container'>
+            <div className='ca-game-card__content'>
+              <div className='ca-game-card__text'>
+                <div className='ca-game-card__title'>
+                  <div className='ca-game-card__game-name'>
+                    {appName}
                   </div>
+                  <MoreMenu items={this.props.moreMenuItems} />
                 </div>
-                <div className={'ca-game-footer ' + backgroundFooterColor}>
-
-                  {maxRoomPlayer === 1
-                    ? (<div className='ca-game-footer__container-single-player'>{t('singlePlayer')}</div>)
-                    : (
-                      <div className='ca-game-footer__container'>
-                        <div className='ca-game-footer__container-item'>
-                          {isFull ? (
-                            <span className='ca-game-footer__alert'>{t('roomsAreFull')}</span>
-                          ) : (
-                              <div className='ca-game-footer__placeholder'>
-                                <div className='ca-game-footer__icon'>
-                                  <img src={clockImage} alt='Can not found clock img' />
-                                </div>
-                                <div className='ca-game-footer__info'>
-                                  <div className='ca-game-footer__first-line'>
-                                    {t('startingIn') + ':'}
-                                  </div>
-                                  <div
-                                    className={
-                                      'ca-game-footer__second-line ' + secondLineColor
-                                    }
-                                  >
-                                    {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                        </div>
-                        <div className='ca-game-footer__container-item'>
-                          <div className='ca-game-footer__placeholder'>
-                            <div className='ca-game-footer__icon'>
-                              <img src={userImage} alt='Can not found User img' />
-                            </div>
-                            <div className='ca-game-footer__info'>
-                              <div className='ca-game-footer__first-line'>{t('players') + ':'}</div>
-                              <div
-                                className={'ca-game-footer__second-line ' + secondLineColor}
-                              >
-                                {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer * maxRooms)}`}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  }
-
+                <div className='ca-game-card__description'>
+                  {description}
+                </div>
+                <div className='ca-game-card__btn-container'>
+                  {!isFull ? this.getBattleButton(status) : <span />}
                 </div>
               </div>
             </div>
-          )
-        }
+            <div className={'ca-game-footer ' + backgroundFooterColor}>
+
+              {maxRoomPlayer === 1
+                ? (<div className='ca-game-footer__container-single-player'>{t('singlePlayer')}</div>)
+                : (
+                  <div className='ca-game-footer__container'>
+                    <div className='ca-game-footer__container-item'>
+                      {isFull ? (
+                        <span className='ca-game-footer__alert'>{t('roomsAreFull')}</span>
+                      ) : (
+                          <div className='ca-game-footer__placeholder'>
+                            <div className='ca-game-footer__icon'>
+                              <img src={clockImage} alt='Can not found clock img' />
+                            </div>
+                            <div className='ca-game-footer__info'>
+                              <div className='ca-game-footer__first-line'>
+                                {t('startingIn') + ':'}
+                              </div>
+                              <div
+                                className={
+                                  'ca-game-footer__second-line ' + secondLineColor
+                                }
+                              >
+                                {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                    <div className='ca-game-footer__container-item'>
+                      <div className='ca-game-footer__placeholder'>
+                        <div className='ca-game-footer__icon'>
+                          <img src={userImage} alt='Can not found User img' />
+                        </div>
+                        <div className='ca-game-footer__info'>
+                          <div className='ca-game-footer__first-line'>{t('players') + ':'}</div>
+                          <div
+                            className={'ca-game-footer__second-line ' + secondLineColor}
+                          >
+                            {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer * maxRooms)}`}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+
+            </div>
+          </div>
+        </div>
+      )}
       </I18n>
     );
   }
