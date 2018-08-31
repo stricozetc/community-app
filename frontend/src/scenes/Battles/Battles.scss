@@ -27,6 +27,12 @@
   .ca-homepage {
     &__container {
       margin: 0;
+    }
+  }
+}
+@media(max-width:890px) {
+  .ca-homepage {
+    &__container {
       @include flexbox-center-all();
     }
   }
@@ -40,6 +46,8 @@
     &__container-for-games {
       margin-right: 0;
       margin-left: 0;
+      width: 100%;
+      max-width: 380px;
     }
   }
 }
@@ -50,7 +58,7 @@
     }
 
     &__container-for-games {
-      margin-top: 4rem;
+      margin-top: 6rem;
     }
   }
 }

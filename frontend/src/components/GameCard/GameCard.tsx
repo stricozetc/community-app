@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {CaButton, GameCardProps} from 'components';
-import {BattleStatus} from 'models';
+import { CaButton, GameCardProps } from 'components';
+import { BattleStatus } from 'models';
 
 import clockImage from 'assets/clock.svg';
 import userImage from 'assets/user.svg';
@@ -26,39 +26,33 @@ export class CaGameCard extends React.Component<GameCardProps> {
   ): JSX.Element => {
     if (status === BattleStatus.Init) {
       return (
-        <I18n>
-          {
-            ( t ) => (
-              <CaButton
-                onClick={this.joinGame}
-              >
-              {t('joinTheBattle')}
-              </CaButton>
-            )
-          }
+        <I18n>{(t) => (
+          <CaButton
+            onClick={this.joinGame}
+          >
+            {t('joinTheBattle')}
+          </CaButton>
+        )}
         </I18n>
       );
     } else {
       return (
-        <I18n>
-          {
-            ( t ) => (
-              <CaButton
-                onClick={this.leaveGame}
-              >
-              {t('leaveTheBattle')}
-              </CaButton>
-            )
-          }
+        <I18n>{(t) => (
+          <CaButton
+            onClick={this.leaveGame}
+          >
+            {t('leaveTheBattle')}
+          </CaButton>
+        )}
         </I18n>
       );
     }
   }
 
   public render(): JSX.Element {
-    const {status, waitBattlePlayersCountAction, isFull, battleStartTime} = this.props;
+    const { status, waitBattlePlayersCountAction, isFull, battleStartTime } = this.props;
 
-    const {appName, description, maxRoomPlayer, maxRooms} = this.props.game;
+    const { appName, description, maxRoomPlayer, maxRooms } = this.props.game;
 
     const secondLineColor = isFull
       ? 'ca-game-footer__second-line--full-players'
@@ -77,49 +71,58 @@ export class CaGameCard extends React.Component<GameCardProps> {
     const classes = [topBorderClass, backgroundClass];
 
     return (
-      <I18n>
-        {
-          ( t ) => (
-            <div className={['ca-game-card', ...classes].join(' ')}>
-              <div className='ca-game-card__container'>
-                <div className='ca-game-card__header'>
-                  <h1 className='ca-game-card__game-title'>{appName}</h1>
+      <I18n>{(t) => (
+        <div className={['ca-game-card', ...classes].join(' ')}>
+          <div className='ca-game-card__container'>
+            <div className='ca-game-card__content'>
+              <div className='ca-game-card__text'>
+                <div className='ca-game-card__title'>
+                  <div className='ca-game-card__game-name'>
+                    {appName}
+                  </div>
                   <MoreMenu items={this.props.moreMenuItems} />
                 </div>
-                <h2 className='ca-game-card__game-desc'>{description}</h2>
-
-                <div className='ca-game-card__btn-container'>
-                  {!isFull ? this.getBattleButton(status) : <span/>}
+                <div className='ca-game-card__description'>
+                  {description}
                 </div>
-                <div className={'ca-game-footer ' + backgroundFooterColor}>
+                <div className='ca-game-card__btn-container'>
+                  {!isFull ? this.getBattleButton(status) : <span />}
+                </div>
+              </div>
+            </div>
+            <div className={'ca-game-footer ' + backgroundFooterColor}>
+
+              {maxRoomPlayer === 1
+                ? (<div className='ca-game-footer__container-single-player'>{t('singlePlayer')}</div>)
+                : (
                   <div className='ca-game-footer__container'>
                     <div className='ca-game-footer__container-item'>
                       {isFull ? (
                         <span className='ca-game-footer__alert'>{t('roomsAreFull')}</span>
                       ) : (
-                        <div className='ca-game-footer__placeholder'>
-                          <div className='ca-game-footer__icon'>
-                            <img src={clockImage} alt='Can not found clock img'/>
-                          </div>
-                          <div className='ca-game-footer__info'>
-                            <div className='ca-game-footer__first-line'>
-                              {t('startingIn') + ':'}
+                          <div className='ca-game-footer__placeholder'>
+                            <div className='ca-game-footer__icon'>
+                              <img src={clockImage} alt='Can not found clock img' />
                             </div>
-                            <div
-                              className={
-                                'ca-game-footer__second-line ' + secondLineColor
-                              }
-                            >
-                              {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
+                            <div className='ca-game-footer__info'>
+                              <div className='ca-game-footer__first-line'>
+                                {t('startingIn') + ':'}
+                              </div>
+                              <div
+                                className={
+                                  'ca-game-footer__second-line ' + secondLineColor
+                                }
+                              >
+                                {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </div>
                     <div className='ca-game-footer__container-item'>
                       <div className='ca-game-footer__placeholder'>
                         <div className='ca-game-footer__icon'>
-                          <img src={userImage} alt='Can not found User img'/>
+                          <img src={userImage} alt='Can not found User img' />
                         </div>
                         <div className='ca-game-footer__info'>
                           <div className='ca-game-footer__first-line'>{t('players') + ':'}</div>
@@ -132,11 +135,13 @@ export class CaGameCard extends React.Component<GameCardProps> {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                )
+              }
+
             </div>
-          )
-        }
+          </div>
+        </div>
+      )}
       </I18n>
     );
   }
