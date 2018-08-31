@@ -52,7 +52,7 @@ export class Countdown extends React.Component<CountdownProps, CountdownState> {
   public render(): JSX.Element {
     const totalMinutes = Math.floor(this.state.currentTime / 60000);
     const totalSeconds = Math.round(this.state.currentTime / 1000) - totalMinutes * 60;
-    console.log('Time', this.props.time);
+
     return (
       <I18n>
         {
