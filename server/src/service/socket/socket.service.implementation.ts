@@ -122,6 +122,9 @@ export class SocketServiceImplementation implements SocketService {
       return {
         id: r.id,
         gameId: r.gameId,
+        gameName: r.gameName,
+        description: r.description,
+        maxWaitingTime: r.maxWaitingTime,
         distance: r.distance,
         maxPlayersCount: r.maxPlayersCount,
         playersCount: r.players.length,

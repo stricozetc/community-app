@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { CaButton, GameCardProps } from 'components';
-import { BattleStatus } from 'models';
 
 import clockImage from 'assets/clock.svg';
 import userImage from 'assets/user.svg';
@@ -21,10 +20,8 @@ export class CaGameCard extends React.Component<GameCardProps> {
     this.props.leaveGame(this.props.game.appName);
   }
 
-  public getBattleButton = (
-    status: BattleStatus
-  ): JSX.Element => {
-    if (status === BattleStatus.Init) {
+  public getBattleButton = (isWaitBattle: boolean): JSX.Element => {
+    if (!isWaitBattle) {
       return (
         <I18n>{(t) => (
           <CaButton
@@ -50,7 +47,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
   }
 
   public render(): JSX.Element {
-    const { status, waitBattlePlayersCountAction, isFull, battleStartTime } = this.props;
+    const { waitBattlePlayersCountAction, isFull, battleStartTime, isWaitBattle } = this.props;
 
     const { appName, description, maxRoomPlayer, maxRooms } = this.props.game;
 
@@ -86,7 +83,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
                   {description}
                 </div>
                 <div className='ca-game-card__btn-container'>
-                  {!isFull ? this.getBattleButton(status) : <span />}
+                  {!isFull ? this.getBattleButton(isWaitBattle) : <span />}
                 </div>
               </div>
             </div>
@@ -129,7 +126,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
                           <div
                             className={'ca-game-footer__second-line ' + secondLineColor}
                           >
-                            {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer * maxRooms)}`}
+                            {`${waitBattlePlayersCountAction} / ${(maxRoomPlayer)}`}
                           </div>
                         </div>
                       </div>

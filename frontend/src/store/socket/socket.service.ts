@@ -3,7 +3,7 @@ import * as openSocket from 'socket.io-client';
 import { GameModel, RoomInfo } from 'models';
 import { Subject } from 'rxjs';
 export class SocketService {
-  public roomsInfo: Subject<RoomInfo[]> = new Subject();
+  public rooms: Subject<RoomInfo[]> = new Subject();
   public notifyCountdown: Subject<number> = new Subject();
   public updateLeadersBoard: Subject<string> = new Subject();
 
@@ -17,7 +17,7 @@ export class SocketService {
     for (const game of games) {
       this.socket.on(
         game.updateRoomsInfoEventName,
-        (roomsInfo: RoomInfo[]) => this.roomsInfo.next(roomsInfo)
+        (rooms: RoomInfo[]) => this.rooms.next(rooms)
       );
       this.socket.on(
         game.notifyCountdown,

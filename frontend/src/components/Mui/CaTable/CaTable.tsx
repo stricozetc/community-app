@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 import * as classNames from 'classnames';
-import { CaDelete, CaEdit, CaLock} from 'components';
+import { CaDelete, CaEdit, CaLock } from 'components';
 
 import { HeaderName, ResultStatus, Row, TypeOfColumn } from 'models';
 import { createStyled } from 'utils';
@@ -32,149 +32,148 @@ const Styled = createStyled(styles);
 
 export class CaTable extends React.Component<CaTableProps> {
 
-    public getTextContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction, rowData: Row[]) => {
-      let textContent;
-      const text = row[`${column.field}`];
+  public getTextContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction, rowData: Row[]) => {
+    let textContent;
+    const text = row[`${column.field}`];
 
-      if (row[`${column.field}`] === 'undefined' || row[`${column.field}`] === null && column.type !== TypeOfColumn.Increment) {
-        return '-';
-      }
-
-      switch (column.type) {
-        case TypeOfColumn.String: {
-          textContent = text;
-          break;
-        }
-        case TypeOfColumn.TimeCount: {
-          textContent = t('minutes', { count: text });
-          break;
-        }
-        case TypeOfColumn.Points: {
-          textContent = text;
-          break;
-        }
-        case TypeOfColumn.Result: {
-          if (text === ResultStatus.Win) {
-            textContent = t('win');
-          } else if (text === ResultStatus.Lose) {
-            textContent = t('lose');
-          } else if (text === ResultStatus.Draw) {
-            textContent = t('draw');
-          }
-
-          break;
-        }
-        case TypeOfColumn.Date: {
-          textContent = new Date(text).toLocaleString(i18nInstance.language, options);
-          break;
-        }
-        case TypeOfColumn.Increment: {
-          textContent = rowData.findIndex(currentRow => currentRow === row) + 1;
-          break;
-        }
-        default: {
-          textContent = text;
-        }
-      }
-      return textContent;
+    if (row[`${column.field}`] === 'undefined' || row[`${column.field}`] === null && column.type !== TypeOfColumn.Increment) {
+      return '-';
     }
 
-    public getButtonContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
-      const isCellHaveEditButton = column.editAction;
-      const isCellHaveDeleteButton = column.deleteAction;
-      const isCellHaveLockButton = column.lockAction;
-      const isCellHaveAnyButton = isCellHaveEditButton || isCellHaveDeleteButton || isCellHaveLockButton;
-      
-      let buttonContent;
-
-      if (isCellHaveAnyButton) {
-        buttonContent = (
-            <Styled>{({ classes }) => (
-                <div className={classes.buttonsInCellWithButtons}>
-                    {column.lockAction ? <CaLock showAppToken={() => column.lockAction && column.lockAction(row.appToken)} /> : null}
-                    {column.editAction ? <CaEdit editHandler={() => column.editAction && column.editAction(row.id)} /> : null}
-                    {column.deleteAction ? <CaDelete deleteHandler={() => column.deleteAction && column.deleteAction(row)} /> : null}
-                </div>
-            )}</Styled>
-        )
+    switch (column.type) {
+      case TypeOfColumn.String: {
+        textContent = text;
+        break;
       }
+      case TypeOfColumn.TimeCount: {
+        textContent = t('minutes', { count: text });
+        break;
+      }
+      case TypeOfColumn.Points: {
+        textContent = text;
+        break;
+      }
+      case TypeOfColumn.Result: {
+        if (text === ResultStatus.Win) {
+          textContent = t('win');
+        } else if (text === ResultStatus.Lose) {
+          textContent = t('lose');
+        } else if (text === ResultStatus.Draw) {
+          textContent = t('draw');
+        }
 
-      return buttonContent;
+        break;
+      }
+      case TypeOfColumn.Date: {
+        textContent = new Date(text).toLocaleString(i18nInstance.language, options);
+        break;
+      }
+      case TypeOfColumn.Increment: {
+        textContent = rowData.findIndex(currentRow => currentRow === row) + 1;
+        break;
+      }
+      default: {
+        textContent = text;
+      }
     }
+    return textContent;
+  }
 
-    public getContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction, rowData: Row[]) => {
-      const textContent = this.getTextContentOfTheCell(column, row, t, rowData);
-      const buttonContent = this.getButtonContentOfTheCell(column, row, t);
+  public getButtonContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction) => {
+    const isCellHaveEditButton = column.editAction;
+    const isCellHaveDeleteButton = column.deleteAction;
+    const isCellHaveLockButton = column.lockAction;
+    const isCellHaveAnyButton = isCellHaveEditButton || isCellHaveDeleteButton || isCellHaveLockButton;
 
-      return (
+    let buttonContent;
+
+    if (isCellHaveAnyButton) {
+      buttonContent = (
         <Styled>{({ classes }) => (
-            <div className={classes.cellWithButtons}>
-              <div className={classes.textInCellWithButtons}>{textContent}</div>
-              {buttonContent}
-            </div>
+          <div className={classes.buttonsInCellWithButtons}>
+            {column.lockAction ? <CaLock showAppToken={() => column.lockAction && column.lockAction(row.appToken)} /> : null}
+            {column.editAction ? <CaEdit editHandler={() => column.editAction && column.editAction(row.id)} /> : null}
+            {column.deleteAction ? <CaDelete deleteHandler={() => column.deleteAction && column.deleteAction(row)} /> : null}
+          </div>
         )}</Styled>
       );
     }
 
-    public onRowClick = (row: Row) => {
-      if (this.props.handleRowClick) {
-        this.props.handleRowClick(row);
-      }
-    }
+    return buttonContent;
+  }
 
-    public render(): JSX.Element {
-      const { columnDef, rowData } = this.props;
+  public getContentOfTheCell = (column: HeaderName, row: any, t: TranslationFunction, rowData: Row[]) => {
+    const textContent = this.getTextContentOfTheCell(column, row, t, rowData);
+    const buttonContent = this.getButtonContentOfTheCell(column, row, t);
 
-      return (
-        <Styled>{({ classes }) => (
-          <I18n>
-            {
-              (t) => (
-                <Table>
-                  <TableHead className={classes.tableHead}>
-                    <TableRow className={classes.tableHeadRow}>
-                      {columnDef.map((nameOfColumn, index) => {
-                        const numeric = index !== 0;
-                        return (
-                          <TableCell
-                            key={nameOfColumn.headerName}
-                            numeric={numeric}
-                            className={classNames(classes.columnCell, classes.tableHeadCell)}
-                          >
-                            {t(nameOfColumn.headerName)}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rowData.map((row, rowIndex) => {
-                      return (
-                        <TableRow key={rowIndex} onClick={() => this.onRowClick(row)}>
-                          {columnDef.map((column, propertyIndex) => {
-                            const numeric = propertyIndex !== 0;
+    return (
+      <Styled>{({ classes }) => (
+        <div className={classes.cellWithButtons}>
+          <div className={classes.textInCellWithButtons}>{textContent}</div>
+          {buttonContent}
+        </div>
+      )}</Styled>
+    );
+  }
 
-                            return (
-                              <TableCell
-                                numeric={numeric}
-                                key={propertyIndex}
-                                className={classes.columnCell}
-                              >
-                                {this.getContentOfTheCell(column, row, t, rowData)}
-                              </TableCell>
-                            );
-                          }
-                          )}
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              )
-            }
-          </I18n>
-        )}</Styled>
-      );
+  public onRowClick = (row: Row) => {
+    if (this.props.handleRowClick) {
+      this.props.handleRowClick(row);
     }
   }
 
+  public render(): JSX.Element {
+    const { columnDef, rowData } = this.props;
+
+    return (
+      <Styled>{({ classes }) => (
+        <I18n>
+          {
+            (t) => (
+              <Table>
+                <TableHead className={classes.tableHead}>
+                  <TableRow className={classes.tableHeadRow}>
+                    {columnDef.map((nameOfColumn, index) => {
+                      const numeric = index !== 0;
+                      return (
+                        <TableCell
+                          key={nameOfColumn.headerName}
+                          numeric={numeric}
+                          className={classNames(classes.columnCell, classes.tableHeadCell)}
+                        >
+                          {t(nameOfColumn.headerName)}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rowData.map((row, rowIndex) => {
+                    return (
+                      <TableRow key={rowIndex} onClick={() => this.onRowClick(row)}>
+                        {columnDef.map((column, propertyIndex) => {
+                          const numeric = propertyIndex !== 0;
+
+                          return (
+                            <TableCell
+                              numeric={numeric}
+                              key={propertyIndex}
+                              className={classes.columnCell}
+                            >
+                              {this.getContentOfTheCell(column, row, t, rowData)}
+                            </TableCell>
+                          );
+                        }
+                        )}
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            )
+          }
+        </I18n>
+      )}</Styled>
+    );
+  }
+}

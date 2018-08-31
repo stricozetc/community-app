@@ -13,14 +13,13 @@ export interface BattleProps {
   authStatus: AuthStatus;
   battleStatus: BattleStatus;
   history: History;
-  roomsInfo: RoomInfo[];
+  gameId: number | undefined;
+  rooms: RoomInfo[];
   games: GameModel[];
   status: LoadStatus;
   children?: JSX.Element;
 
-  joinBattleAction(payload: string): void;
-
-  leaveBattleAction(payload: string): void;
+  joinRoom(payload: string): void;
 
   logoutUser(): void;
 

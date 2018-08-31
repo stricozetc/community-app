@@ -7,7 +7,6 @@ import { Dispatch } from 'redux';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 
-
 import { CaButton } from 'components/Mui/CaButton';
 import { CaSpinner } from 'components/Spinner';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';

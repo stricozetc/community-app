@@ -1,6 +1,6 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-// Yegor: comment icons imports cuz of temporary removed nav links
+// (Yegor): comment icons imports cuz of temporary removed nav links
 // import SettingsIcon from '@material-ui/icons/SettingsRounded';
 // import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
@@ -18,8 +18,8 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { AppMenuItem, AuthStatus, Languages, transitionDirection } from 'models';
-import { CaBattles, CurrentBattle } from 'scenes/Battles';
+import { CaBattles } from 'scenes/Battles';
+import { CurrentBattle } from 'scenes/CurrentBattle';
 import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
 import { Landing } from 'scenes/Landing';
 import { CaLeadersPage } from 'scenes/Leaders';
@@ -27,14 +27,13 @@ import { PageNotFound } from 'scenes/PageNotFound';
 import { CaStatisticPage } from 'scenes/Statistic';
 import { CaUserSettings } from 'scenes/UserSettings';
 
-
 import {
   AppState,
   ChangeLanguage,
   CleanStatistic,
   CloseSnackbar,
   FrontEndUser,
-  LeaveBattle,
+  LeaveRoom,
   LogoutUser,
   SetCurrentUser,
   store,
@@ -58,6 +57,13 @@ import {
   RegistrationForm,
   SnackbarErrorMessage,
 } from 'components';
+
+import {
+  AppMenuItem,
+  AuthStatus,
+  Languages,
+  transitionDirection,
+} from 'models';
 
 import { CaMyGames } from '../MyGames/MyGames';
 
@@ -88,10 +94,8 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.cleanStatistic();
     this.props.history.push('/');
 
-    const userInBattle = !!this.props.battleName;
-
-    if (userInBattle) {
-      this.props.leaveBattle(this.props.battleName);
+    if (!!this.props.currentPlayerRoom) {
+      this.props.leaveRoom(this.props.currentPlayerRoom.gameName);
     }
   }
 
@@ -136,13 +140,13 @@ export class RootComponent extends React.Component<RootProps> {
 
     const isAuthorized = authStatus === AuthStatus.Authorized;
     const appMenuItems: AppMenuItem[] = [
-      // Yegor: temporary hide settings cuz they aren't ready yet
+      // (Yegor): temporary hide settings cuz they aren't ready yet
       // {
       //   icon: <SettingsIcon />,
       //   title: 'settings',
       //   action: () => this.props.history.push('/settings')
       // },
-      // Yegor: hide nav link to admin page
+      // (Yegor): hide nav link to admin page
       // {
       //   icon: <AdminIcon />,
       //   title: 'adminPage',
@@ -166,7 +170,7 @@ export class RootComponent extends React.Component<RootProps> {
                 activeClassName: 'ca-navbar__nav-item--active',
                 disabled: !isAuthorized
               }/* , */
-              // Yegor: temporary hide statistics cuz of bad adaptiveness for mobile
+              // (Yegor): temporary hide statistics cuz of bad adaptiveness for mobile
               // {
               //   text: t('statistics'),
               //   to: '/statistics',
@@ -178,9 +182,9 @@ export class RootComponent extends React.Component<RootProps> {
             <div className='ca-navbar__menu-container'>
               {
                 isAuthorized &&
-                  <AppMenu appMenuItems={appMenuItems} >
-                    {this.getMenuProfilePanel()}
-                  </AppMenu>
+                <AppMenu appMenuItems={appMenuItems} >
+                  {this.getMenuProfilePanel()}
+                </AppMenu>
               }
             </div>
 
@@ -293,7 +297,7 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/battles/:id'
+              path='/wait-battle'
               render={props => (
                 <CurrentBattle {...props}>
                   {this.getNavbar(this.props.status)}
@@ -340,7 +344,7 @@ export class RootComponent extends React.Component<RootProps> {
               )}
             />
 
-             <Route
+            <Route
               exact={true}
               path='/leaders/:appName'
               render={props => (
@@ -365,17 +369,17 @@ export class RootComponent extends React.Component<RootProps> {
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  battleName: state.battle.battleName,
+  currentPlayerRoom: state.room.currentPlayerRoom,
   errors: state.snackbarUi.message,
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
-  user: state.auth.user
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
-  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
+  leaveRoom: (battleName: string) => dispatch(new LeaveRoom(battleName)),
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
 });
