@@ -4,7 +4,7 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
-import { SnackbarType } from 'models';
+import { SnackbarType, UserFieldsToLogin } from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
 import { OpenSnackbar } from 'store/snackbar';
@@ -25,7 +25,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
   actions$.pipe(
     ofType(AuthTypes.LoginUser),
     switchMap(action =>
-      from(HttpWrapper.post('api/users/login', action.payload)).pipe(
+      from(HttpWrapper.post<UserFieldsToLogin, { token: string }>('api/users/login', action.payload)).pipe(
         map(res => {
           const { token } = res.data;
           Cookies.set('jwtToken', token);

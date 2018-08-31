@@ -23,12 +23,8 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
   actions$.pipe(
     ofType(StatisticTypes.InitBestUsers),
     switchMap(() =>
-      from(HttpWrapper.get('api/v1/statistic/best-users')).pipe(
-        map((res) => {
-          const bestUsers: BestUser[] = res.data;
-
-          return new LoadBestUsersCompleted(bestUsers);
-        }),
+      from(HttpWrapper.get<BestUser[]>('api/v1/statistic/best-users')).pipe(
+        map((response) => new LoadBestUsersCompleted(response.data)),
         catchError((error) => {
           return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
@@ -40,12 +36,8 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
   actions$.pipe(
     ofType(StatisticTypes.InitMostPopularGames),
     switchMap(() =>
-      from(HttpWrapper.get('api/v1/statistic/most-popular-games')).pipe(
-        map((res) => {
-          const popGames: MostPopularGames[] = res.data;
-
-          return new LoadMostPopularGamesCompleted(popGames);
-        }),
+      from(HttpWrapper.get<MostPopularGames[]>('api/v1/statistic/most-popular-games')).pipe(
+        map((response) => new LoadMostPopularGamesCompleted(response.data)),
         catchError((error) => {
           return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
@@ -56,12 +48,8 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
 export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =>
   actions$.ofType(StatisticTypes.InitRecentGames).pipe(
     switchMap((action) =>
-      from(HttpWrapper.get(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
-        map((res) => {
-          const rg: RecentGames[] = res.data;
-
-          return new LoadRecentGamesCompleted(rg);
-        }),
+      from(HttpWrapper.get<RecentGames[]>(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
+        map((response) => new LoadRecentGamesCompleted(response.data)),
         catchError((error) => {
           return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
@@ -72,12 +60,8 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
 export const initLeaders$ = (actions$: ActionsObservable<InitLeaders>) =>
   actions$.ofType(StatisticTypes.InitLeaders).pipe(
     switchMap((action) =>
-      from(HttpWrapper.get(`api/v1/statistic/get-leaders?appName=${action.appName}`)).pipe(
-        map((res) => {
-          const leaders: Leaders[] = res.data;
-
-          return new LoadLeadersCompleted(leaders);
-        }),
+      from(HttpWrapper.get<Leaders[]>(`api/v1/statistic/get-leaders?appName=${action.appName}`)).pipe(
+        map((response) => new LoadLeadersCompleted(response.data)),
         catchError((error) => {
           return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })

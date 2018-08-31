@@ -7,6 +7,7 @@ export interface GameCardProps {
   waitBattlePlayersCountAction: number;
   isFull?: boolean;
   battleStartTime: Date;
+  moreMenuItems: MoreMenuItem[];
 
   joinGame($event: string): void;
 
