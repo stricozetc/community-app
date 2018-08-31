@@ -9,7 +9,7 @@ export class ChartsService {
   private constructor() {
   }
 
-  public static getWinRateData(gameName: string, gameData: GameData[]): WinRateDiagramData {
+  public static getWinRateData(gameName: string, gameData: any[]): WinRateDiagramData {
     const gameResults = gameData
       .filter(item => item.game === gameName)
       .map(game => game.result);
