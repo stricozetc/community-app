@@ -11,12 +11,11 @@ export interface RootProps {
   status: AuthStatus;
   user: FrontEndUser | undefined;
   history: History;
-  roomId: number | undefined;
+  currentPlayerRoom: RoomInfo | undefined;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
   errors: any;
   language?: string;
-  roomsInfo: RoomInfo[];
 
   leaveBattle(battleName: string): void;
 

@@ -3,5 +3,7 @@ import { RoomState } from './interfaces';
 type State = RoomState;
 
 export const initialState: State = {
-  roomsInfo: [],
+  rooms: [],
+  currentPlayerRoom: undefined,
+  currentGameId: undefined,
 };

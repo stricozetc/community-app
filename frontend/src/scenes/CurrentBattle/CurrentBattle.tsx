@@ -17,7 +17,6 @@ import {
 import {
   AuthStatus,
   BattleStatus,
-  RoomInfo,
 } from 'models';
 
 import { CurrentBattleProps } from './CurrentBattle.model';
@@ -36,47 +35,33 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
   }
 
   public isGameFull(): boolean {
-    const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-
-    return currentRoom ?
-      currentRoom.playersCount === currentRoom.maxPlayersCount :
+    return this.props.currentPlayerRoom ?
+      this.props.currentPlayerRoom.playersCount === this.props.currentPlayerRoom.maxPlayersCount :
       false;
   }
 
   public getPlayersCount(): number {
-    const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-
-    return currentRoom ? currentRoom.playersCount : 0;
+    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.playersCount : 0;
   }
 
   public getGameName = (): string => {
-    const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-
-    return currentRoom ? currentRoom.gameName : '';
+    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.gameName : '';
   }
 
   public getGameDescription = (): string => {
-    const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-
-    return currentRoom ? currentRoom.description : '';
+    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.description : '';
   }
 
   public getGameCountdown = (): number => {
-    const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-
-    return currentRoom && currentRoom.distance ? currentRoom.distance : 0;
+    return this.props.currentPlayerRoom && this.props.currentPlayerRoom.distance ? this.props.currentPlayerRoom.distance : 0;
   }
 
   public getGameMaxRoomPlayer = (): number => {
-    const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-
-    return currentRoom ? currentRoom.maxPlayersCount : 0;
+    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.maxPlayersCount : 0;
   }
 
   public getGameMaxWaitingTime = (): number => {
-    const currentRoom: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-
-    return currentRoom ? currentRoom.maxWaitingTime : 0;
+    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.maxWaitingTime : 0;
   }
 
   public handleLeaveRoom = () => {
@@ -166,10 +151,10 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
 }
 
 const mapStateToProps = (state: AppState) => ({
-  roomsInfo: state.room.roomsInfo,
+  rooms: state.room.rooms,
+  currentPlayerRoom: state.room.currentPlayerRoom,
   gameStatus: state.battle.status,
   authStatus: state.auth.status,
-  roomId: state.battle.roomId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

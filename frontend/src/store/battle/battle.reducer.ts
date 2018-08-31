@@ -16,8 +16,6 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       return {
         ...state,
         status: BattleStatus.Init,
-        roomId: undefined,
-        gameId: undefined,
       };
     }
 
@@ -25,20 +23,6 @@ export const battleReducer = (state = initialState, action: BattleActions) => {
       return {
         ...state,
         status: BattleStatus.Play,
-      };
-    }
-
-    case BattleActionTypes.SetRoomId: {
-      return {
-        ...state,
-        roomId: action.payload,
-      };
-    }
-
-    case BattleActionTypes.SetGameId: {
-      return {
-        ...state,
-        gameId: action.payload,
       };
     }
 

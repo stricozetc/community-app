@@ -2,22 +2,40 @@ import { RoomInfo } from 'models';
 import { action } from 'store/decorators';
 
 export enum RoomActionTypes {
-  SetRoomsInfo = '[room] Set Rooms Info',
-  SetRoomsInfoError = '[room] Set Rooms Info (Error)',
+  SetRooms = '[room] Set Rooms',
+  SetRoomsError = '[room] Set Rooms (Error)',
+  SetPlayerRoom = '[room] Set Player Room',
+  SetGameId = '[room] Set Game Id',
 }
 
 @action()
-export class SetRoomsInfo {
-  public readonly type = RoomActionTypes.SetRoomsInfo;
+export class SetRooms {
+  public readonly type = RoomActionTypes.SetRooms;
 
   constructor(public payload: RoomInfo[]) { }
 }
 
 @action()
-export class SetRoomsInfoError {
-  public readonly type = RoomActionTypes.SetRoomsInfoError;
+export class SetRoomsError {
+  public readonly type = RoomActionTypes.SetRoomsError;
+}
+
+@action()
+export class SetPlayerRoom {
+  public readonly type = RoomActionTypes.SetPlayerRoom;
+
+  constructor(public payload: RoomInfo) { }
+}
+
+@action()
+export class SetGameId {
+  public readonly type = RoomActionTypes.SetGameId;
+
+  constructor(public payload: number) { }
 }
 
 export type RoomActions =
-  | SetRoomsInfo
-  | SetRoomsInfoError;
+  | SetRooms
+  | SetRoomsError
+  | SetPlayerRoom
+  | SetGameId;

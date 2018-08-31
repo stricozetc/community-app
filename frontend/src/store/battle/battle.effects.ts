@@ -5,13 +5,14 @@ import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from 'store';
 import { EmitEventWithOptions } from 'store/socket';
 
+import { SetGameId } from '../room';
+
 import {
   BattleActionTypes,
   ErrorBattle,
   JoinBattle,
   LeaveBattle,
   RedirectToBattle,
-  SetGameId
 } from './battle.action';
 
 export const joinBattle$ = (actions$: ActionsObservable<JoinBattle>, state$: Observable<AppState>) =>

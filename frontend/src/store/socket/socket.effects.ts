@@ -6,7 +6,7 @@ import { NotifyCountdown, RedirectToBattle } from 'store/battle';
 import { EmitEventWithOptions } from 'store/socket';
 
 // toDo: fix imports
-import { SetRoomsInfo } from '../room';
+import { SetRooms } from '../room';
 import { InitLeaders } from '../statistic/statistic.action';
 
 import {
@@ -26,8 +26,8 @@ socketService.updateLeadersBoard.subscribe((appName: string) => {
   store.dispatch(new InitLeaders(appName));
 });
 
-socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) => {
-  return store.dispatch(new SetRoomsInfo(roomsInfo));
+socketService.rooms.subscribe((room: RoomInfo[]) => {
+  return store.dispatch(new SetRooms(room));
 });
 
 socketService.notifyCountdown.subscribe((distance: number) => {

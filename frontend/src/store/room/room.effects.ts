@@ -5,25 +5,24 @@ import { switchMap, withLatestFrom } from 'rxjs/operators';
 import { RoomInfo } from 'models';
 import { AppState } from 'store';
 
-import { SetRoomId } from '../battle';
-
 import {
   RoomActionTypes,
-  SetRoomsInfo,
-  SetRoomsInfoError
+  SetPlayerRoom,
+  SetRooms,
+  SetRoomsError,
 } from './room.action';
 
-export const emitEvent$ = (actions$: ActionsObservable<SetRoomsInfo>, state$: Observable<AppState>) =>
+export const emitEvent$ = (actions$: ActionsObservable<SetRooms>, state$: Observable<AppState>) =>
   actions$.pipe(
-    ofType(RoomActionTypes.SetRoomsInfo),
+    ofType(RoomActionTypes.SetRooms),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-      const roomsInfo: RoomInfo[] = action.payload;
-      const foundRoomInfo: RoomInfo | undefined = roomsInfo.find((roomInfo: RoomInfo) =>
+      const room: RoomInfo[] = action.payload;
+      const foundRoomInfo: RoomInfo | undefined = room.find((roomInfo: RoomInfo) =>
         roomInfo.playersCount !== roomInfo.maxPlayersCount &&
-        roomInfo.gameId === state.battle.gameId
+        roomInfo.gameId === state.room.currentGameId
       );
-      return foundRoomInfo ? of(new SetRoomId(foundRoomInfo.id)) : of(new SetRoomsInfoError());
+      return foundRoomInfo ? of(new SetPlayerRoom(foundRoomInfo)) : of(new SetRoomsError());
     })
   );
 

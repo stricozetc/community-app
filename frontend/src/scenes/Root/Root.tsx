@@ -1,6 +1,6 @@
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-// Yegor: comment icons imports cuz of temporary removed nav links
+// (Yegor): comment icons imports cuz of temporary removed nav links
 // import SettingsIcon from '@material-ui/icons/SettingsRounded';
 // import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
@@ -62,7 +62,6 @@ import {
   AppMenuItem,
   AuthStatus,
   Languages,
-  RoomInfo,
   transitionDirection,
 } from 'models';
 
@@ -95,9 +94,8 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.cleanStatistic();
     this.props.history.push('/');
 
-    if (!!this.props.roomId) {
-      const room: RoomInfo | undefined = this.props.roomsInfo.find(r => r.id === this.props.roomId);
-      this.props.leaveBattle(room ? room.gameName : '');
+    if (!!this.props.currentPlayerRoom) {
+      this.props.leaveBattle(this.props.currentPlayerRoom.gameName);
     }
   }
 
@@ -142,13 +140,13 @@ export class RootComponent extends React.Component<RootProps> {
 
     const isAuthorized = authStatus === AuthStatus.Authorized;
     const appMenuItems: AppMenuItem[] = [
-      // Yegor: temporary hide settings cuz they aren't ready yet
+      // (Yegor): temporary hide settings cuz they aren't ready yet
       // {
       //   icon: <SettingsIcon />,
       //   title: 'settings',
       //   action: () => this.props.history.push('/settings')
       // },
-      // Yegor: hide nav link to admin page
+      // (Yegor): hide nav link to admin page
       // {
       //   icon: <AdminIcon />,
       //   title: 'adminPage',
@@ -172,7 +170,7 @@ export class RootComponent extends React.Component<RootProps> {
                 activeClassName: 'ca-navbar__nav-item--active',
                 disabled: !isAuthorized
               }/* , */
-              // Yegor: temporary hide statistics cuz of bad adaptiveness for mobile
+              // (Yegor): temporary hide statistics cuz of bad adaptiveness for mobile
               // {
               //   text: t('statistics'),
               //   to: '/statistics',
@@ -184,9 +182,9 @@ export class RootComponent extends React.Component<RootProps> {
             <div className='ca-navbar__menu-container'>
               {
                 isAuthorized &&
-                  <AppMenu appMenuItems={appMenuItems} >
-                    {this.getMenuProfilePanel()}
-                  </AppMenu>
+                <AppMenu appMenuItems={appMenuItems} >
+                  {this.getMenuProfilePanel()}
+                </AppMenu>
               }
             </div>
 
@@ -371,12 +369,11 @@ export class RootComponent extends React.Component<RootProps> {
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  roomId: state.battle.roomId,
+  currentPlayerRoom: state.room.currentPlayerRoom,
   errors: state.snackbarUi.message,
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
   user: state.auth.user,
-  roomsInfo: state.room.roomsInfo,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -28,25 +28,22 @@ export class RoomService {
   }
 
   public async createNewRoom(index: number, client: SocketIO.Socket, playerToken: string): Promise<boolean> {
-    const roomToken = await this.apiService.startNewRoom(`
-      ${this.games[index].requestUrl}/api/start-new-room`,
-                                                         {},
-                                                         this.games[index]);
+    const roomToken = await this.apiService.startNewRoom(`${this.games[index].requestUrl}/api/start-new-room`, {}, this.games[index]);
 
     let isCreated = false;
 
-        if (roomToken) {
-          this.rooms.push({
-            id: index,
-            gameId: this.games[index].id,
-            gameName: this.games[index].appName,
-            description: this.games[index].description,
-            maxWaitingTime: this.games[index].maxWaitingTime,
-            maxPlayersCount: this.games[index].maxRoomPlayer,
-            players: [client],
-            token: roomToken,
-            status: RoomStatus.Waiting
-          });
+    if (roomToken) {
+      this.rooms.push({
+        id: index,
+        gameId: this.games[index].id,
+        gameName: this.games[index].appName,
+        description: this.games[index].description,
+        maxWaitingTime: this.games[index].maxWaitingTime,
+        maxPlayersCount: this.games[index].maxRoomPlayer,
+        players: [client],
+        token: roomToken,
+        status: RoomStatus.Waiting
+      });
 
       this.playersBindService.bindPlayer(roomToken, playerToken);
       this.loggerService.infoLog(`New room was added for ${this.games[index].appName}`);
@@ -197,12 +194,12 @@ export class RoomService {
     try {
       await this.playersBindService.sendPlayerBind(game, room);
       room.players.forEach((player: SocketIO.Socket) => {
-            player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
-            this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
+        player.emit(this.games[index].updateRoomsInfoEventName, this.mapRoomsToRoomsInfo());
+        this.loggerService.infoLog(`Sent count wait players in ${this.games[index].appName}`);
 
-            player.emit('redirect', this.games[index].redirectUrl);
-            this.loggerService.infoLog(`Redirect players group to ${this.games[index].appName}`);
-          });
+        player.emit('redirect', this.games[index].redirectUrl);
+        this.loggerService.infoLog(`Redirect players group to ${this.games[index].appName}`);
+      });
       room.status = RoomStatus.InGame;
     } catch (error) {
       this.loggerService.errorLog(error);

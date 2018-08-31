@@ -14,7 +14,7 @@ export interface BattleProps {
   battleStatus: BattleStatus;
   history: History;
   gameId: number | undefined;
-  roomsInfo: RoomInfo[];
+  rooms: RoomInfo[];
   games: GameModel[];
   status: LoadStatus;
   children?: JSX.Element;

@@ -1,5 +1,7 @@
 import { RoomInfo } from 'models';
 
 export interface RoomState {
-  roomsInfo: RoomInfo[];
+  rooms: RoomInfo[];
+  currentPlayerRoom: RoomInfo | undefined;
+  currentGameId: number | undefined;
 }

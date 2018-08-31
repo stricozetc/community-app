@@ -36,7 +36,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
   }
 
   public getGameRooms = (game: GameModel): RoomInfo[] => {
-    return this.props.roomsInfo.filter(r => r.gameId === game.id);
+    return this.props.rooms.filter(r => r.gameId === game.id);
   }
 
   public getNearestCountdown = (rooms: RoomInfo[]): number => {
@@ -112,8 +112,8 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
   battleStatus: state.battle.status,
-  gameId: state.battle.gameId,
-  roomsInfo: state.room.roomsInfo,
+  gameId: state.room.currentGameId,
+  rooms: state.room.rooms,
   games: state.games.games,
   status: state.games.gamesStatus,
 });
