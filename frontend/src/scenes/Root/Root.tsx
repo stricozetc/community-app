@@ -33,7 +33,7 @@ import {
   CleanStatistic,
   CloseSnackbar,
   FrontEndUser,
-  LeaveBattle,
+  LeaveRoom,
   LogoutUser,
   SetCurrentUser,
   store,
@@ -95,7 +95,7 @@ export class RootComponent extends React.Component<RootProps> {
     this.props.history.push('/');
 
     if (!!this.props.currentPlayerRoom) {
-      this.props.leaveBattle(this.props.currentPlayerRoom.gameName);
+      this.props.leaveRoom(this.props.currentPlayerRoom.gameName);
     }
   }
 
@@ -379,7 +379,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
   cleanStatistic: () => dispatch(new CleanStatistic()),
-  leaveBattle: (battleName: string) => dispatch(new LeaveBattle(battleName)),
+  leaveRoom: (battleName: string) => dispatch(new LeaveRoom(battleName)),
   changeLanguage: (language: string) => dispatch(new ChangeLanguage(language)),
   closeSnackbar: () => dispatch(new CloseSnackbar()),
 });

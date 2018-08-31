@@ -14,14 +14,15 @@ import { isEmpty } from 'utils';
 
 import {
   AppState,
-  JoinBattle,
+  JoinRoom,
   LoadGames,
-  LogoutUser
+  LogoutUser,
 } from 'store';
 
 import { BattleProps } from './Battles.model';
 
 import './Battles.scss';
+import {  } from 'store/room';
 
 class CaBattlesComponent extends React.Component<BattleProps> {
 
@@ -81,7 +82,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                   <CaGameCard
                     game={game}
                     joinGame={($event) => {
-                      this.props.joinBattleAction($event);
+                      this.props.joinRoom($event);
                       this.props.history.push(`/wait-battle`);
                     }}
                     moreMenuItems={moreMenuItems}
@@ -111,7 +112,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
-  battleStatus: state.battle.status,
+  battleStatus: state.room.battleStatus,
   gameId: state.room.currentGameId,
   rooms: state.room.rooms,
   games: state.games.games,
@@ -120,7 +121,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
-  joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
+  joinRoom: (name: string) => dispatch(new JoinRoom(name)),
   initGames: () => dispatch(new LoadGames())
 });
 

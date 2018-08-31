@@ -10,7 +10,7 @@ import { CaButton, Countdown } from 'components';
 
 import {
   AppState,
-  LeaveBattle,
+  LeaveRoom,
   LogoutUser
 } from 'store';
 
@@ -153,12 +153,12 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
 const mapStateToProps = (state: AppState) => ({
   rooms: state.room.rooms,
   currentPlayerRoom: state.room.currentPlayerRoom,
-  gameStatus: state.battle.status,
+  gameStatus: state.room.battleStatus,
   authStatus: state.auth.status,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
+  leaveBattleAction: (name: string) => dispatch(new LeaveRoom(name)),
   logoutUser: () => dispatch(new LogoutUser())
 });
 

@@ -2,7 +2,7 @@ import { RoomInfo } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { ignoreElements, tap } from 'rxjs/operators';
 import { store } from 'store';
-import { NotifyCountdown, RedirectToBattle } from 'store/battle';
+import { NotifyCountdown, RedirectToGameRoom } from 'store/room';
 import { EmitEventWithOptions } from 'store/socket';
 
 // toDo: fix imports
@@ -20,7 +20,7 @@ const socketService = new SocketService();
 
 socketService
   .getRoomUrl()
-  .then((url: string) => store.dispatch(new RedirectToBattle(url)));
+  .then((url: string) => store.dispatch(new RedirectToGameRoom(url)));
 
 socketService.updateLeadersBoard.subscribe((appName: string) => {
   store.dispatch(new InitLeaders(appName));

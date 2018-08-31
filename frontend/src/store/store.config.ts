@@ -15,12 +15,6 @@ import {
 } from './auth';
 
 import {
-  BattleEffects,
-  BattleState,
-  battleReducer
-} from './battle';
-
-import {
   GamesEffects,
   GamesState,
   gamesReducer
@@ -68,7 +62,6 @@ import {
 } from './room';
 
 const rootReducers = combineReducers({
-  battle: battleReducer,
   auth: authReducer,
   games: gamesReducer,
   statistic: statisticReducer,
@@ -81,7 +74,6 @@ const rootReducers = combineReducers({
 });
 
 const rootEpic = combineEpics(
-  ...BattleEffects,
   ...AuthEffects,
   ...GamesEffects,
   ...StatisticEffects,
@@ -95,7 +87,6 @@ const rootEpic = combineEpics(
 const epicMiddleware = createEpicMiddleware();
 
 export interface AppState {
-  battle: BattleState;
   auth: AuthState;
   games: GamesState;
   statistic: StatisticState;

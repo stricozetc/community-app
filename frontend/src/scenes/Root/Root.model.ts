@@ -17,7 +17,7 @@ export interface RootProps {
   errors: any;
   language?: string;
 
-  leaveBattle(battleName: string): void;
+  leaveRoom(battleName: string): void;
 
   logoutUser(): void;
 
