@@ -26,7 +26,6 @@
     display: flex;
     flex-direction: column;
     height: 330px;
-    background-color: rgba(71, 86, 98, 0.79);
     word-break: break-all;
   }
 
@@ -36,13 +35,12 @@
     flex-grow: 1;
   }
 
-  &__text {   
+  &__text {
     display: flex;
     flex-direction: column;
     padding: 24px 24px 20px 24px;
     flex-grow: 1;
     color: #fff;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   }
 
   &__title {
@@ -50,7 +48,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: $big-font;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   &__game-name {
@@ -97,7 +95,7 @@
       font-size: $big-font-2;
     }
 
-    &__discription {
+    &__description {
       font-size: $medium-font-2;
     }
   }
@@ -108,7 +106,7 @@
       font-size: $big-font;
     }
 
-    &__discription {
+    &__description {
       font-size: $medium-font;
     }
   }
