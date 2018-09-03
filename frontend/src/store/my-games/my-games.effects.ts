@@ -26,7 +26,7 @@ export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
         ofType(MyGamesActionTypes.DeleteGame),
         switchMap(action =>
             from(HttpWrapper.post<GameModel, GameModel[]>('api/v1/my-games/delete-game', action.payload)).pipe(
-                map(response => new DeleteGameSuccess(response.data)),                
+                map(response => new DeleteGameSuccess(response.data)),
                 catchError(error => of(new DeleteGameError(error)))
             )
         )
