@@ -3,20 +3,21 @@ import { FrontEndUser } from 'store';
 
 import {
   AuthStatus,
-  SnackbarType
+  RoomInfo,
+  SnackbarType,
 } from 'models';
 
 export interface RootProps {
   status: AuthStatus;
   user: FrontEndUser | undefined;
   history: History;
-  battleName: string;
+  currentPlayerRoom: RoomInfo | undefined;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
   errors: any;
   language?: string;
 
-  leaveBattle(battleName: string): void;
+  leaveRoom(battleName: string): void;
 
   logoutUser(): void;
 

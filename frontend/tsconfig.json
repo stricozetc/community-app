@@ -20,7 +20,8 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "strict": true,
-    "noImplicitThis": false
+    "noImplicitThis": false,
+    "noImplicitAny": true
   },
   "exclude": [
     "node_modules",

@@ -14,10 +14,9 @@ import { isEmpty } from 'utils';
 
 import {
   AppState,
-  JoinBattle,
-  LeaveBattle,
+  JoinRoom,
   LoadGames,
-  LogoutUser
+  LogoutUser,
 } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -36,11 +35,11 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     this.props.initGames();
   }
 
-  public getGameRooms(game: GameModel): RoomInfo[] {
-    return this.props.roomsInfo.filter(r => r.gameId === game.id);
+  public getGameRooms = (game: GameModel): RoomInfo[] => {
+    return this.props.rooms.filter(r => r.gameId === game.id);
   }
 
-  public getNearestCountdown(rooms: RoomInfo[]): number {
+  public getNearestCountdown = (rooms: RoomInfo[]): number => {
     const mappedRooms = rooms
       .map(r => r.distance)
       .filter(d => !!d);
@@ -51,6 +50,10 @@ class CaBattlesComponent extends React.Component<BattleProps> {
       }) as number[] : [];
 
     return sortedRooms && sortedRooms[0] ? sortedRooms[0] : 0;
+  }
+
+  public redToWaitRoom = (): void => {
+    this.props.history.push('/wait-battle');
   }
 
   public render(): JSX.Element {
@@ -78,18 +81,19 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                   <CaGameCard
                     game={game}
                     joinGame={($event) => {
-                      this.props.joinBattleAction($event);
-                      this.props.history.push(`/battles/${index}`);
+                      this.props.joinRoom($event);
+                      this.props.history.push(`/wait-battle`);
                     }}
                     moreMenuItems={moreMenuItems}
-                    leaveGame={this.props.leaveBattleAction}
+                    leaveGame={this.redToWaitRoom}
                     status={this.props.battleStatus}
                     battleStatus={this.props.battleStatus}
                     waitBattlePlayersCountAction={waitBattlePlayersCount}
-                    isFull={waitBattlePlayersCount === game.maxRoomPlayer * game.maxRooms}
+                    // (Mikalai) add logic if we don't have empty place for new player
+                    isFull={!!this.props.gameId && this.props.gameId !== game.id}
+                    isWaitBattle={this.props.gameId === game.id ? true : false}
                     battleStartTime={new Date((new Date()).getTime() + this.getNearestCountdown(gameRooms))}
                   />
-
                 </div>
               );
             })}
@@ -107,16 +111,16 @@ class CaBattlesComponent extends React.Component<BattleProps> {
 
 const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
-  battleStatus: state.battle.status,
-  roomsInfo: state.battle.roomsInfo,
+  battleStatus: state.room.battleStatus,
+  gameId: state.room.currentGameId,
+  rooms: state.room.rooms,
   games: state.games.games,
   status: state.games.gamesStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logoutUser: () => dispatch(new LogoutUser()),
-  joinBattleAction: (name: string) => dispatch(new JoinBattle(name)),
-  leaveBattleAction: (name: string) => dispatch(new LeaveBattle(name)),
+  joinRoom: (name: string) => dispatch(new JoinRoom(name)),
   initGames: () => dispatch(new LoadGames())
 });
 
