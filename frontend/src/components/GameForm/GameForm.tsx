@@ -310,6 +310,15 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                   color='primary'
                   type='submit'
                   className='ca-Registration-form__registration-btn'
+                  disabled={
+                    !this.state.isAppNameValid ||
+                    !this.state.isDescriptionValid ||
+                    !this.state.isMaxRoomPlayerValid ||
+                    !this.state.isMaxRoomsValid ||
+                    !this.state.isRequestUrlValid ||
+                    !this.state.isMaxWaitingTimeValid ||
+                    !this.state.isRedirectUrlValid
+                  }
                 >
                   {this.props.config}
                 </CaButton>
