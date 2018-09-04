@@ -43,7 +43,7 @@ export class SetLanguage {
 export class ChangeLanguage {
   public readonly type = UserSettingsTypes.ChangeLanguage;
 
-  constructor(public payload: any) { }
+  constructor(public payload: string) { }
 }
 
 @action()
