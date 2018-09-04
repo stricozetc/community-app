@@ -34,19 +34,9 @@ $icon-font: 7rem;
 
 // MEDIA BreakPoint
 $media-types: (
-    xsmall-range: '(max-width: 599px)',
-    small-range: '(min-width: 600px) and (max-width: 959px)',
+    extra-small-range: '(max-width: 499px)',
+    small-range: '(min-width: 500px) and (max-width: 959px)',
     medium-range: '(min-width: 960px) and (max-width: 1279px)',
     large-range: '(min-width: 1280px) and (max-width: 1919px)',
-    xlarge-range: '(min-width: 1920px)'
+    extra-large-range: '(min-width: 1920px)'
 );
-
-@mixin respond-to($media) {
-    @if not map-contains($media-types, $media) {
-      @warn "#{$media} is not a known media type. Using large-range instead.";
-      $media: large-range;
-    }
-    @media #{map-get($media-types, $media)} {
-        @content;
-    }
-}
