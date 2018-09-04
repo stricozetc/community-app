@@ -77,20 +77,23 @@
   }
 
 }
-@media(max-width: 1024px) {
-  .ca-game-card {
-    width: 38rem;
-  }
-}
-@media(max-width: 768px) {
+@include respond-to(extra-small-range) {
   .ca-game-card {
     width: 100%;
-    max-width: 700px;
-
-    &__container {
-      min-height: 300px;
+    
+    &__title {
+      font-size: $big-font;
     }
 
+    &__description {
+      font-size: $medium-font;
+    }
+  }
+}
+@include respond-to(small-range) {
+  .ca-game-card {
+    width: 100%;
+    max-width: 450px;
     &__title {
       font-size: $big-font-2;
     }
@@ -100,14 +103,15 @@
     }
   }
 }
-@media(max-width: 520px) {
+@include respond-to(medium-range) {
   .ca-game-card {
-    &__title {
-      font-size: $big-font;
-    }
-
-    &__description {
-      font-size: $medium-font;
-    }
+  }
+}
+@include respond-to(large-range) {
+  .ca-game-card {
+  }
+}
+@include respond-to(extra-large-range) {
+  .ca-game-card {
   }
 }
