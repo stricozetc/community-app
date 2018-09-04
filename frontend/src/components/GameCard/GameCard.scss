@@ -26,7 +26,6 @@
     display: flex;
     flex-direction: column;
     height: 330px;
-    background-color: rgba(71, 86, 98, 0.79);
     word-break: break-all;
   }
 
@@ -36,13 +35,12 @@
     flex-grow: 1;
   }
 
-  &__text {   
+  &__text {
     display: flex;
     flex-direction: column;
     padding: 24px 24px 20px 24px;
     flex-grow: 1;
     color: #fff;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   }
 
   &__title {
@@ -50,7 +48,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: $big-font;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   &__game-name {
@@ -79,37 +77,41 @@
   }
 
 }
-@media(max-width: 1024px) {
-  .ca-game-card {
-    width: 38rem;
-  }
-}
-@media(max-width: 768px) {
+@include respond-to(extra-small-range) {
   .ca-game-card {
     width: 100%;
-    max-width: 700px;
-
-    &__container {
-      min-height: 300px;
-    }
-
-    &__title {
-      font-size: $big-font-2;
-    }
-
-    &__discription {
-      font-size: $medium-font-2;
-    }
-  }
-}
-@media(max-width: 520px) {
-  .ca-game-card {
+    
     &__title {
       font-size: $big-font;
     }
 
-    &__discription {
+    &__description {
       font-size: $medium-font;
     }
+  }
+}
+@include respond-to(small-range) {
+  .ca-game-card {
+    width: 100%;
+    max-width: 450px;
+    &__title {
+      font-size: $big-font-2;
+    }
+
+    &__description {
+      font-size: $medium-font-2;
+    }
+  }
+}
+@include respond-to(medium-range) {
+  .ca-game-card {
+  }
+}
+@include respond-to(large-range) {
+  .ca-game-card {
+  }
+}
+@include respond-to(extra-large-range) {
+  .ca-game-card {
   }
 }

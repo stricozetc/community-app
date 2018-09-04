@@ -49,7 +49,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
   public render(): JSX.Element {
     const { waitBattlePlayersCountAction, isFull, battleStartTime, isWaitBattle } = this.props;
 
-    const { appName, description, maxRoomPlayer/* , maxRooms */ } = this.props.game;
+    const { appName, description, maxRoomPlayer } = this.props.game;
 
     const secondLineColor = isFull
       ? 'ca-game-footer__second-line--full-players'
