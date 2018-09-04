@@ -21,6 +21,13 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       requestUrlErrors: [],
       maxWaitingTimeErrors: [],
       redirectUrlErrors: [],
+      isAppNameValid: false,
+      isDescriptionValid: false,
+      isMaxRoomPlayerValid: false,
+      isMaxRoomsValid: false,
+      isRequestUrlValid: false,
+      isMaxWaitingTimeValid: false,
+      isRedirectUrlValid: false,
       touched: {
         appName: false,
         description: false,
@@ -167,6 +174,48 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
+    if (appNameErrors.length <= 0) {
+      this.setState({ isAppNameValid: true });
+    } else {
+      this.setState({ isAppNameValid: false });
+    }
+
+    if (descriptionErrors.length <= 0) {
+      this.setState({ isDescriptionValid: true });
+    } else {
+      this.setState({ isDescriptionValid: false });
+    }
+
+    if (maxRoomPlayerErrors.length <= 0) {
+      this.setState({ isMaxRoomPlayerValid: true });
+    } else {
+      this.setState({ isMaxRoomPlayerValid: false });
+    }
+
+    if (maxRoomsErrors.length <= 0) {
+      this.setState({ isMaxRoomsValid: true });
+    } else {
+      this.setState({ isMaxRoomsValid: false });
+    }
+
+    if (requestUrlErrors.length <= 0) {
+      this.setState({ isRequestUrlValid: true });
+    } else {
+      this.setState({ isRequestUrlValid: false });
+    }
+
+    if (maxWaitingTimeErrors.length <= 0) {
+      this.setState({ isMaxWaitingTimeValid: true });
+    } else {
+      this.setState({ isMaxWaitingTimeValid: false });
+    }
+
+    if (redirectUrlErrors.length <= 0) {
+      this.setState({ isRedirectUrlValid: true });
+    } else {
+      this.setState({ isRedirectUrlValid: false });
+    }
+
     this.setState({
       appNameErrors,
       descriptionErrors,
@@ -261,6 +310,15 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                   color='primary'
                   type='submit'
                   className='ca-Registration-form__registration-btn'
+                  disabled={
+                    !this.state.isAppNameValid ||
+                    !this.state.isDescriptionValid ||
+                    !this.state.isMaxRoomPlayerValid ||
+                    !this.state.isMaxRoomsValid ||
+                    !this.state.isRequestUrlValid ||
+                    !this.state.isMaxWaitingTimeValid ||
+                    !this.state.isRedirectUrlValid
+                  }
                 >
                   {this.props.config}
                 </CaButton>
