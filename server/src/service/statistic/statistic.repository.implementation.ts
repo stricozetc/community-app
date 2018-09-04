@@ -52,12 +52,11 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       } else {
         throw logicErr.notFoundAppToken;
       }
-    })
-      .catch((error: ErrorBlock) => {
+    } catch (error)  {
         if (error.code) {
           throw error;
         } else {
-          this.loggerService.errorLog(error.msg);
+          this.loggerService.errorLog(error);
           throw technicalErr.databaseCrash;
         }
     }
