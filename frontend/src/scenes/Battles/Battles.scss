@@ -3,7 +3,7 @@
 
 .ca-homepage {
   &__container {
-    margin: 0 8rem;
+    margin: 0 4rem;
     @include flexbox();
   }
 
@@ -23,42 +23,47 @@
     @include flexbox-center-all();
   }
 }
-@media(max-width:1024px) {
+@include respond-to(extra-small-range) {
+  .ca-homepage {
+    &__container {
+      margin: 0 1rem;
+    }
+    &__container-for-games {
+      margin: 1rem 0 0 0;
+      width: 100%;
+    }
+  }
+}
+@include respond-to(small-range) {
   .ca-homepage {
     &__container {
       margin: 0;
     }
-  }
-}
-@media(max-width:890px) {
-  .ca-homepage {
-    &__container {
-      @include flexbox-center-all();
-    }
-  }
-}
-@media(max-width: 768px) {
-  .ca-homepage {
-    &__container {
-      margin: 0 6rem;
-    }
-
     &__container-for-games {
-      margin-right: 0;
-      margin-left: 0;
+      margin: 2rem 0;
       width: 100%;
-      max-width: 380px;
+      @include flexbox-center-main-ax();
     }
   }
 }
-@media(max-width:600px) {
+@include respond-to(medium-range) {
+  .ca-game-card {
+    
+  }
   .ca-homepage {
-    &__container {
-      margin: 0 4rem;
-    }
-
-    &__container-for-games {
-      margin-top: 6rem;
-    }
+  &__container-for-games {
+    margin-top: 6rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
+    display: flex;
+  }
+}
+}
+@include respond-to(large-range) {
+  .ca-game-card {
+  }
+}
+@include respond-to(extra-large-range) {
+  .ca-game-card {
   }
 }
