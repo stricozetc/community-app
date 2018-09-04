@@ -1,7 +1,9 @@
-import { ResultStatus, WinRateDiagramData } from 'models';
+import { ResultStatus, WinRateDiagramData  } from 'models';
 import { i18nInstance } from 'utils/i18n';
 
 import { EChartOption } from 'echarts';
+
+
 
 export class ChartsService {
   private constructor() {
