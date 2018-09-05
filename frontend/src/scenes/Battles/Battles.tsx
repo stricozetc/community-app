@@ -17,6 +17,7 @@ import {
   JoinRoom,
   LoadGames,
   LogoutUser,
+  LeaveRoom,
 } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -64,12 +65,24 @@ class CaBattlesComponent extends React.Component<BattleProps> {
         {!isEmpty(this.props.games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
             {this.props.games.map((game: GameModel, index: number) => {
-              const moreMenuItems: MoreMenuItem[] = [
-                {
-                  title: 'leaders',
-                  action: () => this.props.history.push(`/leaders/${game.appName}`)
-                }
-              ];
+              const moreMenuItems: MoreMenuItem[] =
+                this.props.gameId == game.id
+                  ? [
+                    {
+                      title: 'leaders',
+                      action: () => this.props.history.push(`/leaders/${game.appName}`)
+                    },
+                    {
+                      title: 'leaveTheRoom',
+                      action: () => this.props.leaveBattleAction(game.appName)
+                    }
+                  ]
+                  : [
+                    {
+                      title: 'leaders',
+                      action: () => this.props.history.push(`/leaders/${game.appName}`)
+                    }
+                  ];
 
               const gameRooms = this.getGameRooms(game);
               const waitBattlePlayersCount = gameRooms && gameRooms.length ? gameRooms
@@ -119,6 +132,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  leaveBattleAction: (name: string) => dispatch(new LeaveRoom(name)),
   logoutUser: () => dispatch(new LogoutUser()),
   joinRoom: (name: string) => dispatch(new JoinRoom(name)),
   initGames: () => dispatch(new LoadGames())
