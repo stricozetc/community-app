@@ -24,4 +24,6 @@ export interface BattleProps {
   logoutUser(): void;
 
   initGames(): void;
+
+  leaveBattleAction(payload: string): void;
 }
