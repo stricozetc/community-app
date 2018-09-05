@@ -44,12 +44,22 @@ class CaLeadersComponent extends React.Component<StatisticProps> {
   }
 
   public render(): JSX.Element {
+    const {
+      match: {
+        params
+      },
+      statistic: {
+        leadersStatus,
+        leaders
+      },
+      children,
+    } = this.props;
 
     const isDataLoaded =
-      this.props.statistic.leadersStatus === LoadStatus.Success;
+      leadersStatus === LoadStatus.Success;
 
     const isDataFailed =
-      this.props.statistic.leadersStatus === LoadStatus.Error;
+      leadersStatus === LoadStatus.Error;
 
     const columnDef = [
       {
@@ -68,13 +78,13 @@ class CaLeadersComponent extends React.Component<StatisticProps> {
       },
     ];
 
-    const { appName } = this.props.match.params['appName'];
+    const appName = params['appName'];
     return (
       <I18n>
         {
           ( t ) => (
             <div className='ca-statistic'>
-              {this.props.children}
+              {children}
               <h2 className='leaders__statistics-title'>{t('topTen')}</h2>
               <div className='leaders__app-name'>
                 {appName}
@@ -84,7 +94,7 @@ class CaLeadersComponent extends React.Component<StatisticProps> {
                   <CaSpinner isActive={!isDataLoaded} />
                 </div>
               ) : (
-                  <CaTable rowData={this.props.statistic.leaders} columnDef={columnDef} />
+                  <CaTable rowData={leaders} columnDef={columnDef} />
                 )}
             </div>
           )
