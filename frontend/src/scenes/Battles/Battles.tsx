@@ -57,17 +57,26 @@ class CaBattlesComponent extends React.Component<BattleProps> {
   }
 
   public render(): JSX.Element {
+    const {
+      children,
+      games,
+      history,
+      battleStatus,
+      gameId,
+      status,
+      joinRoom
+    } = this.props;
     return (
       <div className='ca-homepage'>
-        {this.props.children}
+        {children}
 
-        {!isEmpty(this.props.games) && (
+        {!isEmpty(games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
-            {this.props.games.map((game: GameModel, index: number) => {
+            {games.map((game: GameModel, index: number) => {
               const moreMenuItems: MoreMenuItem[] = [
                 {
                   title: 'leaders',
-                  action: () => this.props.history.push(`/leaders/${game.appName}`)
+                  action: () => history.push(`/leaders/${game.appName}`)
                 }
               ];
 
@@ -81,17 +90,17 @@ class CaBattlesComponent extends React.Component<BattleProps> {
                   <CaGameCard
                     game={game}
                     joinGame={($event) => {
-                      this.props.joinRoom($event);
-                      this.props.history.push(`/wait-battle`);
+                      joinRoom($event);
+                      history.push(`/wait-battle`);
                     }}
                     moreMenuItems={moreMenuItems}
                     leaveGame={this.redToWaitRoom}
-                    status={this.props.battleStatus}
-                    battleStatus={this.props.battleStatus}
+                    status={battleStatus}
+                    battleStatus={battleStatus}
                     waitBattlePlayersCountAction={waitBattlePlayersCount}
                     // (Mikalai) add logic if we don't have empty place for new player
-                    isFull={!!this.props.gameId && this.props.gameId !== game.id}
-                    isWaitBattle={this.props.gameId === game.id ? true : false}
+                    isFull={!!gameId && gameId !== game.id}
+                    isWaitBattle={gameId === game.id ? true : false}
                     battleStartTime={new Date((new Date()).getTime() + this.getNearestCountdown(gameRooms))}
                   />
                 </div>
@@ -99,9 +108,9 @@ class CaBattlesComponent extends React.Component<BattleProps> {
             })}
           </div>
         )}
-        {this.props.status === 1 && (
+        {status === 1 && (
           <div className='ca-homepage__spinner-container'>
-            <CaSpinner isActive={this.props.status === 1} />
+            <CaSpinner isActive={status === 1} />
           </div>
         )}
       </div>
