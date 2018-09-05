@@ -39,11 +39,11 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       }
     };
   }
-
-  public handleChange = (event: any): void => {
+  
+  public handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const name = target.name as 'appName';
 
     this.setState({ [name]: value } as GameFormState);
     this.checkValidation();

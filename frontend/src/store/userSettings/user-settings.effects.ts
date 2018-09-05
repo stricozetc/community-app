@@ -40,7 +40,7 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
   actions$.pipe(
     ofType(UserSettingsTypes.SetLanguage),
     switchMap((action) => {
-      return from(HttpWrapper.get(`api/users/get-user-language?email=${action.payload}`)).pipe(
+      return from(HttpWrapper.get<string>(`api/users/get-user-language?email=${action.payload}`)).pipe(
         map(res => {
           return new ChangeLanguage(res.data);
         }),

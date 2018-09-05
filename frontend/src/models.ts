@@ -256,5 +256,5 @@ export interface RecentGames {
 
 export interface SnackbarPayload {
   type: SnackbarType;
-  message: ErrorBlock | ErrorBlock[];
+  message: any;
 }

@@ -60,6 +60,7 @@ import {
   RoomState,
   roomReducer
 } from './room';
+import { SnackbarErrorMessage } from 'components';
 
 const rootReducers = combineReducers({
   auth: authReducer,
@@ -90,7 +91,7 @@ export interface AppState {
   auth: AuthState;
   games: GamesState;
   statistic: StatisticState;
-  errors: {};
+  errors: SnackbarErrorMessage;
   socket: SocketState;
   snackbarUi: SnackbarUiState;
   restorePassword: RestorePasswordState;
