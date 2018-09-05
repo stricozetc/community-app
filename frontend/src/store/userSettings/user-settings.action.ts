@@ -1,6 +1,7 @@
 import { action } from '../decorators';
 
 import { FieldsToChangePassword } from './interfaces';
+import { Errors } from 'models';
 
 export enum UserSettingsTypes {
   ChangePassword = '[user-settings] Change Password',
@@ -29,7 +30,7 @@ export class ChangePasswordSuccess {
 export class ChangePasswordError {
   public readonly type = UserSettingsTypes.ChangePasswordError;
 
-  constructor(public payload: any) { }
+  constructor(public payload: Errors[]) { }
 }
 
 @action()
@@ -64,7 +65,7 @@ export class SaveLanguageSuccess {
 export class SaveLanguageError {
   public readonly type = UserSettingsTypes.SaveLanguageError;
 
-  constructor(public payload: any) { }
+  constructor(public payload: Errors[]) { }
 }
 
 export type UserSettingsActions =
