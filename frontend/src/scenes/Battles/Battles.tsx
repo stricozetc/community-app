@@ -66,7 +66,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
           <div className='ca-homepage__container ca-global-fadeIn'>
             {this.props.games.map((game: GameModel, index: number) => {
               const moreMenuItems: MoreMenuItem[] =
-                this.props.gameId == game.id
+                this.props.gameId === game.id
                   ? [
                     {
                       title: 'leaders',
