@@ -38,7 +38,7 @@ export class CaGameCard extends React.Component<GameCardProps> {
           <CaButton
             onClick={this.leaveGame}
           >
-            {t('leaveTheBattle')}
+            {t('returnToRoom')}
           </CaButton>
         )}
         </I18n>
@@ -92,29 +92,28 @@ export class CaGameCard extends React.Component<GameCardProps> {
               {maxRoomPlayer === 1
                 ? (<div className='ca-game-footer__container-single-player'>{t('singlePlayer')}</div>)
                 : (
-                  <div className='ca-game-footer__container'>
+                  <div
+                    className={isFull
+                      ? 'ca-game-footer__container'
+                      : 'ca-game-footer__container ' + backgroundFooterColor}>
                     <div className='ca-game-footer__container-item'>
-                      {isFull ? (
-                        <span className='ca-game-footer__alert'>{t('roomsAreFull')}</span>
-                      ) : (
-                          <div className='ca-game-footer__placeholder'>
-                            <div className='ca-game-footer__icon'>
-                              <img src={clockImage} alt='Can not found clock img' />
-                            </div>
-                            <div className='ca-game-footer__info'>
-                              <div className='ca-game-footer__first-line'>
-                                {t('startingIn') + ':'}
-                              </div>
-                              <div
-                                className={
-                                  'ca-game-footer__second-line ' + secondLineColor
-                                }
-                              >
-                                {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
-                              </div>
-                            </div>
+                      <div className='ca-game-footer__placeholder'>
+                        <div className='ca-game-footer__icon'>
+                          <img src={clockImage} alt='Can not found clock img' />
+                        </div>
+                        <div className='ca-game-footer__info'>
+                          <div className='ca-game-footer__first-line'>
+                            {t('startingIn') + ':'}
                           </div>
-                        )}
+                          <div
+                            className={
+                              'ca-game-footer__second-line ' + secondLineColor
+                            }
+                          >
+                            {`${battleStartTime.getHours()}:${battleStartTime.getMinutes()}:${battleStartTime.getSeconds()}`}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div className='ca-game-footer__container-item'>
                       <div className='ca-game-footer__placeholder'>
