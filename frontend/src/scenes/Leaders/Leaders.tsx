@@ -68,7 +68,7 @@ class CaLeadersComponent extends React.Component<StatisticProps, any> {
       },
     ];
 
-    const appName = this.props.match.params['appName'];
+    const { appName } = this.props.match.params['appName'];
     return (
       <I18n>
         {
