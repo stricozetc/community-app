@@ -16,12 +16,8 @@ export const initGames$ = (actions$: ActionsObservable<LoadGames>) =>
   actions$.pipe(
     ofType(GamesTypes.LoadGames),
     switchMap(() =>
-      from(HttpWrapper.get('api/games/get-games')).pipe(
-        map((res: any) => {
-          const games: GameModel[] = res.data;
-
-          return new LoadGamesSuccess(games);
-        }),
+      from(HttpWrapper.get<GameModel[]>('api/games/get-games')).pipe(
+        map(response => new LoadGamesSuccess(response.data)),
         catchError(() => of(new LoadGamesError()))
       )
     )

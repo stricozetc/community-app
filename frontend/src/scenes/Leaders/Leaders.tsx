@@ -24,7 +24,7 @@ import { StatisticProps } from './Leaders.model';
 
 import './Leaders.scss';
 
-class CaLeadersComponent extends React.Component<StatisticProps, any> {
+class CaLeadersComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];
 
   public componentWillMount(): void {

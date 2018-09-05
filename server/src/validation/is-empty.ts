@@ -1,4 +1,4 @@
-export const isEmpty = (value: any) => {
+export const isEmpty = <T>(value: T) => {
     return (
         value === undefined ||
         value === null ||

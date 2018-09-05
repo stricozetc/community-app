@@ -1,3 +1,5 @@
+import { SequelizeStaticAndInstance, Model } from "../node_modules/@types/sequelize";
+
 export interface RecentGameFromServer {
   game: string;
   playedTime: number;
@@ -29,4 +31,13 @@ export interface Leaders {
   userToken: string;
   name: number;
   scores: number;
+}
+
+export interface ModelsDbInterface {
+  appTokens: Model<SequelizeStaticAndInstance['Model'], {}>;
+  games: Model<SequelizeStaticAndInstance['Model'], {}>;
+  roles: Model<SequelizeStaticAndInstance['Model'], {}>;
+  statistic: Model<SequelizeStaticAndInstance['Model'], {}>;
+  userRoles: Model<SequelizeStaticAndInstance['Model'], {}>;
+  users: Model<SequelizeStaticAndInstance['Model'], {}>;
 }

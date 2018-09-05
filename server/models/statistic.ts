@@ -1,7 +1,8 @@
-import Sequelize from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from 'config/dbconfig';
 import { SequelizeStaticAndInstance } from 'sequelize';
+import { ModelsDbInterface } from 'models/otherModels';
 
 export interface Statistic {
     userToken: string;
@@ -65,11 +66,11 @@ export const StatisticModel: SequelizeStaticAndInstance['Model'] = db.connect.de
         tableName: dbConfig.statisticTable,
 
         classMethods: {
-            associate: (models: any) => {
+            associate: (models: ModelsDbInterface) => {
                 // skip associating during working with DB
 
                 StatisticModel.belongsTo(models.users, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
                 StatisticModel.belongsTo(models.appTokens, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
             }
         },
-    });
+    });   
