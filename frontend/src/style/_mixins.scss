@@ -39,3 +39,13 @@
   display: flex;
   align-items: center;
 }
+
+@mixin respond-to($media) {
+    @if not map-contains($media-types, $media) {
+      @warn "#{$media} is not a known media type. Using large-range instead.";
+      $media: large-range;
+    }
+    @media #{map-get($media-types, $media)} {
+        @content;
+    }
+}
