@@ -118,8 +118,9 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
                     onClick={() => this.changeContent(StatTab.RecentGames)}
                   />
                 </CaTabs>
-
-                <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} handleRowClick={this.handleRowClick} />
+                <div className='ca-users-tables__statistics-container'>
+                  <CaTable rowData={this.state.rowData} columnDef={this.state.columnDef} handleRowClick={this.handleRowClick} />
+                </div>
               </div>
               <div className='ca-users-tables__charts'>
                 <h2 className='ca-users-tables__charts-title'>{t('charts')}</h2>
