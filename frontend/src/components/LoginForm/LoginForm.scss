@@ -37,10 +37,57 @@
         margin-top: 38px;
         color: rgb(0, 0, 238);
     }
+
+    &__button-container {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    &__google-btn {
+      background-color: rgb(211, 211, 211);
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: rgb(185, 185, 185);
+      }
+    }
+
+    &__facebook-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgb(211, 211, 211);
+      border: none;
+      padding: 0;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: rgb(185, 185, 185) !important;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
 }
 
 .fa-google{
-    font-size: 35px;
-    color: rgb(98, 98, 98);
-    margin: 25px 10px -10px 10px;
+  line-height: 48px;
+  font-size: 24px;
+  color: rgb(98, 98, 98);
+}
+
+.fa-facebook {
+  padding-top: 3px;
+  color: rgba(0,0,0,.54);
+  font-size: 24px !important;
+  margin-right: 0 !important;
 }

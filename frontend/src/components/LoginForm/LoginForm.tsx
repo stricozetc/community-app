@@ -3,6 +3,8 @@ import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
+// import VkLogin from 'react-vk-login';
+// import { Vk, Auth } from 'react-vk';
 import { Dispatch } from 'redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
@@ -217,7 +219,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     })}
                 </FormGroup>
                 <div className='ca-login-form__footer'>
-                  <div>
+                  <div className='ca-login-form__button-container'>
                     <CaButton
                       color='primary'
                       type='submit'
@@ -226,18 +228,38 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     >
                       {t('login').toUpperCase()}
                     </CaButton>
-                    <GoogleLogin
-                      className='fab fa-google'
-                      tag='i'
-                      buttonText=''
-                      clientId='900518225558-n6fviqu9tkht7teu1cujr2rednsshmaq.apps.googleusercontent.com'
-                      onSuccess={this.responseSuccess}
-                      onFailure={this.responseError}
-                    />
+                    <div className='ca-login-form__google-btn'>
+                      <GoogleLogin
+                        className='fab fa-google'
+                        tag='i'
+                        buttonText=''
+                        clientId='900518225558-n6fviqu9tkht7teu1cujr2rednsshmaq.apps.googleusercontent.com'
+                        onSuccess={this.responseSuccess}
+                        onFailure={this.responseError}
+                      />
+                    </div>
                     <FacebookLogin
                       appId='328331921069724'
                       fields='name,email'
-                      callback={this.responseFacebook} />
+                      callback={this.responseFacebook}
+                      cssClass='ca-login-form__facebook-btn'
+                      // buttonStyle={
+                      //   {
+
+                      //   }
+                      // }
+                      textButton=''
+                      icon='fa-facebook'
+                    />
+                    {/* <VkLogin
+                      appId='1088597931155576'
+                      autoLoad={true}
+                      fields='name,email'
+                      callback={this.responseFacebook}
+                    /> */}
+                    {/* <Vk apiId={123456}>
+                      <Auth />
+                    </Vk> */}
                   </div>
                   <div className='ca-login-form__forget-password'>
                     <a href='/#/forget-password' onClick={() => this.redToForgetPassword()}>{t('forget-password')}</a>
