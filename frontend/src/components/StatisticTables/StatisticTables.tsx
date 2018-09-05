@@ -138,20 +138,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
       </I18n>
     );
   }
-
-  public getNameOfHeaders(tableHeadersName: any, statistic: object): string[] {
-    const propertyNames = Object.keys(statistic);
-    const headersName: string[] = [];
-
-    propertyNames.forEach(property => {
-      if (tableHeadersName[property]) {
-        headersName.push(tableHeadersName[property]);
-      }
-    });
-
-    return [...headersName];
-  }
-
+  
   public changeContent(activeTab: number): void {
 
     switch (activeTab) {

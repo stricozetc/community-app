@@ -1,4 +1,4 @@
-import { ErrorBlock } from 'models';
+import { SnackbarType } from 'models';
 
 import { action } from '../decorators';
 
@@ -25,7 +25,8 @@ export class SendRestoreRequestSuccess {
 export class SendRestoreRequestFail {
   public readonly type = RestorePasswordTypes.SendRestoreRequestError;
 
-  constructor(public payload: ErrorBlock | ErrorBlock[]) { }
+  constructor(public payload: {type: SnackbarType,
+    message: string} ) { }
 }
 
 @action()

@@ -56,7 +56,7 @@ export class Countdown extends React.Component<CountdownProps, CountdownState> {
     return (
       <I18n>
         {
-          ( t ) => (
+          (t) => (
             <div className='ca-countdown'>
               {totalMinutes}{t('shortMinute')} : {totalSeconds}{t('shortSecond')}
             </div>

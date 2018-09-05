@@ -22,80 +22,96 @@
     border-top: 5px solid $top-border-unactive-game;
   }
 
-  &__header {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    height: 330px;
+    word-break: break-all;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 24px 20px 24px;
+    flex-grow: 1;
+    color: #fff;
+  }
+
+  &__title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  &__container {
-    position: relative;
-    text-align: start;
-    padding: 2.4rem;
-    height: 300px;
-  }
-
-  &__game-title {
-    color: $white;
     font-size: $big-font;
+    margin-bottom: 10px;
+  }
+
+  &__game-name {
+    font-size: 26px;
     font-weight: 600;
   }
 
-  &__game-desc {
-    color: $grey;
+  &__description {
+    color: #d7dde2;
     font-size: $medium-font;
+    flex-grow: 1;
   }
 
   &__btn-container {
-    margin-top: 3rem;
-    text-align: center;
-    margin-bottom: 8.6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &__footer {
     display: flex;
     background-color: $grey-2;
-    min-height: 5.6rem;
-    position: absolute;
-    bottom: -4.8rem;
+    height: 56px;
     width: 100%;
-    left: 0;
   }
 
 }
-@media(max-width: 1024px) {
-  .ca-game-card {
-    width: 38rem;
-  }
-}
-@media(max-width: 768px) {
+@include respond-to(extra-small-range) {
   .ca-game-card {
     width: 100%;
-    max-width: 700px;
-
-    &__container {
-      min-height: 300px;
+    
+    &__title {
+      font-size: $big-font;
     }
 
-    &__game-title {
+    &__description {
+      font-size: $medium-font;
+    }
+  }
+}
+@include respond-to(small-range) {
+  .ca-game-card {
+    width: 100%;
+    max-width: 450px;
+    &__title {
       font-size: $big-font-2;
-      margin-bottom: 2rem;
     }
 
-    &__game-desc {
+    &__description {
       font-size: $medium-font-2;
     }
   }
 }
-@media(max-width: 520px) {
+@include respond-to(medium-range) {
   .ca-game-card {
-    &__game-title {
-      font-size: $big-font;
-      margin-bottom: 1rem;
-    }
-
-    &__game-desc {
-      font-size: $medium-font;
-    }
+  }
+}
+@include respond-to(large-range) {
+  .ca-game-card {
+  }
+}
+@include respond-to(extra-large-range) {
+  .ca-game-card {
   }
 }

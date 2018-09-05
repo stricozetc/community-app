@@ -1,6 +1,7 @@
-import { History } from 'history';
 import * as React from 'react';
 import { I18n } from 'react-i18next';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import clockImage from 'assets/clock-small.svg';
 import swordImage from 'assets/sword.svg';
@@ -8,27 +9,21 @@ import userImage from 'assets/user-small.svg';
 import { CaButton, Countdown } from 'components';
 
 import {
+  AppState,
+  LeaveRoom,
+  LogoutUser
+} from 'store';
+
+import {
   AuthStatus,
   BattleStatus,
-  GameModel,
-  RoomInfo
 } from 'models';
 
-import './current-battle.scss';
+import { CurrentBattleProps } from './CurrentBattle.model';
 
-interface Props {
-  roomsInfo: RoomInfo[];
-  battleName: string;
-  countdown: number;
-  history: History;
-  games: GameModel[];
-  gameStatus: number;
-  authStatus: number;
-  leaveBattleAction(payload: string): void;
-  logoutUser(): void;
-}
+import './CurrentBattle.scss';
 
-export class CurrentBattleComponent extends React.Component<Props> {
+export class CurrentBattleComponent extends React.Component<CurrentBattleProps> {
   public componentWillMount(): void {
     if (this.props.authStatus === AuthStatus.NotAuthorized) {
       this.props.history.push('/battles');
@@ -39,46 +34,30 @@ export class CurrentBattleComponent extends React.Component<Props> {
     }
   }
 
-  public getGameIndex(): number {
-    const currentRoute = this.props.history.location.pathname;
-    const test = new RegExp(/\d+/);
-    const foundNumber = test.exec(currentRoute) || ['0'];
-
-    return parseInt(foundNumber[0], 0);
-  }
-
   public isGameFull(): boolean {
-    const maxRoomPlayers = this.props.games && this.props.games.length ?
-      this.props.games[this.getGameIndex()].maxRoomPlayer : 0;
-    const roomPlayers = this.getPlayersCount();
-
-    return roomPlayers === maxRoomPlayers;
+    return this.props.currentPlayerRoom ?
+      this.props.currentPlayerRoom.playersCount === this.props.currentPlayerRoom.maxPlayersCount :
+      false;
   }
 
-  public getPlayersCount(): number {
-    /**
-     * @todo need to refactor logic with room id and game indexes
-     * @type {RoomInfo | undefined}
-     */
-    const currentRoom = this.props.roomsInfo.find(r => r.id === this.getGameIndex());
-    return currentRoom ? currentRoom.playersCount : 0;
+  public getGameName = (): string => {
+    return this.props.currentPlayerRoom ? this.props.currentPlayerRoom.gameName : '';
   }
+
+  // public getGameCountdown = (): number => {
+  //   return this.props.currentPlayerRoom && this.props.currentPlayerRoom.distance ? this.props.currentPlayerRoom.distance : 0;
+  // }
 
   public handleLeaveRoom = () => {
-    this.props.leaveBattleAction(this.props.battleName);
+    this.props.leaveBattleAction(this.getGameName());
     this.props.history.push('/battles');
   }
 
   public render(): JSX.Element {
-    const { battleName, countdown } = this.props;
-
-    const currentGame = this.props.games && this.props.games.length ?
-      this.props.games[this.getGameIndex()] : undefined;
-
-    const timeValue = currentGame ? currentGame.maxWaitingTime : 0;
+    const { currentPlayerRoom } = this.props;
 
     return (
-      <I18n>
+      < I18n >
         {
           (t) => (
             <section className='ca-current-battle'>
@@ -90,11 +69,10 @@ export class CurrentBattleComponent extends React.Component<Props> {
                   </div>
                   <div className='ca-current-battle__header-text'>
                     <div className='ca-current-battle__title'>
-                      {battleName}
+                      {this.getGameName()}
                     </div>
                     <div className='ca-current-battle__sub-title'>
-                      {currentGame ?
-                        currentGame.description : ''}
+                      {currentPlayerRoom ? currentPlayerRoom.description : ''}
                     </div>
                   </div>
                 </div>
@@ -102,7 +80,7 @@ export class CurrentBattleComponent extends React.Component<Props> {
                 <div className='ca-current-battle__time-line'>
                   <div className='ca-current-battle__time'>
                     <span className='ca-current-battle__time-description'>{t('startingIn') + ':'}</span>
-                    <Countdown time={countdown} />
+                    <Countdown time={currentPlayerRoom && currentPlayerRoom.distance ? currentPlayerRoom.distance : 0} />
                   </div>
                   <div className='ca-current-battle__start-button'>
 
@@ -121,8 +99,9 @@ export class CurrentBattleComponent extends React.Component<Props> {
                   </div>
                   <span className='ca-current-battle__info-text'>{t('players') + ':'}</span>
                   <span
-                    className='ca-current-battle__info-count'>{this.getPlayersCount()}/{currentGame ?
-                      currentGame.maxRoomPlayer : 0}</span>
+                    className='ca-current-battle__info-count'>
+                    {currentPlayerRoom ? currentPlayerRoom.playersCount : 0}/{currentPlayerRoom ? currentPlayerRoom.maxPlayersCount : 0}
+                  </span>
                 </div>
 
                 <div className='ca-current-battle__info'>
@@ -131,7 +110,9 @@ export class CurrentBattleComponent extends React.Component<Props> {
                   </div>
                   <span className='ca-current-battle__info-text'>{t('battleTime') + ':'} </span>
                   <span
-                    className='ca-current-battle__info-count'>{t('minutes', { count: timeValue })}</span>
+                    className='ca-current-battle__info-count'>
+                    {t('minutes', { count: currentPlayerRoom ? currentPlayerRoom.maxWaitingTime : 0 })}
+                  </span>
                 </div>
 
                 <div className='ca-current-battle__invite-button'>
@@ -158,3 +139,20 @@ export class CurrentBattleComponent extends React.Component<Props> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => ({
+  rooms: state.room.rooms,
+  currentPlayerRoom: state.room.currentPlayerRoom,
+  gameStatus: state.room.battleStatus,
+  authStatus: state.auth.status,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  leaveBattleAction: (name: string) => dispatch(new LeaveRoom(name)),
+  logoutUser: () => dispatch(new LogoutUser())
+});
+
+export const CurrentBattle = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CurrentBattleComponent);

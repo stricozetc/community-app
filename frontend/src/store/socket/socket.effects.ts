@@ -2,26 +2,33 @@ import { RoomInfo } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { ignoreElements, tap } from 'rxjs/operators';
 import { store } from 'store';
-import { NotifyCountdown, RedirectToBattle, SetRoomsInfo } from 'store/battle';
+import { NotifyCountdown, RedirectToGameRoom } from 'store/room';
 import { EmitEventWithOptions } from 'store/socket';
 
-import { EmitEvent, InitEvents, SocketActionTypes } from './socket.action';
-import { SocketService } from './socket.service';
+// toDo: fix imports
+import { SetRooms } from '../room';
 import { InitLeaders } from '../statistic/statistic.action';
+
+import {
+  EmitEvent,
+  InitEvents,
+  SocketActionTypes,
+} from './socket.action';
+import { SocketService } from './socket.service';
 
 const socketService = new SocketService();
 
 socketService
   .getRoomUrl()
-  .then((url: string) => store.dispatch(new RedirectToBattle(url)));
+  .then((url: string) => store.dispatch(new RedirectToGameRoom(url)));
 
 socketService.updateLeadersBoard.subscribe((appName: string) => {
   store.dispatch(new InitLeaders(appName));
 });
 
-socketService.roomsInfo.subscribe((roomsInfo: RoomInfo[]) =>
-  store.dispatch(new SetRoomsInfo(roomsInfo))
-);
+socketService.rooms.subscribe((room: RoomInfo[]) => {
+  return store.dispatch(new SetRooms(room));
+});
 
 socketService.notifyCountdown.subscribe((distance: number) => {
   console.dir('Synchronization from server...');

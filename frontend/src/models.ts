@@ -45,6 +45,9 @@ export enum RestorePasswordStatus {
 export interface RoomInfo {
   id: number;
   gameId: number;
+  gameName: string;
+  description: string;
+  maxWaitingTime: number;
   maxPlayersCount: number;
   playersCount: number;
   status: RoomStatus;
@@ -251,8 +254,7 @@ export interface RecentGames {
   result: number;
 }
 
-
 export interface SnackbarPayload {
   type: SnackbarType;
-  message: ErrorBlock | ErrorBlock[];
+  message: any;
 }

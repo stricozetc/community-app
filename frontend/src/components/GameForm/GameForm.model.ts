@@ -12,6 +12,13 @@ export interface GameFormState {
     leaveEventName?: string;
     updateRoomsInfoEventName?: string;
     notifyCountdown?: string;
+    isAppNameValid: boolean;
+    isDescriptionValid: boolean;
+    isMaxRoomPlayerValid: boolean;
+    isMaxRoomsValid: boolean;
+    isRequestUrlValid: boolean;
+    isMaxWaitingTimeValid: boolean;
+    isRedirectUrlValid: boolean;
     touched: {
         appName: boolean;
         description: boolean;
@@ -35,5 +42,5 @@ export interface GameFormProps {
     userId: number;
     config: SettingFormType;
     model: GameForSettingForm;
-    submit (payload: GameModel): void;
+    submit(payload: GameModel): void;
 }

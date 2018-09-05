@@ -15,12 +15,6 @@ import {
 } from './auth';
 
 import {
-  BattleEffects,
-  BattleState,
-  battleReducer
-} from './battle';
-
-import {
   GamesEffects,
   GamesState,
   gamesReducer
@@ -61,8 +55,14 @@ import {
   restorePasswordReducer
 } from './restore-password';
 
+import {
+  RoomEffects,
+  RoomState,
+  roomReducer
+} from './room';
+import { SnackbarErrorMessage } from 'components';
+
 const rootReducers = combineReducers({
-  battle: battleReducer,
   auth: authReducer,
   games: gamesReducer,
   statistic: statisticReducer,
@@ -71,10 +71,10 @@ const rootReducers = combineReducers({
   myGames: myGamesReducer,
   userSettings: userSettingsReducer,
   restorePassword: restorePasswordReducer,
+  room: roomReducer,
 });
 
 const rootEpic = combineEpics(
-  ...BattleEffects,
   ...AuthEffects,
   ...GamesEffects,
   ...StatisticEffects,
@@ -82,21 +82,22 @@ const rootEpic = combineEpics(
   ...MyGamesEffects,
   ...UserSettingsEffects,
   ...RestorePasswordEffects,
+  ...RoomEffects,
 );
 
 const epicMiddleware = createEpicMiddleware();
 
 export interface AppState {
-  battle: BattleState;
   auth: AuthState;
   games: GamesState;
   statistic: StatisticState;
-  errors: {};
+  errors: SnackbarErrorMessage;
   socket: SocketState;
   snackbarUi: SnackbarUiState;
   restorePassword: RestorePasswordState;
   userSettings: UserSettingsState;
   myGames: MyGamesState;
+  room: RoomState;
 }
 
 const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();

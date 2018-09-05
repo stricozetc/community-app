@@ -73,7 +73,7 @@ export class CaUserSettingsComponent extends React.Component<
     this.props.changePassword(data);
   }
 
-  public handleChange = (event: any, value: any): void => {
+  public handleChange = (event: React.ChangeEvent<{}>, value: number): void => {
     this.setState({ value });
   }
 
