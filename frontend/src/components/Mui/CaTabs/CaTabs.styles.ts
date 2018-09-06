@@ -1,13 +1,13 @@
 import { Theme, createStyles } from '@material-ui/core';
 
-export const styles = (theme: Theme) => createStyles({
+export const styles = ({breakpoints}: Theme) => createStyles({
     scrollButtons: {
-        [theme.breakpoints.up('sm')]: {
+        [breakpoints.up('sm')]: {
             display: 'none'
         }
     },
     root: {
-        [theme.breakpoints.down('sm')]: {
+        [breakpoints.down('sm')]: {
             marginLeft: '0px'
         }
     }
