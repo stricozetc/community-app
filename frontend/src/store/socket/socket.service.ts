@@ -31,7 +31,7 @@ export class SocketService {
     this.socket.emit(eventName);
   }
 
-  public emitEventWithOptions(eventName: string, opts?: any): void {
+  public emitEventWithOptions(eventName: string, opts?: string): void {
     this.socket.emit(eventName, opts);
   }
 

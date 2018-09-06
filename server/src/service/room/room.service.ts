@@ -154,7 +154,7 @@ export class RoomService {
     });
 
     const operation$ = Promise.resolve(true);
-    if (token && room) {
+    if (token) {
       this.playersBindService.removePlayers(room.token, token);
     }
 
