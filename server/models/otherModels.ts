@@ -41,3 +41,34 @@ export interface ModelsDbInterface {
   userRoles: Model<SequelizeStaticAndInstance['Model'], {}>;
   users: Model<SequelizeStaticAndInstance['Model'], {}>;
 }
+
+export interface DbConfig{    
+        connection: {
+            host: string;
+            user: string;
+            password: string;
+        };
+        defaultUser: {
+            userName: string;
+            userPassword: string;
+            userRole: string;
+        };
+        defaultAdmin: {
+            userName: string;
+            userPassword: string;
+            userRole: string;
+        };
+        database: string;
+        usersModel: string;
+        usersTable: string;
+        rolesModel: string;
+        rolesTable: string;
+        appTokensModel: string;
+        appTokensTable: string;
+        userRolesModel: string;
+        userRolesTable: string;
+        statisticModel: string;
+        statisticTable: string;
+        gamesModel: string;
+        gamesTable: string;    
+} 
