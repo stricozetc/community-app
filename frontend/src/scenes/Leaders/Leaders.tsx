@@ -24,7 +24,7 @@ import { StatisticProps } from './Leaders.model';
 
 import './Leaders.scss';
 
-class CaLeadersComponent extends React.Component<StatisticProps, any> {
+class CaLeadersComponent extends React.Component<StatisticProps> {
   public dataForSnack: FrontEndSnackbarData[] = [];
 
   public componentWillMount(): void {
@@ -44,49 +44,59 @@ class CaLeadersComponent extends React.Component<StatisticProps, any> {
   }
 
   public render(): JSX.Element {
+    const {
+      match: {
+        params
+      },
+      statistic: {
+        leadersStatus,
+        leaders
+      },
+      children,
+    } = this.props;
 
     const isDataLoaded =
-      this.props.statistic.leadersStatus === LoadStatus.Success;
+      leadersStatus === LoadStatus.Success;
 
     const isDataFailed =
-      this.props.statistic.leadersStatus === LoadStatus.Error;
+      leadersStatus === LoadStatus.Error;
 
     const columnDef = [
-        {
-          headerName: 'position',
-          type: TypeOfColumn.Increment
-        },
-        {
-          headerName: 'userName',
-          field: RowProperty.Name,
-          type: TypeOfColumn.String
-        },
-        {
-          headerName: 'score',
-          field: RowProperty.Scores,
-          type: TypeOfColumn.Points
-        },
-      ];
+      {
+        headerName: 'position',
+        type: TypeOfColumn.Increment
+      },
+      {
+        headerName: 'userName',
+        field: RowProperty.Name,
+        type: TypeOfColumn.String
+      },
+      {
+        headerName: 'score',
+        field: RowProperty.Scores,
+        type: TypeOfColumn.Points
+      },
+    ];
 
-    const appName = this.props.match.params['appName'];
+    const appName = params['appName'];
     return (
       <I18n>
         {
           ( t ) => (
-          <div className='ca-statistic'>
-            {this.props.children}
-            <h2 className='leaders__statistics-title'>{t('leaders')}</h2>
-            <div className='leaders__app-name'>
-              {appName}
-            </div>
-            {!isDataLoaded && !isDataFailed ? (
-              <div className='ca-homepage__spinner-container'>
-                <CaSpinner isActive={!isDataLoaded} />
+            <div className='ca-statistic'>
+              {children}
+              <h2 className='leaders__statistics-title'>{t('topTen')}</h2>
+              <div className='leaders__app-name'>
+                {appName}
               </div>
-            ) : (
-              <CaTable rowData={this.props.statistic.leaders} columnDef={columnDef} />
-              )}
-          </div>
+              {!isDataLoaded && !isDataFailed ? (
+                <div className='ca-homepage__spinner-container'>
+                  <CaSpinner isActive={!isDataLoaded} />
+                </div>
+              ) : (
+                  <CaTable rowData={leaders} columnDef={columnDef} />
+                )}
+            </div>
           )
         }
       </I18n>

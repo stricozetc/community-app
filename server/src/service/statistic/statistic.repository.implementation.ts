@@ -284,6 +284,8 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
               const bestUsers = this.statisticService
                 .sortBy(allUsersStatistic, 'scores')
                 .filter((user) => user.scores > 0);
+                bestUsers.length = 10;
+                
               return resolveBestUsers(bestUsers);
             } catch (error) {
               throw error;
