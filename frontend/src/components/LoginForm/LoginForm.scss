@@ -3,12 +3,68 @@
 .ca-login-form {
     font-size: 1.6rem;
 
+    &__form-linked-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      background-color: transparent;
+      color: #669;
+    }
+
+    &__form-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 15px;
+      background-color: transparent;
+    }
+
+    &__custom-facebook {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome; //custom facebook
+      font-size: 15px;
+      font-size: inherit;
+      text-rendering: auto;
+      color: white;
+      &:before {
+        content: '\f09a';
+        } 
+    }
+
+    &__custom-google {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome; //custom google
+      font-size: inherit;
+      text-rendering: auto;
+      color: white;
+      margin-top: 5px;
+      &:before {
+        content: '\f1a0';
+      }
+    }
+
     &__container {
-        width: 80%;
-        margin: 0 auto;
-        background-color: white;
-        font-size: inherit;
-        padding: 4rem;
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      font-size: inherit;
+      padding: 4rem;
+      margin-top: 2rem;
+    }
+    
+    &__socials-btn {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__socials-btn-container {
+      width: 11%;
+      min-width: 100px;
+      display: flex;
+      justify-content: space-around;
     }
 
     &__error {
@@ -33,36 +89,31 @@
         justify-content: space-between;
     }
 
-    &__forget-password{
-        margin-top: 38px;
-        color: rgb(0, 0, 238);
-    }
-
     &__button-container {
       display: flex;
-      align-items: flex-end;
+      justify-content: center;
     }
 
     &__google-btn {
-      background-color: rgb(211, 211, 211);
+      background-color: rgba(0,0,0,.33);
       display: inline-block;
-      width: 50px;
-      height: 50px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
       text-align: center;
       cursor: pointer;
       transition: 0.3s;
 
       &:hover {
-        background-color: rgb(185, 185, 185);
+        background-color: #db4437;
       }
     }
 
     &__facebook-btn {
-      width: 50px;
-      height: 50px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
-      background-color: rgb(211, 211, 211);
+      background-color: rgba(0,0,0,.33);
       border: none;
       padding: 0;
       text-align: center;
@@ -70,24 +121,11 @@
       transition: 0.3s;
 
       &:hover {
-        background-color: rgb(185, 185, 185) !important;
+        background-color: #3c5a98;
       }
 
       &:focus {
         outline: none;
       }
     }
-}
-
-.fa-google{
-  line-height: 48px;
-  font-size: 24px;
-  color: rgb(98, 98, 98);
-}
-
-.fa-facebook {
-  padding-top: 3px;
-  color: rgba(0,0,0,.54);
-  font-size: 24px !important;
-  margin-right: 0 !important;
 }
