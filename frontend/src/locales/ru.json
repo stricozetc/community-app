@@ -5,6 +5,7 @@
   "login": "Войти",
   "logout": "Выйти",
   "register": "Регистрация",
+  "loginWithSocialNetwork": "Или войдите с помощью соцсетей",
   "joinTheBattle": "Войти в игру",
   "returnToRoom": "Вернутся в комнату",
   "startTheBattle": "Начать игру",
@@ -88,6 +89,6 @@
   "restore": "Востановить",
   "email-sent": "Письмо отправлено.",
   "mail": "Письмо с сылкой для востановления доступа было отправлено на ",
-  "forget-password": "Забыли пароль?",
+  "forgot-password": "Забыли пароль?",
   "leaders": "Лидеры"
 }
