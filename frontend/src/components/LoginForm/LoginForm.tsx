@@ -3,8 +3,6 @@ import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
-// import VkLogin from 'react-vk-login';
-// import { Vk, Auth } from 'react-vk';
 import { Dispatch } from 'redux';
 
 import { FormGroup, TextField } from '@material-ui/core';
