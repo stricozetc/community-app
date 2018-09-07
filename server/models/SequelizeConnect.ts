@@ -1,8 +1,9 @@
 import Sequelize from 'sequelize';
 import { dbConfig } from 'config/dbconfig';
+import { DbConfig } from 'models/otherModels';
 
 export interface Db {
-    dbConfig: any;
+    dbConfig: DbConfig;
     connect: Sequelize.Sequelize;
 }
 
