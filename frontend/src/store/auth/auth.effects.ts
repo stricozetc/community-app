@@ -89,7 +89,7 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
   actions$.pipe(
     ofType(AuthTypes.SocialNetworksLogin),
     switchMap(action =>
-      from(HttpWrapper.post('api/users/google-auth', action.payload)).pipe(
+      from(HttpWrapper.post<object, FrontEndUser>('api/users/google-auth', action.payload)).pipe(
         map(res => {
           const { token } = res.data;
           Cookies.set('jwtToken', token);
