@@ -3,47 +3,6 @@
 .ca-login-form {
     font-size: 1.6rem;
 
-    &__form-linked-text {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 14px;
-      cursor: pointer;
-      text-decoration: none;
-      background-color: transparent;
-      color: #669;
-    }
-
-    &__form-text {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 15px;
-      background-color: transparent;
-    }
-
-    &__custom-facebook {
-      display: inline-block;
-      font: normal normal normal 14px/1 FontAwesome; //custom facebook
-      font-size: 15px;
-      font-size: inherit;
-      text-rendering: auto;
-      color: white;
-      &:before {
-        content: '\f09a';
-        } 
-    }
-
-    &__custom-google {
-      display: inline-block;
-      font: normal normal normal 14px/1 FontAwesome; //custom google
-      font-size: inherit;
-      text-rendering: auto;
-      color: white;
-      margin-top: 5px;
-      &:before {
-        content: '\f1a0';
-      }
-    }
-
     &__container {
       width: 80%;
       max-width: 800px;
@@ -52,6 +11,35 @@
       font-size: inherit;
       padding: 4rem;
       margin-top: 2rem;
+    }
+
+    &__error {
+        color: #f92a42;
+        display: block;
+        padding: 5px 10px;
+        background-color: rgba(239, 38, 78, .4);
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    &__password-field {
+      margin-top: 20px;
+    }
+
+    &__button-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    &__login-btn {
+      margin-top: 20px;
+    }
+
+    &__form-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 15px;
+      background-color: transparent;
     }
     
     &__socials-btn {
@@ -67,31 +55,38 @@
       justify-content: space-around;
     }
 
-    &__error {
-        color: #f92a42;
-        display: block;
-        padding: 5px 10px;
-        background-color: rgba(239, 38, 78, .4);
-        border-radius: 10px;
-        margin-top: 10px;
+    &__custom-facebook {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: 15px;
+      font-size: inherit;
+      text-rendering: auto;
+      color: white;
+      &:before {
+        content: '\f09a';
+        } 
     }
 
-    &__password-field {
-        margin-top: 20px;
+    &__custom-google {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      color: white;
+      margin-top: 5px;
+      &:before {
+        content: '\f1a0';
+      }
     }
 
-    &__login-btn {
-        margin-top: 20px;
-    }
-
-    &__footer{
-        display: flex;
-        justify-content: space-between;
-    }
-
-    &__button-container {
-      display: flex;
-      justify-content: center;
+    &__form-linked-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      background-color: transparent;
+      color: #669;
     }
 
     &__google-btn {
