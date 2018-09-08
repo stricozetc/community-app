@@ -33,7 +33,7 @@ export class EmitEvent {
 export class EmitEventWithOptions {
   public readonly type = SocketActionTypes.EmitEventWithOptions;
 
-  public constructor(public payload: { eventName: string, options?: any }) {
+  public constructor(public payload: { eventName: string, options?: string }) {
   }
 }
 

@@ -5,6 +5,7 @@ import {
   AuthStatus,
   RoomInfo,
   SnackbarType,
+  ErrorBlock,
 } from 'models';
 
 export interface RootProps {
@@ -14,7 +15,7 @@ export interface RootProps {
   currentPlayerRoom: RoomInfo | undefined;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
-  errors: any;
+  errors: ErrorBlock | ErrorBlock[];
   language?: string;
 
   leaveRoom(battleName: string): void;

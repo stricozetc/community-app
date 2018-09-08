@@ -17,6 +17,7 @@ import {
   JoinRoom,
   LoadGames,
   LogoutUser,
+  LeaveRoom,
 } from 'store';
 
 import { BattleProps } from './Battles.model';
@@ -60,12 +61,13 @@ class CaBattlesComponent extends React.Component<BattleProps> {
     const {
       children,
       games,
+      gameId,
+      leaveBattleAction,
       history,
       battleStatus,
-      gameId,
       status,
       joinRoom
-    } = this.props;
+    } = this.props
     return (
       <div className='ca-homepage'>
         {children}
@@ -73,12 +75,24 @@ class CaBattlesComponent extends React.Component<BattleProps> {
         {!isEmpty(games) && (
           <div className='ca-homepage__container ca-global-fadeIn'>
             {games.map((game: GameModel, index: number) => {
-              const moreMenuItems: MoreMenuItem[] = [
-                {
-                  title: 'leaders',
-                  action: () => history.push(`/leaders/${game.appName}`)
-                }
-              ];
+              const moreMenuItems: MoreMenuItem[] =
+                gameId === game.id
+                  ? [
+                    {
+                      title: 'leaders',
+                      action: () => history.push(`/leaders/${game.appName}`)
+                    },
+                    {
+                      title: 'leaveTheRoom',
+                      action: () => leaveBattleAction(game.appName)
+                    }
+                  ]
+                  : [
+                    {
+                      title: 'leaders',
+                      action: () => history.push(`/leaders/${game.appName}`)
+                    }
+                  ];
 
               const gameRooms = this.getGameRooms(game);
               const waitBattlePlayersCount = gameRooms && gameRooms.length ? gameRooms
@@ -128,6 +142,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  leaveBattleAction: (name: string) => dispatch(new LeaveRoom(name)),
   logoutUser: () => dispatch(new LogoutUser()),
   joinRoom: (name: string) => dispatch(new JoinRoom(name)),
   initGames: () => dispatch(new LoadGames())
