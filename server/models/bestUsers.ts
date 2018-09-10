@@ -18,10 +18,5 @@ export const BestUsersModel: SequelizeStaticAndInstance['Model'] = db.connect.de
     userToken: {
         type: Sequelize.STRING(50),
         allowNull: false
-    },
-    isActive: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
     }
 });
