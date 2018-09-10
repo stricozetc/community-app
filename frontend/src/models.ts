@@ -260,9 +260,10 @@ export interface SnackbarPayload {
 }
 
 export interface SocialNetworksUser {
-  email: string;
+  email: string | undefined;
   language: string;
-  name: string;
+  name: string | undefined;
   accessToken: string;
 }
 
+export type GoogleResponse = any;

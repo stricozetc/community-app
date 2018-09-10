@@ -1,5 +1,5 @@
 import * as React from 'react';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin, {  ReactFacebookLoginInfo } from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
-import { SocialNetworksUser } from 'models';
+import { SocialNetworksUser, GoogleResponse } from 'models';
 import { AppState, LoginUser, SocialNetworksLogin } from 'store';
 import { getCurrentLanguageFromLocalStorage } from 'utils';
 
@@ -140,23 +140,23 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   public redToForgetPassword(): void {
     this.props.history.push('/forget-password');
   }
-
-  public responseSuccess = (response: any) => {
+ 
+  public responseSuccess = (response: GoogleResponse) => {
     const user: SocialNetworksUser = {
-      email: response.profileObj.email,
+      email: response.email,
       language: getCurrentLanguageFromLocalStorage(),
-      name: response.profileObj.name,
+      name: response.name,
       accessToken: response.accessToken,
     };
 
     this.props.socialNetworksLogin(user);
   }
 
-  public responseError = (response: any) => {
+  public responseError = (response: GoogleResponse) => {
     console.log(response);
   }
 
-  public responseFacebook = (response: any) => {
+  public responseFacebook = (response: ReactFacebookLoginInfo) => {
     const user: SocialNetworksUser = {
       email: response.email,
       language: getCurrentLanguageFromLocalStorage(),

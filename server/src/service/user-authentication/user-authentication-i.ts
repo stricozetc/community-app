@@ -168,8 +168,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
         name: string,
         language: string,
         accessToken: string
-    ): Promise<any> {
-        return new Promise(async (resolve, reject) => {
+    ): Promise<{ success: boolean, token: string }> {
+        return new Promise<{ success: boolean, token: string }>(async (resolve, reject) => {
             try {
                 const user: User = await UserModel.findOne({ where: { email } });
                 if (user) {
