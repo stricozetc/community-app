@@ -254,7 +254,9 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
 
             try {
               const users = await db.connect.query(
-                'SELECT distinct u.name as name, s.scores as scores, u.token as userToken, u.isActive as isActive  FROM `community-app`.users as u INNER JOIN `community-app`.statistic as s ON u.token = s.userToken order by s.scores desc, s.createdAt asc limit 10'
+                'SELECT distinct u.name as name, s.scores as scores, u.token as userToken ' +
+                'FROM `community-app`.users as u INNER JOIN `community-app`.statistic as s ON ' +
+                'u.token = s.userToken order by s.scores desc, s.createdAt asc limit 10'
                 , { model: BestUsersModel });
 
               const promises = users.map((currentUser: Leaders) => {
