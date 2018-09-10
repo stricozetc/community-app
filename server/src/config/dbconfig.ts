@@ -16,6 +16,7 @@ export const dbConfig = {
     },
     database: 'community-app',
     usersModel: 'users',
+    BestUserModel: 'users',
     usersTable: 'users',
     rolesModel: 'roles',
     rolesTable: 'roles',
