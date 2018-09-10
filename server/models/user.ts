@@ -3,6 +3,7 @@ import { db } from './SequelizeConnect';
 import { dbConfig } from 'config/dbconfig';
 
 import { SequelizeStaticAndInstance } from 'sequelize';
+import { ModelsDbInterface } from 'models/otherModels';
 
 export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.usersModel, {
     id: {
@@ -48,7 +49,7 @@ export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
         // defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
         tableName: dbConfig.usersTable,
         classMethods: {
-            associate: (models: any) => {
+            associate: (models: ModelsDbInterface) => {
                 // skip associating during working with DB
                 UserModel.belongsToMany(
                     models.roles,

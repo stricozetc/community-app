@@ -23,7 +23,7 @@ export let passportConfig = (passport: PassportStatic) => {
                 done(null, false, { message: 'User is not found' });
             }
         } catch {
-            return (err: any) => done(err);
+            return (err: Error) => done(err);
         }
     }));
 };

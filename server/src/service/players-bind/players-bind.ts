@@ -53,7 +53,7 @@ export class PlayersBindService {
       .find((playersBind: PlayersBind) => playersBind.room === room.token);
 
     try {
-      const response = await axios.post<any>(`${game.requestUrl}/api/set-user-bind`, sendingPlayersBind, {
+      const response = await axios.post(`${game.requestUrl}/api/set-user-bind`, sendingPlayersBind, {
       headers: {
         Authorization: 'Bearer ' + app.appToken
       }
