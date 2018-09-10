@@ -1,5 +1,6 @@
 import { StatisticRepository } from './statistic.repository';
 import { injectable, inject } from 'inversify';
+import { db } from './../../../models';
 
 import {
   StatisticModel,
@@ -248,6 +249,9 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         return new Promise<Leaders[]>(async (resolveBestUsers, reject) => {
 
           try {
+            const nUsers = db.connect.query(
+              'SELECT distinct u.name as Name, s.scores as Score FROM `community-app`.users as u INNER JOIN `community-app`.statistic as s ON u.token = s.userToken order by s.scores desc, s.createdAt asc limit 10');
+              const nPromises
             const users = await UserModel.findAll({ attributes: ['token', 'name', 'isActive'] });
             const promises = users.map( async (currentUser) => {
               if (currentUser.isActive) {
