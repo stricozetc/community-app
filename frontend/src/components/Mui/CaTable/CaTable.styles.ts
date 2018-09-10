@@ -1,6 +1,6 @@
-import { createStyles } from '@material-ui/core';
+import { Theme, createStyles } from '@material-ui/core';
 
-export const styles = createStyles({
+export const styles = ({breakpoints}: Theme) => createStyles({
   tableHead: {
     borderTop: '2px solid rgb(161, 161, 161)'
   },
@@ -18,11 +18,27 @@ export const styles = createStyles({
     fontSize: 'inherit',
     color: 'inherit',
 
-    '&:first-child': {
-      paddingLeft: '105px'
+    [breakpoints.down('xs')]: {
+      textAlign: 'left',
+      fontSize: '15px'
     },
+
+    '&:first-child': {
+      paddingLeft: '105px',
+
+      [breakpoints.down('xs')]: {
+        padding: '10px'
+      },
+
+    },
+
     '&:last-child': {
-      paddingRight: '107px'
+      paddingRight: '107px',
+
+      [breakpoints.down('xs')]: {
+        padding: '10px'
+      }
+
     }
   },
   tableHeadCell: {
