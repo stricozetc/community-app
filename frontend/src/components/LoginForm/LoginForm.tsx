@@ -143,9 +143,9 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
  
   public responseSuccess = (response: GoogleResponse) => {
     const user: SocialNetworksUser = {
-      email: response.email,
+      email: response.profileObj.email,
       language: getCurrentLanguageFromLocalStorage(),
-      name: response.name,
+      name: response.profileObj.name,
       accessToken: response.accessToken,
     };
 
