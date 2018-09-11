@@ -5,4 +5,5 @@ export interface User {
     password: string;
     token: string;
     language: string;
+    accessToken?: string;
 }

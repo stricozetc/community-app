@@ -16,7 +16,8 @@ import {
   LogoutUser,
   RegisterUser,
   RegistrationSuccess,
-  SetCurrentUser
+  SetCurrentUser,
+  SocialNetworksLogin,
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
@@ -84,10 +85,31 @@ export const setCurrentUser$ = (action$: ActionsObservable<SetCurrentUser>) =>
     ignoreElements()
   );
 
+export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksLogin>) =>
+  actions$.pipe(
+    ofType(AuthTypes.SocialNetworksLogin),
+    switchMap(action =>
+      from(HttpWrapper.post<object, FrontEndUser>('api/users/google-auth', action.payload)).pipe(
+        map(res => {
+          const { token } = res.data;
+          Cookies.set('jwtToken', token);
+          setAuthToken(token);
+          const decoded: FrontEndUser = jwt_decode(token);
+
+          return new SetCurrentUser(decoded);
+        }),
+        catchError((error) => {
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        })
+      )
+    )
+  );
+
 export const AuthEffects = [
   loginUser$,
   registerUser$,
   logoutUser$,
   successRegistration$,
-  setCurrentUser$
+  setCurrentUser$,
+  socialNetworksLogin$,
 ];
