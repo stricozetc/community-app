@@ -35,6 +35,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           return new SetCurrentUser(decoded);
         }),
         catchError((error) => {
+          console.log(error.response)
           return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
         })
       )
