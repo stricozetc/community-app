@@ -1,5 +1,6 @@
 import { StatisticRepository } from './statistic.repository';
 import { injectable, inject } from 'inversify';
+import { db } from './../../../models';
 
 import {
   StatisticModel,
@@ -11,7 +12,8 @@ import {
   ErrorBlock,
   GamesModel,
   Game,
-  Leaders
+  Leaders,
+  BestUsersModel
 } from './../../../models';
 
 import { GameData } from './../../controller/statistic.controller';
@@ -47,18 +49,18 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
           this.socketService.notifyAllClients('updateLeaders', tokenRow.appName);
           return true;
         } catch (error) {
-           throw error;
+          throw error;
         }
       } else {
         throw logicErr.notFoundAppToken;
       }
-    } catch (error)  {
-        if (error.code) {
-          throw error;
-        } else {
-          this.loggerService.errorLog(error);
-          throw technicalErr.databaseCrash;
-        }
+    } catch (error) {
+      if (error.code) {
+        throw error;
+      } else {
+        this.loggerService.errorLog(error);
+        throw technicalErr.databaseCrash;
+      }
     }
   }
 
@@ -88,7 +90,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
             };
 
             return accumulator.concat(result);
-          },                               []);
+          }, []);
         }
 
         return recentGames;
@@ -99,12 +101,12 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       }
 
     } catch (error) {
-        if (error.code) {
-          throw error;
-        } else {
-          this.loggerService.errorLog(error);
-          throw technicalErr.databaseCrash;
-        }
+      if (error.code) {
+        throw error;
+      } else {
+        this.loggerService.errorLog(error);
+        throw technicalErr.databaseCrash;
+      }
     }
   }
 
@@ -114,8 +116,10 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
         try {
           const gamesAndTokens: Array<{
             appToken: string;
-            appName: string }> = await GamesModel.findAll({
-              attributes: ['appToken', 'appName'] });
+            appName: string
+          }> = await GamesModel.findAll({
+            attributes: ['appToken', 'appName']
+          });
 
           const tokens = gamesAndTokens.map((row) => row.appToken);
           const promises = tokens.map(async (currentToken) => {
@@ -235,7 +239,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
             throw technicalErr.databaseCrash;
           }
         }
-    });
+      });
   }
 
   public async getLeaders(appName: string): Promise<Leaders[]> {
@@ -245,60 +249,44 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       });
       const token = tokenRow && tokenRow.appToken;
       if (token) {
-        return new Promise<Leaders[]>(async (resolveBestUsers, reject) => {
+        return new Promise<Leaders[]>(
+          async (resolveBestUsers, reject) => {
 
-          try {
-            const users = await UserModel.findAll({ attributes: ['token', 'name', 'isActive'] });
-            const promises = users.map( async (currentUser) => {
-              if (currentUser.isActive) {
+            try {
+              const users = await db.connect.query(
+                'SELECT distinct u.name as name, s.scores as scores, u.token as userToken ' +
+                'FROM `community-app`.users as u INNER JOIN `community-app`.statistic as s ON ' +
+                'u.token = s.userToken order by s.scores desc, s.createdAt asc limit 10'
+                , { model: BestUsersModel });
+
+              const promises = users.map((currentUser: Leaders) => {
                 try {
-                  const historyRows = await StatisticModel.findAll({
-                    where: { userToken: currentUser.token, appToken: token }
-                  });
-
-                  const scoresArray = historyRows.map((row) => {
-                    return row.scores;
-                  });
-                  let scores = 0;
-                  if (!isEmpty(scoresArray)) {
-                    scores = scoresArray.reduce((a, b) => a > b ? a : b);
-                  }
-
                   const result = {
-                    userToken: currentUser.token,
+                    userToken: currentUser.userToken,
                     name: currentUser.name,
-                    scores
+                    scores: currentUser.scores
                   };
                   return result;
                 } catch (error) {
                   this.loggerService.errorLog(error);
                   throw technicalErr.databaseCrash;
                 }
-              } else {
-                throw logicErr.userShouldBeActive;
-              }
-            });
+              });
 
-            try {
-              const allUsersStatistic = await Promise.all(promises);
-              const bestUsers = this.statisticService
-                .sortBy(allUsersStatistic, 'scores')
-                .filter((user) => user.scores > 0);
-                bestUsers.length = 10;
-                
-              return resolveBestUsers(bestUsers);
+              try {
+                return resolveBestUsers(promises);
+              } catch (error) {
+                throw error;
+              }
             } catch (error) {
-              throw error;
+              if (error.code) {
+                throw error;
+              } else {
+                this.loggerService.errorLog(error);
+                throw technicalErr.databaseCrash;
+              }
             }
-          } catch (error) {
-            if (error.code) {
-              throw error;
-            } else {
-              this.loggerService.errorLog(error);
-              throw technicalErr.databaseCrash;
-            }
-            }
-        });
+          });
       } else {
         throw logicErr.notFoundAppToken;
       }

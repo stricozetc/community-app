@@ -258,3 +258,12 @@ export interface SnackbarPayload {
   type: SnackbarType;
   message: any;
 }
+
+export interface SocialNetworksUser {
+  email: string | undefined;
+  language: string;
+  name: string | undefined;
+  accessToken: string;
+}
+
+export type GoogleResponse = any;

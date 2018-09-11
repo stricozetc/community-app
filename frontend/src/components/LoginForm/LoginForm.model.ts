@@ -1,5 +1,10 @@
 import { History } from 'history';
-import { AuthStatus, UserFieldsToLogin } from 'models';
+
+import {
+  AuthStatus,
+  SocialNetworksUser,
+  UserFieldsToLogin,
+} from 'models';
 
 export interface LoginFormState {
   email: string;
@@ -34,4 +39,5 @@ export interface LoginFormProps {
   history: History;
 
   loginUser(user: UserFieldsToLogin): void;
+  socialNetworksLogin(socialNetworksUser: SocialNetworksUser): void;
 }

@@ -10,4 +10,7 @@ export abstract class UserAuthenticationRepository {
     public abstract getUserLanguage(userEmail: string): Promise<string>;
 
     public abstract checkUserEmail(userEmail: string): Promise<boolean>;
+
+    public abstract socialNetworksLogin(email: string, name: string, language: string, accessToken: string)
+        : Promise<{ success: boolean, token: string }>;
 }

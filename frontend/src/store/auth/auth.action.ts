@@ -1,4 +1,8 @@
-import { UserFieldsToLogin, UserFieldsToRegister } from 'models';
+import {
+  SocialNetworksUser,
+  UserFieldsToLogin,
+  UserFieldsToRegister,
+} from 'models';
 
 import { action } from '../decorators';
 
@@ -11,6 +15,7 @@ export enum AuthTypes {
   SetCurrentUser = '[auth] Set Current User',
   RegistrationSuccess = '[auth] Registration (Success)',
   RegistrationError = '[auth] Registration (Error)',
+  SocialNetworksLogin = '[auth] Social Networks Login',
 }
 
 @action()
@@ -53,10 +58,18 @@ export class RegistrationError {
   constructor(public payload: string) { }
 }
 
+@action()
+export class SocialNetworksLogin {
+  public readonly type = AuthTypes.SocialNetworksLogin;
+
+  constructor(public payload: SocialNetworksUser) { }
+}
+
 export type AuthActions =
   | RegisterUser
   | LoginUser
   | LogoutUser
   | SetCurrentUser
   | RegistrationSuccess
-  | RegistrationError;
+  | RegistrationError
+  | SocialNetworksLogin;
