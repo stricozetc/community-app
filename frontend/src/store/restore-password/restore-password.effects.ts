@@ -35,9 +35,9 @@ export const sendRestorePasswordRequest$ = (actions$: ActionsObservable<SendRest
 export const sendRestorePasswordRequestFail$ = (actions$: ActionsObservable<SendRestoreRequestFail>) =>
   actions$.pipe(
     ofType(RestorePasswordTypes.SendRestoreRequestError),
-    map((action) => new OpenSnackbar({
+    map(() => new OpenSnackbar({
       type: SnackbarType.Error,
-      message: action.payload
+      message: {msg: 'some text'}
     })),
   );
 
