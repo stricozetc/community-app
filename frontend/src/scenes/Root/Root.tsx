@@ -212,10 +212,8 @@ export class RootComponent extends React.Component<RootProps> {
               transitionDirection={transitionDirection.Down}
               message={
                 <div>
-                  {Array.isArray(this.props.errors) ?
-                    this.props.errors.map((item: ErrorBlock, index: number) =>
-                      <div key={index}>{item.msg}</div>) :
-                      <div>{this.props.errors.msg}</div>
+                  { this.props.errors.map((item: ErrorBlock, index: number) =>
+                    <div key={index}>{item.msg}</div>)
                   }
                 </div>
               }

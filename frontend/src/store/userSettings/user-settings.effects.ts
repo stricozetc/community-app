@@ -30,7 +30,7 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
           return new ChangePasswordSuccess();
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: [error.response.data] }));
         })
       )
     )
@@ -45,7 +45,7 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
           return new ChangeLanguage(res.data);
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: [error.response.data] }));
         })
       );
     })
@@ -72,7 +72,7 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: [error.response.data] }));
         })
       );
     })

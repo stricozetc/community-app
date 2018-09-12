@@ -251,10 +251,9 @@ export interface RecentGames {
 
 export interface SnackbarPayload {
   type: SnackbarType;
-  message: ErrorBlock;
+  message: ErrorBlock[];
 }
 
-export interface ErrorBlock {
-  code?: number;
+export interface ErrorBlock {  
   msg: string;
 }

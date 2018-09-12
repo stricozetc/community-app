@@ -34,9 +34,10 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
 
           return new SetCurrentUser(decoded);
         }),
-        catchError((error) => {
-          console.log(error.response.data)
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        catchError((error) => {          
+          return of(new OpenSnackbar({ type: SnackbarType.Error, 
+          message: Array.isArray(error.response.data) ? error.response.data :
+          [error.response.data] }));
         })
       )
     )
@@ -48,8 +49,9 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new RegistrationSuccess('./login')),
-        catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        catchError((error) => {          
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message: Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data] }));
         })
       )
     )
