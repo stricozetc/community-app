@@ -254,6 +254,7 @@ export interface SnackbarPayload {
   message: ErrorBlock[];
 }
 
-export interface ErrorBlock {  
+export interface ErrorBlock {
+  code?: number;
   msg: string;
 }

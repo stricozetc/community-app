@@ -4,7 +4,8 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
-import { SnackbarType, UserFieldsToLogin } from 'models';
+import { SnackbarType, UserFieldsToLogin, ErrorBlock
+} from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
 import { OpenSnackbar } from 'store/snackbar';
@@ -34,10 +35,16 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
 
           return new SetCurrentUser(decoded);
         }),
-        catchError((error) => {          
-          return of(new OpenSnackbar({ type: SnackbarType.Error, 
-          message: Array.isArray(error.response.data) ? error.response.data :
-          [error.response.data] }));
+        catchError((error) => {
+          const snackbarArray: ErrorBlock[] = [];
+          let  message;
+          if(Array.isArray(error.response.data)) {
+            message = error.response.data
+          } else {
+            snackbarArray.push(error.response.data)
+            message = [...snackbarArray]
+          }
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message}));
         })
       )
     )
@@ -50,8 +57,15 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new RegistrationSuccess('./login')),
         catchError((error) => {          
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data] }));
+          const snackbarArray: ErrorBlock[] = [];
+          let  message;
+          if(Array.isArray(error.response.data)) {
+            message = error.response.data
+          } else {
+            snackbarArray.push(error.response.data)
+            message = [...snackbarArray]
+          }
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message}));
         })
       )
     )

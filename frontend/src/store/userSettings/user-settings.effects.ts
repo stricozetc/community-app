@@ -1,4 +1,4 @@
-import { SnackbarType } from 'models';
+import { SnackbarType, ErrorBlock } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { Observable, from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap, withLatestFrom } from 'rxjs/operators';
@@ -30,7 +30,15 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
           return new ChangePasswordSuccess();
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: [error.response.data] }));
+          const snackbarArray: ErrorBlock[] = [];
+          let  message;
+          if(Array.isArray(error.response.data)) {
+            message = error.response.data
+          } else {
+            snackbarArray.push(error.response.data)
+            message = [...snackbarArray]
+          }
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message}));
         })
       )
     )
@@ -45,7 +53,15 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
           return new ChangeLanguage(res.data);
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: [error.response.data] }));
+          const snackbarArray: ErrorBlock[] = [];
+          let  message;
+          if(Array.isArray(error.response.data)) {
+            message = error.response.data
+          } else {
+            snackbarArray.push(error.response.data)
+            message = [...snackbarArray]
+          }
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message}))
         })
       );
     })
@@ -72,7 +88,15 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: [error.response.data] }));
+          const snackbarArray: ErrorBlock[] = [];
+          let  message;
+          if(Array.isArray(error.response.data)) {
+            message = error.response.data
+          } else {
+            snackbarArray.push(error.response.data)
+            message = [...snackbarArray]
+          }
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message}))
         })
       );
     })
