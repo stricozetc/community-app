@@ -5,6 +5,7 @@
   "login": "Login",
   "logout": "Logout",
   "register": "Register",
+  "loginWithSocialNetwork": "Or sign in with a social network",
   "joinTheBattle": "Join The Battle",
   "returnToRoom": "Return to the Room",
   "startTheBattle": "Start the battle",
@@ -87,7 +88,7 @@
   "restore": "Restore",
   "email-sent": "Email sent.",
   "mail": "An email with a link to restore access has been sent to ",
-  "forget-password": "Forget password?",
+  "forgot-password": "Forgot password?",
   "leaders": "Leaders",
   "topTen": "Top 10"
 }

@@ -1,9 +1,9 @@
-import Sequelize from 'sequelize';
+import Sequelize, { SequelizeStaticAndInstance } from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from 'config/dbconfig';
 import { ModelsDbInterface } from 'models/otherModels';
 
-export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
+export const UserRoles: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.userRolesModel, {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,

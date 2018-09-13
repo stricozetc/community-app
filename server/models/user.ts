@@ -6,7 +6,6 @@ import { SequelizeStaticAndInstance } from 'sequelize';
 import { ModelsDbInterface } from 'models/otherModels';
 
 export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.usersModel, {
-
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -18,7 +17,7 @@ export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
     },
     password: {
         type: Sequelize.CHAR(60),
-        allowNull: false
+        allowNull: true
     },
     email: {
         type: Sequelize.STRING(255),
@@ -38,6 +37,10 @@ export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
         type: Sequelize.STRING(2),
         allowNull: false,
         // defaultValue: 'en',
+    },
+    accessToken: {
+        type: Sequelize.STRING(300),
+        allowNull: true,
     },
 }, {
         // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
