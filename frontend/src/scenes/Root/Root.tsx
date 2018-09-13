@@ -54,8 +54,7 @@ import {
   CaSelect,
   CaSnackbar,
   LoginForm,
-  RegistrationForm,
-  /* SnackbarErrorMessage, */
+  RegistrationForm  
 } from 'components';
 
 import {
