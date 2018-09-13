@@ -18,6 +18,7 @@ export interface LoginFormState {
   };
   emailErrors: string[];
   passwordErrors: string[];
+  isVkDialogOpen: boolean;
 }
 
 export const initLoginFormState: LoginFormState = {
@@ -32,6 +33,7 @@ export const initLoginFormState: LoginFormState = {
   },
   emailErrors: [],
   passwordErrors: [],
+  isVkDialogOpen: false,
 };
 
 export interface LoginFormProps {
