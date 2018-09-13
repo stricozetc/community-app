@@ -279,10 +279,15 @@ export interface VkSuccessResponse {
 
 export interface GoogleSuccessResponse extends GoogleLoginResponse, GoogleLoginResponseOffline {
   accessToken: string,
-  profileObj : {
+  profileObj: {
     email: string,
     name: string,
     googleId?: string,
     imageUrl?: string,
   }
 }
+
+export interface GoogleErrorResponse {
+  details?: string,
+  error: string
+};
