@@ -254,6 +254,11 @@ export interface SnackbarPayload {
   message: ErrorBlock[];
 }
 
+export interface ErrorBlock{
+  code?: number;
+  msg: string
+}
+
 export interface SocialNetworksUser {
   email: string | undefined;
   language: string;
