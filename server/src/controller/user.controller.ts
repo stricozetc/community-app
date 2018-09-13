@@ -94,4 +94,17 @@ export class UserController {
                 response.status(400).json(error);
         }
     }
+
+    @httpPost('/google-auth')
+    public async googleAuth(request: Request, response: Response): Promise<Response | { success: boolean, token: string }> {
+        const { email, name, language, accessToken } = request.body;
+        // (Mikalai) Add validation
+        try {
+            return this.userAuthenticationRepository.socialNetworksLogin(email, name, language, accessToken);
+        } catch (error) {
+            return error.code >= 2000 ?
+                response.status(500).json(error) :
+                response.status(400).json(error);
+        }
+    }
 }

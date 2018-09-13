@@ -1,9 +1,9 @@
 import { Theme, createStyles } from '@material-ui/core';
 
-export const styles = (theme: Theme) => createStyles({
+export const styles = ({breakpoints}: Theme) => createStyles({
   button: {
     display: 'inline-block',
-    [theme.breakpoints.down('xs')]: {
+    [breakpoints.down('xs')]: {
       display: 'block'
     }
   }

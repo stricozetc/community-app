@@ -4,11 +4,13 @@
     font-size: 1.6rem;
 
     &__container {
-        width: 80%;
-        margin: 0 auto;
-        background-color: white;
-        font-size: inherit;
-        padding: 4rem;
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      font-size: inherit;
+      padding: 4rem;
+      margin-top: 2rem;
     }
 
     &__error {
@@ -21,20 +23,104 @@
     }
 
     &__password-field {
-        margin-top: 20px;
+      margin-top: 20px;
+    }
+
+    &__button-container {
+      display: flex;
+      justify-content: center;
     }
 
     &__login-btn {
-        margin-top: 20px;
+      margin-top: 20px;
     }
 
-    &__footer{
-        display: flex;
-        justify-content: space-between;
+    &__form-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 15px;
+      background-color: transparent;
+    }
+    
+    &__socials-btn {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
     }
 
-    &__forget-password{
-        margin-top: 38px;
-        color: rgb(0, 0, 238);
+    &__socials-btn-container {
+      width: 11%;
+      min-width: 100px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    &__custom-facebook {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: 15px;
+      font-size: inherit;
+      text-rendering: auto;
+      color: white;
+      &:before {
+        content: '\f09a';
+        } 
+    }
+
+    &__custom-google {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      color: white;
+      margin-top: 5px;
+      &:before {
+        content: '\f1a0';
+      }
+    }
+
+    &__form-linked-text {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      background-color: transparent;
+      color: #669;
+    }
+
+    &__google-btn {
+      background-color: rgba(0,0,0,.33);
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: #db4437;
+      }
+    }
+
+    &__facebook-btn {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: rgba(0,0,0,.33);
+      border: none;
+      padding: 0;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: #3c5a98;
+      }
+
+      &:focus {
+        outline: none;
+      }
     }
 }
