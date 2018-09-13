@@ -4,8 +4,7 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
-import { SnackbarType, UserFieldsToLogin, ErrorBlock
-} from 'models';
+import { SnackbarType, UserFieldsToLogin, ErrorBlock } from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
 import { OpenSnackbar } from 'store/snackbar';
@@ -44,7 +43,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
             snackbarArray.push(error.response.data)
             message = [...snackbarArray]
           }
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, message}))
         })
       )
     )

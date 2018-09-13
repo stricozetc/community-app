@@ -1,6 +1,6 @@
 import { History } from 'history';
 
-import { AuthStatus, GameModel/* , SnackbarPayload */ } from 'models';
+import { AuthStatus, GameModel } from 'models';
 import { FrontEndUser } from 'store';
 
 export interface MyGameProps {
