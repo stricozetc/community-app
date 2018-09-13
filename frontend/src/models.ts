@@ -1,4 +1,5 @@
 import { EChartOption } from 'echarts/lib/echarts';
+import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 
 export interface WinRateDiagramData {
   Options: EChartOption;
@@ -264,6 +265,24 @@ export interface SocialNetworksUser {
   language: string;
   name: string | undefined;
   accessToken: string;
+  SocialId?: number;
 }
 
-export type GoogleResponse = any;
+export interface VkSuccessResponse {
+  first_name: string,
+  last_name: string,
+  photo?: string,
+  uid?: number,
+  language?: string,
+  hash: string
+}
+
+export interface GoogleSuccessResponse extends GoogleLoginResponse, GoogleLoginResponseOffline {
+  accessToken: string,
+  profileObj : {
+    email: string,
+    name: string,
+    googleId?: string,
+    imageUrl?: string,
+  }
+}
