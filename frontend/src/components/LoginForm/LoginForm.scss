@@ -54,21 +54,6 @@
       justify-content: space-around;
     }
 
-    &__vk-btn {
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.33);
-      border: none;
-      padding: 0;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.3s;
-      &:hover {
-        background-color: #4A76A8;
-      }
-    }
-
     &__custom-vk {
       display: inline-block;
       font: normal normal normal 14px/1 FontAwesome;
@@ -149,5 +134,24 @@
       &:focus {
         outline: none;
       }
+    }
+
+    &__vk-btn {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.33);
+      border: none;
+      padding: 0;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      &:hover {
+        background-color: #4A76A8;
+      }
+    }
+
+    &__vk-dialog > div {
+      overflow: hidden;
     }
 }

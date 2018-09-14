@@ -176,7 +176,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     const user: SocialNetworksUser = {
       email: response.uid + '@1.com',
       language: getCurrentLanguageFromLocalStorage(),
-      name: response.first_name + '' + response.last_name,
+      name: response.first_name + ' ' + response.last_name,
       accessToken: response.hash,
     };
 
@@ -295,7 +295,10 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 >
                   <i className='ca-login-form__custom-vk'></i>
                 </div>
-                <Dialog open={isVkDialogOpen} onClose={this.handleCloseVkDialog}>
+                <Dialog
+                  className={'ca-login-form__vk-dialog'}
+                  open={isVkDialogOpen}
+                  onClose={this.handleCloseVkDialog}>
                   <VK apiId={6688447}>
                     <Auth options={{
                       onAuth: (response: VkSuccessResponse) =>
