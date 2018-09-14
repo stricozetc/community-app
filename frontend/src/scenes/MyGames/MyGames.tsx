@@ -154,7 +154,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     deleteGame: (gameThatNeedToDelete: GameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
     addGame: (data: GameModel) => dispatch(new AddGame(data)),
     getMyGames: (userId: number) => dispatch(new InitMyGames(userId)),
-    successCopyToken: () => dispatch(new OpenSnackbar({type: SnackbarType.Success, message: [{msg: 'Application token was successful copied'}]}))
+    successCopyToken: () => dispatch(new OpenSnackbar({type: SnackbarType.Success, messages: [{msg: 'Application token was successful copied'}]}))
 });
 
 export const CaMyGames = connect(
