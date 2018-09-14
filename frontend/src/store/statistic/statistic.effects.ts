@@ -2,7 +2,7 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { BestUser, Leaders, MostPopularGames, RecentGames, SnackbarType, } from 'models';
+import { BestUser, Leaders, MostPopularGames, RecentGames, SnackbarType, ErrorBlock, } from 'models';
 import { HttpWrapper } from 'services';
 import { OpenSnackbar } from 'store/snackbar';
 
@@ -26,7 +26,9 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
       from(HttpWrapper.get<BestUser[]>('api/v1/statistic/best-users')).pipe(
         map((response) => new LoadBestUsersCompleted(response.data)),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
+            [error.response.data]
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}))
         })
       )
     )
@@ -39,7 +41,9 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
       from(HttpWrapper.get<MostPopularGames[]>('api/v1/statistic/most-popular-games')).pipe(
         map((response) => new LoadMostPopularGamesCompleted(response.data)),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
+            [error.response.data]
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}))
         })
       )
     )
@@ -51,7 +55,9 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
       from(HttpWrapper.get<RecentGames[]>(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
         map((response) => new LoadRecentGamesCompleted(response.data)),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
+            [error.response.data]
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )
@@ -63,7 +69,9 @@ export const initLeaders$ = (actions$: ActionsObservable<InitLeaders>) =>
       from(HttpWrapper.get<Leaders[]>(`api/v1/statistic/get-leaders?appName=${action.appName}`)).pipe(
         map((response) => new LoadLeadersCompleted(response.data)),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
+            [error.response.data]
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )

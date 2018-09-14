@@ -224,11 +224,6 @@ export interface FrontEndValidationErrorsGameRegister {
   redirectUrl: { mustBeCorrect: string, required: string };
 }
 
-export interface ErrorBlock {
-  code?: number;
-  msg: string;
-}
-
 export interface Leaders {
   userToken: string;
   name: number;
@@ -256,7 +251,12 @@ export interface RecentGames {
 
 export interface SnackbarPayload {
   type: SnackbarType;
-  message: any;
+  messages: ErrorBlock[];
+}
+
+export interface ErrorBlock{
+  code?: number;
+  msg: string
 }
 
 export interface SocialNetworksUser {

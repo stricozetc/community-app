@@ -10,8 +10,7 @@ export interface LoginFormState {
   email: string;
   password: string;
   isPasswordValid: boolean;
-  isEmailValid: boolean;
-  isSnackbarOpen: boolean;
+  isEmailValid: boolean;  
   touched: {
     email: boolean;
     password: boolean;
@@ -24,8 +23,7 @@ export const initLoginFormState: LoginFormState = {
   email: '',
   password: '',
   isPasswordValid: false,
-  isEmailValid: false,
-  isSnackbarOpen: false,
+  isEmailValid: false,  
   touched: {
     email: false,
     password: false
