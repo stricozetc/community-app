@@ -67,7 +67,7 @@ class CaBattlesComponent extends React.Component<BattleProps> {
       battleStatus,
       status,
       joinRoom
-    } = this.props
+    } = this.props;
     return (
       <div className='ca-homepage'>
         {children}

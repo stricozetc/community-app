@@ -254,9 +254,9 @@ export interface SnackbarPayload {
   messages: ErrorBlock[];
 }
 
-export interface ErrorBlock{
+export interface ErrorBlock {
   code?: number;
-  msg: string
+  msg: string;
 }
 
 export interface SocialNetworksUser {

@@ -52,9 +52,9 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new RegistrationSuccess('./login')),
         catchError((error) => {          
-          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
-            [error.response.data]
-            
+          const messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data];
+
           return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
