@@ -37,7 +37,7 @@ export const sendRestorePasswordRequestFail$ = (actions$: ActionsObservable<Send
     map(() => new OpenSnackbar({
       type: SnackbarType.Error,
       messages: [{msg: 'Error of password restoration'}]
-    }),    
+    }),
   ),
   );
 
