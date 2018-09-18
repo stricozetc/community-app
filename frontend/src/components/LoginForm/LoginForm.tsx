@@ -6,8 +6,8 @@ import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { FormGroup, TextField, Dialog } from '@material-ui/core';
-import { CaButton } from 'components';
+import { FormGroup, TextField } from '@material-ui/core';
+import { CaButton, VkDialog } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
 import { SocialNetworksUser, VkSuccessResponse, GoogleSuccessResponse, GoogleErrorResponse } from 'models';
 import { AppState, LoginUser, SocialNetworksLogin } from 'store';
@@ -270,7 +270,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
             <div className='ca-login-form__form-text'>{t('loginWithSocialNetwork')}</div>
             <div className='ca-login-form__socials-btn'>
               <div className='ca-login-form__socials-btn-container'>
-              {/* isn't work without https on public host, and work on local host with http */}
+                {/* isn't work without https on public host, and work on local host with http */}
                 <FacebookLogin
                   appId='328331921069724'
                   fields='name,email'
@@ -295,7 +295,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 >
                   <i className='ca-login-form__custom-vk'></i>
                 </div>
-                <Dialog
+                <VkDialog
                   className={'ca-login-form__vk-dialog'}
                   open={isVkDialogOpen}
                   onClose={this.handleCloseVkDialog}>
@@ -306,7 +306,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     }}
                     />
                   </VK>
-                </Dialog>
+                </VkDialog>
               </div>
             </div>
             <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
