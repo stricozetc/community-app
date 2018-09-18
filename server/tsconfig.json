@@ -75,6 +75,7 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "jest": {
     "globals": {
