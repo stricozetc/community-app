@@ -249,7 +249,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 <div className='ca-login-form__socials-btn'>
                   <div className='ca-login-form__socials-btn-container'>
                     <FacebookLogin
-                      appId={configFile.facebookApi.id}
+                      appId={configFile.frontEnd.facebookApi.id}
                       fields='name,email'
                       callback={this.responseFacebook}
                       cssClass='ca-login-form__facebook-btn'
@@ -261,7 +261,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                         className='ca-login-form__custom-google'
                         tag='i'
                         buttonText=''
-                        clientId={configFile.googleApi.id}
+                        clientId={configFile.frontEnd.googleApi.id}
                         onSuccess={this.responseSuccess}
                         onFailure={this.responseError}
                       />

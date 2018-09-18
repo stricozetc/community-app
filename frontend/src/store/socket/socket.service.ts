@@ -12,7 +12,11 @@ export class SocketService {
   private socket: SocketIOClient.Socket;
 
   public constructor() {
-    this.socket = openSocket(configFile.url);
+    this.socket = openSocket(
+      configFile.backEndPath.schema + 
+      '://' + configFile.backEndPath.host +
+      ':' + configFile.backEndPath.port
+      );
   }
 
   public init(games: GameModel[]): void {

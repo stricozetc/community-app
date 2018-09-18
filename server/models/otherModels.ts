@@ -59,6 +59,7 @@ export interface DbConfig{
             userPassword: string;
             userRole: string;
         };
+        dialect: string;
         database: string;
         usersModel: string;
         usersTable: string;
