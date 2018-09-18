@@ -1,0 +1,13 @@
+{
+    "facebookApi": 
+        {
+        "id": "328331921069724"
+    },
+    "googleApi": 
+        {
+        "id": "900518225558-n6fviqu9tkht7teu1cujr2rednsshmaq.apps.googleusercontent.com"
+    },
+    "url": "http://localhost:3030",
+    "frontendPort": "3000"
+
+}

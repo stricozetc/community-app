@@ -4,6 +4,7 @@ import { GoogleLogin } from 'react-google-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import * as configFile from './../../config.json';
 
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
@@ -248,7 +249,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 <div className='ca-login-form__socials-btn'>
                   <div className='ca-login-form__socials-btn-container'>
                     <FacebookLogin
-                      appId='328331921069724'
+                      appId={configFile.facebookApi.id}
                       fields='name,email'
                       callback={this.responseFacebook}
                       cssClass='ca-login-form__facebook-btn'
@@ -260,7 +261,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                         className='ca-login-form__custom-google'
                         tag='i'
                         buttonText=''
-                        clientId='900518225558-n6fviqu9tkht7teu1cujr2rednsshmaq.apps.googleusercontent.com'
+                        clientId={configFile.googleApi.id}
                         onSuccess={this.responseSuccess}
                         onFailure={this.responseError}
                       />

@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 
+import * as configFile from './../config.json';
+
 export class HttpWrapper {
-    private static baseUrl: string = 'http://localhost:3030/';
+    private static baseUrl: string = configFile.url + '/';
 
     public static post<T, R>(url: string, data: T): Promise<AxiosResponse<R>> {
         return axios.post(`${this.baseUrl}${url}`, data);
