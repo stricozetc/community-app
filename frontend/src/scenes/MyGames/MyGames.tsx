@@ -13,8 +13,7 @@ import {
 import {
     AuthStatus,
     GameModel,
-    RowProperty,
-    SnackbarPayload,
+    RowProperty,    
     SnackbarType,
     TypeOfColumn
 } from 'models';
@@ -58,14 +57,7 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
     public handleSuccessCopy = () => {
         this.handleClosePopover();
 
-        this.props.successCopyToken(
-            {
-                type: SnackbarType.Success,
-                message: {
-                    msg: 'Application token was successful copied'
-                }
-            }
-        );
+        this.props.successCopyToken();
     }
 
     public handleOpenPopover = (appToken: string) => {
@@ -162,7 +154,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     deleteGame: (gameThatNeedToDelete: GameModel) => dispatch(new DeleteGame(gameThatNeedToDelete)),
     addGame: (data: GameModel) => dispatch(new AddGame(data)),
     getMyGames: (userId: number) => dispatch(new InitMyGames(userId)),
-    successCopyToken: (data: SnackbarPayload) => dispatch(new OpenSnackbar(data))
+    successCopyToken: () => dispatch(new OpenSnackbar({type: SnackbarType.Success, messages: [{msg: 'Application token was successful copied'}]}))
 });
 
 export const CaMyGames = connect(

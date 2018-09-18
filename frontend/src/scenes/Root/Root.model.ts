@@ -15,7 +15,7 @@ export interface RootProps {
   currentPlayerRoom: RoomInfo | undefined;
   isSnackbarOpen: boolean;
   snackbarType: SnackbarType;
-  errors: ErrorBlock | ErrorBlock[];
+  errors: ErrorBlock[];
   language?: string;
 
   leaveRoom(battleName: string): void;

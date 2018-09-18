@@ -1,6 +1,6 @@
 import { History } from 'history';
 
-import { AuthStatus, GameModel, SnackbarPayload } from 'models';
+import { AuthStatus, GameModel } from 'models';
 import { FrontEndUser } from 'store';
 
 export interface MyGameProps {
@@ -13,7 +13,7 @@ export interface MyGameProps {
     deleteGame(payload: GameModel | null): void;
     addGame(payload: GameModel): void;
     getMyGames(payload: number): void;
-    successCopyToken(payload: SnackbarPayload): void;
+    successCopyToken(): void;
 
 }
 

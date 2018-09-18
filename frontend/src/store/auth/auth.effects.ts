@@ -4,7 +4,7 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
-import { SnackbarType, UserFieldsToLogin } from 'models';
+import { SnackbarType, UserFieldsToLogin, ErrorBlock } from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
 import { OpenSnackbar } from 'store/snackbar';
@@ -32,11 +32,14 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           Cookies.set('jwtToken', token);
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
-
+          
           return new SetCurrentUser(decoded);
         }),
-        catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        catchError((error) => {          
+          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
+            [error.response.data]
+
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}))
         })
       )
     )
@@ -48,8 +51,11 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
         map(() => new RegistrationSuccess('./login')),
-        catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+        catchError((error) => {          
+          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
+            [error.response.data]
+            
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )
@@ -99,7 +105,7 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
           return new SetCurrentUser(decoded);
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, message: error.response.data }));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages: error.response.data }));
         })
       )
     )

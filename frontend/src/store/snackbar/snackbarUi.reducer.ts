@@ -8,7 +8,7 @@ export const snackbarUiReducer = (state = initialState, action: SnackbarUiAction
         ...state,
         isOpen: true,
         type: action.payload.type,
-        message: action.payload.message
+        message: action.payload.messages
       };
     }
     case SnackbarUiTypes.CloseSnackbar: {
