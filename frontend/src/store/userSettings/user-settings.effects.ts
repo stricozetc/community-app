@@ -30,8 +30,11 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
           return new ChangePasswordSuccess();
         }),
         catchError((error) => {
-          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
-            [error.response.data]
+          const messages: ErrorBlock[] =
+            error.name !== 'Error' ? [{msg: error.message}] :
+            Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data];
+
           return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
@@ -47,9 +50,12 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
           return new ChangeLanguage(res.data);
         }),
         catchError((error) => {
-          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
-            [error.response.data]
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}))
+          const messages: ErrorBlock[] =
+            error.name !== 'Error' ? [{msg: error.message}] :
+            Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data];
+
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       );
     })
@@ -76,9 +82,12 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
         catchError((error) => {
-          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
-            [error.response.data]
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}))
+          const messages: ErrorBlock[] =
+            error.name !== 'Error' ? [{msg: error.message}] :
+            Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data];
+
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       );
     })

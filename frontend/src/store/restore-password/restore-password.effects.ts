@@ -25,8 +25,9 @@ export const sendRestorePasswordRequest$ = (actions$: ActionsObservable<SendRest
     ofType(RestorePasswordTypes.SendRestoreRequest),
     switchMap(action =>
       from(HttpWrapper.post('api/restore-password/send-mail', { userEmail: action.payload })).pipe(
-        map(() => new SendRestoreRequestSuccess()),
-        catchError((error) => of(new SendRestoreRequestFail(error.response.data)))
+          map(() => new SendRestoreRequestSuccess()),
+          catchError((error) => of(new SendRestoreRequestFail(error.response.data))
+        )
       )
     )
   );
@@ -37,7 +38,7 @@ export const sendRestorePasswordRequestFail$ = (actions$: ActionsObservable<Send
     map(() => new OpenSnackbar({
       type: SnackbarType.Error,
       messages: [{msg: 'Error of password restoration'}]
-    }),    
+    }),
   ),
   );
 

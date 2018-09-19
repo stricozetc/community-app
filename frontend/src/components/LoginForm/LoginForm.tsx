@@ -141,7 +141,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   public redToForgetPassword(): void {
     this.props.history.push('/forget-password');
   }
- 
+
   public responseSuccess = (response: GoogleResponse) => {
     const user: SocialNetworksUser = {
       email: response.profileObj.email,
@@ -299,7 +299,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   errors: state.errors,
-  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

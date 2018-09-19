@@ -32,14 +32,18 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           Cookies.set('jwtToken', token);
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
+          let a = undefined as any;
+          a.ghostMetod()
           
           return new SetCurrentUser(decoded);
         }),
-        catchError((error) => {          
-          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
-            [error.response.data]
+        catchError((error) => {
+          const messages: ErrorBlock[] =
+            error.name !== 'Error' ? [{msg: error.message}] :
+            Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}))
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )
@@ -50,11 +54,15 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     ofType(AuthTypes.RegisterUser),
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
-        map(() => new RegistrationSuccess('./login')),
-        catchError((error) => {          
-          let messages: ErrorBlock[] = Array.isArray(error.response.data) ? error.response.data:           
-            [error.response.data]
-            
+        map(() => {                   
+          new RegistrationSuccess('./login');          
+      }),
+        catchError((error) => {
+          const messages: ErrorBlock[] =
+            error.name !== 'Error' ? [{msg: error.message}] :
+            Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data];
+
           return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
@@ -97,15 +105,21 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
     switchMap(action =>
       from(HttpWrapper.post<object, FrontEndUser>('api/users/google-auth', action.payload)).pipe(
         map(res => {
-          const { token } = res.data;
+          {const { token } = res.data;
           Cookies.set('jwtToken', token);
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
 
           return new SetCurrentUser(decoded);
+          }
         }),
         catchError((error) => {
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages: error.response.data }));
+          const messages: ErrorBlock[] =
+            error.name !== 'Error' ? [{msg: error.message}] :
+            Array.isArray(error.response.data) ? error.response.data :
+            [error.response.data];
+
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )

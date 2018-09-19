@@ -54,7 +54,7 @@ import {
   CaSelect,
   CaSnackbar,
   LoginForm,
-  RegistrationForm  
+  RegistrationForm
 } from 'components';
 
 import {
