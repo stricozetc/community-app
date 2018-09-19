@@ -66,6 +66,10 @@ export interface FrontEndValidationErrorsLogin {
   password: { min: string, required: string };
 }
 
+export interface FrontEndValidationErrorsVk {
+  email: { mustBeCorrect: string, required: string };
+}
+
 export interface FrontEndValidationErrorsChangePassword {
   oldPassword: { required: string, min: string };
   newPassword: { required: string, min: string };
