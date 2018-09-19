@@ -27,7 +27,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
         map((response) => new LoadBestUsersCompleted(response.data)),
         catchError((error) => {
           const messages: ErrorBlock[] =
-          !(error.name === 'Error') ? [{msg: error.message}] :
+          error.name !== 'Error' ? [{msg: error.message}] :
           Array.isArray(error.response.data) ? error.response.data :
           [error.response.data];
 
@@ -45,7 +45,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
         map((response) => new LoadMostPopularGamesCompleted(response.data)),
         catchError((error) => {
           const messages: ErrorBlock[] =
-          !(error.name === 'Error') ? [{msg: error.message}] :
+          error.name !== 'Error' ? [{msg: error.message}] :
           Array.isArray(error.response.data) ? error.response.data :
           [error.response.data];
 
@@ -62,7 +62,7 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
         map((response) => new LoadRecentGamesCompleted(response.data)),
         catchError((error) => {
           const messages: ErrorBlock[] =
-          !(error.name === 'Error') ? [{msg: error.message}] :
+          error.name !== 'Error' ? [{msg: error.message}] :
           Array.isArray(error.response.data) ? error.response.data :
           [error.response.data];
 
@@ -79,7 +79,7 @@ export const initLeaders$ = (actions$: ActionsObservable<InitLeaders>) =>
         map((response) => new LoadLeadersCompleted(response.data)),
         catchError((error) => {
            const messages: ErrorBlock[] =
-            !(error.name === 'Error') ? [{msg: error.message}] :
+            error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 

@@ -32,12 +32,14 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           Cookies.set('jwtToken', token);
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
+          let a = undefined as any;
+          a.ghostMetod()
           
           return new SetCurrentUser(decoded);
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !(error.name === 'Error') ? [{msg: error.message}] :
+            error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 
@@ -57,7 +59,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
       }),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !(error.name === 'Error') ? [{msg: error.message}] :
+            error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 
@@ -113,7 +115,7 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !(error.name === 'Error') ? [{msg: error.message}] :
+            error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 

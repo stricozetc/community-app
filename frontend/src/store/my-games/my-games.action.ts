@@ -71,7 +71,7 @@ export class AddGameSuccess {
 
 @action()
 export class AddGameError {
-  public readonly type = MyGamesActionTypes.AddGameError;  
+  public readonly type = MyGamesActionTypes.AddGameError;
 }
 
 @action()
