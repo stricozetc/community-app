@@ -1,7 +1,6 @@
 import * as React from 'react';
 import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
-import VK, { Auth } from 'react-vk';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -171,10 +170,10 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.props.socialNetworksLogin(user);
   }
 
-  public successResponseVk = (response: VkSuccessResponse) => {
+  public successResponseVk = (response: VkSuccessResponse, email:string) => {
     console.log(response);
     const user: SocialNetworksUser = {
-      email: response.uid + '@1.com',
+      email: email,
       language: getCurrentLanguageFromLocalStorage(),
       name: response.first_name + ' ' + response.last_name,
       accessToken: response.hash,
@@ -298,14 +297,12 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 <VkDialog
                   className={'ca-login-form__vk-dialog'}
                   open={isVkDialogOpen}
-                  onClose={this.handleCloseVkDialog}>
-                  <VK apiId={6688447}>
-                    <Auth options={{
-                      onAuth: (response: VkSuccessResponse) =>
-                        this.successResponseVk(response)
-                    }}
-                    />
-                  </VK>
+                  onClose={this.handleCloseVkDialog}
+                  onSuccess={
+                    (response: VkSuccessResponse, email: string) =>
+                        this.successResponseVk(response, email)
+                  }
+                >
                 </VkDialog>
               </div>
             </div>
