@@ -34,8 +34,6 @@ export class EditGameSuccess {
 @action()
 export class EditGameError {
   public readonly type = MyGamesActionTypes.EditGameError;
-
-  public constructor(public payload: object) {}
 }
 
 @action()
@@ -55,8 +53,6 @@ export class DeleteGameSuccess {
 @action()
 export class DeleteGameError {
   public readonly type = MyGamesActionTypes.DeleteGameError;
-
-  public constructor(public payload: object) {}
 }
 
 @action()
@@ -75,9 +71,7 @@ export class AddGameSuccess {
 
 @action()
 export class AddGameError {
-  public readonly type = MyGamesActionTypes.AddGameError;
-
-  public constructor(public payload: object) {}
+  public readonly type = MyGamesActionTypes.AddGameError;  
 }
 
 @action()

@@ -3,7 +3,7 @@ import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
 
-import { GameModel } from 'models';
+import { GameModel, ErrorBlock, SnackbarType } from 'models';
 
 import {
     AddGame,
@@ -20,6 +20,7 @@ import {
     LoadMyGamesSuccess,
     MyGamesActionTypes
 } from './my-games.action';
+import { OpenSnackbar } from '../snackbar';
 
 export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
     action$.pipe(
@@ -27,7 +28,15 @@ export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
         switchMap(action =>
             from(HttpWrapper.post<GameModel, GameModel[]>('api/v1/my-games/delete-game', action.payload)).pipe(
                 map(response => new DeleteGameSuccess(response.data)),
-                catchError(error => of(new DeleteGameError(error)))
+                catchError(error => {
+                    const messages: ErrorBlock[] =
+                    !(error.name === 'Error') ? [{msg: error.message}] :
+                    Array.isArray(error.response.data) ? error.response.data :
+                    [error.response.data];
+                    new DeleteGameError();
+
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                })
             )
         )
     );
@@ -38,7 +47,15 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
         switchMap(action =>
             from(HttpWrapper.post<GameModel, GameModel[]>('api/v1/my-games/edit-game', action.payload)).pipe(
                 map(response =>  new EditGameSuccess(response.data)),
-                catchError(error => of(new EditGameError(error)))
+                catchError(error => {
+                    const messages: ErrorBlock[] =
+                    !(error.name === 'Error') ? [{msg: error.message}] :
+                    Array.isArray(error.response.data) ? error.response.data :
+                    [error.response.data];
+                    new EditGameError()
+
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                })
             )
         )
     );
@@ -49,7 +66,15 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
         switchMap(action => {
             return from(HttpWrapper.post<GameModel, GameModel>('api/v1/my-games/add-game', action.payload)).pipe(
                 map(response => new AddGameSuccess(response.data)),
-                catchError(error => of(new AddGameError(error)))
+                catchError(error => {
+                    const messages: ErrorBlock[] =
+                    !(error.name === 'Error') ? [{msg: error.message}] :
+                    Array.isArray(error.response.data) ? error.response.data :
+                    [error.response.data];
+                    new AddGameError()
+
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                })
             );
             }
         )
@@ -61,7 +86,16 @@ export const initMyGames$ = (action$: ActionsObservable<InitMyGames>) =>
         switchMap(action =>
             from(HttpWrapper.get<GameModel[]>(`api/v1/my-games/get-games?userId=${action.payload}`)).pipe(
                 map((response) => new LoadMyGamesSuccess(response.data)),
-                catchError(error => of(new LoadMyGamesError(error)))
+                catchError(error => {
+                    const messages: ErrorBlock[] =
+                    !(error.name === 'Error') ? [{msg: error.message}] :
+                    Array.isArray(error.response.data) ? error.response.data :
+                    [error.response.data];
+                    new LoadMyGamesError(error)
+
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                    }
+                )
             )
         )
     );

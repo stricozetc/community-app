@@ -108,7 +108,8 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
 
-          return new SetCurrentUser(decoded)}
+          return new SetCurrentUser(decoded);
+          }
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =

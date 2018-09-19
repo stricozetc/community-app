@@ -66,7 +66,7 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
           Array.isArray(error.response.data) ? error.response.data :
           [error.response.data];
 
-        return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )
