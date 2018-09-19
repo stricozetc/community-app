@@ -4,6 +4,7 @@ import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 're
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import * as configFile from './../../config.json';
 
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton, VkDialog } from 'components';
@@ -142,7 +143,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   }
 
   public successResponseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-
     let data: GoogleSuccessResponse = response as GoogleSuccessResponse;
     const user: SocialNetworksUser = {
       email: data.profileObj.email,
@@ -170,7 +170,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.props.socialNetworksLogin(user);
   }
 
-  public successResponseVk = (response: VkSuccessResponse, email:string) => {
+  public successResponseVk = (response: VkSuccessResponse, email: string) => {
     console.log(response);
     const user: SocialNetworksUser = {
       email: email,
@@ -271,7 +271,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
               <div className='ca-login-form__socials-btn-container'>
                 {/* isn't work without https on public host, and work on local host with http */}
                 <FacebookLogin
-                  appId='328331921069724'
+                  appId={configFile.frontEnd.facebookApi.id}
                   fields='name,email'
                   callback={this.responseFacebook}
                   cssClass='ca-login-form__facebook-btn'
@@ -283,37 +283,34 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     className='ca-login-form__custom-google'
                     tag='i'
                     buttonText=''
-                    clientId='227700117302-q4uvo0fsvcujktrdaim4cta15chs1lgv.apps.googleusercontent.com'
+                    clientId={configFile.frontEnd.googleApi.id}
                     onSuccess={this.successResponseGoogle}
                     onFailure={this.errorResponseGoogle}
                   />
                 </div>
-                <div
-                  className='ca-login-form__vk-btn'
-                  onClick={this.handleOpenVkDialog}
-                >
-                  <i className='ca-login-form__custom-vk'></i>
-                </div>
-                <VkDialog
-                  className={'ca-login-form__vk-dialog'}
-                  open={isVkDialogOpen}
-                  onClose={this.handleCloseVkDialog}
-                  onSuccess={
-                    (response: VkSuccessResponse, email: string) =>
-                        this.successResponseVk(response, email)
-                  }
-                >
-                </VkDialog>
+                <i className='ca-login-form__custom-vk'></i>
+
+
               </div>
+              <VkDialog
+                className={'ca-login-form__vk-dialog'}
+                open={isVkDialogOpen}
+                onClose={this.handleCloseVkDialog}
+                onSuccess={
+                  (response: VkSuccessResponse, email: string) =>
+                    this.successResponseVk(response, email)
+                }
+              >
+              </VkDialog>
             </div>
-            <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
-              {t('forgot-password')}
-            </div>
-            <div className='ca-login-form__form-linked-text' onClick={() => this.redToRegistratePage()}>
-              {t('register')}
-            </div>
+          <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
+            {t('forgot-password')}
+          </div>
+          <div className='ca-login-form__form-linked-text' onClick={() => this.redToRegistratePage()}>
+            {t('register')}
+          </div>
           </form>
-        </div>
+          </div>
       )
       }
       </I18n>
@@ -337,7 +334,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   errors: state.errors,
-  isSnackbarOpen: state.snackbarUi.isOpen
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

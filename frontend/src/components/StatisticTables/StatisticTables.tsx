@@ -138,7 +138,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
       </I18n>
     );
   }
-  
+
   public changeContent(activeTab: number): void {
 
     switch (activeTab) {

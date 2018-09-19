@@ -2,6 +2,8 @@ import * as openSocket from 'socket.io-client';
 
 import { GameModel, RoomInfo } from 'models';
 import { Subject } from 'rxjs';
+
+import * as configFile from './../../config.json';
 export class SocketService {
   public rooms: Subject<RoomInfo[]> = new Subject();
   public notifyCountdown: Subject<number> = new Subject();
@@ -10,7 +12,11 @@ export class SocketService {
   private socket: SocketIOClient.Socket;
 
   public constructor() {
-    this.socket = openSocket('http://localhost:3030');
+    this.socket = openSocket(
+      configFile.backEndPath.schema + 
+      '://' + configFile.backEndPath.host +
+      ':' + configFile.backEndPath.port
+      );
   }
 
   public init(games: GameModel[]): void {

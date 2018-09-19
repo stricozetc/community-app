@@ -54,8 +54,7 @@ import {
   CaSelect,
   CaSnackbar,
   LoginForm,
-  RegistrationForm,
-  SnackbarErrorMessage,
+  RegistrationForm
 } from 'components';
 
 import {
@@ -63,6 +62,7 @@ import {
   AuthStatus,
   Languages,
   transitionDirection,
+  ErrorBlock,
 } from 'models';
 
 import { CaMyGames } from '../MyGames/MyGames';
@@ -211,10 +211,8 @@ export class RootComponent extends React.Component<RootProps> {
               transitionDirection={transitionDirection.Down}
               message={
                 <div>
-                  {Array.isArray(this.props.errors) ?
-                    this.props.errors && this.props.errors.map((item: SnackbarErrorMessage, index: number) =>
-                      <div key={index}>{item.msg}</div>) :
-                    <div>{this.props.errors && this.props.errors.msg}</div>
+                  { this.props.errors.map((item: ErrorBlock, index: number) =>
+                    <div key={index}>{item.msg}</div>)
                   }
                 </div>
               }

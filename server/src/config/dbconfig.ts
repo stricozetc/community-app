@@ -1,8 +1,10 @@
+import configFile from '../../../frontend/src/config.json'
+
 export const dbConfig = {
     connection: {
-        host: 'localhost',
-        user: 'root',
-        password: 'password'
+        host: configFile.dbConfig.host,
+        user: configFile.dbConfig.user,
+        password: configFile.dbConfig.password
     },
     defaultUser: {
         userName: 'test',
@@ -14,6 +16,7 @@ export const dbConfig = {
         userPassword: 'admin',
         userRole: 'admin'
     },
+    dialect: configFile.dbConfig.dialect,
     database: 'community-app',
     usersModel: 'users',
     usersTable: 'users',

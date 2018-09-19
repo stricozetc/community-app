@@ -1,4 +1,3 @@
-
 import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 
@@ -26,8 +25,9 @@ export const sendRestorePasswordRequest$ = (actions$: ActionsObservable<SendRest
     ofType(RestorePasswordTypes.SendRestoreRequest),
     switchMap(action =>
       from(HttpWrapper.post('api/restore-password/send-mail', { userEmail: action.payload })).pipe(
-        map(() => new SendRestoreRequestSuccess()),
-        catchError((error) => of(new SendRestoreRequestFail(error.response.data)))
+          map(() => new SendRestoreRequestSuccess()),
+          catchError((error) => of(new SendRestoreRequestFail(error.response.data))
+        )
       )
     )
   );
@@ -35,10 +35,11 @@ export const sendRestorePasswordRequest$ = (actions$: ActionsObservable<SendRest
 export const sendRestorePasswordRequestFail$ = (actions$: ActionsObservable<SendRestoreRequestFail>) =>
   actions$.pipe(
     ofType(RestorePasswordTypes.SendRestoreRequestError),
-    map((action) => new OpenSnackbar({
+    map(() => new OpenSnackbar({
       type: SnackbarType.Error,
-      message: action.payload
-    })),
+      messages: [{msg: 'Error of password restoration'}]
+    }),
+  ),
   );
 
 export const RestorePasswordEffects = [

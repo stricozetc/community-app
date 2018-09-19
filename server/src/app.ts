@@ -8,6 +8,8 @@ import SocketIO from 'socket.io';
 import passport from 'passport';
 import cors from 'cors';
 
+import configFile from '../../frontend/src/config.json'
+
 import {
     LoggerService,
     LoggerServiceImplementation,
@@ -64,7 +66,10 @@ const logger: LoggerService = new LoggerServiceImplementation();
 const application = server.build();
 
 const serverInstance = application.listen(config.port, () => {
-    logger.infoLog(`App is running at http://localhost:${config.port}`);
+    logger.infoLog(`App is running at
+    ${configFile.backEndPath.schema}://
+    ${configFile.backEndPath.host}:
+    ${configFile.backEndPath.port}`);
     logger.infoLog('Press CTRL+C to stop\n');
 });
 
