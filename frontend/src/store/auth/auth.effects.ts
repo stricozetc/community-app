@@ -31,9 +31,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
           const { token } = res.data;
           Cookies.set('jwtToken', token);
           setAuthToken(token);
-          const decoded: FrontEndUser = jwt_decode(token);
-          let a = undefined as any;
-          a.ghostMetod()
+          const decoded: FrontEndUser = jwt_decode(token);          
           
           return new SetCurrentUser(decoded);
         }),
