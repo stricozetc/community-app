@@ -143,7 +143,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   }
 
   public successResponseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    console.log(response);
     let data: GoogleSuccessResponse = response as GoogleSuccessResponse;
     const user: SocialNetworksUser = {
       email: data.profileObj.email,

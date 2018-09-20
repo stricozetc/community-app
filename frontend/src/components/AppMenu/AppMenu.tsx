@@ -47,7 +47,7 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
   }
 
   public render(): JSX.Element {
-    const { appMenuItems, children } = this.props;
+    const { appMenuItems, children, imageUrl } = this.props;
     const { anchorEl } = this.state;
 
     const open = Boolean(anchorEl);
@@ -61,8 +61,8 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
                 onClick={this.handleIconClick}
                 className={classes.icon}
               >
-              {this.props.imageUrl ?
-                <Avatar src={this.props.imageUrl} /> :
+              {imageUrl ?
+                <Avatar src={imageUrl} /> :
                 <AccountCircle />}
               </IconButton>
 

@@ -116,21 +116,22 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public getMenuProfilePanel = (): JSX.Element => {
+    const { user } = this.props;
     return (
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>
           {
-            this.props.user && this.props.user.imageUrl ?
-              <Avatar src={this.props.user && this.props.user.imageUrl} />
+            user && user.imageUrl ?
+              <Avatar src={user && user.imageUrl} />
               : <AccountCircle />
           }
         </div>
         <div className='app-menu__profile-text-block'>
           <div className='app-menu__profile-name'>
-            {this.props.user && this.props.user.name}
+            {user && user.name}
           </div>
           <div className='app-menu__profile-email'>
-            {this.props.user && this.props.user.email}
+            {user && user.email}
           </div>
         </div>
       </div>
@@ -160,6 +161,8 @@ export class RootComponent extends React.Component<RootProps> {
       }
     ];
 
+    const { user, isSnackbarOpen, snackbarType, errors } = this.props;
+
     return (
       <I18n>{
         (t, { i18n }) => (
@@ -184,10 +187,10 @@ export class RootComponent extends React.Component<RootProps> {
               {
                 isAuthorized ?
                 <>
-                <AppMenu appMenuItems={appMenuItems} imageUrl={this.props.user && this.props.user.imageUrl} >
+                <AppMenu appMenuItems={appMenuItems} imageUrl={user && user.imageUrl} >
                   {this.getMenuProfilePanel()}
                 </AppMenu>
-                <div className='ca-navbar__profile-name'>{this.props.user && this.props.user.name}</div>
+                <div className='ca-navbar__profile-name'>{user && user.name}</div>
                 </>
                 : null
                 
@@ -210,14 +213,14 @@ export class RootComponent extends React.Component<RootProps> {
 
             <CaSnackbar
               anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-              open={this.props.isSnackbarOpen}
+              open={isSnackbarOpen}
               autoHideDuration={4000}
               handleClose={() => this.closeSnackbar()}
-              type={this.props.snackbarType}
+              type={snackbarType}
               transitionDirection={transitionDirection.Down}
               message={
                 <div>
-                  {this.props.errors.map((item: ErrorBlock, index: number) =>
+                  {errors.map((item: ErrorBlock, index: number) =>
                     <div key={index}>{item.msg}</div>)
                   }
                 </div>
@@ -230,6 +233,7 @@ export class RootComponent extends React.Component<RootProps> {
     );
   }
   public render(): JSX.Element {
+    const { status } = this.props;
     return (
       <Router>
         <div className='App'>
@@ -239,7 +243,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/'
               render={props => (
                 <Landing {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </Landing>
               )}
             />
@@ -249,7 +253,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/forget-password'
               render={props =>
                 <CaForgetPasswordPage {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaForgetPasswordPage>
               }
             />
@@ -259,7 +263,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/register'
               render={props =>
                 <RegistrationForm {...props} >
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </RegistrationForm>
               }
             />
@@ -269,7 +273,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/login'
               render={props => (
                 <LoginForm {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </LoginForm>
               )}
             />
@@ -284,7 +288,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/statistics'
               render={props => (
                 <CaStatisticPage {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaStatisticPage>
               )}
             />
@@ -294,7 +298,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/battles'
               render={props => (
                 <CaBattles {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaBattles>
               )}
             />
@@ -304,7 +308,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/wait-battle'
               render={props => (
                 <CurrentBattle {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CurrentBattle>
               )}
             />
@@ -314,7 +318,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/_admin_console'
               render={props => (
                 <CaMyGames {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaMyGames>
               )}
             />
@@ -324,7 +328,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/_admin_console/add-game'
               render={props => (
                 <CaAddGame {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaAddGame>
               )}
             />
@@ -334,7 +338,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/_admin_console/edit-game/:idOfTheGame'
               render={props => (
                 <CaEditGame {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaEditGame>
               )}
             />
@@ -343,7 +347,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/settings'
               render={props => (
                 <CaUserSettings {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaUserSettings>
               )}
             />
@@ -353,7 +357,7 @@ export class RootComponent extends React.Component<RootProps> {
               path='/leaders/:appName'
               render={props => (
                 <CaLeadersPage {...props}>
-                  {this.getNavbar(this.props.status)}
+                  {this.getNavbar(status)}
                 </CaLeadersPage>
               )}
             />
@@ -361,7 +365,7 @@ export class RootComponent extends React.Component<RootProps> {
             <Route
               path='/*'
               render={() => (
-                <PageNotFound>{this.getNavbar(this.props.status)}</PageNotFound>
+                <PageNotFound>{this.getNavbar(status)}</PageNotFound>
               )}
             />
           </Switch>
