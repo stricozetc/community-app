@@ -1,3 +1,4 @@
+import { Avatar } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 // (Yegor): comment icons imports cuz of temporary removed nav links
@@ -118,11 +119,11 @@ export class RootComponent extends React.Component<RootProps> {
     return (
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>
-          <AccountCircle style={{
-            color: 'inherit',
-            fontSize: '42px'
-          }}
-          />
+          {
+            this.props.user && this.props.user.imageUrl ?
+              <Avatar src={this.props.user && this.props.user.imageUrl} />
+              : <AccountCircle />
+          }
         </div>
         <div className='app-menu__profile-text-block'>
           <div className='app-menu__profile-name'>
@@ -181,10 +182,15 @@ export class RootComponent extends React.Component<RootProps> {
           >
             <div className='ca-navbar__menu-container'>
               {
-                isAuthorized &&
-                <AppMenu appMenuItems={appMenuItems} >
+                isAuthorized ?
+                <>
+                <AppMenu appMenuItems={appMenuItems} imageUrl={this.props.user && this.props.user.imageUrl} >
                   {this.getMenuProfilePanel()}
                 </AppMenu>
+                <div className='ca-navbar__profile-name'>{this.props.user && this.props.user.name}</div>
+                </>
+                : null
+                
               }
             </div>
 
@@ -211,7 +217,7 @@ export class RootComponent extends React.Component<RootProps> {
               transitionDirection={transitionDirection.Down}
               message={
                 <div>
-                  { this.props.errors.map((item: ErrorBlock, index: number) =>
+                  {this.props.errors.map((item: ErrorBlock, index: number) =>
                     <div key={index}>{item.msg}</div>)
                   }
                 </div>
