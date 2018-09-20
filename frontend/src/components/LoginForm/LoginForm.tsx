@@ -296,6 +296,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 </div>
               </div>
               <VkDialog
+                apiId={configFile.frontEnd.vkApi.id}
                 className={'ca-login-form__vk-dialog'}
                 open={isVkDialogOpen}
                 onClose={this.handleCloseVkDialog}

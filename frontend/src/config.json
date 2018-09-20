@@ -4,9 +4,12 @@
             "id": "328331921069724"
         },
         "googleApi": {
-            "id": "900518225558-n6fviqu9tkht7teu1cujr2rednsshmaq.apps.googleusercontent.com"
+            "id": "227700117302-q4uvo0fsvcujktrdaim4cta15chs1lgv.apps.googleusercontent.com"
         },
-        "port": "3000"
+        "vkApi": {
+            "id": "6688447"
+        },
+        "port": "80"
     },
     "backEndPath": {
         "port": "3030",

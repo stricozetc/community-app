@@ -86,7 +86,8 @@ export class VkDialog extends React.Component<VkDialogProps, VkDialogState> {
   public render(): JSX.Element {
     const {
       onSuccess,
-      open
+      open,
+      apiId
     } = this.props;
 
     const {
@@ -141,7 +142,7 @@ export class VkDialog extends React.Component<VkDialogProps, VkDialogState> {
                     </CaButton>
                   </div>
                 </>
-                : <VK apiId={6688447}>
+                : <VK apiId={apiId}>
                   <Auth options={{
                     onAuth: (response: VkSuccessResponse) =>
                       onSuccess(response, email)
