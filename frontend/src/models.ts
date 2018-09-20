@@ -288,10 +288,10 @@ export interface GoogleSuccessResponse extends GoogleLoginResponse, GoogleLoginR
     name: string,
     googleId?: string,
     imageUrl?: string,
-  }
+  };
 }
 
 export interface GoogleErrorResponse {
   details?: string,
   error: string
-};
+}

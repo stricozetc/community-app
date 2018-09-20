@@ -49,6 +49,9 @@ export const CaDialogInfo = ({ open, onClose, appToken, onSuccess }: CaDialogInf
           />
           <CopyToClipboard text={appToken}>
             <div>
+            {/* Those div need to be added for prevent warning message in console.
+            Without him copy to clipboard function doesn`t works.
+            */}
               <CaCopy copyHandler={onSuccess}/>
             </div>
           </CopyToClipboard>
