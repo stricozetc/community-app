@@ -167,7 +167,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
         email: string,
         name: string,
         language: string,
-        accessToken: string
+        accessToken: string,
+        imageUrl: string
     ): Promise<{ success: boolean, token: string }> {
         return new Promise<{ success: boolean, token: string }>(async (resolve, reject) => {
             try {
@@ -178,6 +179,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                         name: user.name,
                         email: user.email,
                         token: user.token,
+                        imageUrl: user.imageUrl,
                     };
                     jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
                         if (error) {
@@ -196,6 +198,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                         token: uuidToken,
                         language,
                         accessToken,
+                        imageUrl,
                     });
                     const savedUser = await newUserDate.save();
 
@@ -210,6 +213,7 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                             name: savedUser.name,
                             email: savedUser.email,
                             token: savedUser.token,
+                            imageUrl: savedUser.imageUrl,
                         };
                         console.log('AAAAAAAAAAAAA', payload);
 
