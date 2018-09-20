@@ -52,9 +52,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     ofType(AuthTypes.RegisterUser),
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
-        map(() => {                   
-          new RegistrationSuccess('./login');          
-      }),
+        map(() => new RegistrationSuccess('./login')),
         catchError((error) => {
           const messages: ErrorBlock[] =
             error.name !== 'Error' ? [{msg: error.message}] :
