@@ -288,9 +288,12 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                     onFailure={this.errorResponseGoogle}
                   />
                 </div>
-                <i className='ca-login-form__custom-vk'></i>
-
-
+                <div
+                  className='ca-login-form__vk-btn'
+                  onClick={this.handleOpenVkDialog}
+                >
+                  <i className='ca-login-form__custom-vk'></i>
+                </div>
               </div>
               <VkDialog
                 className={'ca-login-form__vk-dialog'}
@@ -303,14 +306,14 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
               >
               </VkDialog>
             </div>
-          <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
-            {t('forgot-password')}
-          </div>
-          <div className='ca-login-form__form-linked-text' onClick={() => this.redToRegistratePage()}>
-            {t('register')}
-          </div>
+            <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
+              {t('forgot-password')}
+            </div>
+            <div className='ca-login-form__form-linked-text' onClick={() => this.redToRegistratePage()}>
+              {t('register')}
+            </div>
           </form>
-          </div>
+        </div>
       )
       }
       </I18n>
