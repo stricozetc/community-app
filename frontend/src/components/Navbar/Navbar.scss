@@ -41,11 +41,17 @@
     order: 1;
     margin-left: auto;
     margin-right: 4rem;
+    display: flex;
   }
 
   &__select-language {
     width: 80px;
     margin-left: 20px;
+  }
+
+  &__profile-name {
+    display: flex;
+    align-items: center;
   }
 }
 @media(max-width: 800px) {
@@ -73,6 +79,13 @@
     &__select-language {
       width: 55px;
       margin-left: 16px;
+    }
+  }
+}
+@include respond-to(extra-small-range) {
+  .ca-navbar {
+    &__profile-name {
+      display: none;
     }
   }
 }

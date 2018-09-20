@@ -270,24 +270,27 @@ export interface SocialNetworksUser {
   name: string | undefined;
   accessToken: string;
   SocialId?: number;
+  imageUrl?: string;
 }
 
 export interface VkSuccessResponse {
-  first_name: string,
-  last_name: string,
-  photo?: string,
-  uid?: number,
-  language?: string,
-  hash: string
+  first_name: string;
+  last_name: string;
+  photo?: string;
+  uid?: number;
+  language?: string;
+  hash: string;
+  photo_rec?: string;
 }
 
 export interface GoogleSuccessResponse extends GoogleLoginResponse, GoogleLoginResponseOffline {
-  accessToken: string,
+  accessToken: string;
   profileObj: {
     email: string,
     name: string,
     googleId?: string,
     imageUrl?: string,
+    givenName?: string,
   };
 }
 

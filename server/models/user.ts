@@ -42,6 +42,10 @@ export const UserModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
         type: Sequelize.STRING(300),
         allowNull: true,
     },
+    imageUrl: {
+        type: Sequelize.STRING(300),
+        allowNull: true,
+    },
 }, {
         // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
         // otherwise, the model name will be pluralized

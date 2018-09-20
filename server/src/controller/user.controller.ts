@@ -97,10 +97,10 @@ export class UserController {
 
     @httpPost('/google-auth')
     public async googleAuth(request: Request, response: Response): Promise<Response | { success: boolean, token: string }> {
-        const { email, name, language, accessToken } = request.body;
+        const { email, name, language, accessToken, imageUrl } = request.body;
         // (Mikalai) Add validation
         try {
-            return this.userAuthenticationRepository.socialNetworksLogin(email, name, language, accessToken);
+            return this.userAuthenticationRepository.socialNetworksLogin(email, name, language, accessToken, imageUrl);
         } catch (error) {
             return error.code >= 2000 ?
                 response.status(500).json(error) :

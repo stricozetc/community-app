@@ -6,4 +6,5 @@ export interface User {
     token: string;
     language: string;
     accessToken?: string;
+    imageUrl?: string;
 }
