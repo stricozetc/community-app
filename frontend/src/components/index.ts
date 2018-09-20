@@ -14,3 +14,4 @@ export * from './ChangePasswordForm';
 export * from './MoreMenu';
 export * from './GameForm';
 export * from './Mui';
+export * from './VkDialog';

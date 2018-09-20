@@ -1,15 +1,15 @@
 import * as React from 'react';
-import FacebookLogin, {  ReactFacebookLoginInfo } from 'react-facebook-login';
-import { GoogleLogin } from 'react-google-login';
+import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
+import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import * as configFile from './../../config.json';
 
 import { FormGroup, TextField } from '@material-ui/core';
-import { CaButton } from 'components';
+import { CaButton, VkDialog } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
-import { SocialNetworksUser, GoogleResponse } from 'models';
+import { SocialNetworksUser, VkSuccessResponse, GoogleSuccessResponse, GoogleErrorResponse } from 'models';
 import { AppState, LoginUser, SocialNetworksLogin } from 'store';
 import { getCurrentLanguageFromLocalStorage } from 'utils';
 
@@ -142,22 +142,24 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.props.history.push('/forget-password');
   }
 
-  public responseSuccess = (response: GoogleResponse) => {
+  public successResponseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    let data: GoogleSuccessResponse = response as GoogleSuccessResponse;
     const user: SocialNetworksUser = {
-      email: response.profileObj.email,
+      email: data.profileObj.email,
       language: getCurrentLanguageFromLocalStorage(),
-      name: response.profileObj.name,
-      accessToken: response.accessToken,
+      name: data.profileObj.name,
+      accessToken: data.accessToken,
     };
 
     this.props.socialNetworksLogin(user);
   }
 
-  public responseError = (response: GoogleResponse) => {
+  public errorResponseGoogle = (response: GoogleErrorResponse) => {
     console.log(response);
   }
 
   public responseFacebook = (response: ReactFacebookLoginInfo) => {
+    console.log(response);
     const user: SocialNetworksUser = {
       email: response.email,
       language: getCurrentLanguageFromLocalStorage(),
@@ -166,6 +168,26 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     };
 
     this.props.socialNetworksLogin(user);
+  }
+
+  public successResponseVk = (response: VkSuccessResponse, email: string) => {
+    console.log(response);
+    const user: SocialNetworksUser = {
+      email: email,
+      language: getCurrentLanguageFromLocalStorage(),
+      name: response.first_name + ' ' + response.last_name,
+      accessToken: response.hash,
+    };
+
+    this.props.socialNetworksLogin(user);
+  }
+
+  public handleCloseVkDialog = () => {
+    this.setState({ isVkDialogOpen: false });
+  }
+
+  public handleOpenVkDialog = () => {
+    this.setState({ isVkDialogOpen: true });
   }
 
   public render(): JSX.Element {
@@ -180,104 +202,121 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       isPasswordValid,
       touched,
       emailErrors,
-      passwordErrors
+      passwordErrors,
+      isVkDialogOpen
     } = this.state;
 
     return (
-      <I18n>
-        {
-          (t) => (
-            <div className='ca-login-form'>
-              {children}
-              <form onSubmit={this.onSubmit} className='ca-login-form__container'>
-                <FormGroup>
-                  <TextField
-                    id='email'
-                    label={t('emailLabel')}
-                    name='email'
-                    value={email}
-                    onChange={this.onChangeEmail}
-                    type='email'
-                    onBlur={this.onBlur('email')}
-                    error={!isEmailValid && touched.email}
-                  />
-                  {!isEmailValid &&
-                    touched.email &&
-                    emailErrors.map((err, index) => {
-                      return (
-                        <div className='ca-login-form__error' key={index}>
-                          {t(err)}
-                        </div>
-                      );
-                    })}
-                </FormGroup>
-
-                <FormGroup>
-                  <TextField
-                    className='ca-login-form__password-field'
-                    style={{ marginTop: '20px' }}
-                    id='password'
-                    label={t('passwordLabel')}
-                    name='password'
-                    value={password}
-                    onChange={this.onChangePassword}
-                    type='password'
-                    onBlur={this.onBlur('password')}
-                    error={!isPasswordValid && touched.password}
-                  />
-                  {!isPasswordValid &&
-                    touched.password &&
-                    passwordErrors.map((err, index) => {
-                      return (
-                        <div className='ca-login-form__error' key={index}>
-                          {t(err)}
-                        </div>
-                      );
-                    })}
-                </FormGroup>
-                <div className='ca-login-form__button-container'>
-                  <CaButton
-                    color='primary'
-                    type='submit'
-                    className='ca-login-form__login-btn'
-                    disabled={!isEmailValid || !isPasswordValid}
-                  >
-                    {t('login').toUpperCase()}
-                  </CaButton>
-                </div>
-                <div className='ca-login-form__form-text'>{t('loginWithSocialNetwork')}</div>
-                <div className='ca-login-form__socials-btn'>
-                  <div className='ca-login-form__socials-btn-container'>
-                    <FacebookLogin
-                      appId={configFile.frontEnd.facebookApi.id}
-                      fields='name,email'
-                      callback={this.responseFacebook}
-                      cssClass='ca-login-form__facebook-btn'
-                      textButton=''
-                      icon='ca-login-form__custom-facebook'
-                    />
-                    <div className='ca-login-form__google-btn'>
-                      <GoogleLogin
-                        className='ca-login-form__custom-google'
-                        tag='i'
-                        buttonText=''
-                        clientId={configFile.frontEnd.googleApi.id}
-                        onSuccess={this.responseSuccess}
-                        onFailure={this.responseError}
-                      />
+      <I18n>{(t) => (
+        <div className='ca-login-form'>
+          {children}
+          <form onSubmit={this.onSubmit} className='ca-login-form__container'>
+            <FormGroup>
+              <TextField
+                id='email'
+                label={t('emailLabel')}
+                name='email'
+                value={email}
+                onChange={this.onChangeEmail}
+                type='email'
+                onBlur={this.onBlur('email')}
+                error={!isEmailValid && touched.email}
+              />
+              {!isEmailValid &&
+                touched.email &&
+                emailErrors.map((err, index) => {
+                  return (
+                    <div className='ca-login-form__error' key={index}>
+                      {t(err)}
                     </div>
-                  </div>
-                </div>
-              <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
-                {t('forgot-password')}
-              </div>
-              <div className='ca-login-form__form-linked-text' onClick={() => this.redToRegistratePage()}>
-                {t('register')}
-              </div>
-              </form>
+                  );
+                })}
+            </FormGroup>
+
+            <FormGroup>
+              <TextField
+                className='ca-login-form__password-field'
+                style={{ marginTop: '20px' }}
+                id='password'
+                label={t('passwordLabel')}
+                name='password'
+                value={password}
+                onChange={this.onChangePassword}
+                type='password'
+                onBlur={this.onBlur('password')}
+                error={!isPasswordValid && touched.password}
+              />
+              {!isPasswordValid &&
+                touched.password &&
+                passwordErrors.map((err, index) => {
+                  return (
+                    <div className='ca-login-form__error' key={index}>
+                      {t(err)}
+                    </div>
+                  );
+                })}
+            </FormGroup>
+            <div className='ca-login-form__button-container'>
+              <CaButton
+                color='primary'
+                type='submit'
+                className='ca-login-form__login-btn'
+                disabled={!isEmailValid || !isPasswordValid}
+              >
+                {t('login').toUpperCase()}
+              </CaButton>
             </div>
+            <div className='ca-login-form__form-text'>{t('loginWithSocialNetwork')}</div>
+            <div className='ca-login-form__socials-btn'>
+              <div className='ca-login-form__socials-btn-container'>
+                {/* isn't work without https on public host, and work on local host with http */}
+                <FacebookLogin
+                  appId={configFile.frontEnd.facebookApi.id}
+                  fields='name,email'
+                  callback={this.responseFacebook}
+                  cssClass='ca-login-form__facebook-btn'
+                  textButton=''
+                  icon='ca-login-form__custom-facebook'
+                />
+                <div className='ca-login-form__google-btn'>
+                  <GoogleLogin
+                    className='ca-login-form__custom-google'
+                    tag='i'
+                    buttonText=''
+                    clientId={configFile.frontEnd.googleApi.id}
+                    onSuccess={this.successResponseGoogle}
+                    onFailure={this.errorResponseGoogle}
+                  />
+                </div>
+                <div
+                  className='ca-login-form__vk-btn'
+                  onClick={this.handleOpenVkDialog}
+                >
+                  <i className='ca-login-form__custom-vk'></i>
+                </div>
+              </div>
+              <VkDialog
+                apiId={configFile.frontEnd.vkApi.id}
+                className={'ca-login-form__vk-dialog'}
+                open={isVkDialogOpen}
+                onClose={this.handleCloseVkDialog}
+                onSuccess={
+                  (response: VkSuccessResponse, email: string) =>
+                    this.successResponseVk(response, email)
+                }
+              >
+              </VkDialog>
+            </div>
+            <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
+              {t('forgot-password')}
+            </div>
+            <div className='ca-login-form__form-linked-text' onClick={() => this.redToRegistratePage()}>
+              {t('register')}
+            </div>
+          </form>
+        </div>
       )
-    }
+      }
       </I18n>
     );
   }
