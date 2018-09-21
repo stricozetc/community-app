@@ -304,8 +304,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                   (response: VkSuccessResponse, email: string) =>
                     this.successResponseVk(response, email)
                 }
-              >
-              </VkDialog>
+              />
             </div>
             <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
               {t('forgot-password')}

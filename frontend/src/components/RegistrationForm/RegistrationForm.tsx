@@ -1,13 +1,15 @@
 import * as React from 'react';
+import FacebookLogin from 'react-facebook-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import * as configFile from './../../config.json';
 
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
-import { UserFieldsToRegister } from 'models';
-import { AppState, RegisterUser } from 'store';
+import { UserFieldsToRegister, SocialNetworksUser, GoogleSuccessResponse, GoogleErrorResponse, VkSuccessResponse } from 'models';
+import { AppState, RegisterUser, SocialNetworksLogin } from 'store';
 
 import {
   RegistrationFormProps,
@@ -16,12 +18,16 @@ import {
 } from './RegistrationForm.model';
 
 import './RegistrationForm.scss';
+import { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogin } from 'react-google-login';
+import { getCurrentLanguageFromLocalStorage } from 'utils';
+import { ReactFacebookLoginInfo } from 'react-facebook-login';
+import { VkDialog } from '../VkDialog';
+import { SocialNetworksBlock } from '../SocialNetworksBlock';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: RegistrationFormProps) {
     super(props);
     this.state = initRegistrationFormState;
-
   }
 
   public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -144,6 +150,54 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
       }
     });
     this.checkValidation();
+  }
+
+  public successResponseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    let data: GoogleSuccessResponse = response as GoogleSuccessResponse;
+    const user: SocialNetworksUser = {
+      email: data.profileObj.email,
+      language: getCurrentLanguageFromLocalStorage(),
+      name: data.profileObj.name,
+      accessToken: data.accessToken,
+    };
+
+    this.props.socialNetworksLogin(user);
+  }
+
+  public errorResponseGoogle = (response: GoogleErrorResponse) => {
+    console.log(response);
+  }
+
+  public responseFacebook = (response: ReactFacebookLoginInfo) => {
+    console.log(response);
+    const user: SocialNetworksUser = {
+      email: response.email,
+      language: getCurrentLanguageFromLocalStorage(),
+      name: response.name,
+      accessToken: response.accessToken,
+    };
+
+    this.props.socialNetworksLogin(user);
+  }
+
+  public successResponseVk = (response: VkSuccessResponse, email: string) => {
+    console.log(response);
+    const user: SocialNetworksUser = {
+      email: email,
+      language: getCurrentLanguageFromLocalStorage(),
+      name: response.first_name + ' ' + response.last_name,
+      accessToken: response.hash,
+    };
+
+    this.props.socialNetworksLogin(user);
+  }
+
+  public handleCloseVkDialog = () => {
+    this.setState({ isVkDialogOpen: false });
+  }
+
+  public handleOpenVkDialog = () => {
+    this.setState({ isVkDialogOpen: true });
   }
 
   public render(): JSX.Element {
@@ -271,7 +325,53 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                   }
                 >
                   {t('register')}
-                </CaButton>
+                </CaButton>                
+                <div className='ca-login-form__form-text'>{t('loginWithSocialNetwork')}</div>
+            <div className='ca-login-form__socials-btn'>
+              <div className='ca-login-form__socials-btn-container'>
+                {/* isn't work without https on public host, and work on local host with http */}
+                <FacebookLogin
+                  appId={configFile.frontEnd.facebookApi.id}
+                  fields='name,email'
+                  callback={this.responseFacebook}
+                  cssClass='ca-login-form__facebook-btn'
+                  textButton=''
+                  icon='ca-login-form__custom-facebook'
+                />
+                <div className='ca-login-form__google-btn'>
+                  <GoogleLogin
+                    className='ca-login-form__custom-google'
+                    tag='i'
+                    buttonText=''
+                    clientId={configFile.frontEnd.googleApi.id}
+                    onSuccess={this.successResponseGoogle}
+                    onFailure={this.errorResponseGoogle}
+                  />
+                </div>
+                <div
+                  className='ca-login-form__vk-btn'
+                  onClick={this.handleOpenVkDialog}
+                >
+                  <i className='ca-login-form__custom-vk'></i>
+                </div>
+              </div>
+              <VkDialog
+                apiId={configFile.frontEnd.vkApi.id}
+                className={'ca-login-form__vk-dialog'}
+                open={this.state.isVkDialogOpen}
+                onClose={this.handleCloseVkDialog}
+                onSuccess={
+                  (response: VkSuccessResponse, email: string) =>
+                    this.successResponseVk(response, email)
+                }
+              />
+            </div>            
+              <div className='ca-login-form__form-linked-text'>
+                {t('forgot-password')}
+              </div>
+              <div className='ca-login-form__form-linked-text'>
+                {t('register')}
+              </div>              
               </form>
             </div>
           )
@@ -301,6 +401,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user)),
+  socialNetworksLogin: (socialNetworksUser: SocialNetworksUser) => dispatch(new SocialNetworksLogin(socialNetworksUser))
 });
 
 export const RegistrationForm = connect(
