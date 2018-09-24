@@ -1,9 +1,7 @@
 import * as React from 'react';
-import FacebookLogin from 'react-facebook-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as configFile from './../../config.json';
 
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
@@ -18,11 +16,10 @@ import {
 } from './RegistrationForm.model';
 
 import './RegistrationForm.scss';
-import { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogin } from 'react-google-login';
+import { GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { getCurrentLanguageFromLocalStorage } from 'utils';
 import { ReactFacebookLoginInfo } from 'react-facebook-login';
-import { VkDialog } from '../VkDialog';
-import { SocialNetworksBlock } from '../SocialNetworksBlock';
+import { SocNetBlock } from '../SocialNetworksBlock';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: RegistrationFormProps) {
@@ -335,10 +332,10 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                   {t('register')}
                 </CaButton>                
                 <div className='ca-login-form__form-text'>{t('loginWithSocialNetwork')}</div>
-            <div className='ca-login-form__socials-btn'>
-              <div className='ca-login-form__socials-btn-container'>
+            {/* <div className='ca-login-form__socials-btn'>
+              <div className='ca-login-form__socials-btn-container'> */}
                 {/* isn't work without https on public host, and work on local host with http */}
-                <FacebookLogin
+                {/* <FacebookLogin
                   appId={configFile.frontEnd.facebookApi.id}
                   fields='name,email'
                   callback={this.responseFacebook}
@@ -379,10 +376,9 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
               </div>
               <div className='ca-login-form__form-linked-text'>
                 {t('register')}
-              </div>
-              <SocialNetworksBlock
-              forget={this.redToRegistratePage}
-              reg={this.redToForgetPassword}
+              </div> */}
+              <SocNetBlock
+              history={this.props.history}
               />
               </form>
             </div>
