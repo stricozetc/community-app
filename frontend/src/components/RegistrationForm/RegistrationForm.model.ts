@@ -1,6 +1,6 @@
 import { History } from 'history';
 
-import { AuthStatus, UserFieldsToRegister, SocialNetworksUser } from 'models';
+import { AuthStatus, UserFieldsToRegister } from 'models';
 
 export interface RegistrationFormState {
   email: string;
@@ -51,6 +51,5 @@ export interface RegistrationFormProps {
 
   language: string;  
 
-  registerUser(user: UserFieldsToRegister): void;
-  socialNetworksLogin(socialNetworksUser: SocialNetworksUser): void;
+  registerUser(user: UserFieldsToRegister): void;  
 }

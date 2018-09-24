@@ -1,17 +1,13 @@
 import * as React from 'react';
-import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
-import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { I18n } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import * as configFile from './../../config.json';
 
 import { FormGroup, TextField } from '@material-ui/core';
-import { CaButton, VkDialog } from 'components';
+import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
-import { SocialNetworksUser, VkSuccessResponse, GoogleSuccessResponse, GoogleErrorResponse } from 'models';
+import { SocialNetworksUser } from 'models';
 import { AppState, LoginUser, SocialNetworksLogin } from 'store';
-import { getCurrentLanguageFromLocalStorage } from 'utils';
 
 import {
   AuthStatus,
@@ -26,6 +22,7 @@ import {
 } from './LoginForm.model';
 
 import './LoginForm.scss';
+import { SocNetBlock } from '../SocialNetworksBlock';
 
 export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
   constructor(props: LoginFormProps) {
@@ -134,62 +131,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.checkValidation();
   }
 
-  public redToRegistratePage(): void {
-    this.props.history.push('/register');
-  }
-
-  public redToForgetPassword(): void {
-    this.props.history.push('/forget-password');
-  }
-
-  public successResponseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    let data: GoogleSuccessResponse = response as GoogleSuccessResponse;
-    const user: SocialNetworksUser = {
-      email: data.profileObj.email,
-      language: getCurrentLanguageFromLocalStorage(),
-      name: data.profileObj.name,
-      accessToken: data.accessToken,
-    };
-
-    this.props.socialNetworksLogin(user);
-  }
-
-  public errorResponseGoogle = (response: GoogleErrorResponse) => {
-    console.log(response);
-  }
-
-  public responseFacebook = (response: ReactFacebookLoginInfo) => {
-    console.log(response);
-    const user: SocialNetworksUser = {
-      email: response.email,
-      language: getCurrentLanguageFromLocalStorage(),
-      name: response.name,
-      accessToken: response.accessToken,
-    };
-
-    this.props.socialNetworksLogin(user);
-  }
-
-  public successResponseVk = (response: VkSuccessResponse, email: string) => {
-    console.log(response);
-    const user: SocialNetworksUser = {
-      email: email,
-      language: getCurrentLanguageFromLocalStorage(),
-      name: response.first_name + ' ' + response.last_name,
-      accessToken: response.hash,
-    };
-
-    this.props.socialNetworksLogin(user);
-  }
-
-  public handleCloseVkDialog = () => {
-    this.setState({ isVkDialogOpen: false });
-  }
-
-  public handleOpenVkDialog = () => {
-    this.setState({ isVkDialogOpen: true });
-  }
-
   public render(): JSX.Element {
     const {
       children
@@ -202,8 +143,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       isPasswordValid,
       touched,
       emailErrors,
-      passwordErrors,
-      isVkDialogOpen
+      passwordErrors      
     } = this.state;
 
     return (
@@ -265,53 +205,10 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
               >
                 {t('login').toUpperCase()}
               </CaButton>
-            </div>
-            <div className='ca-login-form__form-text'>{t('loginWithSocialNetwork')}</div>
-            <div className='ca-login-form__socials-btn'>
-              <div className='ca-login-form__socials-btn-container'>
-                {/* isn't work without https on public host, and work on local host with http */}
-                <FacebookLogin
-                  appId={configFile.frontEnd.facebookApi.id}
-                  fields='name,email'
-                  callback={this.responseFacebook}
-                  cssClass='ca-login-form__facebook-btn'
-                  textButton=''
-                  icon='ca-login-form__custom-facebook'
-                />
-                <div className='ca-login-form__google-btn'>
-                  <GoogleLogin
-                    className='ca-login-form__custom-google'
-                    tag='i'
-                    buttonText=''
-                    clientId={configFile.frontEnd.googleApi.id}
-                    onSuccess={this.successResponseGoogle}
-                    onFailure={this.errorResponseGoogle}
-                  />
-                </div>
-                <div
-                  className='ca-login-form__vk-btn'
-                  onClick={this.handleOpenVkDialog}
-                >
-                  <i className='ca-login-form__custom-vk'></i>
-                </div>
-              </div>
-              <VkDialog
-                apiId={configFile.frontEnd.vkApi.id}
-                className={'ca-login-form__vk-dialog'}
-                open={isVkDialogOpen}
-                onClose={this.handleCloseVkDialog}
-                onSuccess={
-                  (response: VkSuccessResponse, email: string) =>
-                    this.successResponseVk(response, email)
-                }
+            </div>            
+            <SocNetBlock
+                history={this.props.history}
               />
-            </div>
-            <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
-              {t('forgot-password')}
-            </div>
-            <div className='ca-login-form__form-linked-text' onClick={() => this.redToRegistratePage()}>
-              {t('register')}
-            </div>
           </form>
         </div>
       )
