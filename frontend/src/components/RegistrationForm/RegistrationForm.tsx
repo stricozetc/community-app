@@ -200,6 +200,14 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     this.setState({ isVkDialogOpen: true });
   }
 
+  public redToRegistratePage(): void {
+    this.props.history.push('/register');
+  }
+
+  public redToForgetPassword(): void {
+    this.props.history.push('/forget-password');
+  }
+
   public render(): JSX.Element {
     return (
       <I18n>
@@ -371,7 +379,11 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
               </div>
               <div className='ca-login-form__form-linked-text'>
                 {t('register')}
-              </div>              
+              </div>
+              <SocialNetworksBlock
+              forget={this.redToRegistratePage}
+              reg={this.redToForgetPassword}
+              />
               </form>
             </div>
           )
