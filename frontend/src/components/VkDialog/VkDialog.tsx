@@ -153,7 +153,7 @@ export class VkDialog extends React.Component<VkDialogProps, VkDialogState> {
           </Dialog>)}
         </I18n>)}
       </Styled>
-    )
+    );
   }
 
   private validateEmail(email: string): boolean {

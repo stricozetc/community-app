@@ -3,8 +3,8 @@ import axios, { AxiosResponse } from 'axios';
 import * as configFile from './../config.json';
 
 export class HttpWrapper {
-    private static baseUrl: string = 
-    configFile.backEndPath.schema + 
+    private static baseUrl: string =
+    configFile.backEndPath.schema +
     '://' + configFile.backEndPath.host +
     ':' + configFile.backEndPath.port + '/';
 
