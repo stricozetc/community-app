@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as CopyToClipboard from 'react-copy-to-clipboard';
 import { I18n } from 'react-i18next';
 
-import { IconButton } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -49,9 +48,12 @@ export const CaDialogInfo = ({ open, onClose, appToken, onSuccess }: CaDialogInf
             }}
           />
           <CopyToClipboard text={appToken}>
-            <IconButton>
+            <div>
+            {/* Those div need to be added for prevent warning message in console.
+            Without him copy to clipboard function doesn`t works.
+            */}
               <CaCopy copyHandler={onSuccess}/>
-            </IconButton>
+            </div>
           </CopyToClipboard>
         </div>
       </Dialog>

@@ -71,7 +71,7 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new AddGameError()
+                    new AddGameError();
 
                     return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
                 })

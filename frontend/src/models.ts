@@ -297,4 +297,4 @@ export interface GoogleSuccessResponse extends GoogleLoginResponse, GoogleLoginR
 export interface GoogleErrorResponse {
   details?: string,
   error: string
-};
+}
