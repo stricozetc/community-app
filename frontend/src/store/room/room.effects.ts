@@ -1,6 +1,6 @@
 import { ActionsObservable, ofType } from 'redux-observable';
 import { Observable, of } from 'rxjs';
-import { map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom, ignoreElements } from 'rxjs/operators';
 
 import { GameModel, RoomInfo } from 'models';
 import { AppState, EmitEventWithOptions } from 'store';
@@ -79,7 +79,8 @@ export const redirectToBattle$ = (actions$: ActionsObservable<RedirectToGameRoom
       } else {
         return new ErrorRoom();
       }
-    })
+    }),
+    ignoreElements()
   );
 
 export const RoomEffects = [
