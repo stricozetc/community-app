@@ -11,6 +11,7 @@ import {
   MenuList,
   Paper,
   Popper,
+  Avatar
 } from '@material-ui/core';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -46,7 +47,7 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
   }
 
   public render(): JSX.Element {
-    const { appMenuItems, children } = this.props;
+    const { appMenuItems, children, imageUrl } = this.props;
     const { anchorEl } = this.state;
 
     const open = Boolean(anchorEl);
@@ -60,7 +61,9 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
                 onClick={this.handleIconClick}
                 className={classes.icon}
               >
-                <AccountCircle className={classes.avatarSm} />
+              {imageUrl ?
+                <Avatar src={imageUrl} /> :
+                <AccountCircle />}
               </IconButton>
 
               <Popper open={open} anchorEl={anchorEl} transition={true} disablePortal={true}>

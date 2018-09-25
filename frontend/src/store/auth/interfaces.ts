@@ -11,4 +11,5 @@ export interface FrontEndUser {
   email: string;
   token: string;
   language: string;
+  imageUrl?: string;
 }

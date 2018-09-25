@@ -11,6 +11,6 @@ export abstract class UserAuthenticationRepository {
 
     public abstract checkUserEmail(userEmail: string): Promise<boolean>;
 
-    public abstract socialNetworksLogin(email: string, name: string, language: string, accessToken: string)
+    public abstract socialNetworksLogin(email: string, name: string, language: string, accessToken: string, imageUrl: string)
         : Promise<{ success: boolean, token: string }>;
 }
