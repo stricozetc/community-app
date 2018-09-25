@@ -208,6 +208,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
             </div>            
             <SocNetBlock
                 history={this.props.history}
+                isRestorePasswordVisible = {true}
               />
           </form>
         </div>

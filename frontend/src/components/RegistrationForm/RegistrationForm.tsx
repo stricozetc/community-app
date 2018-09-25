@@ -274,6 +274,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                 </CaButton>
               <SocNetBlock
                 history={this.props.history}
+                isRestorePasswordVisible={false}
               />
               </form>
             </div>
