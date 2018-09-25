@@ -52,7 +52,7 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new EditGameError()
+                    new EditGameError();
 
                     return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
                 })
@@ -71,7 +71,7 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new AddGameError()
+                    new AddGameError();
 
                     return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
                 })
@@ -91,7 +91,7 @@ export const initMyGames$ = (action$: ActionsObservable<InitMyGames>) =>
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new LoadMyGamesError(error)
+                    new LoadMyGamesError(error);
 
                     return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
                     }

@@ -31,7 +31,7 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
           Array.isArray(error.response.data) ? error.response.data :
           [error.response.data];
 
-        return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )
@@ -49,7 +49,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
           Array.isArray(error.response.data) ? error.response.data :
           [error.response.data];
 
-        return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )
@@ -83,7 +83,7 @@ export const initLeaders$ = (actions$: ActionsObservable<InitLeaders>) =>
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+            return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )

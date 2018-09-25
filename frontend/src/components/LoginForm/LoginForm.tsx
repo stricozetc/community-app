@@ -143,7 +143,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       isPasswordValid,
       touched,
       emailErrors,
-      passwordErrors      
+      passwordErrors
     } = this.state;
 
     return (
