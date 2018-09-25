@@ -6,8 +6,8 @@ import { Dispatch } from 'redux';
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
-import { UserFieldsToRegister } from 'models';
-import { AppState, RegisterUser } from 'store';
+import { UserFieldsToRegister, SocialNetworksUser } from 'models';
+import { AppState, RegisterUser, SocialNetworksLogin } from 'store';
 
 import {
   RegistrationFormProps,
@@ -16,12 +16,12 @@ import {
 } from './RegistrationForm.model';
 
 import './RegistrationForm.scss';
+import { SocNetBlock } from '../SocialNetworksBlock';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: RegistrationFormProps) {
     super(props);
     this.state = initRegistrationFormState;
-
   }
 
   public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -272,6 +272,10 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                 >
                   {t('register')}
                 </CaButton>
+              <SocNetBlock
+                history={this.props.history}
+                isRestorePasswordVisible={false}
+              />
               </form>
             </div>
           )
@@ -301,6 +305,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user)),
+  socialNetworksLogin: (socialNetworksUser: SocialNetworksUser) => dispatch(new SocialNetworksLogin(socialNetworksUser))
 });
 
 export const RegistrationForm = connect(

@@ -49,7 +49,7 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
           Array.isArray(error.response.data) ? error.response.data :
           [error.response.data];
 
-        return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
         })
       )
     )

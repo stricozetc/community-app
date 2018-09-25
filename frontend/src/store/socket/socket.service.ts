@@ -13,7 +13,7 @@ export class SocketService {
 
   public constructor() {
     this.socket = openSocket(
-      configFile.backEndPath.schema + 
+      configFile.backEndPath.schema +
       '://' + configFile.backEndPath.host +
       ':' + configFile.backEndPath.port
       );
