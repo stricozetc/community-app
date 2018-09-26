@@ -39,9 +39,10 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         let data: GoogleSuccessResponse = response as GoogleSuccessResponse;
         const user: SocialNetworksUser = {
             email: data.profileObj.email,
-            name: data.profileObj.name,
+            name: data.profileObj.givenName,
             accessToken: data.accessToken,
             language: getCurrentLanguageFromLocalStorage(),
+            imageUrl: data.profileObj.imageUrl,
         };
         
         this.props.socialNetworksLogin(user);
@@ -66,8 +67,10 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         const user: SocialNetworksUser = {
             email: email,
             language: getCurrentLanguageFromLocalStorage(),
-            name: response.first_name + ' ' + response.last_name,
+            name: response.first_name,
             accessToken: response.hash,
+            imageUrl: response.photo_rec,
+
         };
 
 
