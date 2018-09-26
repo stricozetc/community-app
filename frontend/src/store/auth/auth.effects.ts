@@ -100,14 +100,14 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
     ofType(AuthTypes.SocialNetworksLogin),
     switchMap(action =>
       from(HttpWrapper.post<object, FrontEndUser>('api/users/google-auth', action.payload)).pipe(
-        map(res => {
-          {const { token } = res.data;
+        map(res => {          
+          const { token } = res.data;          
           Cookies.set('jwtToken', token);
           setAuthToken(token);
-          const decoded: FrontEndUser = jwt_decode(token);
+          const decoded: FrontEndUser = jwt_decode(token);          
 
           return new SetCurrentUser(decoded);
-          }
+          
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
