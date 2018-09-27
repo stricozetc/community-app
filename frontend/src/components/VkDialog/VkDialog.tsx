@@ -110,6 +110,7 @@ export class VkDialog extends React.Component<VkDialogProps, VkDialogState> {
               {!isOpenVkWidget
                 ? <>
                   <FormGroup>
+                    <div className='ca-login-form__vk-email-warning'>{t('vkEmailWarningForAuth')}</div>
                     <TextField
                       id='email'
                       label={t('emailLabel')}

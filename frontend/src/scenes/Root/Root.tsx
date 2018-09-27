@@ -55,7 +55,8 @@ import {
   CaSelect,
   CaSnackbar,
   LoginForm,
-  RegistrationForm
+  RegistrationForm,
+  ProtectedRoute,
 } from 'components';
 
 import {
@@ -187,13 +188,13 @@ export class RootComponent extends React.Component<RootProps> {
             <div className='ca-navbar__menu-container'>
               {
                 isAuthorized ?
-                <>
-                <AppMenu appMenuItems={appMenuItems} imageUrl={user && user.imageUrl} >
-                  {this.getMenuProfilePanel()}
-                </AppMenu>
-                <div className='ca-navbar__profile-name'>{user && user.name}</div>
-                </>
-                : null
+                  <>
+                    <AppMenu appMenuItems={appMenuItems} imageUrl={user && user.imageUrl} >
+                      {this.getMenuProfilePanel()}
+                    </AppMenu>
+                    <div className='ca-navbar__profile-name'>{user && user.name}</div>
+                  </>
+                  : null
 
               }
             </div>
@@ -284,15 +285,14 @@ export class RootComponent extends React.Component<RootProps> {
               render={props => <Redirect to='/battles' />}
             />
 
-            <Route
-              exact={true}
+            <ProtectedRoute
+              status={status}
               path='/statistics'
-              render={props => (
-                <CaStatisticPage {...props}>
-                  {this.getNavbar(status)}
-                </CaStatisticPage>
-              )}
-            />
+            >
+              <CaStatisticPage {...this.props}>
+                {this.getNavbar(status)}
+              </CaStatisticPage>
+            </ProtectedRoute>
 
             <Route
               exact={true}

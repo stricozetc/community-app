@@ -15,3 +15,4 @@ export * from './MoreMenu';
 export * from './GameForm';
 export * from './Mui';
 export * from './VkDialog';
+export * from './ProtectedRoute';
