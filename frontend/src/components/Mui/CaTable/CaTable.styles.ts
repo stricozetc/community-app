@@ -17,6 +17,7 @@ export const styles = ({breakpoints}: Theme) => createStyles({
     borderBottom: '1px solid rgb(161, 161, 161)',
     fontSize: 'inherit',
     color: 'inherit',
+    textAlign: 'left',
 
     [breakpoints.down('xs')]: {
       textAlign: 'left',
@@ -27,6 +28,7 @@ export const styles = ({breakpoints}: Theme) => createStyles({
       paddingLeft: '0px',
       paddingRight: '0px',
       textAlign: 'center',
+      width: '10%',
 
       [breakpoints.down('xs')]: {
         padding: '10px',

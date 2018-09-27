@@ -44,7 +44,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             imageUrl: data.profileObj.imageUrl,
         };
         
-        this.props.socialNetworksLogin(user);        
+        this.props.socialNetworksLogin(user);
     }
 
     public errorResponseGoogle = (response: GoogleErrorResponse) => {
@@ -71,7 +71,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             accessToken: response.hash,
             imageUrl: response.photo_rec,
         };
-        
+
         this.props.socialNetworksLogin(user);
     }
 
@@ -142,7 +142,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             )
             }
             </I18n>
-        )
+        );
     }
 }
 
