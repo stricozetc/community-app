@@ -21,7 +21,7 @@ export interface RegistrationFormState {
   passwordErrors: string[];
   nameErrors: string[];
   language: string;
-  isVkDialogOpen: boolean;  
+  isVkDialogOpen: boolean;
 }
 
 export const initRegistrationFormState: RegistrationFormState = {
@@ -43,13 +43,13 @@ export const initRegistrationFormState: RegistrationFormState = {
   passwordErrors: [],
   nameErrors: [],
   language: 'eng',
-  isVkDialogOpen: false,  
+  isVkDialogOpen: false,
 };
 export interface RegistrationFormProps {
   history: History;
   status: AuthStatus;
 
-  language: string;  
+  language: string;
 
-  registerUser(user: UserFieldsToRegister): void;  
+  registerUser(user: UserFieldsToRegister): void;
 }
