@@ -205,7 +205,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
               >
                 {t('login').toUpperCase()}
               </CaButton>
-            </div>            
+            </div>
             <SocNetBlock
                 history={this.props.history}
                 isRestorePasswordVisible = {true}
