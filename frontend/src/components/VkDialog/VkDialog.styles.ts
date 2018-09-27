@@ -17,8 +17,10 @@ export const styles = () => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    width: '200px',
-    overflow: 'hidden'
+    width: '205px',
+    overflow: 'hidden',
+    padding: '10px'
+
   },
   vkDialogErr: {
     fontSize: '14px',
