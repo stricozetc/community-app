@@ -24,16 +24,20 @@ export const styles = ({breakpoints}: Theme) => createStyles({
     },
 
     '&:first-child': {
-      paddingLeft: '105px',
+      paddingLeft: '0px',
+      paddingRight: '0px',
+      textAlign: 'center',
 
       [breakpoints.down('xs')]: {
-        padding: '10px'
+        padding: '10px',
       },
 
     },
 
     '&:last-child': {
-      paddingRight: '107px',
+      paddingLeft: '0px',
+      paddingRight: '0px',
+      textAlign: 'center',
 
       [breakpoints.down('xs')]: {
         padding: '10px'
