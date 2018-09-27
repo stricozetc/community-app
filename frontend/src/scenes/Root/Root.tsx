@@ -117,7 +117,8 @@ export class RootComponent extends React.Component<RootProps> {
   }
 
   public getMenuProfilePanel = (): JSX.Element => {
-    const { user } = this.props;
+    const { user } = this.props;    
+    
     return (
       <div className='app-menu__profile'>
         <div className='app-menu__profile-icon-block'>

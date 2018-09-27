@@ -36,14 +36,15 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
     }
 
     public successResponseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        let data: GoogleSuccessResponse = response as GoogleSuccessResponse;
+        let data: GoogleSuccessResponse = response as GoogleSuccessResponse;        
         const user: SocialNetworksUser = {
             email: data.profileObj.email,
             language: getCurrentLanguageFromLocalStorage(),
-            name: data.profileObj.name,
+            name: data.profileObj.givenName,
             accessToken: data.accessToken,
+            imageUrl: data.profileObj.imageUrl,
         };
-
+        
         this.props.socialNetworksLogin(user);
     }
 
@@ -51,8 +52,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         console.log(response);
     }
 
-    public responseFacebook = (response: ReactFacebookLoginInfo) => {
-        console.log(response);
+    public responseFacebook = (response: ReactFacebookLoginInfo) => {        
         const user: SocialNetworksUser = {
             email: response.email,
             language: getCurrentLanguageFromLocalStorage(),
@@ -63,16 +63,15 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         this.props.socialNetworksLogin(user);
     }
 
-    public successResponseVk = (response: VkSuccessResponse, email: string) => {
-        console.log(response);
+    public successResponseVk = (response: VkSuccessResponse, email: string) => {        
         const user: SocialNetworksUser = {
             email: email,
             language: getCurrentLanguageFromLocalStorage(),
-            name: response.first_name + ' ' + response.last_name,
+            name: response.first_name,
             accessToken: response.hash,
+            imageUrl: response.photo_rec,
         };
-
-
+        
         this.props.socialNetworksLogin(user);
     }
 
