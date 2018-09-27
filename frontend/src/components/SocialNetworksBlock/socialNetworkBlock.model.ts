@@ -6,11 +6,11 @@ export interface SocialNetworksBlockProps {
     status: AuthStatus;
     isRestorePasswordVisible: boolean;
 
-    socialNetworksLogin(socialNetworksUser: SocialNetworksUser): void;    
+    socialNetworksLogin(socialNetworksUser: SocialNetworksUser): void;
 }
 
 export interface SocialNetworksBlockState {
-    isVkDialogOpen: boolean    
+    isVkDialogOpen: boolean
 }
 
 export const initLoginFormState: SocialNetworksBlockState = {    

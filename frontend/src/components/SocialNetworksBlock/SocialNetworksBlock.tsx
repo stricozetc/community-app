@@ -4,13 +4,12 @@ import { I18n } from 'react-i18next';
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import * as configFile from './../../config.json';
 
-
 import { VkDialog } from 'components';
-import { SocialNetworksUser, VkSuccessResponse, GoogleSuccessResponse, GoogleErrorResponse, AuthStatus } from 'models';
+import { SocialNetworksUser, VkSuccessResponse, GoogleSuccessResponse, GoogleErrorResponse, AuthStatus, SnackbarType } from 'models';
 import { getCurrentLanguageFromLocalStorage } from 'utils';
 import { SocialNetworksBlockProps, initLoginFormState, SocialNetworksBlockState } from './socialNetworkBlock.model';
 import { Dispatch } from 'redux';
-import { SocialNetworksLogin, AppState } from 'store';
+import { SocialNetworksLogin, AppState, OpenSnackbar } from 'store';
 import { connect } from 'react-redux';
 
 export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProps, SocialNetworksBlockState>{
@@ -24,8 +23,8 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
     public componentWillReceiveProps(nextProps: SocialNetworksBlockProps): void {
         if (nextProps.status === AuthStatus.Authorized) {
           this.props.history.push('/homepage');
-        }        
-    }    
+        }
+    }
 
     public redToRegistratePage(): void {
         this.props.history.push('/register');
@@ -45,11 +44,12 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             imageUrl: data.profileObj.imageUrl,
         };
         
-        this.props.socialNetworksLogin(user);
+        this.props.socialNetworksLogin(user);        
     }
 
     public errorResponseGoogle = (response: GoogleErrorResponse) => {
-        console.log(response);
+        return new OpenSnackbar({type: SnackbarType.Warning,
+        messages: [{msg: response.error}]});
     }
 
     public responseFacebook = (response: ReactFacebookLoginInfo) => {        
@@ -63,7 +63,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         this.props.socialNetworksLogin(user);
     }
 
-    public successResponseVk = (response: VkSuccessResponse, email: string) => {        
+    public successResponseVk = (response: VkSuccessResponse, email: string) => {
         const user: SocialNetworksUser = {
             email: email,
             language: getCurrentLanguageFromLocalStorage(),
@@ -86,7 +86,6 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
     public render() {
 
         const { isVkDialogOpen } = this.state;
-        
 
         return (
             <I18n>{(t) => (
