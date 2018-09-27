@@ -90,5 +90,6 @@
   "mail": "An email with a link to restore access has been sent to ",
   "forgot-password": "Forgot password?",
   "leaders": "Leaders",
-  "topTen": "Top 10"
+  "topTen": "Top 10",
+  "vkEmailWarningForAuth": "Please enter your contact e-mail"
 }
