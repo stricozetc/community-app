@@ -40,6 +40,7 @@ export const styles = ({breakpoints}: Theme) => createStyles({
       paddingLeft: '0px',
       paddingRight: '0px',
       textAlign: 'center',
+      width: '12%',
 
       [breakpoints.down('xs')]: {
         padding: '10px'

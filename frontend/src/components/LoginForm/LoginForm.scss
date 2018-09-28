@@ -155,3 +155,12 @@
       font-size: 1.4rem;
     }
 }
+
+@media(max-width:320px) {
+  .ca-login-form{
+
+    &__container{
+      padding: 3.2rem;
+    }
+  }
+}
