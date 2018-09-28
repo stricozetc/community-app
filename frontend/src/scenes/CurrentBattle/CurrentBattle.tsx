@@ -77,7 +77,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                   </div>
                 </div>
 
-                {this.props.battleStatus === 1 ? <div className='ca-current-battle__time-line'>
+                {this.props.battleStatus === BattleStatus.Wait ? <div className='ca-current-battle__time-line'>
                   <div className='ca-current-battle__time'>
                     <span className='ca-current-battle__time-description'>{t('startingIn') + ':'}</span>
                     <Countdown time={currentPlayerRoom && currentPlayerRoom.distance ? currentPlayerRoom.distance : 0} />
@@ -93,7 +93,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                   </div>
                 </div> : <h1 className='ca-current-battle__waiting-for-redirect'>Waiting for redirect</h1>}
 
-                {this.props.battleStatus === 1 ? <div className='ca-current-battle__info'>
+                {this.props.battleStatus === BattleStatus.Wait ? <div className='ca-current-battle__info'>
                   <div className='ca-current-battle__info-icon'>
                     <img src={userImage} alt='Can not found User img' />
                   </div>
@@ -104,7 +104,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                   </span>
                 </div> : null}
 
-                {this.props.battleStatus === 1 ? <div className='ca-current-battle__info'>
+                {this.props.battleStatus === BattleStatus.Wait ? <div className='ca-current-battle__info'>
                   <div className='ca-current-battle__info-icon'>
                     <img src={clockImage} alt='Can not found User img' />
                   </div>
