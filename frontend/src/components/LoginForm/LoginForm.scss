@@ -102,7 +102,7 @@
     }
 
     &__google-btn {
-      background-color: rgba(0,0,0,.33);
+      background-color: rgba(136, 5, 5, 0.322);
       display: inline-block;
       width: 25px;
       height: 25px;
@@ -120,7 +120,7 @@
       width: 25px;
       height: 25px;
       border-radius: 50%;
-      background-color: rgba(0,0,0,.33);
+      background-color: rgba(4, 40, 139, 0.425);
       border: none;
       padding: 0;
       text-align: center;
@@ -140,7 +140,7 @@
       width: 25px;
       height: 25px;
       border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.33);
+      background-color: rgba(9, 52, 102, 0.459);
       border: none;
       padding: 0;
       text-align: center;
@@ -154,4 +154,21 @@
     &__vk-email-warning {
       font-size: 1.4rem;
     }
+}
+
+@media(max-width: 768px){
+  .ca-login-form{
+
+    &__facebook-btn {
+      background-color: #3c5a98;
+    }
+
+    &__google-btn {
+      background-color: #db4437;
+    }
+
+    &__vk-btn {
+      background-color: #4A76A8;
+    }
+  }
 }
