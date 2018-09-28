@@ -21,3 +21,15 @@
       font-size: 1.6rem;
     }
 }
+
+@media(max-width:320px){
+    .ca-Registration-form{
+        &__container{
+            padding: 3.2rem;
+        }
+
+        &__registration-btn {
+            margin-left: 25px;
+        }
+    }
+}

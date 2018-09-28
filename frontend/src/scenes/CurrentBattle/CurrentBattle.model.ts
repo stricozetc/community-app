@@ -1,8 +1,9 @@
 import { History } from 'history';
 
-import { RoomInfo } from 'models';
+import { BattleStatus, RoomInfo } from 'models';
 
 export interface CurrentBattleProps {
+  battleStatus: BattleStatus;
   rooms: RoomInfo[];
   currentPlayerRoom: RoomInfo | undefined;
   history: History;
