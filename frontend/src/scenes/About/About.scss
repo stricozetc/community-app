@@ -1,0 +1,14 @@
+.ca-about {
+    &__title {
+        margin-top: 10px;
+        text-align: center;
+        color: #f4b33a;
+        font-size: 40px;
+        text-transform: uppercase;
+    }
+    &__authors-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
