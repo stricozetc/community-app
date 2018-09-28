@@ -112,12 +112,13 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
                                     onFailure={this.errorResponseGoogle}
                                 />
                             </div>
-                            <div
+                            {/* <div
                                 className='ca-login-form__vk-btn'
                                 onClick={this.handleOpenVkDialog}
                             >
                                 <i className='ca-login-form__custom-vk'></i>
-                            </div>
+                            </div> 
+                            hided vk auth */}
                         </div>
                         <VkDialog
                             apiId={configFile.frontEnd.vkApi.id}
