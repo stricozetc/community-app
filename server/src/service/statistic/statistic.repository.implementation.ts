@@ -2,6 +2,8 @@ import { StatisticRepository } from './statistic.repository';
 import { injectable, inject } from 'inversify';
 import { db } from './../../../models';
 
+import Sequelize from 'sequelize';
+
 import {
   StatisticModel,
   UserModel,
@@ -12,8 +14,7 @@ import {
   ErrorBlock,
   GamesModel,
   Game,
-  Leaders,
-  BestUsersModel
+  Leaders
 } from './../../../models';
 
 import { GameData } from './../../controller/statistic.controller';
@@ -251,31 +252,31 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       if (token) {
         return new Promise<Leaders[]>(
           async (resolveBestUsers, reject) => {
-
             try {
-              const users = await db.connect.query(
-                "SELECT u.name, s.scores FROM `community-app`.users as u inner join  (SELECT max(scores) as scores, userToken, createdAt FROM `community-app`.statistic where appToken = '" + token + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10"
-                , { model: BestUsersModel });
+              db.connect.query(
+                "SELECT u.name, s.scores FROM `community-app`.users as u inner join (SELECT max(scores) as scores, userToken, createdAt FROM `community-app`.statistic where appToken = '" + token + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10"
+                , { type: Sequelize.QueryTypes.SELECT })
+                .then(users => {
+                  const promises = users.map((currentUser: Leaders) => {
+                    try {
+                      const result = {
+                        userToken: currentUser.userToken,
+                        name: currentUser.name,
+                        scores: currentUser.scores
+                      };
+                      return result;
+                    } catch (error) {
+                      this.loggerService.errorLog(error);
+                      throw technicalErr.databaseCrash;
+                    }
+                  });
 
-              const promises = users.map((currentUser: Leaders) => {
-                try {
-                  const result = {
-                    userToken: currentUser.userToken,
-                    name: currentUser.name,
-                    scores: currentUser.scores
-                  };
-                  return result;
-                } catch (error) {
-                  this.loggerService.errorLog(error);
-                  throw technicalErr.databaseCrash;
-                }
-              });
-
-              try {
-                return resolveBestUsers(promises);
-              } catch (error) {
-                throw error;
-              }
+                  try {
+                    return resolveBestUsers(promises);
+                  } catch (error) {
+                    throw error;
+                  }
+                })
             } catch (error) {
               if (error.code) {
                 throw error;

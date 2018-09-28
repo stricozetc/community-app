@@ -1,4 +1,4 @@
-import configFile from '../../../frontend/src/config.json'
+import configFile from '../../../frontend/src/config.json';
 
 export const dbConfig = {
     connection: {
