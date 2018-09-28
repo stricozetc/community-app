@@ -40,7 +40,6 @@ export interface ModelsDbInterface {
   statistic: Model<SequelizeStaticAndInstance['Model'], {}>;
   userRoles: Model<SequelizeStaticAndInstance['Model'], {}>;
   users: Model<SequelizeStaticAndInstance['Model'], {}>;
-  bestUsers: Model<SequelizeStaticAndInstance['Model'], {}>;
 }
 
 export interface DbConfig{    
@@ -63,8 +62,6 @@ export interface DbConfig{
         database: string;
         usersModel: string;
         usersTable: string;
-        bestUsersModel: string;
-        bestUsersTable: string;
         rolesModel: string;
         rolesTable: string;
         appTokensModel: string;
