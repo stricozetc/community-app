@@ -1,10 +1,9 @@
 import Sequelize from 'sequelize';
 import { db } from './SequelizeConnect';
-import { dbConfig } from './../src/config/dbconfig';
 
 import { SequelizeStaticAndInstance } from 'sequelize';
 
-export const BestUsersModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.bestUsersModel, {
+export const BestUsersModel: SequelizeStaticAndInstance['Model'] = db.connect.define(null, {
 
     name: {
         type: Sequelize.INTEGER,

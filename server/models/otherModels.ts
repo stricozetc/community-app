@@ -63,8 +63,6 @@ export interface DbConfig{
         database: string;
         usersModel: string;
         usersTable: string;
-        bestUsersModel: string;
-        bestUsersTable: string;
         rolesModel: string;
         rolesTable: string;
         appTokensModel: string;
