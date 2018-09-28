@@ -1,4 +1,4 @@
-import configFile from '../../../frontend/src/config.json'
+import configFile from '../../../frontend/src/config.json';
 
 export const dbConfig = {
     connection: {
@@ -20,8 +20,6 @@ export const dbConfig = {
     database: 'community-app',
     usersModel: 'users',
     usersTable: 'users',
-    bestUsersModel: 'bestUser',
-    bestUsersTable: 'best_user',
     rolesModel: 'roles',
     rolesTable: 'roles',
     appTokensModel: 'appTokens',
