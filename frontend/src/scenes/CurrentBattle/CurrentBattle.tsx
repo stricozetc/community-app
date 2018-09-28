@@ -77,7 +77,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                   </div>
                 </div>
 
-                <div className='ca-current-battle__time-line'>
+                {this.props.battleStatus === 1 ? <div className='ca-current-battle__time-line'>
                   <div className='ca-current-battle__time'>
                     <span className='ca-current-battle__time-description'>{t('startingIn') + ':'}</span>
                     <Countdown time={currentPlayerRoom && currentPlayerRoom.distance ? currentPlayerRoom.distance : 0} />
@@ -91,9 +91,9 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                     </CaButton>
 
                   </div>
-                </div>
+                </div> : <h1 className='ca-current-battle__waiting-for-redirect'>Waiting for redirect</h1>}
 
-                <div className='ca-current-battle__info'>
+                {this.props.battleStatus === 1 ? <div className='ca-current-battle__info'>
                   <div className='ca-current-battle__info-icon'>
                     <img src={userImage} alt='Can not found User img' />
                   </div>
@@ -102,9 +102,9 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                     className='ca-current-battle__info-count'>
                     {currentPlayerRoom ? currentPlayerRoom.playersCount : 0}/{currentPlayerRoom ? currentPlayerRoom.maxPlayersCount : 0}
                   </span>
-                </div>
+                </div> : null}
 
-                <div className='ca-current-battle__info'>
+                {this.props.battleStatus === 1 ? <div className='ca-current-battle__info'>
                   <div className='ca-current-battle__info-icon'>
                     <img src={clockImage} alt='Can not found User img' />
                   </div>
@@ -113,7 +113,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                     className='ca-current-battle__info-count'>
                     {t('minutes', { count: currentPlayerRoom ? currentPlayerRoom.maxWaitingTime : 0 })}
                   </span>
-                </div>
+                </div> : null}
 
                 <div className='ca-current-battle__invite-button'>
                   <CaButton
@@ -141,6 +141,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
 }
 
 const mapStateToProps = (state: AppState) => ({
+  battleStatus: state.room.battleStatus,
   rooms: state.room.rooms,
   currentPlayerRoom: state.room.currentPlayerRoom,
   gameStatus: state.room.battleStatus,
