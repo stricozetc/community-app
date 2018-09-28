@@ -19,6 +19,7 @@ import {
   Switch
 } from 'react-router-dom';
 
+import { CaAbout } from 'scenes/About';
 import { CaBattles } from 'scenes/Battles';
 import { CurrentBattle } from 'scenes/CurrentBattle';
 import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
@@ -175,7 +176,7 @@ export class RootComponent extends React.Component<RootProps> {
                 to: '/battles',
                 activeClassName: 'ca-navbar__nav-item--active',
                 disabled: !isAuthorized
-              }/* , */
+              },/* , */
               // (Yegor): temporary hide statistics cuz of bad adaptiveness for mobile
               // {
               //   text: t('statistics'),
@@ -183,6 +184,12 @@ export class RootComponent extends React.Component<RootProps> {
               //   activeClassName: 'ca-navbar__nav-item--active',
               //   disabled: !isAuthorized
               // }
+              {
+                text: t('about'),
+                to: '/about',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              }
             ]}
           >
             <div className='ca-navbar__menu-container'>
@@ -360,6 +367,16 @@ export class RootComponent extends React.Component<RootProps> {
                 <CaLeadersPage {...props}>
                   {this.getNavbar(status)}
                 </CaLeadersPage>
+              )}
+            />
+
+             <Route
+              exact={true}
+              path='/about'
+              render={props => (
+                <CaAbout {...props}>
+                  {this.getNavbar(status)}
+                </CaAbout>
               )}
             />
 
