@@ -108,4 +108,12 @@
   &__invite-button {
     margin: 3.8rem 0 1.8rem 0;
   }
+
+  &__waiting-for-redirect {
+    color: #f4b33a;
+    font-size: 2.6rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+  }
 }
