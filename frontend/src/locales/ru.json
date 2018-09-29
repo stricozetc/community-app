@@ -93,5 +93,6 @@
   "forgot-password": "Забыли пароль?",
   "leaders": "Лидеры",
   "topTen": "Топ 10",
-  "vkEmailWarningForAuth": "Пожалуйста, введите свой контактный e-mail"
+  "vkEmailWarningForAuth": "Пожалуйста, введите свой контактный e-mail",
+  "waitingForRedirect": "Ожидание перенаправления"
 }

@@ -92,5 +92,6 @@
   "forgot-password": "Forgot password?",
   "leaders": "Leaders",
   "topTen": "Top 10",
-  "vkEmailWarningForAuth": "Please enter your contact e-mail"
+  "vkEmailWarningForAuth": "Please enter your contact e-mail",
+  "waitingForRedirect": "Waiting for redirect"
 }
