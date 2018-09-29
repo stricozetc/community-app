@@ -254,7 +254,9 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
           async (resolveBestUsers, reject) => {
             try {
               db.connect.query(
-                "SELECT u.name, s.scores FROM `community-app`.users as u inner join (SELECT max(scores) as scores, userToken, createdAt FROM `community-app`.statistic where appToken = '" + token + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10"
+                "SELECT u.name, s.scores FROM `community-app`.users as u inner join (SELECT max(scores) as scores, userToken, createdAt FROM `community-app`.statistic where appToken = '"
+                 + token 
+                 + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10"
                 , { type: Sequelize.QueryTypes.SELECT })
                 .then(users => {
                   const promises = users.map((currentUser: Leaders) => {

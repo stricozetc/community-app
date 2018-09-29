@@ -44,7 +44,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             imageUrl: data.profileObj.imageUrl,
         };
         
-        this.props.socialNetworksLogin(user);        
+        this.props.socialNetworksLogin(user);
     }
 
     public errorResponseGoogle = (response: GoogleErrorResponse) => {
@@ -71,7 +71,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             accessToken: response.hash,
             imageUrl: response.photo_rec,
         };
-        
+
         this.props.socialNetworksLogin(user);
     }
 
@@ -112,12 +112,13 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
                                     onFailure={this.errorResponseGoogle}
                                 />
                             </div>
-                            <div
+                            {/* <div
                                 className='ca-login-form__vk-btn'
                                 onClick={this.handleOpenVkDialog}
                             >
                                 <i className='ca-login-form__custom-vk'></i>
-                            </div>
+                            </div> 
+                            hided vk auth */}
                         </div>
                         <VkDialog
                             apiId={configFile.frontEnd.vkApi.id}
@@ -142,7 +143,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             )
             }
             </I18n>
-        )
+        );
     }
 }
 
