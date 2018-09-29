@@ -91,7 +91,7 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
                     </CaButton>
 
                   </div>
-                </div> : <h1 className='ca-current-battle__waiting-for-redirect'>Waiting for redirect</h1>}
+                </div> : <h1 className='ca-current-battle__waiting-for-redirect'>{t('waitingForRedirect')}</h1>}
 
                 {this.props.battleStatus === BattleStatus.Wait ? <div className='ca-current-battle__info'>
                   <div className='ca-current-battle__info-icon'>
