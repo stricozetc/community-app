@@ -22,6 +22,7 @@ export interface RegistrationFormState {
   nameErrors: string[];
   language: string;
   isVkDialogOpen: boolean;
+  isSpinnerRun: boolean;
 }
 
 export const initRegistrationFormState: RegistrationFormState = {
@@ -44,10 +45,11 @@ export const initRegistrationFormState: RegistrationFormState = {
   nameErrors: [],
   language: 'eng',
   isVkDialogOpen: false,
+  isSpinnerRun: false
 };
 export interface RegistrationFormProps {
   history: History;
-  status: AuthStatus;
+  status: AuthStatus;  
 
   language: string;
 

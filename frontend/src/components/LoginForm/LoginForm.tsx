@@ -23,6 +23,7 @@ import {
 
 import './LoginForm.scss';
 import { SocNetBlock } from '../SocialNetworksBlock';
+import { CaSpinner } from '../Spinner';
 
 export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
   constructor(props: LoginFormProps) {
@@ -32,8 +33,8 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   }
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
-    if (nextProps.status === AuthStatus.Authorized) {
-      this.props.history.push('/homepage');
+    if (nextProps.status === AuthStatus.Authorized) {            
+      this.props.history.push('/homepage');      
     }
   }
 
@@ -121,7 +122,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     this.setState({ emailErrors, passwordErrors });
   }
 
-  public onBlur = (field: string) => (event: React.FormEvent<HTMLSelectElement>) => {
+  public onBlur = (field: string) => () => {
     this.setState({
       touched: {
         ...this.state.touched,
@@ -143,14 +144,15 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       isPasswordValid,
       touched,
       emailErrors,
-      passwordErrors
+      passwordErrors,
+      isSpinnerRun
     } = this.state;
 
     return (
       <I18n>{(t) => (
         <div className='ca-login-form'>
           {children}
-          <form onSubmit={this.onSubmit} className='ca-login-form__container'>
+          {isSpinnerRun ? <CaSpinner isActive={true} /> : (<form onSubmit={this.onSubmit} className='ca-login-form__container'>
             <FormGroup>
               <TextField
                 id='email'
@@ -210,7 +212,9 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 history={this.props.history}
                 isRestorePasswordVisible = {true}
               />
-          </form>
+          </form>)
+          }
+          
         </div>
       )
       }
