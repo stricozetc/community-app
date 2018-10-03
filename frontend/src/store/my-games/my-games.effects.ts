@@ -30,6 +30,7 @@ export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
                 map(response => new DeleteGameSuccess(response.data)),
                 catchError(error => {
                     const messages: ErrorBlock[] =
+                    !error.response ? [{msg: error.code}] :
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
@@ -49,6 +50,7 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
                 map(response =>  new EditGameSuccess(response.data)),
                 catchError(error => {
                     const messages: ErrorBlock[] =
+                    !error.response ? [{msg: error.message}] :
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
@@ -68,6 +70,7 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
                 map(response => new AddGameSuccess(response.data)),
                 catchError(error => {
                     const messages: ErrorBlock[] =
+                    !error.response ? [{msg: error.message}] :
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
@@ -88,6 +91,7 @@ export const initMyGames$ = (action$: ActionsObservable<InitMyGames>) =>
                 map((response) => new LoadMyGamesSuccess(response.data)),
                 catchError(error => {
                     const messages: ErrorBlock[] =
+                    !error.response ? [{msg: error.message}] :
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
