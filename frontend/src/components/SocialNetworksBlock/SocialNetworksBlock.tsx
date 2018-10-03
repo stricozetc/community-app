@@ -52,7 +52,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         messages: [{msg: response.error}]});
     }
 
-    public responseFacebook = (response: ReactFacebookLoginInfo) => {        
+    public responseFacebook = (response: ReactFacebookLoginInfo) => {
         const user: SocialNetworksUser = {
             email: response.email,
             language: getCurrentLanguageFromLocalStorage(),

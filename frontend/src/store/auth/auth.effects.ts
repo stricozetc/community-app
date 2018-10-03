@@ -37,6 +37,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
+            !error.response ? [{msg: error.message}] :
             error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
@@ -55,6 +56,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
         map(() => new RegistrationSuccess('./login')),
         catchError((error) => {
           const messages: ErrorBlock[] =
+            !error.response ? [{msg: error.message}] :
             error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
@@ -111,6 +113,7 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
+            !error.response ? [{msg: error.code}] :
             error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];

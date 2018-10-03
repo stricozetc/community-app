@@ -31,6 +31,7 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
+            !error.response ? [{msg: error.message}] :
             error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
@@ -51,6 +52,7 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
+            !error.response ? [{msg: error.message}] :
             error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
@@ -81,8 +83,9 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
     switchMap((action) => {
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
-        catchError((error) => {
-          const messages: ErrorBlock[] =
+        catchError((error) => {            
+            const messages: ErrorBlock[] =
+            !error.response ? [{msg: error.message}] :
             error.name !== 'Error' ? [{msg: error.message}] :
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
