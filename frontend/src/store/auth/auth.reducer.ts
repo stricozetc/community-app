@@ -14,6 +14,24 @@ export const authReducer = (state = initialState, action: AuthActions) => {
                 user: action.payload
             };
         }
+        case AuthTypes.RegisterUser: {
+            return {
+                ...state,
+                spinnerRun: true
+            };
+        }
+        case AuthTypes.RegistrationSuccess: {
+            return {
+                ...state,
+                spinnerRun: false
+            };
+        }        
+        case AuthTypes.LoginUser: {
+            return {
+                ...state,
+                spinnerRun: true
+            };
+        }
         default:
             return state;
     }

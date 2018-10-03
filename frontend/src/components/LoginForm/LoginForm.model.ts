@@ -39,6 +39,7 @@ export const initLoginFormState: LoginFormState = {
 export interface LoginFormProps {
   status: AuthStatus;
   history: History;
+  spinnerRun: boolean
 
   loginUser(user: UserFieldsToLogin): void;
   socialNetworksLogin(socialNetworksUser: SocialNetworksUser): void;

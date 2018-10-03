@@ -15,7 +15,7 @@ export enum AuthTypes {
   SetCurrentUser = '[auth] Set Current User',
   RegistrationSuccess = '[auth] Registration (Success)',
   RegistrationError = '[auth] Registration (Error)',
-  SocialNetworksLogin = '[auth] Social Networks Login',
+  SocialNetworksLogin = '[auth] Social Networks Login'  
 }
 
 @action()

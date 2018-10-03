@@ -156,7 +156,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           (t) => (
             <div>
               {this.props.children}
-              {this.state.isSpinnerRun ? <CaSpinner isActive={true} /> :
+              {this.props.spinnerRun ? <CaSpinner isActive={true} /> :
               (<form
                 onSubmit={this.handleSubmit}
                 className='ca-Registration-form__container'
@@ -306,6 +306,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   language: state.userSettings.language,
+  spinnerRun: state.auth.spinnerRun
   
 });
 

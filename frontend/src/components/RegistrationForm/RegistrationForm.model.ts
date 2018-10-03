@@ -49,7 +49,8 @@ export const initRegistrationFormState: RegistrationFormState = {
 };
 export interface RegistrationFormProps {
   history: History;
-  status: AuthStatus;  
+  status: AuthStatus;
+  spinnerRun: boolean;  
 
   language: string;
 

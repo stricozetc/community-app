@@ -145,14 +145,14 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       touched,
       emailErrors,
       passwordErrors,
-      isSpinnerRun
+      /* isSpinnerRun */
     } = this.state;
 
     return (
       <I18n>{(t) => (
         <div className='ca-login-form'>
           {children}
-          {isSpinnerRun ? <CaSpinner isActive={true} /> : (<form onSubmit={this.onSubmit} className='ca-login-form__container'>
+          {this.props.spinnerRun ? <CaSpinner isActive={true} /> : (<form onSubmit={this.onSubmit} className='ca-login-form__container'>
             <FormGroup>
               <TextField
                 id='email'
@@ -239,6 +239,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   errors: state.errors,
+  spinnerRun: state.auth.spinnerRun
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
