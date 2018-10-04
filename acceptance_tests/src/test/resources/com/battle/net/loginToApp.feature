@@ -1,5 +1,8 @@
-Feature: Example feature
+Feature: Login to application as test user
 
   Scenario: User can login to BattleNet
-    When User login to BattleNet
-    Then Check user is logged in
+    Given User register to app first time
+      | email             | password | name     |
+      | testemail@mail.ru | 123456   | testuser |
+    When User login to App
+    Then Check user is logged in successfully

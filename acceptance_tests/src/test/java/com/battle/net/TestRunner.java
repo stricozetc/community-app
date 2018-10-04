@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/com/battle/net"},
         tags = {"~@Ignore"},
         plugin = {
-                "com.epam.reportportal.cucumber.StepReporter"
+                "com.battle.net.StepReporterHooksDisabled"
         }
 )
 public class TestRunner {

@@ -6,4 +6,11 @@ public class Constants {
         public static final String BASE_URI = "http://localhost:3030/";
         public static final String API_USERS = "api/users/";
     }
+
+    public final class Db {
+
+        public static final String URI = "jdbc:mysql://localhost:3306/community-app";
+        public static final String LOGIN = "root";
+        public static final String PASSWORD = "password";
+    }
 }
