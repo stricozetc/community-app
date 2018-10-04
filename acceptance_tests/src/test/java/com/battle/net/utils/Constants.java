@@ -1,4 +1,4 @@
-package com.battle.net;
+package com.battle.net.utils;
 
 public class Constants {
     public final class Uri {

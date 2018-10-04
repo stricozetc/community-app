@@ -1,3 +1,4 @@
+@API
 Feature: Register new user to App
 
   Scenario: Register new user to App

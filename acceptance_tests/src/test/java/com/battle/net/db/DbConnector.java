@@ -1,6 +1,6 @@
 package com.battle.net.db;
 
-import com.battle.net.Constants.*;
+import com.battle.net.utils.Constants.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
