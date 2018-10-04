@@ -18,6 +18,8 @@ import {
   RegistrationSuccess,
   SetCurrentUser,
   SocialNetworksLogin,
+  RegistrationError,
+  LoginError,  
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
@@ -42,7 +44,9 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}),
+          new LoginError()
+          );
         })
       )
     )
@@ -53,7 +57,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     ofType(AuthTypes.RegisterUser),
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
-        map(() => new RegistrationSuccess('./login')),
+        map(() => new RegistrationSuccess('/login')),
         catchError((error) => {
           const messages: ErrorBlock[] =
             !error.response ? [{msg: error.message}] :
@@ -61,7 +65,9 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}),
+          new RegistrationError()
+          );
         })
       )
     )

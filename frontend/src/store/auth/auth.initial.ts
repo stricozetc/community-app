@@ -6,5 +6,6 @@ type State = AuthState;
 
 export const initialState: State = {
   status: AuthStatus.NotAuthorized,
-  user: undefined
+  user: undefined,
+  spinnerRun: false
 };
