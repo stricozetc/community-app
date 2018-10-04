@@ -17,7 +17,9 @@ import {
   RegisterUser,
   RegistrationSuccess,
   SetCurrentUser,
-  SocialNetworksLogin,  
+  SocialNetworksLogin,
+  RegistrationError,
+  LoginError,  
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
@@ -41,7 +43,9 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}),
+          new LoginError()
+          );
         })
       )
     )
@@ -59,7 +63,9 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
             Array.isArray(error.response.data) ? error.response.data :
             [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}),
+          new RegistrationError()
+          );
         })
       )
     )

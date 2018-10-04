@@ -15,7 +15,8 @@ export enum AuthTypes {
   SetCurrentUser = '[auth] Set Current User',
   RegistrationSuccess = '[auth] Registration (Success)',
   RegistrationError = '[auth] Registration (Error)',
-  SocialNetworksLogin = '[auth] Social Networks Login'  
+  SocialNetworksLogin = '[auth] Social Networks Login',
+  LoginError = '[auth] Login (error)'
 }
 
 @action()
@@ -53,9 +54,7 @@ export class RegistrationSuccess {
 
 @action()
 export class RegistrationError {
-  public readonly type = AuthTypes.RegistrationError;
-
-  constructor(public payload: string) { }
+  public readonly type = AuthTypes.RegistrationError;  
 }
 
 @action()
@@ -65,6 +64,11 @@ export class SocialNetworksLogin {
   constructor(public payload: SocialNetworksUser) { }
 }
 
+@action()
+export class LoginError {
+  public readonly type = AuthTypes.LoginError;   
+}
+
 export type AuthActions =
   | RegisterUser
   | LoginUser
@@ -72,4 +76,5 @@ export type AuthActions =
   | SetCurrentUser
   | RegistrationSuccess
   | RegistrationError
-  | SocialNetworksLogin;
+  | SocialNetworksLogin
+  | LoginError;
