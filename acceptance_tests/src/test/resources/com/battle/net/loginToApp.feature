@@ -1,3 +1,4 @@
+@API
 Feature: Login to application as test user
 
   Scenario: User can login to BattleNet

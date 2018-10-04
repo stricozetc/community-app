@@ -7,8 +7,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.battle.net.Constants.Uri.API_USERS;
-import static com.battle.net.Constants.Uri.BASE_URI;
+import static com.battle.net.utils.Constants.Uri.API_USERS;
+import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static io.restassured.RestAssured.given;
 
 @Slf4j
