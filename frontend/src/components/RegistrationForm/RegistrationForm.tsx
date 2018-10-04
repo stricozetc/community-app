@@ -17,12 +17,13 @@ import {
 
 import './RegistrationForm.scss';
 import { SocNetBlock } from '../SocialNetworksBlock';
+import { CaSpinner } from '../Spinner';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: RegistrationFormProps) {
     super(props);
     this.state = initRegistrationFormState;
-  }
+  }   
 
   public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const email = event.target.value;
@@ -47,7 +48,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
     this.setState({ passwordToRepeat });
   }
-
+  
   public handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
@@ -60,6 +61,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     };
 
     this.props.registerUser(user);
+    console.log(user);
+    /* this.setState({isSpinnerRun: true}); */
   }
 
   public checkValidation = (): void => {
@@ -113,7 +116,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
         passwordErrors,
         frontEndValidationErrorsRegister.password.min
       );
-    }
+    }    
 
     if (emailErrors.length <= 0) {
       this.setState({ isEmailValid: true });
@@ -132,8 +135,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     } else {
       this.setState({ isPasswordValid: false });
     }
-
-    this.setState({ emailErrors, passwordErrors, nameErrors });
+    
+    this.setState({ emailErrors, passwordErrors, nameErrors });    
   }
 
   public handleBlur = (field: string) => (event: React.FormEvent<HTMLElement>) => {
@@ -153,7 +156,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
           (t) => (
             <div>
               {this.props.children}
-              <form
+              {this.props.spinnerRun ? <CaSpinner isActive={true} /> :
+              (<form
                 onSubmit={this.handleSubmit}
                 className='ca-Registration-form__container'
               >
@@ -267,16 +271,17 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                     !this.state.isEmailValid ||
                     !this.state.isPasswordValid ||
                     !this.state.isNameValid ||
-                    this.state.password !== this.state.passwordToRepeat
+                    this.state.password !== this.state.passwordToRepeat                    
                   }
                 >
                   {t('register')}
-                </CaButton>
+                </CaButton>                
               <SocNetBlock
                 history={this.props.history}
                 isRestorePasswordVisible={false}
               />
-              </form>
+              </form>)
+            }            
             </div>
           )
         }
@@ -293,14 +298,16 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     if (index) {
       arr.splice(index, 1);
     }
-
+    
     return arr;
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
-  language: state.userSettings.language
+  language: state.userSettings.language,
+  spinnerRun: state.auth.spinnerRun
+  
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
