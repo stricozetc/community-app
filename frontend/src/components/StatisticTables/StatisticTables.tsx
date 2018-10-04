@@ -139,6 +139,19 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     );
   }
 
+  public getNameOfHeaders(tableHeadersName: any, statistic: object): string[] {
+    const propertyNames = Object.keys(statistic);
+    const headersName: string[] = [];
+
+    propertyNames.forEach(property => {
+      if (tableHeadersName[property]) {
+        headersName.push(tableHeadersName[property]);
+      }
+    });
+
+    return [...headersName];
+  }
+
   public changeContent(activeTab: number): void {
 
     switch (activeTab) {
@@ -163,13 +176,16 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         ];
         const rowData = [...this.props.statistic.bestUsers];
 
-        this.setState({
-          activeTab,
-          rowData,
-          columnDef
-        });
+        if (!this.isArrayEmpty(rowData)) {
 
+          this.setState({
+            activeTab,
+            rowData,
+            columnDef
+          });
+        }
         break;
+
       }
 
       case StatTab.TheMostPopularGames: {
@@ -192,12 +208,15 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
           },
         ];
         const rowData = [...this.props.statistic.mostPopularGames] || [];
+        
+        if (!this.isArrayEmpty(rowData)) {
 
-        this.setState({
-          activeTab,
-          rowData,
-          columnDef
-        });
+          this.setState({
+            activeTab,
+            rowData,
+            columnDef
+          });
+        }
 
         break;
       }
@@ -223,16 +242,21 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         ];
         const rowData = [...this.props.statistic.recentGames] || [];
 
-        this.setState({
-          activeTab,
-          rowData,
-          columnDef
-        });
+        if (!this.isArrayEmpty(rowData)) {
 
+          this.setState({
+            activeTab,
+            rowData,
+            columnDef
+          });
+        }
         break;
       }
       default:
         break;
     }
+  }
+  public isArrayEmpty<T>(arrayOfData: T[]): boolean {
+    return !Array.isArray(arrayOfData) || !arrayOfData.length;
   }
 }
