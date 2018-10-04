@@ -1,8 +1,13 @@
 package com.battle.net.service;
 
-import com.battle.net.model.User;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+
+import com.battle.net.model.User;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -35,5 +40,23 @@ public class UserControllerService {
                 .body(jObj.toString())
                 .when().post(BASE_URI + API_USERS + "register")
                 .then().extract().response();
+    }
+
+    public static Response selectLanguage(String lang, String email) {
+        log.debug("User with email {} selected language: {}", email,lang);
+        Map<String, String> data = new HashMap<>();
+        data.put("userEmail", email);
+        data.put("userLanguage", lang);
+        return given()
+            .contentType(ContentType.JSON)
+            .body(data).when()
+            .post(BASE_URI + API_USERS + "user-language");
+    }
+
+    public static Response getUserLanguage(String email) {
+        log.debug("Get language by email: {}", email);
+        return given().queryParam("email", email)
+                      .when().get(BASE_URI + API_USERS + "get-user-language")
+                      .then().extract().response();
     }
 }

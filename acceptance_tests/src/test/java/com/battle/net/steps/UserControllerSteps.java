@@ -38,4 +38,19 @@ public class UserControllerSteps {
         Assert.assertEquals(container.response.statusCode(), 200);
         Assert.assertEquals(container.response.path("isActive"), true);
     }
+
+    @When("^User select \"([^\"]*)\" language$")
+    public void userSelectLanguage(String lang) {
+        container.response = UserControllerService.selectLanguage(lang,container.user.getEmail());
+        Assert.assertEquals(200,container.response.statusCode());
+
+
+    }
+
+    @Then("^User language is \"([^\"]*)\"$")
+    public void userLanguageIs(String lang) {
+         container.response = UserControllerService.getUserLanguage(container.user.getEmail());
+        Assert.assertEquals(200, container.response.statusCode());
+   Assert.assertEquals(lang, container.response.getBody().asString());
+    }
 }
