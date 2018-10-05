@@ -198,7 +198,8 @@ export enum SettingFormType {
 
 export enum chartsTypes {
   WinRate = 'winRate',
-  NoChartsAvailable = 'noChartsAvailable'
+  NoChartsAvailable = 'noChartsAvailable',
+  WeekReport = 'weekReport'
 }
 
 export const JsMarathonCharts: string[] = [chartsTypes.WinRate];
@@ -297,4 +298,36 @@ export interface GoogleSuccessResponse extends GoogleLoginResponse, GoogleLoginR
 export interface GoogleErrorResponse {
   details?: string,
   error: string
+}
+
+export interface WeekReportData {
+  dayOfWeek: 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
+  values: YAxisFields[];
+}
+
+export interface YAxisFields {
+  name: string;
+  value: number;
+}
+
+export enum DaysOfWeek {
+  SUNDAY,
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY
+}
+
+export interface ConvertedWeekReportData {
+  dayOfWeek: string;
+  values: YAxisFields[];
+}
+
+export interface Margin{
+  top: number;
+  left: number;
+  bottom: number;
+  right: number;
 }

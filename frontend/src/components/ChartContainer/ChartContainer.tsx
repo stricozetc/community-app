@@ -9,6 +9,7 @@ import { chartsTypes } from 'models';
 
 import { ChartContainerProps, ChartContainerState } from './ChartContainer.model';
 import './ChartContainer.scss';
+import { BarChart } from '../BarChart';
 
 export class ChartContainer extends React.Component<ChartContainerProps, ChartContainerState> {
   public constructor(props: ChartContainerProps) {
@@ -48,6 +49,27 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
         const diagramData = ChartsService.getWinRateData(itemName, statistics.recentGames);
 
         chartComponent = <CircleDiagram diagramData={diagramData} />;
+
+        break;
+      }
+      case chartsTypes.WeekReport: {
+        const diagramData = ChartsService.getWeekReportData(itemName, statistics.recentGames);
+        const config = {
+          margin: {
+            top: 70,
+            right: 40,
+            bottom: 30,
+            left: 40
+          },
+          animationDuration: 300,
+          marginBetweenLegends: 30,
+          legendRectHeight: 18,
+          legendRectWidth: 18,
+          ticksNumber: 5,
+          legendRectMargins: 38,
+          legendTextMargins: 44
+        }
+        chartComponent = <BarChart diagramData={diagramData} config={config}/>;
 
         break;
       }

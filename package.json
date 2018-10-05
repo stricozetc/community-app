@@ -9,7 +9,9 @@
     "full-start": "npm install && npm start"
   },
   "dependencies": {
-    "concurrently": "^3.6.1"
+    "@types/d3": "^5.0.0",
+    "concurrently": "^3.6.1",
+    "react-d3": "^0.4.0"
   },
   "devDependencies": {
     "@types/history": "^4.7.0"
