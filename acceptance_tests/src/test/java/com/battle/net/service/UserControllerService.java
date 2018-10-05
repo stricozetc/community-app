@@ -36,7 +36,6 @@ public class UserControllerService {
 
         JsonObject jObj = (JsonObject) new GsonBuilder().create().toJsonTree(credentials);
         jObj.addProperty("password2", credentials.getPassword());
-        if (credentials.getLanguage() == null) jObj.addProperty("language", "en");
 
         return given()
                 .contentType(ContentType.JSON)
