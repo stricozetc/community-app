@@ -44,7 +44,7 @@ public class UserControllerService {
     }
 
     public static Response selectLanguage(String language, User user) {
-        log.debug("User {} selected language: {}", user.toString(), language);
+        log.debug("User: {} selected language: {}", user.toString(), language);
 
         Map<String, String> data = new HashMap<>();
         data.put("userEmail", user.getEmail());
