@@ -12,9 +12,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.battle.net.utils.Constants.Uri.API_COMMON;
 import static com.battle.net.utils.Constants.Uri.API_USERS;
 import static com.battle.net.utils.Constants.Uri.BASE_URI;

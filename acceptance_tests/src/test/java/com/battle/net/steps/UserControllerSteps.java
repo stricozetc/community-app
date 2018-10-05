@@ -54,12 +54,12 @@ public class UserControllerSteps {
         Assert.assertTrue(container.response.as(Boolean.class));
     }
     
-    @When("^User select '(en|ru)' language$")
+    @When("^User select (en|ru) language$")
     public void userSelectLanguage(String language) {
         container.response = UserControllerService.selectLanguage(language, container.user);
     }
 
-    @Then("^User language is '(en|ru)'$")
+    @Then("^User language is (en|ru)$")
     public void userLanguageIs(String language) {
         container.response = UserControllerService.getUserLanguage(container.user);
         Assert.assertEquals(200, container.response.statusCode());
