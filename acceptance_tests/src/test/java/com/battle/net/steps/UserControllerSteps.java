@@ -1,15 +1,17 @@
 package com.battle.net.steps;
 
-import com.battle.net.utils.Container;
 import com.battle.net.model.User;
 import com.battle.net.service.UserControllerService;
+import com.battle.net.utils.Container;
+
+import org.junit.Assert;
+
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
-
 
 public class UserControllerSteps {
+
     private Container container;
 
     public UserControllerSteps(Container container) {
@@ -39,18 +41,15 @@ public class UserControllerSteps {
         Assert.assertEquals(container.response.path("isActive"), true);
     }
 
-    @When("^User select \"([^\"]*)\" language$")
-    public void userSelectLanguage(String lang) {
-        container.response = UserControllerService.selectLanguage(lang,container.user.getEmail());
-        Assert.assertEquals(200,container.response.statusCode());
-
-
+    @When("^User select '(en|ru)' language$")
+    public void userSelectLanguage(String language) {
+        container.response = UserControllerService.selectLanguage(language, container.user);
     }
 
-    @Then("^User language is \"([^\"]*)\"$")
-    public void userLanguageIs(String lang) {
-         container.response = UserControllerService.getUserLanguage(container.user.getEmail());
+    @Then("^User language is '(en|ru)'$")
+    public void userLanguageIs(String language) {
+        container.response = UserControllerService.getUserLanguage(container.user);
         Assert.assertEquals(200, container.response.statusCode());
-   Assert.assertEquals(lang, container.response.getBody().asString());
+        Assert.assertEquals(language, container.response.getBody().asString());
     }
 }

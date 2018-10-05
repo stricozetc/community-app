@@ -18,6 +18,7 @@ import static io.restassured.RestAssured.given;
 
 @Slf4j
 public class UserControllerService {
+
     public static Response login(User user) {
         log.debug("Login as user: {}", user.toString());
         return given()
@@ -42,20 +43,20 @@ public class UserControllerService {
                 .then().extract().response();
     }
 
-    public static Response selectLanguage(String lang, String email) {
-        log.debug("User with email {} selected language: {}", email,lang);
+    public static Response selectLanguage(String lang, User user) {
+        log.debug("User with email {} selected language: {}", user.getEmail(), lang);
         Map<String, String> data = new HashMap<>();
-        data.put("userEmail", email);
+        data.put("userEmail", user.getEmail());
         data.put("userLanguage", lang);
         return given()
             .contentType(ContentType.JSON)
-            .body(data).when()
-            .post(BASE_URI + API_USERS + "user-language");
+            .body(data)
+            .when().post(BASE_URI + API_USERS + "user-language");
     }
 
-    public static Response getUserLanguage(String email) {
-        log.debug("Get language by email: {}", email);
-        return given().queryParam("email", email)
+    public static Response getUserLanguage(User user) {
+        log.debug("Get language by email: {}", user.getEmail());
+        return given().queryParam("email", user.getEmail())
                       .when().get(BASE_URI + API_USERS + "get-user-language")
                       .then().extract().response();
     }
