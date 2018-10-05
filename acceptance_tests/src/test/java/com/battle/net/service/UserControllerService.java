@@ -43,11 +43,13 @@ public class UserControllerService {
                 .then().extract().response();
     }
 
-    public static Response selectLanguage(String lang, User user) {
-        log.debug("User with email {} selected language: {}", user.getEmail(), lang);
+    public static Response selectLanguage(String language, User user) {
+        log.debug("User {} selected language: {}", user.toString(), language);
+
         Map<String, String> data = new HashMap<>();
         data.put("userEmail", user.getEmail());
-        data.put("userLanguage", lang);
+        data.put("userLanguage", language);
+
         return given()
             .contentType(ContentType.JSON)
             .body(data)
@@ -55,7 +57,8 @@ public class UserControllerService {
     }
 
     public static Response getUserLanguage(User user) {
-        log.debug("Get language by email: {}", user.getEmail());
+        log.debug("Get language for user: {}", user.toString());
+
         return given().queryParam("email", user.getEmail())
                       .when().get(BASE_URI + API_USERS + "get-user-language")
                       .then().extract().response();
