@@ -2,7 +2,6 @@
 Feature: Switch language
 
     Scenario: User can switch language
-    User can login to BattleNet
         Given User register to app first time
             | email             | password | name     |
             | testemail@mail.ru | 123456   | testuser |

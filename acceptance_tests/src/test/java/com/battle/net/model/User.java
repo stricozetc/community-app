@@ -16,4 +16,5 @@ public class User {
     private String password;
     private String name;
     private int id;
+    private String language;
 }

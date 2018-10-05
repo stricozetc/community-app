@@ -36,7 +36,7 @@ public class UserControllerService {
 
         JsonObject jObj = (JsonObject) new GsonBuilder().create().toJsonTree(credentials);
         jObj.addProperty("password2", credentials.getPassword());
-        jObj.addProperty("language", "en");
+        if (credentials.getLanguage() == null) jObj.addProperty("language", "en");
 
         return given()
                 .contentType(ContentType.JSON)
@@ -61,7 +61,7 @@ public class UserControllerService {
                 .when().post(BASE_URI + API_COMMON + "user-settings/change-password")
                 .then().statusCode(200).extract().response();
     }
-    
+
     public static Response selectLanguage(String language, User user) {
         log.debug("User: {} selected language: {}", user.toString(), language);
 
