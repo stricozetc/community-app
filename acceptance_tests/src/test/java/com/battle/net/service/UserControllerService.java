@@ -12,6 +12,10 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.battle.net.utils.Constants.Uri.API_COMMON;
 import static com.battle.net.utils.Constants.Uri.API_USERS;
 import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static io.restassured.RestAssured.given;
@@ -21,6 +25,7 @@ public class UserControllerService {
 
     public static Response login(User user) {
         log.debug("Login as user: {}", user.toString());
+        
         return given()
                 .contentType(ContentType.JSON)
                 .body(user)
@@ -43,6 +48,23 @@ public class UserControllerService {
                 .then().extract().response();
     }
 
+    public static Response changePassword(String newPassword, User user, String token) {
+        Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("userId", user.getId());
+        jsonMap.put("oldPassword", user.getPassword());
+        jsonMap.put("newPassword", newPassword);
+        jsonMap.put("repeatNewPassword", newPassword);
+
+        log.debug("User change password from '{}' to '{}'", user.getPassword(), newPassword);
+
+        return given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .body(jsonMap)
+                .when().post(BASE_URI + API_COMMON + "user-settings/change-password")
+                .then().statusCode(200).extract().response();
+    }
+    
     public static Response selectLanguage(String language, User user) {
         log.debug("User: {} selected language: {}", user.toString(), language);
 
