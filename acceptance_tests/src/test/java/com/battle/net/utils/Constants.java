@@ -5,6 +5,7 @@ public class Constants {
 
         public static final String BASE_URI = "http://localhost:3030/";
         public static final String API_USERS = "api/users/";
+        public static final String API_COMMON = "api/v1/";
     }
 
     public final class Db {
