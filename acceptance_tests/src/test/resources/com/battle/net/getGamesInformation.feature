@@ -1,3 +1,4 @@
+@API @GAME
 Feature: Get games information
 
   Scenario: Get games information for the user
