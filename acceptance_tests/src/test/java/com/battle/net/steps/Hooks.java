@@ -26,11 +26,18 @@ public class Hooks {
         log.info("Scenario '{}' started", scenario.getName());
     }
 
-    @After
+    @After(order = 0)
     public void after(Scenario scenario) {
-        log.debug("Delete user from DB (user: {})", container.user.toString());
+        log.debug("Delete user from DB: ({})", container.user.toString());
         new DbConnector().deleteUser(container.user);
 
         log.info("Scenario '{}' {}", scenario.getName(), scenario.getStatus());
+    }
+
+
+    @After(order = 1, value = "@GAME")
+    public void afterGameScenario() {
+        log.debug("Delete game from DB: ({})", container.game.toString());
+        new DbConnector().deleteGame(container.game);
     }
 }
