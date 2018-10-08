@@ -1,5 +1,5 @@
 @API
-Feature: Removing the game
+Feature: Remove the game
 
     Scenario: Removing the game
         Given User register to app first time
