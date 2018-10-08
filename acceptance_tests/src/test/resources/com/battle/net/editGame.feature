@@ -10,4 +10,6 @@ Feature: Edit the game
     When User edit the game with new parameters
       | description   | this game is edited |
       | maxRoomPlayer | 2                   |
-    Then The game is edited successfully
+    And User get information about games
+    Then Check games information is valid
+
