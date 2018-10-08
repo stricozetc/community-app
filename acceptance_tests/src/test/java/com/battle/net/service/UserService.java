@@ -18,7 +18,7 @@ import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static io.restassured.RestAssured.given;
 
 @Slf4j
-public class UserControllerService {
+public class UserService {
 
     public static Response login(User user) {
         log.debug("Login as user: {}", user.toString());
@@ -26,7 +26,7 @@ public class UserControllerService {
         return given()
                 .contentType(ContentType.JSON)
                 .body(user)
-                .when().post(BASE_URI + API_USERS + "login")
+                .when().post(BASE_URI + API_USERS + "/login")
                 .then().extract().response();
 
     }
@@ -40,7 +40,7 @@ public class UserControllerService {
         return given()
                 .contentType(ContentType.JSON)
                 .body(jObj.toString())
-                .when().post(BASE_URI + API_USERS + "register")
+                .when().post(BASE_URI + API_USERS + "/register")
                 .then().extract().response();
     }
 
@@ -57,7 +57,7 @@ public class UserControllerService {
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .body(jsonMap)
-                .when().post(BASE_URI + API_COMMON + "user-settings/change-password")
+                .when().post(BASE_URI + API_COMMON + "/user-settings/change-password")
                 .then().statusCode(200).extract().response();
     }
 
@@ -71,14 +71,14 @@ public class UserControllerService {
         return given()
             .contentType(ContentType.JSON)
             .body(data)
-            .when().post(BASE_URI + API_USERS + "user-language");
+            .when().post(BASE_URI + API_USERS + "/user-language");
     }
 
     public static Response getUserLanguage(User user) {
         log.debug("Get language for user: {}", user.toString());
 
         return given().queryParam("email", user.getEmail())
-                      .when().get(BASE_URI + API_USERS + "get-user-language")
+                      .when().get(BASE_URI + API_USERS + "/get-user-language")
                       .then().extract().response();
     }
 }
