@@ -1,4 +1,4 @@
-@API @GAME
+@API
 Feature: Edit the game
 
   Scenario: Edition the game

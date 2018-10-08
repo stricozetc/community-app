@@ -1,4 +1,4 @@
-@API @GAME
+@API
 Feature: Removing the game
 
     Scenario: Removing the game
@@ -7,5 +7,5 @@ Feature: Removing the game
             | testemail@mail.ru | 123456   | testuser | en       |
         And User login to App
         And User add game with name "FlappyBirdRemovingTestGame"
-        When User remove the game
-        Then Game is removed for the user
+        When User remove the game "FlappyBirdRemovingTestGame"
+        Then Game is removed successfully
