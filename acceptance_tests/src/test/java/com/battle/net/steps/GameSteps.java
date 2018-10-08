@@ -45,4 +45,16 @@ public class GameSteps {
         Game responseGame = container.response.jsonPath().getObject("find { it.appName.equals('" + container.game.getAppName() + "')}", Game.class);
         Assert.assertEquals(container.game, responseGame);
     }
+
+    @Then("^Game is removed successfully$")
+    public void gameIsRemovedForTheUser() {
+        Assert.assertEquals(200, container.response.statusCode());
+    }
+
+    @When("^User remove the game \"([^\"]*)\"$")
+    public void userRemoveTheGame(String appName) {
+        container.response = GameService.getGame(container.user);
+        Game gameForRemoving =container.response.jsonPath().getObject("find { it.appName.equals('" + appName + "')}", Game.class);
+        container.response = GameService.deleteGame(gameForRemoving);
+    }
 }

@@ -12,3 +12,4 @@ Feature: Edit the game
       | maxRoomPlayer | 2                   |
     And User get information about games
     Then Check games information is valid
+
