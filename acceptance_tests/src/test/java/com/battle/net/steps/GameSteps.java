@@ -18,12 +18,12 @@ public class GameSteps {
     public void userAddGameWithName(String appName) {
         container.game = new Game(container.user.getId(), appName);
         container.response = GameService.addGame(container.game);
+        container.game = container.response.as(Game.class);
     }
 
     @Then("^Game is added for the user$")
     public void gameIsAddedForTheUser() {
         Assert.assertEquals(container.response.statusCode(), 200);
-        container.game = container.response.as(Game.class);
     }
 
 }
