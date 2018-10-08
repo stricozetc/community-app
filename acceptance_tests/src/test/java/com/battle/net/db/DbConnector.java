@@ -1,5 +1,6 @@
 package com.battle.net.db;
 
+import com.battle.net.model.Game;
 import com.battle.net.utils.Constants.*;
 
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import static java.lang.String.format;
 @Slf4j
 public class DbConnector {
     private static final String DELETE_USER = "DELETE FROM `community-app`.users where email='%s'";
+    private static final String DELETE_GAME = "DELETE FROM `community-app`.games where appName='%s'";
 
     public DbConnector() {
         try {
@@ -33,8 +35,27 @@ public class DbConnector {
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement()) {
 
-            stmt.executeUpdate(format(DELETE_USER, user.getEmail()));
-            log.debug("User is deleted (email: {})", user.getEmail());
+            log.debug("Query to delete user: {}", format(DELETE_USER, user.getEmail()));
+
+            int count = stmt.executeUpdate(format(DELETE_USER, user.getEmail()));
+
+            log.debug("Number of deleted records: {}", count);
+            log.debug("User is deleted successfully (user: {})", user.toString());
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    public void deleteGame(Game game) {
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement()) {
+
+            log.debug("Query to delete game: {}", format(DELETE_GAME, game.getAppName()));
+
+            int count = stmt.executeUpdate(format(DELETE_GAME, game.getAppName()));
+
+            log.debug("Number of deleted records: {}", count);
+            log.debug("Game is deleted successfully");
         } catch (SQLException e) {
             log.error(e.getMessage());
         }
