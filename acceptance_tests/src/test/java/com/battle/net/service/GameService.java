@@ -15,7 +15,7 @@ public class GameService {
     public static Response addGame(Game game) {
         log.debug("Add game with params (game:{})", game.toString());
 
-        return given().log().all()
+        return given()
                 .contentType(ContentType.JSON)
                 .body(game)
                 .when().post(BASE_URI + MY_GAME + "/add-game")

@@ -35,10 +35,14 @@ public class GameSteps {
         container.response = GameService.editGame(container.game);
     }
 
-    @Then("^The game is edited successfully$")
-    public void theGameIsEditedSuccessfully() {
+    @When("^User get information about games$")
+    public void userGetInformationAboutGames() {
         container.response = GameService.getGame(container.user);
-        Game editedGame = container.response.jsonPath().getObject("find { it.appName.equals('" + container.game.getAppName() + "')}", Game.class);
-        Assert.assertEquals(container.game, editedGame);
+    }
+
+    @Then("^Check games information is valid$")
+    public void checkGamesInformationIsValid() {
+        Game responseGame = container.response.jsonPath().getObject("find { it.appName.equals('" + container.game.getAppName() + "')}", Game.class);
+        Assert.assertEquals(container.game, responseGame);
     }
 }
