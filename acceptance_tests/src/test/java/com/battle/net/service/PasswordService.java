@@ -20,7 +20,7 @@ public class PasswordService {
         Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("userEmail", user.getEmail());
 
-        return given().log().all()
+        return given()
                 .contentType(ContentType.JSON)
                 .body(jsonMap)
                 .when().post(BASE_URI + RESTORE_PASSWORD + "/send-mail")
