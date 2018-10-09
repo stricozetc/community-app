@@ -18,9 +18,9 @@ public class UserSteps {
         this.container = container;
     }
 
-    @When("^User login to App")
-    public void userLoginToApp() {
-        container.response = UserService.login(container.user);
+    @When("^User \"([^\"]*)\" login to App")
+    public void userLoginToApp(String userName) {
+        container.response = UserService.login(container.userMap.get(userName));
         container.token = container.response.path("token");
     }
 
@@ -30,11 +30,12 @@ public class UserSteps {
         Assert.assertEquals(container.response.path("success"), true);
     }
 
-    @When("^User register to app first time$")
-    public void userRegisterToAppFirstTime(DataTable credentials) {
-        container.user = credentials.asList(User.class).get(0);
-        container.response = UserService.register(container.user);
-        container.user.setId(container.response.path("id"));
+    @When("^User registers to app first time$")
+    public void userRegistersToAppFirstTime(DataTable credentials) {
+        User user = credentials.asList(User.class).get(0);
+        container.response = UserService.register(user);
+        user.setId(container.response.path("id"));
+        container.userMap.put(user.getName(), user);
     }
 
     @Then("^Check user is registered successfully$")
@@ -43,14 +44,14 @@ public class UserSteps {
         Assert.assertEquals(container.response.path("isActive"), true);
     }
 
-    @When("^User select (en|ru) language$")
-    public void userSelectLanguage(String language) {
-        container.response = UserService.selectLanguage(language, container.user);
+    @When("^User \"([^\"]*)\" select (en|ru) language$")
+    public void userSelectLanguage(String username, String language) {
+        container.response = UserService.selectLanguage(language, container.userMap.get(username));
     }
 
-    @Then("^User language is (en|ru)$")
-    public void userLanguageIs(String language) {
-        container.response = UserService.getUserLanguage(container.user);
+    @Then("^The language for user \"([^\"]*)\" is (en|ru)$")
+    public void userLanguageIs(String username, String language) {
+        container.response = UserService.getUserLanguage(container.userMap.get(username));
         Assert.assertEquals(200, container.response.statusCode());
         Assert.assertEquals(language, container.response.getBody().asString());
     }
