@@ -40,7 +40,7 @@ public class DbConnector {
             int count = stmt.executeUpdate(format(DELETE_USER, user.getEmail()));
 
             log.debug("Number of deleted records: {}", count);
-            log.debug("User is deleted successfully (user: {})", user.toString());
+            if (count > 0) log.debug("User is deleted successfully (user: {})", user.toString());
         } catch (SQLException e) {
             log.error(e.getMessage());
         }
@@ -55,7 +55,7 @@ public class DbConnector {
             int count = stmt.executeUpdate(format(DELETE_GAME, game.getAppName()));
 
             log.debug("Number of deleted records: {}", count);
-            log.debug("Game is deleted successfully");
+            if (count > 0) log.debug("Game is deleted successfully");
         } catch (SQLException e) {
             log.error(e.getMessage());
         }

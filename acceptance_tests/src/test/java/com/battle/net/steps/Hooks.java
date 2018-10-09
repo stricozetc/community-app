@@ -28,8 +28,10 @@ public class Hooks {
 
     @After(order = 0)
     public void after(Scenario scenario) {
-        log.debug("Delete user from DB: ({})", container.user.toString());
-        new DbConnector().deleteUser(container.user);
+        container.userMap.values().forEach(user -> {
+            log.debug("Delete user from DB: ({})", user.toString());
+            new DbConnector().deleteUser(user);
+        });
 
         log.info("Scenario '{}' {}", scenario.getName(), scenario.getStatus());
     }
@@ -37,7 +39,9 @@ public class Hooks {
 
     @After(order = 1, value = "@GAME")
     public void afterGameScenario() {
-        log.debug("Delete game from DB: ({})", container.game.toString());
-        new DbConnector().deleteGame(container.game);
+        container.gameMap.values().forEach(game -> {
+            log.debug("Delete game from DB: ({})", game.toString());
+            new DbConnector().deleteGame(game);
+        });
     }
 }

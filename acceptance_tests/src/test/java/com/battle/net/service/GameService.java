@@ -9,11 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static com.battle.net.utils.Constants.Uri.MY_GAME;
 import static io.restassured.RestAssured.given;
+import static java.lang.String.format;
 
 @Slf4j
 public class GameService {
     public static Response addGame(Game game) {
-        log.debug("Add game with params (game:{})", game.toString());
+        log.debug("Add game ({})", game.toString());
 
         return given()
                 .contentType(ContentType.JSON)
@@ -23,7 +24,7 @@ public class GameService {
     }
 
     public static Response deleteGame(Game game) {
-        log.debug("Delete game with params (game:{})", game.toString());
+        log.debug("Delete game ({})", game.toString());
 
         return given()
                 .contentType(ContentType.JSON)
@@ -33,7 +34,7 @@ public class GameService {
     }
 
     public static Response editGame(Game game) {
-        log.debug("Edit game with params (game:{})", game.toString());
+        log.debug("Edit game ({})", game.toString());
 
         return given()
                 .contentType(ContentType.JSON)
@@ -42,7 +43,7 @@ public class GameService {
                 .then().statusCode(200).extract().response();
     }
 
-    public static Response getGame(User user) {
+    public static Response getGames(User user) {
         log.debug("Get all games for user");
 
         return given()
@@ -50,5 +51,25 @@ public class GameService {
                 .param("userId", user.getId())
                 .when().get(BASE_URI + MY_GAME + "/get-games")
                 .then().statusCode(200).extract().response();
+    }
+
+    public static Game createNewGame(User user, String appName, String port) {
+        log.debug("Create new game for {} with name {} on port {}", user.toString(), appName, port);
+
+        return Game.builder()
+                .userId(user.getId())
+                .appName(appName)
+                .description(appName)
+                .maxRoomPlayer(5)
+                .maxRooms(1)
+                .maxWaitingTime(20)
+                .approve(true)
+                .requestUrl(format("http://localhost:%s", port))
+                .redirectUrl(format("http://localhost:%s/home", port))
+                .registrationEventName("on" + appName)
+                .leaveEventName("onLeave" + appName)
+                .updateRoomsInfoEventName("onUpdateRoomsInfo" + appName)
+                .notifyCountdown("onNotifyCountdown" + appName)
+                .build();
     }
 }

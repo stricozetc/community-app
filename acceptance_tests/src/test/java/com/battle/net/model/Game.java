@@ -1,5 +1,7 @@
 package com.battle.net.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,29 +14,26 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 public class Game implements Comparable {
     private Integer id;
     private Integer userId;
     private String appName;
-    private String description = "Test game for testing";
-    private Integer maxRoomPlayer = 2;
-    private Integer maxRooms = 1;
-    private String requestUrl = "http://localhost:8040";
-    private Integer maxWaitingTime = 20;
-    private String redirectUrl = "http://localhost:8040/home";
-    private String registrationEventName = "onFlappyBirdTest";
-    private String leaveEventName = "onLeaveFlappyBirdTest";
-    private String updateRoomsInfoEventName = "onUpdateRoomsInfoFlappyBirdTest";
-    private String notifyCountdown = "onNotifyCountdownFlappyBirdTest";
-    private Boolean approve = true;
+    private String description;
+    private Integer maxRoomPlayer;
+    private Integer maxRooms;
+    private String requestUrl;
+    private Integer maxWaitingTime;
+    private String redirectUrl;
+    private String registrationEventName;
+    private String leaveEventName;
+    private String updateRoomsInfoEventName;
+    private String notifyCountdown;
+    private Boolean approve;
     private String appToken;
     private String updatedAt;
     private String createdAt;
-
-    public Game(int userId, String appName) {
-        this.userId = userId;
-        this.appName = appName;
-    }
 
     @Override
     public int compareTo(Object o) {

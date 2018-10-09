@@ -4,9 +4,12 @@ import com.battle.net.model.Game;
 import com.battle.net.model.User;
 import io.restassured.response.Response;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Container {
     public Response response;
-    public User user;
+    public Map<String, User> userMap = new HashMap<>();
     public String token;
-    public Game game;
+    public Map<String, Game> gameMap = new HashMap<>();
 }

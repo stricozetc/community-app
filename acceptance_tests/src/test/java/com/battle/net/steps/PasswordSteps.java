@@ -14,10 +14,10 @@ public class PasswordSteps {
         this.container = container;
     }
 
-    @When("^User change password to \"([^\"]*)\"$")
-    public void userChangePasswordTo(String newPassword) {
-        container.response = UserService.changePassword(newPassword, container.user, container.token);
-        container.user.setPassword(newPassword);
+    @When("^User \"([^\"]*)\" changes password to \"([^\"]*)\"$")
+    public void userChangePasswordTo(String userName, String newPassword) {
+        container.response = UserService.changePassword(newPassword, container.userMap.get(userName), container.token);
+        container.userMap.get(userName).setPassword(newPassword);
     }
 
     @Then("^Password is changed successfully$")
@@ -25,9 +25,9 @@ public class PasswordSteps {
         Assert.assertTrue(container.response.as(Boolean.class));
     }
 
-    @When("^User restores the password$")
-    public void userRestoresThePassword() {
-        container.response = PasswordService.restorePassword(container.user);
+    @When("^User \"([^\"]*)\" restores the password$")
+    public void userRestoresThePassword(String userName) {
+        container.response = PasswordService.restorePassword(container.userMap.get(userName));
     }
 
     @Then("^The password is restored successfully$")

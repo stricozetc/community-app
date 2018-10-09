@@ -2,12 +2,13 @@
 Feature: Switch language
 
   Scenario: User can switch language
-    Given User register to app first time
+    Given User registers to app first time
       | email             | password | name     | language |
       | testemail@mail.ru | 123456   | testuser | en       |
-    When User select en language
-    Then User language is en
-    When User select ru language
-    Then User language is ru
-    When User select en language
-    Then User language is en
+    And User "testuser" login to App
+    When User "testuser" select en language
+    Then The language for user "testuser" is en
+    When User "testuser" select ru language
+    Then The language for user "testuser" is ru
+    When User "testuser" select en language
+    Then The language for user "testuser" is en
