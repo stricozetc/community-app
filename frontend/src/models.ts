@@ -202,9 +202,10 @@ export enum chartsTypes {
   WeekReport = 'weekReport'
 }
 
-export const JsMarathonCharts: string[] = [chartsTypes.WinRate];
-
 export const MyGameCharts: string[] = [chartsTypes.WinRate];
+
+export const MyWeekCharts: string[] = [chartsTypes.WeekReport];
+
 export interface Errors {
   [key: string]: [{ code: number; msg: string }];
 }

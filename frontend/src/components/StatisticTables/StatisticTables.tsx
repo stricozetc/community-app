@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import { CaTab, CaTable, CaTabs } from 'components';
 
-import {
-  JsMarathonCharts,
+import {  
   MyGameCharts,
+  MyWeekCharts,
   Row,
   RowProperty,
   StatTab,
@@ -62,26 +62,13 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     }
   }
 
-  public getChartList = (itemNate: string) => {
+  public getChartList = (itemName: string) => {    
+
     let chartList: string[];
 
-    switch (itemNate) {
-      case 'JsMarathon': {
-        chartList = [...JsMarathonCharts];
-
-        break;
-      }
-      case 'MyGame': {
-        chartList = [...MyGameCharts];
-
-        break;
-      }
-      default: {
-        chartList = [chartsTypes.NoChartsAvailable];
-
-        break;
-      }
-    }
+    let gamesNames: string[] = this.props.games.games.map(item => item.appName);
+    gamesNames.indexOf(itemName) != -1 ? chartList = [...MyGameCharts, ...MyWeekCharts] :
+    chartList = [chartsTypes.NoChartsAvailable];
 
     return chartList;
   }
