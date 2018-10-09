@@ -13,9 +13,10 @@ export class RestorePasswordController {
   ) { }
 
   /**
-   * @param {string} request.body.userEmail - user email
-   * after successful validation of the user email,
-   * the service is sends a message to the email, controller return code 200
+    * @param {Request} request - data from request
+        @param {any} body - data from request
+          @param {string} userEmail - user email
+    * the service is sends a message to the email, controller return code 200
   */
   @httpPost('/send-mail')
   public async sendMail(request: Request, response: Response): Promise<Response> {

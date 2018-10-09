@@ -14,9 +14,10 @@ export class UserSettingsController1 {
   ) { }
 
   /**
-   * @param {FieldsToChangePassword} request.body - array of games results
-   * after successful validation input data,
-   * controller return true
+    * @param {Request} request - data from request
+        @param {FieldsToChangePassword} body - array of games results
+    * after successful validation input data,
+    * controller return true
   */
   @httpPost('/user-settings/change-password', passport.authenticate('jwt', { session: false }))
   public async postRegister(

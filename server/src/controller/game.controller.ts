@@ -12,7 +12,7 @@ export class GameController {
   }
   
   /**
-   * return array of games from db if they have status approve=1
+    * return array of games from db if they have status approve=1
   */
   @httpGet('/get-games')
   public async getGames(request: Request, response: Response): Promise<void | Response> {

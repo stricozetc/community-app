@@ -12,8 +12,9 @@ export class RegisterAppController {
   ) { }
 
   /**
-   * @param {Game} request.query - game information
-   * after successful validation of the game data, controller return the application token
+    * @param {Request} request - data from request
+        @param {any} query - game information
+    * after successful validation of the game data, controller return the application token
   */
   @httpGet('/app-token')
   public async getAppToken(request: Request, response: Response): Promise<Response> {
