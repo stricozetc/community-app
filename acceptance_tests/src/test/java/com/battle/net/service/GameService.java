@@ -6,6 +6,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.battle.net.utils.Constants.Uri.ALL_GAMES;
 import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static com.battle.net.utils.Constants.Uri.MY_GAME;
 import static io.restassured.RestAssured.given;
@@ -71,5 +72,14 @@ public class GameService {
                 .updateRoomsInfoEventName("onUpdateRoomsInfo" + appName)
                 .notifyCountdown("onNotifyCountdown" + appName)
                 .build();
+    }
+
+    public static Response getAllGamesFromAllUsers() {
+        log.debug("Get all games for all users");
+
+        return given()
+                .contentType(ContentType.JSON)
+                .when().get(BASE_URI + ALL_GAMES + "/get-games")
+                .then().statusCode(200).extract().response();
     }
 }
