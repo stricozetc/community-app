@@ -13,7 +13,7 @@ export function createStyled<T>(styles: T): (props: Props<T>) => JSX.Element {
   function Styled(props: Props<T>): JSX.Element {
     const { children, ...other } = props;
     // tslint:disable-next-line:typedef
-    return children(other as any);
+    return children(other as { classes: Classes<T> });
   }
 
   return withStyles(styles)(Styled) as (props: Props<T>) => JSX.Element;
