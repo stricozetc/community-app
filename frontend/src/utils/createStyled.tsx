@@ -12,6 +12,7 @@ interface Props<T> {
 export function createStyled<T>(styles: T): (props: Props<T>) => JSX.Element {
   function Styled(props: Props<T>): JSX.Element {
     const { children, ...other } = props;
+    // tslint:disable-next-line:typedef
     return children(other as any);
   }
 
