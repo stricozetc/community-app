@@ -28,6 +28,9 @@ export class StatisticController {
   @httpPost('/set-game-result')
   public async setGameResult(request: Request, response: Response): Promise<void | Response> {
     const data: GameData[] = request.body;
+    console.log(`==========================`);
+    console.log(request.body)
+    console.log(`==========================`);
 
     for (let index = 0; index < data.length; index++) {
       const { errors, isValid } = validateGameDataInput(data[index]);

@@ -254,6 +254,7 @@ export interface RecentGames {
   game: string;
   scores: number;
   result: number;
+  playedAt: string;
 }
 
 export interface SnackbarPayload {

@@ -119,6 +119,7 @@ export class ChartsService {
     let historyForGame = historyOfUserGames.filter(
       item => item.game === gameName
     );
+    console.log(historyForGame);
 
     switch (today) {
       case DaysOfWeek.SUNDAY: {
@@ -191,23 +192,24 @@ export class ChartsService {
       }
     }
 
-    console.log(daysToShowOnScreen);
+    console.log(daysToShowOnScreen, gameName);
 
     const weekReportData: WeekReportData[] = daysToShowOnScreen.map(
       (day: number) => {
         const historyForDay = historyForGame.filter(item => {
-          const playedAtTime = new Date(item.playedAt);
+          const playedAtTime = new Date(item.playedAt);          
 
           const thatTime = {
             day: playedAtTime.getDay(),
             date: playedAtTime.getDate()
           }
+          console.log(thatTime);
 
           return thatTime.day === day && Math.abs(d.getDate() - thatTime.date) <= 6; // if this is that day of week and current week
         });
-
+        console.log(historyForDay);
         const results = historyForDay.map(h => h.result);
-        console.log(results, 'results');
+        console.log(results, '----------------- results');
 
         let winsNumber = 0;
         let losesNumber = 0;
@@ -259,7 +261,7 @@ export class ChartsService {
         };
       }
     );
-
+    console.log(weekReportData);
     return weekReportData;
   }
 }
