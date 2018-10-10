@@ -93,5 +93,6 @@
   "leaders": "Leaders",
   "topTen": "Top 10",
   "vkEmailWarningForAuth": "Please enter your contact e-mail",
-  "waitingForRedirect": "Waiting for redirect"
+  "waitingForRedirect": "Waiting for redirect",
+  "weekReport": "Week report"
 }

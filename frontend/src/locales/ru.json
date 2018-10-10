@@ -94,5 +94,6 @@
   "leaders": "Лидеры",
   "topTen": "Топ 10",
   "vkEmailWarningForAuth": "Пожалуйста, введите свой контактный e-mail",
-  "waitingForRedirect": "Ожидание перенаправления"
+  "waitingForRedirect": "Ожидание перенаправления",
+  "weekReport": "Недельный отчет"
 }
