@@ -2,6 +2,12 @@ import { connect as nativeConnect } from 'react-redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
 import {
+  AuthEffects,
+  AuthState,
+  authReducer
+} from './auth';
+
+import {
   applyMiddleware,
   combineReducers,
   compose,
@@ -9,39 +15,10 @@ import {
 } from 'redux';
 
 import {
-  AuthEffects,
-  AuthState,
-  authReducer
-} from './auth';
-
-import {
   GamesEffects,
   GamesState,
   gamesReducer
 } from './games';
-
-import {
-  StatisticEffects,
-  StatisticState,
-  statisticReducer
-} from './statistic';
-
-import {
-  SocketEffects,
-  SocketState,
-  socketReducer
-} from './socket';
-
-import {
-  UserSettingsEffects,
-  UserSettingsState,
-  userSettingsReducer
-} from './userSettings';
-
-import {
-  SnackbarUiState,
-  snackbarUiReducer
-} from './snackbar';
 
 import {
   MyGamesEffects,
@@ -60,7 +37,31 @@ import {
   RoomState,
   roomReducer
 } from './room';
+
 import { SnackbarErrorMessage } from 'components';
+
+import {
+  SnackbarUiState,
+  snackbarUiReducer
+} from './snackbar';
+
+import {
+  SocketEffects,
+  SocketState,
+  socketReducer
+} from './socket';
+
+import {
+  StatisticEffects,
+  StatisticState,
+  statisticReducer
+} from './statistic';
+
+import {
+  UserSettingsEffects,
+  UserSettingsState,
+  userSettingsReducer
+} from './userSettings';
 
 const rootReducers = combineReducers({
   auth: authReducer,

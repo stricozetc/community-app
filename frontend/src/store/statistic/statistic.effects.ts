@@ -2,7 +2,7 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { BestUser, Leaders, MostPopularGames, RecentGames, SnackbarType, ErrorBlock, } from 'models';
+import { BestUser, ErrorBlock, Leaders, MostPopularGames, RecentGames, SnackbarType } from 'models';
 import { HttpWrapper } from 'services';
 import { OpenSnackbar } from 'store/snackbar';
 
@@ -27,12 +27,12 @@ export const initBestUsers$ = (actions$: ActionsObservable<InitBestUsers>) =>
         map((response) => new LoadBestUsersCompleted(response.data)),
         catchError((error) => {
           const messages: ErrorBlock[] =
-          !error.response ? [{msg: error.code}] :
-          error.name !== 'Error' ? [{msg: error.message}] :
-          Array.isArray(error.response.data) ? error.response.data :
-          [error.response.data];
+            !error.response ? [{ msg: error.code }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       )
     )
@@ -46,12 +46,12 @@ export const initMostPopularGames$ = (actions$: ActionsObservable<InitMostPopula
         map((response) => new LoadMostPopularGamesCompleted(response.data)),
         catchError((error) => {
           const messages: ErrorBlock[] =
-          !error.response ? [{msg: error.message}] :
-          error.name !== 'Error' ? [{msg: error.message}] :
-          Array.isArray(error.response.data) ? error.response.data :
-          [error.response.data];
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       )
     )
@@ -63,14 +63,14 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
       from(HttpWrapper.get<RecentGames[]>(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
         map((response) => new LoadRecentGamesCompleted(response.data)),
         catchError((error) => {
-          console.log()
+          console.log();
           const messages: ErrorBlock[] =
-          !error.response ? [{msg: error.message}] :
-          error.name !== 'Error' ? [{msg: error.message}] :
-          Array.isArray(error.response.data) ? error.response.data :
-          [error.response.data];
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       )
     )
@@ -82,13 +82,13 @@ export const initLeaders$ = (actions$: ActionsObservable<InitLeaders>) =>
       from(HttpWrapper.get<Leaders[]>(`api/v1/statistic/get-leaders?appName=${action.appName}`)).pipe(
         map((response) => new LoadLeadersCompleted(response.data)),
         catchError((error) => {
-           const messages: ErrorBlock[] =
-            !error.response ? [{msg: error.message}] :
-            error.name !== 'Error' ? [{msg: error.message}] :
-            Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data];
+          const messages: ErrorBlock[] =
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-            return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       )
     )

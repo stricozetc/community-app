@@ -1,6 +1,6 @@
 import { ActionsObservable, ofType } from 'redux-observable';
 import { Observable, of } from 'rxjs';
-import { map, switchMap, withLatestFrom, ignoreElements } from 'rxjs/operators';
+import { ignoreElements, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { GameModel, RoomInfo } from 'models';
 import { AppState, EmitEventWithOptions } from 'store';

@@ -33,8 +33,8 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   }
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
-    if (nextProps.status === AuthStatus.Authorized) {            
-      this.props.history.push('/homepage');      
+    if (nextProps.status === AuthStatus.Authorized) {
+      this.props.history.push('/homepage');
     }
   }
 
@@ -214,7 +214,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
               />
           </form>)
           }
-          
+
         </div>
       )
       }

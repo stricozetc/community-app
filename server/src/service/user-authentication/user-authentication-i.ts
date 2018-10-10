@@ -97,21 +97,21 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                         const payload = {
                             id: user.id,
                             name: user.name,
-                                    email: user.email,
-                                    token: user.token,
-                                };
-                                jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
-                                    if (error) {
-                                        throw error;
-                                    }
-                                    resolve({
-                                        success: true,
-                                        token: 'Bearer ' + token
-                                    });
-                                });
-                            } else {
-                                return reject(logicErr.wrongPassword(user.email));
+                            email: user.email,
+                            token: user.token,
+                        };
+                        jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
+                            if (error) {
+                                throw error;
                             }
+                            resolve({
+                                success: true,
+                                token: 'Bearer ' + token
+                            });
+                        });
+                    } else {
+                        return reject(logicErr.wrongPassword(user.email));
+                    }
 
                 }
             } catch (error) {

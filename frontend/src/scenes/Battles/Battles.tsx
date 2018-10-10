@@ -15,9 +15,9 @@ import { isEmpty } from 'utils';
 import {
   AppState,
   JoinRoom,
+  LeaveRoom,
   LoadGames,
   LogoutUser,
-  LeaveRoom,
 } from 'store';
 
 import { BattleProps } from './Battles.model';

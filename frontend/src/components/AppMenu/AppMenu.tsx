@@ -2,6 +2,7 @@ import * as React from 'react';
 import { I18n } from 'react-i18next';
 
 import {
+  Avatar,
   ClickAwayListener,
   Grow,
   IconButton,
@@ -11,7 +12,6 @@ import {
   MenuList,
   Paper,
   Popper,
-  Avatar
 } from '@material-ui/core';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';

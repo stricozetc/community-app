@@ -1,4 +1,4 @@
-import { ResultStatus, WinRateDiagramData, RecentGames  } from 'models';
+import { RecentGames, ResultStatus, WinRateDiagramData } from 'models';
 import { i18nInstance } from 'utils/i18n';
 
 import { EChartOption } from 'echarts';

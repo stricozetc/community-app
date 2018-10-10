@@ -33,7 +33,7 @@ export class SocketServiceImplementation implements SocketService {
   }
   public async setSocket(socketIO: SocketIO.Server): Promise<void | Response> {
 
-    this.games = await this.gamesRepository.getGames(); 
+    this.games = await this.gamesRepository.getGames();
 
     socketIO.on('connection', (client: SocketIO.Socket) => {
       this.loggerService.infoLog('Player connection opened');
