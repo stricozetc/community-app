@@ -118,8 +118,7 @@ export class ChartsService {
 
     let historyForGame = historyOfUserGames.filter(
       item => item.game === gameName
-    );
-    console.log(historyForGame);
+    );    
 
     switch (today) {
       case DaysOfWeek.SUNDAY: {
@@ -202,14 +201,12 @@ export class ChartsService {
           const thatTime = {
             day: playedAtTime.getDay(),
             date: playedAtTime.getDate()
-          }
-          console.log(thatTime);
+          }          
 
           return thatTime.day === day && Math.abs(d.getDate() - thatTime.date) <= 6; // if this is that day of week and current week
         });
-        console.log(historyForDay);
-        const results = historyForDay.map(h => h.result);
-        console.log(results, '----------------- results');
+
+        const results = historyForDay.map(h => h.result);        
 
         let winsNumber = 0;
         let losesNumber = 0;
@@ -231,11 +228,8 @@ export class ChartsService {
         let averageScores = 0;
 
         if (!isEmpty(historyForDay)) {
-          const scoresSum = historyForDay.reduce((a, b) => a + b.scores, 0);
-          console.log('historyForDay', historyForDay);
-          console.log('scoresSum', scoresSum);
-          averageScores = scoresSum / numberOfBattles;
-          console.log('average Scores', averageScores);
+          const scoresSum = historyForDay.reduce((a, b) => a + b.scores, 0);          
+          averageScores = scoresSum / numberOfBattles;          
         }
         const dayOfWeek:
           | 'Sunday'
@@ -261,7 +255,7 @@ export class ChartsService {
         };
       }
     );
-    console.log(weekReportData);
+    
     return weekReportData;
   }
 }
