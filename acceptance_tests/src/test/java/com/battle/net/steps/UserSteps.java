@@ -35,6 +35,7 @@ public class UserSteps {
         User user = credentials.asList(User.class).get(0);
         container.response = UserService.register(user);
         user.setId(container.response.path("id"));
+        user.setToken(container.response.path("token"));
         container.userMap.put(user.getName(), user);
     }
 

@@ -78,4 +78,14 @@ public class GameSteps {
     public void userHasGame(String userName, int countOfGames) {
         Assert.assertEquals(container.response.jsonPath().getList("$").size(), countOfGames);
     }
+
+    @And("^User sets redirectUrl \"([^\"]*)\" to game \"([^\"]*)\"$")
+    public void userSetsRedirectUrlToGame(String url, String appName) {
+        container.gameMap.get(appName).setRedirectUrl(url);
+    }
+
+    @And("^User sets appToken for game \"([^\"]*)\" to DB$")
+    public void userSetsAppTokenForGameToDB(String appName) {
+        GameService.setAppTokenToDB(container.gameMap.get(appName));
+    }
 }
