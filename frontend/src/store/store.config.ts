@@ -1,4 +1,3 @@
-/* tslint:disable */
 import { connect as nativeConnect } from 'react-redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
@@ -12,7 +11,8 @@ import {
   applyMiddleware,
   combineReducers,
   compose,
-  createStore
+  createStore,
+  StoreEnhancer
 } from 'redux';
 
 import {
@@ -102,9 +102,13 @@ export interface AppState {
   room: RoomState;
 }
 
-const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
+const reduxDevTools: StoreEnhancer<{
+  dispatch: {};
+}, {}> = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
-const composeForAllBrowsers = (devTools: any) => {
+const composeForAllBrowsers = (devTools: StoreEnhancer<{
+  dispatch: {};
+}, {}>) => {
   return devTools ? compose(
     applyMiddleware(epicMiddleware),
     devTools
@@ -116,7 +120,9 @@ const composeForAllBrowsers = (devTools: any) => {
 
 export const store = createStore(
   rootReducers,
-  composeForAllBrowsers(reduxDevTools)
+  composeForAllBrowsers(reduxDevTools as StoreEnhancer<{
+    dispatch: {};
+  }, {}>)
 );
 
 epicMiddleware.run(rootEpic);
