@@ -27,7 +27,7 @@ export class StatisticController {
 
   /**
     * @param {Request} request - data from request
-        @param {GameData[]} body - array of games results
+    * @param {GameData[]} request.body - array of games results
     * after successful validation of the game results,
     * controller return true
   */
@@ -56,8 +56,8 @@ export class StatisticController {
 
   /**
     * @param {Request} request - data from request
-        @param {any} query - data from request
-          @param {number} userId - array of games results
+    * @param {object} request.query - data from request
+    * @param {number} request.query.userId - array of games results
     * controller return recently played games by the user with this id
   */
   @httpGet('/recent-games', passport.authenticate('jwt', { session: false }))
@@ -125,8 +125,8 @@ export class StatisticController {
 
   /**
     * @param {Request} request - data from request
-        @param {any} query - data from request
-          @param {number} appName - application id
+    * @param {any} request.query - data from request
+    * @param {number} request.query.appName - application id
     * controller return top 10 best users by specific game
   */
   @httpGet('/get-leaders')

@@ -13,7 +13,9 @@ export class RegisterAppController {
 
   /**
     * @param {Request} request - data from request
-        @param {any} query - game information
+    * @param {Game} request.query - game information
+    * @param {ErrorBlock[]} request.query.errors - list of errors
+    * @param {boolean} request.query.isValid - is token valid ? (true or false)
     * after successful validation of the game data, controller return the application token
   */
   @httpGet('/app-token')

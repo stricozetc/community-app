@@ -17,8 +17,8 @@ export class MyGameController {
 
   /**
     * @param {Request} request - data from request
-        @param {Game} body - information about the game you want to remove
-    * return all games after changes if you successfully  deleted the game
+    * @param {Game} request.body - information about the game you want to remove
+    * return all games after changes if you successfully deleted the game
   */
   @httpPost('/delete-game')
   public async deleteGame(request: Request, response: Response): Promise<void | Response> {
@@ -33,8 +33,8 @@ export class MyGameController {
 
   /**
     * @param {Request} request - data from request
-        @param {Game} body - information about the game you want to update
-    * return all games after changes if you successfully  edited the game
+    * @param {Game} request.body - information about the game you want to update
+    * return all games after changes if you successfully edited the game
   */
   @httpPost('/edit-game')
   public async editGame(request: Request, response: Response): Promise<void | Response> {
@@ -49,7 +49,7 @@ export class MyGameController {
 
   /**
     * @param {Request} request - data from request
-        @param {Game} body - information about the game you want to add
+    * @param {Game} request.body - information about the game you want to add
     * return info about the game if you successfully added the game
   */
   @httpPost('/add-game')
@@ -74,8 +74,8 @@ export class MyGameController {
 
   /**
     * @param {Request} request - data from request
-        @param {any} query - data from request
-          @param {number} userId - id of the user who created the game
+    * @param {Game} request.query - data from request
+    * @param {number} request.query.userId - id of the user who created the game
     * return array of games from db if the user created them with the passed id
   */
   @httpGet('/get-games')

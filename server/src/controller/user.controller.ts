@@ -22,7 +22,7 @@ export class UserController {
 
   /**
     * @param {Request} request - data from request
-        @param {UserFieldsToRegister} body - user data for registration
+    * @param {UserFieldsToRegister} request.body - user data for registration
     * after successful validation input data,
     * controller return user data
   */
@@ -43,7 +43,7 @@ export class UserController {
 
   /**
     * @param {Request} request - data from request
-        @param {User} body - user data for login
+    * @param {User} request.body - user data for login
     * after successful validation input data,
     * controller return Promise<{ success: boolean, token: string }>
   */
@@ -65,9 +65,9 @@ export class UserController {
 
   /**
     * @param {Request} request - data from request
-        @param {any} body - data from request
-          @param {string} userEmail - user email
-          @param {string} userLanguage - language data
+    * @param {object} request.body - data from request
+    * @param {string} request.body.userEmail - user email
+    * @param {string} request.body.userLanguage - language data
     * after successful validation input data,
     * controller return Promise<{ success: boolean, token: string }>
   */
@@ -97,8 +97,8 @@ export class UserController {
 
  /**
     * @param {Request} request - data from request
-        @param {any} query - data from request
-          @param {string} email - user email
+    * @param {object} request.query - data from request
+    * @param {string} request.query.email - user email
     * after successful validation email,
     * controller return user language from db
   */
@@ -124,12 +124,12 @@ export class UserController {
 
   /**
     * @param {Request} request - data from request
-        @param {any} body - data from request
-          @param {string} email - user email
-          @param {string} name - user name
-          @param {string} language - user language
-          @param {string} accessToken - user accessToken
-          @param {string} imageUrl - user imageUrl
+    * @param {object} request.body - data from request
+    * @param {string} request.body.email - user email
+    * @param {string} request.body.name - user name
+    * @param {string} request.body.language - user language
+    * @param {string} request.body.accessToken - user accessToken
+    * @param {string} request.body.imageUrl - user imageUrl
     * after successful validation input data,
     * controller return Promise<{ success: boolean, token: string }>
   */

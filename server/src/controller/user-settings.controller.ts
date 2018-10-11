@@ -15,7 +15,9 @@ export class UserSettingsController1 {
 
   /**
     * @param {Request} request - data from request
-        @param {FieldsToChangePassword} body - array of games results
+    * @param {FieldsToChangePassword} request.body - data from request
+    * @param {Errorblock[]} request.body.errors - array with errors
+    * @param {boolean} request.body.isValid - is password valid ? (true or false)
     * after successful validation input data,
     * controller return true
   */
