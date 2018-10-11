@@ -1,7 +1,6 @@
 import { DaysOfWeek } from 'models';
 
-export const translateNumberOfWeekToItsName = (d: number):
-'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' => {
+export const translateNumberOfWeekToItsName = (d: number): string => {
   switch (d) {
       case DaysOfWeek.SATURDAY:
         return 'Saturday';
@@ -21,4 +20,4 @@ export const translateNumberOfWeekToItsName = (d: number):
       default:
         return 'Saturday';
     }
-}
+};

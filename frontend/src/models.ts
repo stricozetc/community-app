@@ -303,7 +303,7 @@ export interface GoogleErrorResponse {
 }
 
 export interface WeekReportData {
-  dayOfWeek: 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
+  dayOfWeek: string;
   values: YAxisFields[];
 }
 

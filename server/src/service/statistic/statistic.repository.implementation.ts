@@ -88,7 +88,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
               game: gameName,
               scores: game.scores,
               result: game.resultStatus,
-              playedAt: game.updatedAt/* .dateToString() */
+              playedAt: game.updatedAt
             };
 
             return accumulator.concat(result);

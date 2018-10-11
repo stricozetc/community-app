@@ -206,7 +206,7 @@ export class ChartsService {
           return thatTime.day === day && Math.abs(d.getDate() - thatTime.date) <= 6; // if this is that day of week and current week
         });
 
-        const results = historyForDay.map(h => h.result);        
+        const results = historyForDay.map(h => h.result);
 
         let winsNumber = 0;
         let losesNumber = 0;
@@ -228,17 +228,10 @@ export class ChartsService {
         let averageScores = 0;
 
         if (!isEmpty(historyForDay)) {
-          const scoresSum = historyForDay.reduce((a, b) => a + b.scores, 0);          
-          averageScores = scoresSum / numberOfBattles;          
+          const scoresSum = historyForDay.reduce((a, b) => a + b.scores, 0);
+          averageScores = scoresSum / numberOfBattles;
         }
-        const dayOfWeek:
-          | 'Sunday'
-          | 'Monday'
-          | 'Tuesday'
-          | 'Wednesday'
-          | 'Thursday'
-          | 'Friday'
-          | 'Saturday' = translateNumberOfWeekToItsName(day);
+        const dayOfWeek = translateNumberOfWeekToItsName(day);
 
         return {
           dayOfWeek,
@@ -259,4 +252,3 @@ export class ChartsService {
     return weekReportData;
   }
 }
-
