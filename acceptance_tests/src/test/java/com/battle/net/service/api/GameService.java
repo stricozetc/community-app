@@ -1,4 +1,4 @@
-package com.battle.net.service;
+package com.battle.net.service.api;
 
 import com.battle.net.model.Game;
 import com.battle.net.model.User;
@@ -6,11 +6,14 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.battle.net.utils.Constants.Uri.API;
 import static com.battle.net.utils.Constants.Uri.ALL_GAMES;
 import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static com.battle.net.utils.Constants.Uri.MY_GAME;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
+
+import org.hamcrest.Matchers;
 
 @Slf4j
 public class GameService {
@@ -72,6 +75,16 @@ public class GameService {
                 .updateRoomsInfoEventName("onUpdateRoomsInfo" + appName)
                 .notifyCountdown("onNotifyCountdown" + appName)
                 .build();
+    }
+
+    public static void setAppTokenToDB(Game game) {
+        log.debug("Set app token to DB for: {}", game.toString());
+
+        given()
+                .contentType(ContentType.JSON)
+                .pathParam("appToken", game.getAppToken())
+                .when().get(game.getRequestUrl() + API + "/save-app-token/{appToken}")
+                .then().statusCode(200).body("status", Matchers.equalTo("Saved"));
     }
 
     public static Response getAllGamesFromAllUsers() {

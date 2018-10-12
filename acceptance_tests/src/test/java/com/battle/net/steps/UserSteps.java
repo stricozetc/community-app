@@ -1,7 +1,7 @@
 package com.battle.net.steps;
 
 import com.battle.net.model.User;
-import com.battle.net.service.UserService;
+import com.battle.net.service.api.UserService;
 import com.battle.net.utils.Container;
 
 import org.junit.Assert;
@@ -35,6 +35,7 @@ public class UserSteps {
         User user = credentials.asList(User.class).get(0);
         container.response = UserService.register(user);
         user.setId(container.response.path("id"));
+        user.setToken(container.response.path("token"));
         container.userMap.put(user.getName(), user);
     }
 

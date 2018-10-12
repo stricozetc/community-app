@@ -1,4 +1,4 @@
-package com.battle.net.service;
+package com.battle.net.service.api;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

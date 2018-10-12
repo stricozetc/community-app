@@ -21,7 +21,8 @@ Feature: Edit the game
     And User "testuser" creates game with name "FlappyBirdForEditionTest2" on port "8050"
     And User adds game with name "FlappyBirdForEditionTest1" to App
     And User adds game with name "FlappyBirdForEditionTest2" to App
-    When User edit the game "FlappyBirdForEditionTest1"
+    When User sets new maxRoomPlayer "2" to game "FlappyBirdForEditionTest1"
+    And User edit the game "FlappyBirdForEditionTest1"
     And User "testuser" get information about games
     Then Check information for game "FlappyBirdForEditionTest1" is valid
     Then Check information for game "FlappyBirdForEditionTest2" is valid
