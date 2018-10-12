@@ -3,6 +3,14 @@ import { isEmpty } from './is-empty';
 import { logicErr } from 'errors/logicErr';
 import { ErrorBlock, Game } from 'models';
 
+const MIN_LENGTH_APP_NAME = 3;
+const MAX_LENGTH_APP_NAME = 50;
+const MIN_LENGTH_APP_DESCRIPTION = 10;
+const MAX_LENGTH_APP_DESCRIPTION = 250;
+const MIN_COUNT_ROOM_PLAYERS = 1;
+const MIN_COUNT_ROOMS = 1;
+const MIN_WAITING_TIME = 15;
+
 export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isValid: boolean } {
   const errors: ErrorBlock[] = [];
 
@@ -15,7 +23,7 @@ export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isVali
     errors.push(logicErr.appNameRequired);
   }
 
-  if (!Validator.isLength(data.appName, { min: 3, max: 50 })) {
+  if (!Validator.isLength(data.appName, { min: MIN_LENGTH_APP_NAME, max: MAX_LENGTH_APP_NAME })) {
     errors.push(logicErr.applicationNameLengthError);
   }
 
@@ -23,7 +31,7 @@ export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isVali
     errors.push(logicErr.descriptionRequired);
   }
 
-  if (!Validator.isLength(data.description, { min: 10, max: 100 })) {
+  if (!Validator.isLength(data.description, { min: MIN_LENGTH_APP_DESCRIPTION, max: MAX_LENGTH_APP_DESCRIPTION })) {
     errors.push(logicErr.descriptionApplicationLengthError);
   }
 
@@ -47,7 +55,7 @@ export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isVali
     errors.push(logicErr.maxRoomPlayerRequired);
   }
 
-  if (data.maxRoomPlayer < 2) {
+  if (data.maxRoomPlayer < MIN_COUNT_ROOM_PLAYERS) {
     errors.push(logicErr.maxRoomPlayerCountError);
   }
 
@@ -55,7 +63,7 @@ export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isVali
     errors.push(logicErr.maxRoomsRequired);
   }
 
-  if (data.maxRooms < 1) {
+  if (data.maxRooms < MIN_COUNT_ROOMS) {
     errors.push(logicErr.maxRoomsCountError);
   }
 
@@ -63,7 +71,7 @@ export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isVali
     errors.push(logicErr.maxWaitingTimeRequired);
   }
 
-  if (data.maxWaitingTime < 15) {
+  if (data.maxWaitingTime < MIN_WAITING_TIME) {
     errors.push(logicErr.maxWaitingTimeError);
   }
 

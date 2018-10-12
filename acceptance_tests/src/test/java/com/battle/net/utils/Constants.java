@@ -9,6 +9,7 @@ public class Constants {
         public static final String RESTORE_PASSWORD = "/api/restore-password";
         public static final String MY_GAME = "/api/v1/my-games";
         public static final String API = "/api";
+        public static final String ALL_GAMES = "/api/games";
     }
 
     public final class Db {

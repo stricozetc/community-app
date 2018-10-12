@@ -37,7 +37,6 @@ public class Hooks {
         log.info("Scenario '{}' {}", scenario.getName(), scenario.getStatus());
     }
 
-
     @After(order = 1, value = "@GAME")
     public void afterGameScenario() {
         container.gameMap.values().forEach(game -> {
@@ -50,5 +49,13 @@ public class Hooks {
     public void afterUiScenario() {
         log.debug("Close browser");
         Selenide.close();
+    }
+
+    @After(order = 3, value = "@STATISTIC")
+    public void afterStatisticScenario() {
+        container.userMap.values().forEach(user -> {
+            log.debug("Delete statistic from DB: ({})", user.toString());
+            new DbConnector().deleteStatistic(user);
+        });
     }
 }

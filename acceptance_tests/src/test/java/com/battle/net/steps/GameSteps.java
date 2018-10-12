@@ -75,7 +75,12 @@ public class GameSteps {
 
     @Then("^User \"([^\"]*)\" has (\\d+) games?$")
     public void userHasGame(String userName, int countOfGames) {
-        Assert.assertEquals(container.response.jsonPath().getList("$").size(), countOfGames);
+        Assert.assertEquals(container.response.jsonPath().getList("findAll { it.userId=" + container.userMap.get(userName).getId() + "}").size(), countOfGames);
+    }
+
+    @When("^Get information about all games of all users$")
+    public void getInformationAboutAllGamesOfAllUsers() {
+        container.response = GameService.getAllGamesFromAllUsers();
     }
 
     @And("^User sets redirectUrl \"([^\"]*)\" to game \"([^\"]*)\"$")

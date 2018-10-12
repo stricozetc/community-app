@@ -25,4 +25,4 @@ Feature: Remove the game
     Then Game "FlappyBirdRemovingTestGame1" is removed successfully
     When User "testuser" get information about games
     Then User "testuser" has 1 game
-    Then Check information for game "FlappyBirdRemovingTestGame2" is valid
+    And Check information for game "FlappyBirdRemovingTestGame2" is valid
