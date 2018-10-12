@@ -25,11 +25,11 @@ public class StatisticSteps {
         log.debug("Set  results for game {} for user {} ", appName, userName);
         Statistic statistic = data.asList(Statistic.class).get(0);
         String userToken = container.userMap.get(userName).getToken();
-        container.response =
-            StatisticService.setGameResults(userToken, container.gameMap.get(appName).getAppToken(), statistic);
+        String appToken = container.gameMap.get(appName).getAppToken();
+        container.response = StatisticService.setGameResults(userToken, appToken, statistic);
     }
 
-    @Then("^Game results set$")
+    @Then("^Game results are set successfully$")
     public void gameResultsSet() {
         Assert.assertTrue(container.response.as(Boolean.class));
     }

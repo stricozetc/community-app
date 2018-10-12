@@ -1,7 +1,7 @@
 @API @GAME @STATISTIC
-Feature: Set games results
+Feature: Set game results
 
-    Scenario: Set games results
+    Scenario: Set game results
         Given User registers to app first time
             | email             | password | name     | language |
             | testemail@mail.ru | 123456   | testuser | en       |
@@ -11,5 +11,5 @@ Feature: Set games results
         When Setting game "FlappyBirdTestGame" results for user "testuser"
             | playedTime | scores | resultStatus | participationStatus |
             | 2          | 222    | 2            | 2                   |
-        Then Game results set
+        Then Game results are set successfully
 
