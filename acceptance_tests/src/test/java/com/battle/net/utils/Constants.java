@@ -10,6 +10,7 @@ public class Constants {
         public static final String MY_GAME = "/api/v1/my-games";
         public static final String API = "/api";
         public static final String ALL_GAMES = "/api/games";
+        public static final String API_STATISTIC = "/api/v1/statistic";
     }
 
     public final class Db {

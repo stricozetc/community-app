@@ -11,6 +11,7 @@ import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.battle.net.utils.Constants.Uri.API_COMMON;
+import static com.battle.net.utils.Constants.Uri.API_STATISTIC;
 import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static io.restassured.RestAssured.given;
 
@@ -27,7 +28,7 @@ public class StatisticService {
             .contentType(ContentType.JSON)
             .header("Authorization", appToken)
             .body(arr.toString())
-            .when().post(BASE_URI + API_COMMON + "/statistic/set-game-result")
+            .when().post(BASE_URI + API_STATISTIC + "/set-game-result")
             .then().statusCode(200).extract().response();
     }
 }
