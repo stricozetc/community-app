@@ -7,26 +7,33 @@ import { validateAppDataInput } from 'validation/register-app';
 @controller('/api/v1')
 export class RegisterAppController {
 
-    public constructor(
-        @inject(AppTokenService) private tokenService: AppTokenService,
-    ) { }
+  public constructor(
+    @inject(AppTokenService) private tokenService: AppTokenService,
+  ) { }
 
-    @httpGet('/app-token')
-    public async getAppToken(request: Request, response: Response): Promise<Response> {
-        const { errors, isValid } = validateAppDataInput(request.query);
+  /**
+    * @param {Request} request - data from request
+    * @param {Game} request.query - game information
+    * @param {ErrorBlock[]} request.query.errors - list of errors
+    * @param {boolean} request.query.isValid - is token valid ? (true or false)
+    * after successful validation of the game data, controller return the application token
+  */
+  @httpGet('/app-token')
+  public async getAppToken(request: Request, response: Response): Promise<Response> {
+    const { errors, isValid } = validateAppDataInput(request.query);
 
-        if (!isValid) {
-            return response.status(400).json(errors);
-        }
-
-        try {
-            const newToken = await this.tokenService.create(request.query);
-
-            return response.status(200).send(newToken);
-        } catch (error) {
-            return error.code >= 2000 ?
-                response.status(500).json(error) :
-                response.status(400).json(error);
-        }
+    if (!isValid) {
+      return response.status(400).json(errors);
     }
+
+    try {
+      const newToken = await this.tokenService.create(request.query);
+
+      return response.status(200).send(newToken);
+    } catch (error) {
+      return error.code >= 2000 ?
+        response.status(500).json(error) :
+        response.status(400).json(error);
+    }
+  }
 }
