@@ -11,11 +11,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class User {
-    private String email;
-    private String password;
-    private String name;
-    private int id;
-    private String language;
-    private String token;
+public class Statistic {
+
+    private int playedTime;
+    private int scores;
+    private int resultStatus;
+    private int participationStatus;
 }

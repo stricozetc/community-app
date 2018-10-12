@@ -36,12 +36,19 @@ public class Hooks {
         log.info("Scenario '{}' {}", scenario.getName(), scenario.getStatus());
     }
 
-
     @After(order = 1, value = "@GAME")
     public void afterGameScenario() {
         container.gameMap.values().forEach(game -> {
             log.debug("Delete game from DB: ({})", game.toString());
             new DbConnector().deleteGame(game);
+        });
+    }
+
+    @After(order = 3, value = "@STATISTIC")
+    public void afterStatisticScenario() {
+        container.userMap.values().forEach(user -> {
+            log.debug("Delete statistic from DB: ({})", user.toString());
+            new DbConnector().deleteStatistic(user);
         });
     }
 }
