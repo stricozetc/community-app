@@ -1,4 +1,4 @@
-package com.battle.net.service;
+package com.battle.net.service.api;
 
 import com.battle.net.model.User;
 import io.restassured.http.ContentType;

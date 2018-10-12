@@ -3,6 +3,7 @@ package com.battle.net.steps;
 import com.battle.net.utils.Container;
 import com.battle.net.db.DbConnector;
 import com.battle.net.utils.ReportPortalLogApi;
+import com.codeborne.selenide.Selenide;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -42,6 +43,12 @@ public class Hooks {
             log.debug("Delete game from DB: ({})", game.toString());
             new DbConnector().deleteGame(game);
         });
+    }
+
+    @After(order = 2, value = "@UI")
+    public void afterUiScenario() {
+        log.debug("Close browser");
+        Selenide.close();
     }
 
     @After(order = 3, value = "@STATISTIC")

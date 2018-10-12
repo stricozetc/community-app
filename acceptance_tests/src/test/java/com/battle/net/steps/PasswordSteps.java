@@ -1,7 +1,7 @@
 package com.battle.net.steps;
 
-import com.battle.net.service.PasswordService;
-import com.battle.net.service.UserService;
+import com.battle.net.service.api.PasswordService;
+import com.battle.net.service.api.UserService;
 import com.battle.net.utils.Container;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;

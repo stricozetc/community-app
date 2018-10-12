@@ -1,9 +1,8 @@
 package com.battle.net.steps;
 
 import com.battle.net.model.Game;
-import com.battle.net.service.GameService;
+import com.battle.net.service.api.GameService;
 import com.battle.net.utils.Container;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -82,5 +81,15 @@ public class GameSteps {
     @When("^Get information about all games of all users$")
     public void getInformationAboutAllGamesOfAllUsers() {
         container.response = GameService.getAllGamesFromAllUsers();
+    }
+
+    @And("^User sets redirectUrl \"([^\"]*)\" to game \"([^\"]*)\"$")
+    public void userSetsRedirectUrlToGame(String url, String appName) {
+        container.gameMap.get(appName).setRedirectUrl(url);
+    }
+
+    @And("^User sets appToken for game \"([^\"]*)\" to DB$")
+    public void userSetsAppTokenForGameToDB(String appName) {
+        GameService.setAppTokenToDB(container.gameMap.get(appName));
     }
 }
