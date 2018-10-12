@@ -1,7 +1,7 @@
 package com.battle.net.steps;
 
 import com.battle.net.model.User;
-import com.battle.net.service.UserService;
+import com.battle.net.service.api.UserService;
 import com.battle.net.utils.Container;
 
 import org.junit.Assert;

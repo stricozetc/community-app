@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class AppLoginPage {
     private static final String APP_BASE_URL = "http://localhost/#/";
 
-    private static final String ENTER_BUTTON = "//div[contains(@class, 'Styled-button') and not(contains(@class, 'btn'))]/button";
+    private static final String LOGIN_BUTTON = "//div[contains(@class, 'Styled-button') and not(contains(@class, 'btn'))]/button";
     private static final String REGISTRATION_BUTTON = "div.ca-landing__register-btn button";
     private static final String EMAIL_FIELD = "#email";
     private static final String PASSWORD_FIELD = "#password";
@@ -22,30 +22,49 @@ public class AppLoginPage {
         return this;
     }
 
-    public MainPage login(User user) {
-        $x(ENTER_BUTTON).click();
-        $(EMAIL_FIELD).setValue(user.getEmail());
-        $(PASSWORD_FIELD).setValue(user.getPassword());
-        /*
-        *The button SUBMIT requires click two times
-        * You can use $(PASSWORD_FIELD).pressTab();
-        * To avoid failed test
-        * The bag is in trello (https://trello.com/c/PYGoEObA/202-the-button-submit-requires-double-click)
-         */
-        $(PASSWORD_FIELD).pressTab();
-        $(SUBMIT_BUTTON).click();
+    public AppLoginPage clickOnLoginButton() {
+        $x(LOGIN_BUTTON).click();
+        return this;
+    }
 
+    public AppLoginPage enterEmail(String email) {
+        $(EMAIL_FIELD).clear();
+        $(EMAIL_FIELD).setValue(email);
+        return this;
+    }
+
+    public AppLoginPage enterPassword(String password) {
+        $(PASSWORD_FIELD).clear();
+        $(PASSWORD_FIELD).setValue(password);
+        return this;
+    }
+
+    public MainPage clickOnSubmitButton() {
+        /*
+         *The button SUBMIT requires click two times
+         * You can use $(PASSWORD_FIELD).pressTab();
+         * To avoid failed test
+         * The bag is in trello (https://trello.com/c/PYGoEObA/202-the-button-submit-requires-double-click)
+         */
+//        $(PASSWORD_FIELD).pressTab();
+        $(SUBMIT_BUTTON).click();
         return new MainPage();
     }
 
-    public AppLoginPage registration(User user) {
+    public AppLoginPage clickOnRegistrationButton() {
         $(REGISTRATION_BUTTON).click();
-        $(EMAIL_FIELD).setValue(user.getEmail());
-        $(NAME_FIELD).setValue(user.getName());
-        $(PASSWORD_FIELD).setValue(user.getPassword());
-        $(REPEAT_PASSWORD).setValue(user.getPassword());
-        $(SUBMIT_BUTTON).click();
+        return this;
+    }
 
+    public AppLoginPage enterName(String name) {
+        $(NAME_FIELD).clear();
+        $(NAME_FIELD).setValue(name);
+        return this;
+    }
+
+    public AppLoginPage enterRepeatPassword(String password) {
+        $(REPEAT_PASSWORD).clear();
+        $(REPEAT_PASSWORD).setValue(password);
         return this;
     }
 }
