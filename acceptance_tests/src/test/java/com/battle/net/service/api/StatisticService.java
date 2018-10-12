@@ -1,4 +1,4 @@
-package com.battle.net.service;
+package com.battle.net.service.api;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -22,6 +22,7 @@ public class StatisticService {
         jObj.addProperty("userToken", userToken);
         JsonArray arr = new JsonArray();
         arr.add(jObj);
+
         return given()
             .contentType(ContentType.JSON)
             .header("Authorization", appToken)

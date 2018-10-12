@@ -1,7 +1,7 @@
 package com.battle.net.steps;
 
 import com.battle.net.model.Statistic;
-import com.battle.net.service.StatisticService;
+import com.battle.net.service.api.StatisticService;
 import com.battle.net.utils.Container;
 
 import org.junit.Assert;
