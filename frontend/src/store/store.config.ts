@@ -8,11 +8,11 @@ import {
 } from './auth';
 
 import {
+  StoreEnhancer,
   applyMiddleware,
   combineReducers,
   compose,
   createStore,
-  StoreEnhancer
 } from 'redux';
 
 import {
@@ -106,7 +106,7 @@ declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION__: Function;
   }
-};
+}
 
 const reduxDevTools: StoreEnhancer<{
   dispatch: {};
