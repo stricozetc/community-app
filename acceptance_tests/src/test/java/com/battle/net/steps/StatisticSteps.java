@@ -20,7 +20,7 @@ public class StatisticSteps {
         this.container = container;
     }
 
-    @When("^Setting game \"([^\"]*)\" results for user \"([^\"]*)\"$")
+    @When("^Set game \"([^\"]*)\" results for user \"([^\"]*)\"$")
     public void settingGameResultsForUser(String appName, String userName, DataTable data) {
         log.debug("Set  results for game {} for user {} ", appName, userName);
         Statistic statistic = data.asList(Statistic.class).get(0);
