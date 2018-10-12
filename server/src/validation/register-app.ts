@@ -47,7 +47,7 @@ export function validateAppDataInput(data: Game): { errors: ErrorBlock[], isVali
     errors.push(logicErr.maxRoomPlayerRequired);
   }
 
-  if (data.maxRoomPlayer < 2) {
+  if (data.maxRoomPlayer < 1) {
     errors.push(logicErr.maxRoomPlayerCountError);
   }
 

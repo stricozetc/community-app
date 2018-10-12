@@ -97,7 +97,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
-    if (this.state.maxRoomPlayer < 2) {
+    if (this.state.maxRoomPlayer < 1) {
       maxRoomPlayerErrors.push(frontEndValidationGameRegister.maxRoomPlayer.count);
     } else {
       maxRoomPlayerErrors = this.removeElFromArrByValue(maxRoomPlayerErrors, frontEndValidationGameRegister.maxRoomPlayer.count);
