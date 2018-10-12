@@ -9,6 +9,14 @@ import { history, isEmpty } from 'utils';
 
 import { GameFormProps, GameFormState } from './GameForm.model';
 
+const MIN_LENGTH_APP_NAME = 3;
+const MAX_LENGTH_APP_NAME = 50;
+const MIN_LENGTH_APP_DESCRIPTION = 10;
+const MAX_LENGTH_APP_DESCRIPTION = 250;
+const MIN_COUNT_ROOM_PLAYERS = 1;
+const MIN_COUNT_ROOMS = 1;
+const MIN_WAITING_TIME = 15;
+
 export class GameForm extends React.Component<GameFormProps, GameFormState> {
   constructor(props: GameFormProps) {
     super(props);
@@ -67,7 +75,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
-    if (this.state.appName.length < 3 || this.state.appName.length > 50) {
+    if (this.state.appName.length < MIN_LENGTH_APP_NAME || this.state.appName.length > MAX_LENGTH_APP_NAME) {
       appNameErrors.push(frontEndValidationGameRegister.appName.length);
     } else {
       appNameErrors = this.removeElFromArrByValue(appNameErrors, frontEndValidationGameRegister.appName.length);
@@ -82,7 +90,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
-    if (this.state.description.length < 10 || this.state.description.length > 250) {
+    if (this.state.description.length < MIN_LENGTH_APP_DESCRIPTION || this.state.description.length > MAX_LENGTH_APP_DESCRIPTION) {
       descriptionErrors.push(frontEndValidationGameRegister.description.length);
     } else {
       descriptionErrors = this.removeElFromArrByValue(descriptionErrors, frontEndValidationGameRegister.description.length);
@@ -97,7 +105,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
-    if (this.state.maxRoomPlayer < 1) {
+    if (this.state.maxRoomPlayer < MIN_COUNT_ROOM_PLAYERS) {
       maxRoomPlayerErrors.push(frontEndValidationGameRegister.maxRoomPlayer.count);
     } else {
       maxRoomPlayerErrors = this.removeElFromArrByValue(maxRoomPlayerErrors, frontEndValidationGameRegister.maxRoomPlayer.count);
@@ -112,7 +120,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
-    if (this.state.maxRooms < 1) {
+    if (this.state.maxRooms < MIN_COUNT_ROOMS) {
       maxRoomsErrors.push(frontEndValidationGameRegister.maxRooms.count);
     } else {
       maxRoomsErrors = this.removeElFromArrByValue(
@@ -130,7 +138,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
-    if (this.state.maxWaitingTime < 15) {
+    if (this.state.maxWaitingTime < MIN_WAITING_TIME) {
       maxWaitingTimeErrors.push(frontEndValidationGameRegister.maxWaitingTime.mustBeCorrect);
     } else {
       maxWaitingTimeErrors = this.removeElFromArrByValue(
