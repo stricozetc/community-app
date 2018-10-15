@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.String.format;
+
 @Slf4j
 public class StatisticSteps {
     int previousResult = 0;
@@ -89,5 +91,20 @@ public class StatisticSteps {
                 user.getToken(),
                 game.getAppToken(),
                 statistic);
+    }
+    @When("^Get recent games for user \"([^\"]*)\"$")
+    public void getRecentGamesForUser(String userName) {
+        log.debug("Get recent games for user {} ", userName);
+        container.response = StatisticService.getRecentGames(container.token, container.userMap.get(userName));
+    }
+
+    @Then("^User has recent game \"([^\"]*)\" with scores \"([^\"]*)\" and result \"([^\"]*)\"$")
+    public void userHasRecentGameWithScoresAndResult(String game, String scores, String result) {
+        int size = container.response.jsonPath().getList("").size();
+        for (int i = 0; i < size; i++) {
+            Assert.assertEquals(game, container.response.path(format("[%s].game",i)).toString());
+            Assert.assertEquals(scores, container.response.path(format("[%s].scores",i)).toString());
+            Assert.assertEquals(result, container.response.path(format("[%s].result",i)).toString());
+        }
     }
 }
