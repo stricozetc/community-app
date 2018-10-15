@@ -2,11 +2,9 @@
 Feature: Get information about all games of all users
 
   Scenario: Get information about all games of all users
-    Given User registers to app first time
+    Given Users register to app first time
       | email              | password | name      | language |
       | testemail1@mail.ru | 123456   | testuser1 | en       |
-    And User registers to app first time
-      | email              | password | name      | language |
       | testemail2@mail.ru | 654321   | testuser2 | en       |
     And User "testuser1" creates game with name "FlappyBirdForTest1" on port "8040"
     And User adds game with name "FlappyBirdForTest1" to App

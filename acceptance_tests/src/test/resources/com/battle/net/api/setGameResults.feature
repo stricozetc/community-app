@@ -8,8 +8,8 @@ Feature: Set game results
     And User "testuser" login to App
     And User "testuser" creates game with name "FlappyBirdTestGame" on port "8040"
     And User adds game with name "FlappyBirdTestGame" to App
-    When Set game "FlappyBirdTestGame" results for user "testuser"
-      | playedTime | scores | resultStatus | participationStatus |
-      | 2          | 222    | 2            | 2                   |
+    When Set results of the game "FlappyBirdTestGame" for user "testuser" in the top ten
+      | playedTime | resultStatus | participationStatus |
+      | 2          | 2            | 2                   |
     Then Game results are set successfully
 

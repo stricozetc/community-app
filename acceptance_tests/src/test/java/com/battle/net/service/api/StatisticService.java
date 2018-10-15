@@ -9,8 +9,8 @@ import com.battle.net.model.Statistic;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.hamcrest.Matchers;
 
-import static com.battle.net.utils.Constants.Uri.API_COMMON;
 import static com.battle.net.utils.Constants.Uri.API_STATISTIC;
 import static com.battle.net.utils.Constants.Uri.BASE_URI;
 import static io.restassured.RestAssured.given;
@@ -25,10 +25,22 @@ public class StatisticService {
         arr.add(jObj);
 
         return given()
-            .contentType(ContentType.JSON)
-            .header("Authorization", appToken)
-            .body(arr.toString())
-            .when().post(BASE_URI + API_STATISTIC + "/set-game-result")
-            .then().statusCode(200).extract().response();
+                .contentType(ContentType.JSON)
+                .header("Authorization", appToken)
+                .body(arr.toString())
+                .when().post(BASE_URI + API_STATISTIC + "/set-game-result")
+                .then().statusCode(200).extract().response();
+    }
+
+    public static Response getLeaders(String appName) {
+        log.debug("Get leaders of game: {}", appName);
+
+        return given()
+                .contentType(ContentType.JSON)
+                .param("appName", appName)
+                .when().get(BASE_URI + API_STATISTIC + "/get-leaders")
+                .then().statusCode(200)
+                .body("size()", Matchers.lessThan(11))
+                .extract().response();
     }
 }
