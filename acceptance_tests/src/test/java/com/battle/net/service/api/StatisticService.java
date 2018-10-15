@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import com.battle.net.model.Statistic;
+import com.battle.net.model.User;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -42,5 +43,14 @@ public class StatisticService {
                 .then().statusCode(200)
                 .body("size()", Matchers.lessThan(11))
                 .extract().response();
+    }
+
+    public static Response getRecentGames(String token, User user) {
+        return given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", token)
+            .param("userId", user.getToken())
+            .when().get(BASE_URI + API_STATISTIC + "/recent-games")
+            .then().statusCode(200).extract().response();
     }
 }
