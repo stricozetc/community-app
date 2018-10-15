@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { ConvertedWeekReportData } from 'models';
 
 import { XRendererOutput } from './interfaces';
+import { winRate, averageScores } from '../constants';
 
 export class XAxisRenderer {
 
@@ -46,7 +47,7 @@ export class XAxisRenderer {
       })
     );
 
-    scaleX1.domain(['winRate', 'averageScores']).range([0, scaleX0.step()]);
+    scaleX1.domain([winRate, averageScores]).range([0, scaleX0.step()]);
 
     this.xAxisGroup.attr('transform', 'translate(0,' + height + ')').call(xAxis);
 

@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { ConvertedWeekReportData, YAxisFields } from 'models';
+import { winRate } from '../constants';
 
 export class RectRenderer {
   public draw(
@@ -40,14 +41,14 @@ export class RectRenderer {
       .duration(200)
       .delay((d: YAxisFields, i: number) => i * animationDuration)
       .attr('y', (d: YAxisFields) => {
-        if (d.name === 'winRate') {
+        if (d.name === winRate) {
           return y1(d.value);
         } else {
           return y0(d.value);
         }
       })
       .attr('height', (d: YAxisFields) => {
-        if (d.name === 'winRate') {
+        if (d.name === winRate) {
           return height - y1(d.value);
         } else {
           return height - y0(d.value);
