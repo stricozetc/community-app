@@ -10,6 +10,8 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
+import java.util.List;
+
 public class UserSteps {
 
     private Container container;
@@ -30,13 +32,15 @@ public class UserSteps {
         Assert.assertEquals(container.response.path("success"), true);
     }
 
-    @When("^User registers to app first time$")
+    @When("^Users? registers? to app first time$")
     public void userRegistersToAppFirstTime(DataTable credentials) {
-        User user = credentials.asList(User.class).get(0);
-        container.response = UserService.register(user);
-        user.setId(container.response.path("id"));
-        user.setToken(container.response.path("token"));
-        container.userMap.put(user.getName(), user);
+        List<User> users = credentials.asList(User.class);
+        users.stream().forEach(user -> {
+            container.response = UserService.register(user);
+            user.setId(container.response.path("id"));
+            user.setToken(container.response.path("token"));
+            container.userMap.put(user.getName(), user);
+        });
     }
 
     @Then("^Check user is registered successfully$")
