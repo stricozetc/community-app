@@ -1,11 +1,14 @@
 package com.battle.net.steps;
 
+import com.battle.net.model.Game;
 import com.battle.net.model.Statistic;
+import com.battle.net.model.User;
 import com.battle.net.service.api.StatisticService;
 import com.battle.net.utils.Container;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
+import io.restassured.response.Response;
 import org.junit.Assert;
 
 import cucumber.api.DataTable;
@@ -18,7 +21,7 @@ import java.util.Random;
 
 @Slf4j
 public class StatisticSteps {
-    int bestResult = 0;
+    int previousResult = 0;
 
     private Container container;
 
@@ -36,31 +39,55 @@ public class StatisticSteps {
         container.response = StatisticService.getLeaders(appName);
     }
 
-    @When("^Set results of the game \"([^\"]*)\" for user \"([^\"]*)\" in the top ten$")
-    public void setResultsOfTheGameForUserInTheTopTen(String appName, String userName, DataTable data) {
-        String userToken = container.userMap.get(userName).getToken();
-        String appToken = container.gameMap.get(appName).getAppToken();
-
-        log.debug("Get the best and last results of leaders");
-
-        container.response = StatisticService.getLeaders(appName);
-        int size = StatisticService.getLeaders(appName).jsonPath().getList("").size();
-        if (size > 0) {
-            System.out.println(container.response.getBody().asString());
-            bestResult = container.response.path("[0].scores");
-        }
-
-        log.debug("Set game result for game: {}, for user {}", appName, userName);
-
+    @When("^Set results of the game \"([^\"]*)\" for user \"([^\"]*)\" (in|out of) the top ten$")
+    public void setResultsOfTheGameForUserInTheTopTen(String appName, String userName, String param, DataTable data) {
         Statistic statistic = data.asList(Statistic.class).get(0);
-        statistic.setScores(bestResult + 10);
+        log.debug("Set game result for game: {}, for user {}", appName, userName);
+        container.response = setResults(container.userMap.get(userName), param,
+                container.gameMap.get(appName), statistic);
         container.statisticMap.put(userName, statistic);
-        container.response = StatisticService.setGameResults(userToken, appToken, statistic);
     }
 
     @Then("^Check user \"([^\"]*)\" is in the top ten$")
     public void checkUserIsInTheTopTen(String userName) {
+        System.out.println(container.response.getBody().asString());
         int score = container.response.jsonPath().get("find { it.name.equals('" + userName + "')}.scores");
-        Assert.assertTrue(score == container.statisticMap.get(userName).getScores());
+        Assert.assertEquals(score, container.statisticMap.get(userName).getScores());
+    }
+
+    @Then("^Check scores of the user \"([^\"]*)\" is not changed in the top ten$")
+    public void checkScoresOfTheUserIsNotChangedInTheTopTen(String userName) {
+        int score = container.response.jsonPath().get("find { it.name.equals('" + userName + "')}.scores");
+        Assert.assertNotEquals(score, container.statisticMap.get(userName).getScores());
+        Assert.assertEquals(score, previousResult);
+    }
+
+    @When("^User \"([^\"]*)\" change scores (in|out of) the top ten for game \"([^\"]*)\"$")
+    public void userChangeScoresOutOfTheTopTenForGame(String userName, String param, String appName) {
+        previousResult = container.statisticMap.get(userName).getScores();
+
+        log.debug("Change scores for user {} for game {}", userName, appName);
+
+        container.response = setResults(container.userMap.get(userName), param,
+                container.gameMap.get(appName), container.statisticMap.get(userName));
+    }
+
+    private static Response setResults(User user, String param, Game game, Statistic statistic) {
+        int bestResult = 0;
+        int lastResult = 0;
+
+        log.debug("Get the best and last results of leaders");
+        Response response = StatisticService.getLeaders(game.getAppName());
+        int size = response.jsonPath().getList("").size();
+        if (size > 0) {
+            bestResult = response.path("[0].scores");
+            lastResult = response.path("[" + (size - 1) + "].scores");
+        }
+
+        statistic.setScores(param.equals("in") ? bestResult + 10 : lastResult - 10);
+        return StatisticService.setGameResults(
+                user.getToken(),
+                game.getAppToken(),
+                statistic);
     }
 }
