@@ -6,7 +6,6 @@ import com.battle.net.model.User;
 import com.battle.net.service.api.StatisticService;
 import com.battle.net.utils.Container;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import io.restassured.response.Response;
 import org.junit.Assert;
@@ -15,11 +14,6 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
-import java.util.Random;
-
-import static java.lang.String.format;
 
 @Slf4j
 public class StatisticSteps {
@@ -102,9 +96,9 @@ public class StatisticSteps {
     public void userHasRecentGameWithScoresAndResult(String game, String scores, String result) {
         int size = container.response.jsonPath().getList("").size();
         for (int i = 0; i < size; i++) {
-            Assert.assertEquals(game, container.response.path(format("[%s].game",i)).toString());
-            Assert.assertEquals(scores, container.response.path(format("[%s].scores",i)).toString());
-            Assert.assertEquals(result, container.response.path(format("[%s].result",i)).toString());
+            Assert.assertEquals(game, container.response.path("["+i+"].game").toString());
+            Assert.assertEquals(scores, container.response.path("["+i+"].scores").toString());
+            Assert.assertEquals(result, container.response.path("["+i+"].result").toString());
         }
     }
 }
