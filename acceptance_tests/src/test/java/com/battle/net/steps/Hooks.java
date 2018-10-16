@@ -52,7 +52,7 @@ public class Hooks {
     }
 
     @After(order = 3, value = "@STATISTIC")
-    public void afterStatisticScenario1() {
+    public void afterStatisticScenario() {
         container.statisticMap.keySet().forEach(key -> {
             log.debug("Delete statistic from DB: ({})", container.userMap.get(key).toString());
             new DbConnector().deleteStatistic(container.userMap.get(key));

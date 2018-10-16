@@ -86,19 +86,21 @@ public class StatisticSteps {
                 game.getAppToken(),
                 statistic);
     }
+
     @When("^Get recent games for user \"([^\"]*)\"$")
     public void getRecentGamesForUser(String userName) {
         log.debug("Get recent games for user {} ", userName);
         container.response = StatisticService.getRecentGames(container.token, container.userMap.get(userName));
+        System.out.println(container.response.getBody().asString());
     }
 
     @Then("^User has recent game \"([^\"]*)\" with scores \"([^\"]*)\" and result \"([^\"]*)\"$")
     public void userHasRecentGameWithScoresAndResult(String game, String scores, String result) {
         int size = container.response.jsonPath().getList("").size();
         for (int i = 0; i < size; i++) {
-            Assert.assertEquals(game, container.response.path("["+i+"].game").toString());
-            Assert.assertEquals(scores, container.response.path("["+i+"].scores").toString());
-            Assert.assertEquals(result, container.response.path("["+i+"].result").toString());
+            Assert.assertEquals(game, container.response.path("[" + i + "].game").toString());
+            Assert.assertEquals(scores, container.response.path("[" + i + "].scores").toString());
+            Assert.assertEquals(result, container.response.path("[" + i + "].result").toString());
         }
     }
 }
