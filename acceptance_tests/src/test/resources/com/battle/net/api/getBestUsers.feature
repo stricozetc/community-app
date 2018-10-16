@@ -1,4 +1,4 @@
-@API @GAME @STATISTIC
+@API @GAME @GAME_STATISTIC
 Feature: Get best users
 
     Scenario: Get best users
