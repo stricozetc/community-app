@@ -33,8 +33,8 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   }
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
-    if (nextProps.status === AuthStatus.Authorized) {            
-      this.props.history.push('/homepage');      
+    if (nextProps.status === AuthStatus.Authorized) {
+      this.props.history.push('/homepage');
     }
   }
 
@@ -59,17 +59,18 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   public onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const user: UserFieldsToLogin = {
-      email: this.state.email,
-      password: this.state.password
-    };
+    if (this.EmailValidation() && this.PasswordValidation()) {
+      const user: UserFieldsToLogin = {
+        email: this.state.email,
+        password: this.state.password
+      };
 
-    this.props.loginUser(user);
+      this.props.loginUser(user);
+    }
   }
 
-  public checkValidation = (): void => {
+  public EmailValidation = (): boolean => {
     let emailErrors: string[] = [];
-    let passwordErrors: string[] = [];
 
     if (!this.state.email) {
       emailErrors.push(frontEndValidationErrorsLogin.email.required);
@@ -89,6 +90,21 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       );
     }
 
+    this.setState({ emailErrors });
+
+    if (emailErrors.length <= 0) {
+      this.isInputErrorStyle('email');
+      this.setState({ isEmailValid: true });
+      return true;
+    } else {
+      this.setState({ isEmailValid: false });
+      return false;
+    }
+  }
+
+  public PasswordValidation = (): boolean => {
+    let passwordErrors: string[] = [];
+
     if (!this.state.password) {
       passwordErrors.push(frontEndValidationErrorsLogin.password.required);
     } else {
@@ -107,29 +123,25 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       );
     }
 
-    if (emailErrors.length <= 0) {
-      this.setState({ isEmailValid: true });
-    } else {
-      this.setState({ isEmailValid: false });
-    }
+    this.setState({ passwordErrors });
 
     if (passwordErrors.length <= 0) {
       this.setState({ isPasswordValid: true });
+      return true;
     } else {
+      this.isInputErrorStyle('password');
       this.setState({ isPasswordValid: false });
+      return false;
     }
-
-    this.setState({ emailErrors, passwordErrors });
   }
 
-  public onBlur = (field: string) => () => {
+  public isInputErrorStyle = (field: string) => () => {
     this.setState({
       touched: {
         ...this.state.touched,
         [field]: true
       }
     });
-    this.checkValidation();
   }
 
   public render(): JSX.Element {
@@ -152,7 +164,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       <I18n>{(t) => (
         <div className='ca-login-form'>
           {children}
-          {this.props.spinnerRun ? <CaSpinner isActive={true} /> : (<form onSubmit={this.onSubmit} className='ca-login-form__container'>
+          {this.props.spinnerRun ? <CaSpinner isActive={true} /> : (<form onSubmit={this.onSubmit} className='ca-login-form__container' noValidate>
             <FormGroup>
               <TextField
                 id='email'
@@ -161,11 +173,9 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 value={email}
                 onChange={this.onChangeEmail}
                 type='email'
-                onBlur={this.onBlur('email')}
                 error={!isEmailValid && touched.email}
               />
               {!isEmailValid &&
-                touched.email &&
                 emailErrors.map((err, index) => {
                   return (
                     <div className='ca-login-form__error' key={index}>
@@ -185,11 +195,9 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 value={password}
                 onChange={this.onChangePassword}
                 type='password'
-                onBlur={this.onBlur('password')}
                 error={!isPasswordValid && touched.password}
               />
               {!isPasswordValid &&
-                touched.password &&
                 passwordErrors.map((err, index) => {
                   return (
                     <div className='ca-login-form__error' key={index}>
@@ -203,18 +211,18 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
                 color='primary'
                 type='submit'
                 className='ca-login-form__login-btn'
-                disabled={!isEmailValid || !isPasswordValid}
+                disabled={!password || !email}
               >
                 {t('login').toUpperCase()}
               </CaButton>
             </div>
             <SocNetBlock
-                history={this.props.history}
-                isRestorePasswordVisible = {true}
-              />
+              history={this.props.history}
+              isRestorePasswordVisible={true}
+            />
           </form>)
           }
-          
+
         </div>
       )
       }
