@@ -108,7 +108,9 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
             <CaSpinner isActive={!isDataLoaded} />
           </div>
         ) : (
-            <StatisticTables statistic={this.props.statistic} />
+            <StatisticTables statistic={this.props.statistic} 
+            games={this.props.games}
+            />
           )}
       </div>
     );
@@ -119,7 +121,8 @@ const mapStateToProps = (state: AppState) => ({
   authStatus: state.auth.status,
   user: state.auth.user!,
   statistic: state.statistic,
-  isSnackbarOpen: state.snackbarUi.isOpen
+  isSnackbarOpen: state.snackbarUi.isOpen,
+  games: state.games,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -1,0 +1,76 @@
+.ca-BarChart {
+    width: 100%;
+    height: 100%;
+    &__chart-area {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__axis line,
+    &__axis path {
+        fill: none;
+        stroke: #fff;
+        shape-rendering: crispEdges;
+    }
+    &__y0.axis line,
+    &__y0.axis path {
+        // stroke: #98abc5;
+        stroke: #d0743c;
+    }
+    &__y1.axis line,
+    &__y1.axis path {
+        stroke: #d0743c;
+    }
+    &__x.axis line,
+    &__x.axis path {
+        stroke: orange;
+    }
+    &__x.axis text {
+        font-size: 16px;
+        fill: #d0743c;
+    }
+    &__y0.axis text {
+        font-size: 12px;
+        fill: #ffeccc !important;
+    }
+    &__y1.axis text {
+        font-size: 12px;
+        fill: #ffeccc !important;
+    }
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    &:after {
+        box-sizing: border-box;
+        display: inline;
+        font-size: 10px;
+        width: 100%;
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.8);
+        content: "\25BC";
+        position: absolute;
+        text-align: center;
+    }
+    &.n:after {
+        margin: -1px 0 0;
+        top: 100%;
+        left: 0;
+    }
+    &__key {
+        font-size: 12px;
+    }
+    &__value {
+        font-size: 14px;
+        color: #5ae050;
+    }
+}
+
+/* Creates a small triangle extender for the tooltip */

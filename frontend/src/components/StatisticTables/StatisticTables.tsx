@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import { CaTab, CaTable, CaTabs } from 'components';
 
-import {
-  JsMarathonCharts,
+import {  
   MyGameCharts,
+  MyWeekCharts,
   Row,
   RowProperty,
   StatTab,
@@ -62,26 +62,13 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     }
   }
 
-  public getChartList = (itemNate: string) => {
+  public getChartList = (itemName: string) => {    
+
     let chartList: string[];
 
-    switch (itemNate) {
-      case 'JsMarathon': {
-        chartList = [...JsMarathonCharts];
-
-        break;
-      }
-      case 'MyGame': {
-        chartList = [...MyGameCharts];
-
-        break;
-      }
-      default: {
-        chartList = [chartsTypes.NoChartsAvailable];
-
-        break;
-      }
-    }
+    let gamesNames: string[] = this.props.games.games.map(item => item.appName);
+    gamesNames.indexOf(itemName) != -1 ? chartList = [...MyGameCharts, ...MyWeekCharts] :
+    chartList = [chartsTypes.NoChartsAvailable];
 
     return chartList;
   }
@@ -139,6 +126,19 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     );
   }
 
+  public getNameOfHeaders(tableHeadersName: any, statistic: object): string[] {
+    const propertyNames = Object.keys(statistic);
+    const headersName: string[] = [];
+
+    propertyNames.forEach(property => {
+      if (tableHeadersName[property]) {
+        headersName.push(tableHeadersName[property]);
+      }
+    });
+
+    return [...headersName];
+  }
+
   public changeContent(activeTab: number): void {
 
     switch (activeTab) {
@@ -163,13 +163,16 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         ];
         const rowData = [...this.props.statistic.bestUsers];
 
-        this.setState({
-          activeTab,
-          rowData,
-          columnDef
-        });
+        if (!this.isArrayEmpty(rowData)) {
 
+          this.setState({
+            activeTab,
+            rowData,
+            columnDef
+          });
+        }
         break;
+
       }
 
       case StatTab.TheMostPopularGames: {
@@ -192,12 +195,15 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
           },
         ];
         const rowData = [...this.props.statistic.mostPopularGames] || [];
+        
+        if (!this.isArrayEmpty(rowData)) {
 
-        this.setState({
-          activeTab,
-          rowData,
-          columnDef
-        });
+          this.setState({
+            activeTab,
+            rowData,
+            columnDef
+          });
+        }
 
         break;
       }
@@ -223,16 +229,21 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
         ];
         const rowData = [...this.props.statistic.recentGames] || [];
 
-        this.setState({
-          activeTab,
-          rowData,
-          columnDef
-        });
+        if (!this.isArrayEmpty(rowData)) {
 
+          this.setState({
+            activeTab,
+            rowData,
+            columnDef
+          });
+        }
         break;
       }
       default:
         break;
     }
+  }
+  public isArrayEmpty<T>(arrayOfData: T[]): boolean {
+    return !Array.isArray(arrayOfData) || !arrayOfData.length;
   }
 }
