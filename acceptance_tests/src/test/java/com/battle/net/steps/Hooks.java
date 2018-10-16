@@ -58,4 +58,12 @@ public class Hooks {
             new DbConnector().deleteStatistic(container.userMap.get(key));
         });
     }
+
+    @After(order = 4, value = "@STATISTIC")
+    public void afterStatisticScenario2() {
+        container.gameMap.keySet().forEach(key -> {
+            log.debug("Delete game statistic from DB: ({})", container.gameMap.get(key).toString());
+            new DbConnector().deleteGameStatistic(container.gameMap.get(key));
+        });
+    }
 }

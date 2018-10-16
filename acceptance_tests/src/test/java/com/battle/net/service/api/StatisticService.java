@@ -53,4 +53,11 @@ public class StatisticService {
             .when().get(BASE_URI + API_STATISTIC + "/recent-games")
             .then().statusCode(200).extract().response();
     }
+    public static Response getBestUsers(String token){
+        return given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", token)
+            .when().get(BASE_URI + API_STATISTIC + "/best-users")
+            .then().statusCode(200).extract().response();
+    }
 }
