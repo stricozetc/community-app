@@ -18,6 +18,7 @@ public class DbConnector {
     private static final String DELETE_USER = "DELETE FROM `community-app`.users where email='%s'";
     private static final String DELETE_GAME = "DELETE FROM `community-app`.games where appName='%s'";
     private static final String DELETE_STATISTIC = "DELETE FROM `community-app`.statistic where userToken='%s'";
+    private static final String DELETE_GAME_STATISTIC = "DELETE FROM `community-app`.statistic where appToken='%s'";
 
     public DbConnector() {
         try {
@@ -70,6 +71,19 @@ public class DbConnector {
 
             int count = stmt.executeUpdate(format(DELETE_STATISTIC, user.getToken()));
 
+            log.debug("Number of deleted records: {}", count);
+            if (count > 0) { log.debug("Statistic is deleted successfully"); }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    public void deleteGameStatistic(Game game) {
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement()) {
+
+            log.debug("Query to delete game statistic: {}", format(DELETE_GAME_STATISTIC, game.getAppToken()));
+            int count = stmt.executeUpdate(format(DELETE_GAME_STATISTIC, game.getAppToken()));
             log.debug("Number of deleted records: {}", count);
             if (count > 0) { log.debug("Statistic is deleted successfully"); }
         } catch (SQLException e) {

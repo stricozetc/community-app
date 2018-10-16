@@ -10,6 +10,7 @@ import cucumber.api.java.en.And;
 import io.restassured.response.Response;
 import org.junit.Assert;
 
+import java.util.List;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -101,6 +102,27 @@ public class StatisticSteps {
             Assert.assertEquals(game, container.response.path("[" + i + "].game").toString());
             Assert.assertEquals(scores, container.response.path("[" + i + "].scores").toString());
             Assert.assertEquals(result, container.response.path("[" + i + "].result").toString());
+        }
+    }
+
+    @When("^Get best users$")
+    public void getBestUsers()  {
+       container.response=StatisticService.getBestUsers(container.token);
+    }
+
+    @And("^Set results of the game \"([^\"]*)\" for user \"([^\"]*)\"$")
+    public void setResultsOfTheGameForUser(String appName, String userName, DataTable data){
+        Statistic statistic = data.asList(Statistic.class).get(0);
+        log.debug("Set game result for game: {}, for user {}", appName, userName);
+        container.response = StatisticService.setGameResults(container.userMap.get(userName).getToken(),
+            container.gameMap.get(appName).getAppToken(),statistic);
+    }
+
+    @Then("^Best users are:$")
+    public void bestUsersAre (List<String> users)  {
+        int size = container.response.jsonPath().getList("").size();
+        for (int i = 0; i < size; i++) {
+            Assert.assertEquals(users.get(i), container.response.path("[" + i + "].name").toString());
         }
     }
 }
