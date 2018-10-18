@@ -8,6 +8,7 @@ export interface RegistrationFormState {
   password: string;
   passwordToRepeat: string;
   isPasswordValid: boolean;
+  isPasswordToRepeatValid: boolean;
   isEmailValid: boolean;
   isNameValid: boolean;
   isSnackbarOpen: boolean;
@@ -19,6 +20,7 @@ export interface RegistrationFormState {
   };
   emailErrors: string[];
   passwordErrors: string[];
+  passwordToRepeatErrors: string[];
   nameErrors: string[];
   language: string;
   isVkDialogOpen: boolean;
@@ -31,6 +33,7 @@ export const initRegistrationFormState: RegistrationFormState = {
   password: '',
   passwordToRepeat: '',
   isPasswordValid: false,
+  isPasswordToRepeatValid: false,
   isEmailValid: false,
   isNameValid: false,
   isSnackbarOpen: false,
@@ -42,6 +45,7 @@ export const initRegistrationFormState: RegistrationFormState = {
   },
   emailErrors: [],
   passwordErrors: [],
+  passwordToRepeatErrors: [],
   nameErrors: [],
   language: 'eng',
   isVkDialogOpen: false,

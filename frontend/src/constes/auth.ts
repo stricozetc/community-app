@@ -33,5 +33,9 @@ export const frontEndValidationErrorsRegister: FrontEndValidationErrorsRegister 
     name: {
         min: 'nameError',
         required: 'nameRequired'
+    },
+    passwordToRepeat: {
+        required: 'nameRequired',
+        match: 'matchPassword'
     }
 };

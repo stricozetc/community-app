@@ -59,6 +59,7 @@ export interface FrontEndValidationErrorsRegister {
   email: { mustBeCorrect: string, required: string };
   password: { min: string, required: string };
   name: { min: string, required: string };
+  passwordToRepeat: {required: string, match: string};
 }
 
 export interface FrontEndValidationErrorsLogin {
