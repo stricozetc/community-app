@@ -54,10 +54,9 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
     const name = target.name as 'appName';
 
     this.setState({ [name]: value } as GameFormState);
-    this.checkValidation();
   }
 
-  public checkValidation(): void {
+  public isValidate(): boolean {
     let appNameErrors: string[] = [];
     let descriptionErrors: string[] = [];
     let maxRoomPlayerErrors: string[] = [];
@@ -182,48 +181,6 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       );
     }
 
-    if (appNameErrors.length <= 0) {
-      this.setState({ isAppNameValid: true });
-    } else {
-      this.setState({ isAppNameValid: false });
-    }
-
-    if (descriptionErrors.length <= 0) {
-      this.setState({ isDescriptionValid: true });
-    } else {
-      this.setState({ isDescriptionValid: false });
-    }
-
-    if (maxRoomPlayerErrors.length <= 0) {
-      this.setState({ isMaxRoomPlayerValid: true });
-    } else {
-      this.setState({ isMaxRoomPlayerValid: false });
-    }
-
-    if (maxRoomsErrors.length <= 0) {
-      this.setState({ isMaxRoomsValid: true });
-    } else {
-      this.setState({ isMaxRoomsValid: false });
-    }
-
-    if (requestUrlErrors.length <= 0) {
-      this.setState({ isRequestUrlValid: true });
-    } else {
-      this.setState({ isRequestUrlValid: false });
-    }
-
-    if (maxWaitingTimeErrors.length <= 0) {
-      this.setState({ isMaxWaitingTimeValid: true });
-    } else {
-      this.setState({ isMaxWaitingTimeValid: false });
-    }
-
-    if (redirectUrlErrors.length <= 0) {
-      this.setState({ isRedirectUrlValid: true });
-    } else {
-      this.setState({ isRedirectUrlValid: false });
-    }
-
     this.setState({
       appNameErrors,
       descriptionErrors,
@@ -233,34 +190,86 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
       maxWaitingTimeErrors,
       redirectUrlErrors
     });
+
+    if (appNameErrors.length <= 0) {
+      this.setState({ isAppNameValid: true });
+    } else {
+      this.setState({ isAppNameValid: false });
+      return false;
+    }
+
+    if (descriptionErrors.length <= 0) {
+      this.setState({ isDescriptionValid: true });
+    } else {
+      this.setState({ isDescriptionValid: false });
+      return false;
+    }
+
+    if (maxRoomPlayerErrors.length <= 0) {
+      this.setState({ isMaxRoomPlayerValid: true });
+    } else {
+      this.setState({ isMaxRoomPlayerValid: false });
+      return false;
+    }
+
+    if (maxRoomsErrors.length <= 0) {
+      this.setState({ isMaxRoomsValid: true });
+    } else {
+      this.setState({ isMaxRoomsValid: false });
+      return false;
+    }
+
+    if (requestUrlErrors.length <= 0) {
+      this.setState({ isRequestUrlValid: true });
+    } else {
+      this.setState({ isRequestUrlValid: false });
+      return false;
+    }
+
+    if (maxWaitingTimeErrors.length <= 0) {
+      this.setState({ isMaxWaitingTimeValid: true });
+    } else {
+      this.setState({ isMaxWaitingTimeValid: false });
+      return false;
+    }
+
+    if (redirectUrlErrors.length <= 0) {
+      this.setState({ isRedirectUrlValid: true });
+    } else {
+      this.setState({ isRedirectUrlValid: false });
+      return false;
+    }
+
+    return true;
   }
 
   public handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    let game: GameModel = {
-      userId: this.props.userId,
-      appName: this.state.appName,
-      description: this.state.description,
-      maxRoomPlayer: this.state.maxRoomPlayer,
-      maxRooms: this.state.maxRooms,
-      requestUrl: this.state.requestUrl,
-      maxWaitingTime: this.state.maxWaitingTime,
-      redirectUrl: this.state.redirectUrl,
-      registrationEventName: 'on' + this.state.appName,
-      leaveEventName: 'onLeave' + this.state.appName,
-      updateRoomsInfoEventName: 'onUpdateRoomsInfo' + this.state.appName,
-      notifyCountdown: 'onNotifyCountdown' + this.state.appName,
+    if (this.isValidate()) {
+      let game: GameModel = {
+        userId: this.props.userId,
+        appName: this.state.appName,
+        description: this.state.description,
+        maxRoomPlayer: this.state.maxRoomPlayer,
+        maxRooms: this.state.maxRooms,
+        requestUrl: this.state.requestUrl,
+        maxWaitingTime: this.state.maxWaitingTime,
+        redirectUrl: this.state.redirectUrl,
+        registrationEventName: 'on' + this.state.appName,
+        leaveEventName: 'onLeave' + this.state.appName,
+        updateRoomsInfoEventName: 'onUpdateRoomsInfo' + this.state.appName,
+        notifyCountdown: 'onNotifyCountdown' + this.state.appName,
+        approve: true
+      };
 
-      approve: true
-    };
+      if (this.props.config === SettingFormType.EditGame) {
+        game = Object.assign(game, { id: this.props.id });
+      }
 
-    if (this.props.config === SettingFormType.EditGame) {
-      game = Object.assign(game, { id: this.props.id });
+      this.props.submit(game);
+      history.push('/_admin_console');
     }
-
-    this.props.submit(game);
-    history.push('/_admin_console');
   }
 
   public handleBlur = (field: string) => (event: React.FormEvent<HTMLElement>) => {
@@ -270,7 +279,6 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
         [field]: true
       }
     });
-    this.checkValidation();
   }
 
   public render(): JSX.Element {
@@ -299,11 +307,10 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                         value={this.state[`${input}`]}
                         onChange={this.handleChange}
                         type={(['maxRoomPlayer', 'maxRooms', 'maxWaitingTime'].indexOf(`${input}`) + 1) ? 'number' : 'text'}
-                        onBlur={this.handleBlur(`${input}`)}
                         error={!this.state[`${input}`] && this.state.touched[`${input}`]}
                       />
                       {!isEmpty(this.state[`${input}Errors`]) &&
-                        this.state.touched[input] &&
+                        
                         this.state[`${input}Errors`].map((err: string, index: number) => {
                           return (
                             <div className='ca-Registration-form__error' key={index}>
@@ -318,15 +325,15 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                   color='primary'
                   type='submit'
                   className='ca-Registration-form__registration-btn'
-                  disabled={
-                    !this.state.isAppNameValid ||
-                    !this.state.isDescriptionValid ||
-                    !this.state.isMaxRoomPlayerValid ||
-                    !this.state.isMaxRoomsValid ||
-                    !this.state.isRequestUrlValid ||
-                    !this.state.isMaxWaitingTimeValid ||
-                    !this.state.isRedirectUrlValid
-                  }
+                   disabled={
+                    !this.state.appName ||
+                    !this.state.description ||
+                    !this.state.maxRoomPlayer ||
+                    !this.state.maxRooms ||
+                    !this.state.requestUrl ||
+                    !this.state.maxWaitingTime ||
+                    !this.state.redirectUrl
+                  } 
                 >
                   {this.props.config}
                 </CaButton>
