@@ -59,7 +59,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   public onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (this.EmailValidation() && this.PasswordValidation()) {
+    if (this.isEmailValidation() && this.isPasswordValidation()) {
       const user: UserFieldsToLogin = {
         email: this.state.email,
         password: this.state.password
@@ -69,7 +69,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     }
   }
 
-  public EmailValidation = (): boolean => {
+  public isEmailValidation = (): boolean => {
     let emailErrors: string[] = [];
 
     if (!this.state.email) {
@@ -102,7 +102,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     }
   }
 
-  public PasswordValidation = (): boolean => {
+  public isPasswordValidation = (): boolean => {
     let passwordErrors: string[] = [];
 
     if (!this.state.password) {
@@ -157,7 +157,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       touched,
       emailErrors,
       passwordErrors,
-      /* isSpinnerRun */
     } = this.state;
 
     return (
