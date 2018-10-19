@@ -53,9 +53,17 @@ public class Hooks {
 
     @After(order = 3, value = "@STATISTIC")
     public void afterStatisticScenario() {
-        container.userMap.values().forEach(user -> {
-            log.debug("Delete statistic from DB: ({})", user.toString());
-            new DbConnector().deleteStatistic(user);
+        container.statisticMap.keySet().forEach(key -> {
+            log.debug("Delete statistic from DB: ({})", container.userMap.get(key).toString());
+            new DbConnector().deleteStatistic(container.userMap.get(key));
+        });
+    }
+
+    @After(order = 4, value = "@GAME_STATISTIC")
+    public void afterGameStatisticScenario() {
+        container.gameMap.keySet().forEach(key -> {
+            log.debug("Delete game statistic from DB: ({})", container.gameMap.get(key).toString());
+            new DbConnector().deleteGameStatistic(container.gameMap.get(key));
         });
     }
 }
