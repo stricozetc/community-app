@@ -4,7 +4,7 @@ import { ActionsObservable, ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap } from 'rxjs/operators';
 
-import { SnackbarType, UserFieldsToLogin, ErrorBlock } from 'models';
+import { ErrorBlock, SnackbarType, UserFieldsToLogin } from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
 import { OpenSnackbar } from 'store/snackbar';
@@ -12,14 +12,14 @@ import { deleteAuthToken, history, setAuthToken } from 'utils';
 
 import {
   AuthTypes,
+  LoginError,
   LoginUser,
   LogoutUser,
   RegisterUser,
+  RegistrationError,
   RegistrationSuccess,
   SetCurrentUser,
   SocialNetworksLogin,
-  RegistrationError,
-  LoginError,  
 } from './auth.action';
 
 import { FrontEndUser } from './interfaces';
@@ -39,13 +39,12 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !error.response ? [{msg: error.message}] :
-            error.name !== 'Error' ? [{msg: error.message}] :
-            Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data];
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}),
-          new LoginError()
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new LoginError()
           );
         })
       )
@@ -60,13 +59,12 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
         map(() => new RegistrationSuccess('/login')),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !error.response ? [{msg: error.message}] :
-            error.name !== 'Error' ? [{msg: error.message}] :
-            Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data];
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}),
-          new RegistrationError()
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new RegistrationError()
           );
         })
       )
@@ -119,12 +117,12 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !error.response ? [{msg: error.code}] :
-            error.name !== 'Error' ? [{msg: error.message}] :
-            Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data];
+            !error.response ? [{ msg: error.code }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       )
     )

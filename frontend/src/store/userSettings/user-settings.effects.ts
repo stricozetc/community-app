@@ -1,4 +1,4 @@
-import { SnackbarType, ErrorBlock } from 'models';
+import { ErrorBlock, SnackbarType } from 'models';
 import { ActionsObservable, ofType } from 'redux-observable';
 import { Observable, from, of } from 'rxjs';
 import { catchError, ignoreElements, map, switchMap, withLatestFrom } from 'rxjs/operators';
@@ -31,12 +31,12 @@ export const changePassword$ = (actions$: ActionsObservable<ChangePassword>) =>
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !error.response ? [{msg: error.message}] :
-            error.name !== 'Error' ? [{msg: error.message}] :
-            Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data];
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       )
     )
@@ -52,12 +52,12 @@ export const setLanguage$ = (actions$: ActionsObservable<SetLanguage>) =>
         }),
         catchError((error) => {
           const messages: ErrorBlock[] =
-            !error.response ? [{msg: error.message}] :
-            error.name !== 'Error' ? [{msg: error.message}] :
-            Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data];
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       );
     })
@@ -83,14 +83,14 @@ export const saveLanguage$ = (actions$: ActionsObservable<SaveLanguage>) =>
     switchMap((action) => {
       return from(HttpWrapper.post('api/users/user-language', action.payload)).pipe(
         map(() => new SaveLanguageSuccess()),
-        catchError((error) => {            
-            const messages: ErrorBlock[] =
-            !error.response ? [{msg: error.message}] :
-            error.name !== 'Error' ? [{msg: error.message}] :
-            Array.isArray(error.response.data) ? error.response.data :
-            [error.response.data];
+        catchError((error) => {
+          const messages: ErrorBlock[] =
+            !error.response ? [{ msg: error.message }] :
+              error.name !== 'Error' ? [{ msg: error.message }] :
+                Array.isArray(error.response.data) ? error.response.data :
+                  [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }));
         })
       );
     })

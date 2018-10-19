@@ -50,7 +50,7 @@ export const initRegistrationFormState: RegistrationFormState = {
 export interface RegistrationFormProps {
   history: History;
   status: AuthStatus;
-  spinnerRun: boolean;  
+  spinnerRun: boolean;
 
   language: string;
 

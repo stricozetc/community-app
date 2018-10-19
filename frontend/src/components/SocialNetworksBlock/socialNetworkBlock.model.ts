@@ -1,5 +1,5 @@
 import { History } from 'history';
-import { SocialNetworksUser, AuthStatus } from 'models';
+import { AuthStatus, SocialNetworksUser } from 'models';
 
 export interface SocialNetworksBlockProps {
     history: History;
@@ -10,9 +10,9 @@ export interface SocialNetworksBlockProps {
 }
 
 export interface SocialNetworksBlockState {
-    isVkDialogOpen: boolean
+    isVkDialogOpen: boolean;
 }
 
-export const initLoginFormState: SocialNetworksBlockState = {    
-    isVkDialogOpen: false    
+export const initLoginFormState: SocialNetworksBlockState = {
+    isVkDialogOpen: false,
 };

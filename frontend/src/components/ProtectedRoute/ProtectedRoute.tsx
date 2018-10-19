@@ -11,7 +11,7 @@ import {
 } from 'models';
 
 export class ProtectedRoute extends React.Component<ProtectedRouteProps> {
-    public render() {
+    public render(): JSX.Element {
         const { status, path, children } = this.props;
         return (
             <Route
@@ -25,6 +25,6 @@ export class ProtectedRoute extends React.Component<ProtectedRouteProps> {
                         </>
                 )}
             />
-        )
+        );
     }
 }

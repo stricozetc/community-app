@@ -2,46 +2,24 @@ import { connect as nativeConnect } from 'react-redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
 import {
-  applyMiddleware,
-  combineReducers,
-  compose,
-  createStore
-} from 'redux';
-
-import {
   AuthEffects,
   AuthState,
   authReducer
 } from './auth';
 
 import {
+  StoreEnhancer,
+  applyMiddleware,
+  combineReducers,
+  compose,
+  createStore,
+} from 'redux';
+
+import {
   GamesEffects,
   GamesState,
   gamesReducer
 } from './games';
-
-import {
-  StatisticEffects,
-  StatisticState,
-  statisticReducer
-} from './statistic';
-
-import {
-  SocketEffects,
-  SocketState,
-  socketReducer
-} from './socket';
-
-import {
-  UserSettingsEffects,
-  UserSettingsState,
-  userSettingsReducer
-} from './userSettings';
-
-import {
-  SnackbarUiState,
-  snackbarUiReducer
-} from './snackbar';
 
 import {
   MyGamesEffects,
@@ -60,7 +38,31 @@ import {
   RoomState,
   roomReducer
 } from './room';
+
 import { SnackbarErrorMessage } from 'components';
+
+import {
+  SnackbarUiState,
+  snackbarUiReducer
+} from './snackbar';
+
+import {
+  SocketEffects,
+  SocketState,
+  socketReducer
+} from './socket';
+
+import {
+  StatisticEffects,
+  StatisticState,
+  statisticReducer
+} from './statistic';
+
+import {
+  UserSettingsEffects,
+  UserSettingsState,
+  userSettingsReducer
+} from './userSettings';
 
 const rootReducers = combineReducers({
   auth: authReducer,
@@ -100,9 +102,19 @@ export interface AppState {
   room: RoomState;
 }
 
-const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__: Function;
+  }
+}
 
-const composeForAllBrowsers = (devTools: any) => {
+const reduxDevTools: StoreEnhancer<{
+  dispatch: {};
+}, {}> = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
+const composeForAllBrowsers = (devTools: StoreEnhancer<{
+  dispatch: {};
+}, {}>) => {
   return devTools ? compose(
     applyMiddleware(epicMiddleware),
     devTools
@@ -114,7 +126,9 @@ const composeForAllBrowsers = (devTools: any) => {
 
 export const store = createStore(
   rootReducers,
-  composeForAllBrowsers(reduxDevTools)
+  composeForAllBrowsers(reduxDevTools as StoreEnhancer<{
+    dispatch: {};
+  }, {}>)
 );
 
 epicMiddleware.run(rootEpic);

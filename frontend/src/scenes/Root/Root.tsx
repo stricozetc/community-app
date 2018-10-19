@@ -56,16 +56,16 @@ import {
   CaSelect,
   CaSnackbar,
   LoginForm,
-  RegistrationForm,
   ProtectedRoute,
+  RegistrationForm,
 } from 'components';
 
 import {
   AppMenuItem,
   AuthStatus,
+  ErrorBlock,
   Languages,
   transitionDirection,
-  ErrorBlock,
 } from 'models';
 
 import { CaMyGames } from '../MyGames/MyGames';
@@ -176,7 +176,7 @@ export class RootComponent extends React.Component<RootProps> {
                 to: '/battles',
                 activeClassName: 'ca-navbar__nav-item--active',
                 disabled: !isAuthorized
-              },/* , */
+              },
               // (Yegor): temporary hide statistics cuz of bad adaptiveness for mobile
               // {
               //   text: t('statistics'),

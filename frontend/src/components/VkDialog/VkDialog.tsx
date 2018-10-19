@@ -67,7 +67,7 @@ export class VkDialog extends React.Component<VkDialogProps, VkDialogState> {
   public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const email = event.target.value;
 
-    this.setState({ email: email });
+    this.setState({ email });
   }
 
   public handleCloseVkWindow = () => {
