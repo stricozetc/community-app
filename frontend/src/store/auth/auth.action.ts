@@ -54,7 +54,7 @@ export class RegistrationSuccess {
 
 @action()
 export class RegistrationError {
-  public readonly type = AuthTypes.RegistrationError;  
+  public readonly type = AuthTypes.RegistrationError;
 }
 
 @action()
@@ -66,7 +66,7 @@ export class SocialNetworksLogin {
 
 @action()
 export class LoginError {
-  public readonly type = AuthTypes.LoginError;   
+  public readonly type = AuthTypes.LoginError;
 }
 
 export type AuthActions =

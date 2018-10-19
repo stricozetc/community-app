@@ -256,10 +256,10 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
             try {
               db.connect.query(
                 "SELECT u.name, s.scores FROM `community-app`.users as u inner join (SELECT max(scores) as scores, userToken, createdAt FROM `community-app`.statistic where appToken = '"
-                 + token 
-                 + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10"
+                + token
+                + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10"
                 , { type: Sequelize.QueryTypes.SELECT })
-                .then(users => {
+                .then((users) => {
                   const promises = users.map((currentUser: Leaders) => {
                     try {
                       const result = {
@@ -279,7 +279,7 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
                   } catch (error) {
                     throw error;
                   }
-                })
+                });
             } catch (error) {
               if (error.code) {
                 throw error;

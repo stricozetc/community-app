@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
-import { UserFieldsToRegister, SocialNetworksUser } from 'models';
+import { SocialNetworksUser, UserFieldsToRegister } from 'models';
 import { AppState, RegisterUser, SocialNetworksLogin } from 'store';
 
 import {
@@ -16,8 +16,8 @@ import {
 } from './RegistrationForm.model';
 
 import './RegistrationForm.scss';
-import { SocNetBlock } from '../SocialNetworksBlock';
 import { CaSpinner } from '../Spinner';
+import { SocNetBlock } from '../SocialNetworksBlock';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
   constructor(props: RegistrationFormProps) {
@@ -131,10 +131,8 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
     }
 
     if (this.state.password !== this.state.passwordToRepeat) {
-      console.log('error!!!');
       passwordToRepeatErrors.push(frontEndValidationErrorsRegister.passwordToRepeat.match);
     } else {
-      console.log('no error!!!');
       passwordToRepeatErrors = this.removeElFromArrByValue(
         passwordToRepeatErrors,
         frontEndValidationErrorsRegister.passwordToRepeat.match
@@ -360,7 +358,6 @@ const mapStateToProps = (state: AppState) => ({
   status: state.auth.status,
   language: state.userSettings.language,
   spinnerRun: state.auth.spinnerRun
-
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -63,7 +63,7 @@ export class RoomService {
     * @todo refactor for lock async operations (multiple users)
     * */
     this.games = await this.gamesRepository.getGames();
-    
+
     const room: Room | undefined = this.rooms.find((r) => r.id === index);
     let operation$ = Promise.resolve(true);
 

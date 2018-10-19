@@ -1,4 +1,4 @@
-import { ResultStatus, WeekReportData, WinRateDiagramData } from 'models';
+import { ResultStatus, WinRateDiagramData, WeekReportData } from 'models';
 import { i18nInstance } from 'utils/i18n';
 
 import { EChartOption } from 'echarts';

@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { connect as _connect } from 'react-redux';
 import { Dispatch } from 'redux';
 

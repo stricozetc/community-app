@@ -5,24 +5,31 @@ import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 're
 import * as configFile from './../../config.json';
 
 import { VkDialog } from 'components';
-import { SocialNetworksUser, VkSuccessResponse, GoogleSuccessResponse, GoogleErrorResponse, AuthStatus, SnackbarType } from 'models';
+import {
+    AuthStatus,
+    GoogleErrorResponse,
+    GoogleSuccessResponse,
+    SnackbarType,
+    SocialNetworksUser,
+    VkSuccessResponse
+} from 'models';
 import { getCurrentLanguageFromLocalStorage } from 'utils';
-import { SocialNetworksBlockProps, initLoginFormState, SocialNetworksBlockState } from './socialNetworkBlock.model';
+import { SocialNetworksBlockProps, SocialNetworksBlockState, initLoginFormState } from './socialNetworkBlock.model';
 import { Dispatch } from 'redux';
-import { SocialNetworksLogin, AppState, OpenSnackbar } from 'store';
+import { AppState, OpenSnackbar, SocialNetworksLogin } from 'store';
 import { connect } from 'react-redux';
 
-export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProps, SocialNetworksBlockState>{
+export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProps, SocialNetworksBlockState> {
 
     constructor(props: SocialNetworksBlockProps) {
         super(props);
 
-        this.state = initLoginFormState
+        this.state = initLoginFormState;
     }
 
     public componentWillReceiveProps(nextProps: SocialNetworksBlockProps): void {
         if (nextProps.status === AuthStatus.Authorized) {
-          this.props.history.push('/homepage');
+            this.props.history.push('/homepage');
         }
     }
 
@@ -35,7 +42,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
     }
 
     public successResponseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-        let data: GoogleSuccessResponse = response as GoogleSuccessResponse;        
+        const data: GoogleSuccessResponse = response as GoogleSuccessResponse;
         const user: SocialNetworksUser = {
             email: data.profileObj.email,
             language: getCurrentLanguageFromLocalStorage(),
@@ -43,13 +50,15 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
             accessToken: data.accessToken,
             imageUrl: data.profileObj.imageUrl,
         };
-        
+
         this.props.socialNetworksLogin(user);
     }
 
     public errorResponseGoogle = (response: GoogleErrorResponse) => {
-        return new OpenSnackbar({type: SnackbarType.Warning,
-        messages: [{msg: response.error}]});
+        return new OpenSnackbar({
+            type: SnackbarType.Warning,
+            messages: [{ msg: response.error }]
+        });
     }
 
     public responseFacebook = (response: ReactFacebookLoginInfo) => {
@@ -63,9 +72,9 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         this.props.socialNetworksLogin(user);
     }
 
-    public successResponseVk = (response: VkSuccessResponse, email: string) => {
+    public successResponseVk = (response: VkSuccessResponse, emailFromInput: string) => {
         const user: SocialNetworksUser = {
-            email: email,
+            email: emailFromInput,
             language: getCurrentLanguageFromLocalStorage(),
             name: response.first_name,
             accessToken: response.hash,
@@ -83,7 +92,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
         this.setState({ isVkDialogOpen: true });
     }
 
-    public render() {
+    public render(): JSX.Element {
 
         const { isVkDialogOpen } = this.state;
 
@@ -117,7 +126,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
                                 onClick={this.handleOpenVkDialog}
                             >
                                 <i className='ca-login-form__custom-vk'></i>
-                            </div> 
+                            </div>
                             hided vk auth */}
                         </div>
                         <VkDialog
@@ -131,7 +140,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
                             }
                         />
                     </div>
-                    { this.props.isRestorePasswordVisible ? <div>
+                    {this.props.isRestorePasswordVisible ? <div>
                         <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
                             {t('forgot-password')}
                         </div>
@@ -159,4 +168,3 @@ export const SocNetBlock = connect(
     mapStateToProps,
     mapDispatchToProps
 )(SocialNetworksBlock);
-

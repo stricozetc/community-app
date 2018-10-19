@@ -3,7 +3,7 @@ import { from, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpWrapper } from 'services';
 
-import { GameModel, ErrorBlock, SnackbarType } from 'models';
+import { ErrorBlock, GameModel, SnackbarType } from 'models';
 
 import {
     AddGame,
@@ -20,6 +20,7 @@ import {
     LoadMyGamesSuccess,
     MyGamesActionTypes
 } from './my-games.action';
+
 import { OpenSnackbar } from '../snackbar';
 
 export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>

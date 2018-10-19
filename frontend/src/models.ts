@@ -290,17 +290,17 @@ export interface VkSuccessResponse {
 export interface GoogleSuccessResponse extends GoogleLoginResponse, GoogleLoginResponseOffline {
   accessToken: string;
   profileObj: {
-    email: string,
-    name: string,
-    googleId?: string,
-    imageUrl?: string,
-    givenName?: string,
+    email: string;
+    name: string;
+    googleId?: string;
+    imageUrl?: string;
+    givenName?: string;
   };
 }
 
 export interface GoogleErrorResponse {
-  details?: string,
-  error: string
+  details?: string;
+  error: string;
 }
 
 export interface WeekReportData {

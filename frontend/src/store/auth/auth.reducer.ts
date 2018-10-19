@@ -26,7 +26,7 @@ export const authReducer = (state = initialState, action: AuthActions) => {
                 ...state,
                 spinnerRun: false
             };
-        }        
+        }
         case AuthTypes.LoginUser: {
             return {
                 ...state,

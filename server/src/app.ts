@@ -8,7 +8,7 @@ import SocketIO from 'socket.io';
 import passport from 'passport';
 import cors from 'cors';
 
-import configFile from '../../frontend/src/config.json'
+import configFile from '../../frontend/src/config.json';
 
 import {
     LoggerService,

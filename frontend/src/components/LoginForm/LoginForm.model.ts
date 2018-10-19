@@ -18,7 +18,7 @@ export interface LoginFormState {
   emailErrors: string[];
   passwordErrors: string[];
   isVkDialogOpen: boolean;
-  isSpinnerRun: boolean
+  isSpinnerRun: boolean;
 }
 
 export const initLoginFormState: LoginFormState = {
@@ -39,7 +39,7 @@ export const initLoginFormState: LoginFormState = {
 export interface LoginFormProps {
   status: AuthStatus;
   history: History;
-  spinnerRun: boolean
+  spinnerRun: boolean;
 
   loginUser(user: UserFieldsToLogin): void;
   socialNetworksLogin(socialNetworksUser: SocialNetworksUser): void;

@@ -3,9 +3,9 @@ import { FrontEndUser } from 'store';
 
 import {
   AuthStatus,
+  ErrorBlock,
   RoomInfo,
   SnackbarType,
-  ErrorBlock,
 } from 'models';
 
 export interface RootProps {
