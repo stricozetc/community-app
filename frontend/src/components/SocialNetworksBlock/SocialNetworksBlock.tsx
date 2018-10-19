@@ -5,7 +5,14 @@ import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 're
 import * as configFile from './../../config.json';
 
 import { VkDialog } from 'components';
-import { AuthStatus, GoogleErrorResponse, GoogleSuccessResponse, SnackbarType, SocialNetworksUser, VkSuccessResponse } from 'models';
+import {
+    AuthStatus,
+    GoogleErrorResponse,
+    GoogleSuccessResponse,
+    SnackbarType,
+    SocialNetworksUser,
+    VkSuccessResponse
+} from 'models';
 import { getCurrentLanguageFromLocalStorage } from 'utils';
 import { SocialNetworksBlockProps, SocialNetworksBlockState, initLoginFormState } from './socialNetworkBlock.model';
 import { Dispatch } from 'redux';
@@ -22,7 +29,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
 
     public componentWillReceiveProps(nextProps: SocialNetworksBlockProps): void {
         if (nextProps.status === AuthStatus.Authorized) {
-          this.props.history.push('/homepage');
+            this.props.history.push('/homepage');
         }
     }
 
@@ -48,8 +55,10 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
     }
 
     public errorResponseGoogle = (response: GoogleErrorResponse) => {
-        return new OpenSnackbar({type: SnackbarType.Warning,
-        messages: [{msg: response.error}]});
+        return new OpenSnackbar({
+            type: SnackbarType.Warning,
+            messages: [{ msg: response.error }]
+        });
     }
 
     public responseFacebook = (response: ReactFacebookLoginInfo) => {
@@ -131,7 +140,7 @@ export class SocialNetworksBlock extends React.Component<SocialNetworksBlockProp
                             }
                         />
                     </div>
-                    { this.props.isRestorePasswordVisible ? <div>
+                    {this.props.isRestorePasswordVisible ? <div>
                         <div className='ca-login-form__form-linked-text' onClick={() => this.redToForgetPassword()}>
                             {t('forgot-password')}
                         </div>
