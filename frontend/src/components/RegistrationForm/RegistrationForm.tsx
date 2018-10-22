@@ -52,23 +52,26 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
   public handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const user: UserFieldsToRegister = {
-      email: this.state.email,
-      name: this.state.name,
-      password: this.state.password,
-      password2: this.state.passwordToRepeat,
-      language: this.props.language,
-    };
+    if (this.isValidData()) {
+      const user: UserFieldsToRegister = {
+        email: this.state.email,
+        name: this.state.name,
+        password: this.state.password,
+        password2: this.state.passwordToRepeat,
+        language: this.props.language,
+      };
 
-    this.props.registerUser(user);
-    console.log(user);
-    /* this.setState({isSpinnerRun: true}); */
+      this.props.registerUser(user);
+    }
+
+    console.log(this.state);
   }
 
-  public checkValidation = (): void => {
+  public isValidData = (): boolean => {
     let emailErrors: string[] = [];
     let passwordErrors: string[] = [];
     let nameErrors: string[] = [];
+    let passwordToRepeatErrors: string[] = [];
 
     if (!this.state.email) {
       emailErrors.push(frontEndValidationErrorsRegister.email.required);
@@ -118,64 +121,117 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
       );
     }
 
+    if (!this.state.passwordToRepeat) {
+      passwordToRepeatErrors.push(frontEndValidationErrorsRegister.passwordToRepeat.required);
+    } else {
+      passwordToRepeatErrors = this.removeElFromArrByValue(
+        passwordToRepeatErrors,
+        frontEndValidationErrorsRegister.passwordToRepeat.required
+      );
+    }
+
+    if (this.state.password !== this.state.passwordToRepeat) {
+      passwordToRepeatErrors.push(frontEndValidationErrorsRegister.passwordToRepeat.match);
+    } else {
+      passwordToRepeatErrors = this.removeElFromArrByValue(
+        passwordToRepeatErrors,
+        frontEndValidationErrorsRegister.passwordToRepeat.match
+      );
+    }
+
+    this.setState({ emailErrors, passwordErrors, nameErrors, passwordToRepeatErrors });
+
     if (emailErrors.length <= 0) {
       this.setState({ isEmailValid: true });
     } else {
+      this.isInputErrorStyle('email');
       this.setState({ isEmailValid: false });
+      return false;
     }
 
     if (nameErrors.length <= 0) {
       this.setState({ isNameValid: true });
     } else {
+      this.isInputErrorStyle('name');
       this.setState({ isNameValid: false });
+      return false;
     }
 
     if (passwordErrors.length <= 0) {
       this.setState({ isPasswordValid: true });
     } else {
+      this.isInputErrorStyle('password');
       this.setState({ isPasswordValid: false });
+      return false;
     }
 
-    this.setState({ emailErrors, passwordErrors, nameErrors });
+    if (passwordToRepeatErrors.length <= 0) {
+      this.setState({ isPasswordToRepeatValid: true });
+    } else {
+      this.isInputErrorStyle('passwordToRepeat');
+      this.setState({ isPasswordToRepeatValid: false });
+      return false;
+    }
+
+    return true;
   }
 
-  public handleBlur = (field: string) => (event: React.FormEvent<HTMLElement>) => {
+  public isInputErrorStyle = (field: string) => (event: React.FormEvent<HTMLElement>) => {
     this.setState({
       touched: {
         ...this.state.touched,
         [field]: true
       }
     });
-    this.checkValidation();
   }
 
   public render(): JSX.Element {
+    const {
+      isNameValid,
+      isPasswordValid,
+      isPasswordToRepeatValid,
+      isEmailValid,
+      touched,
+      email,
+      password,
+      name,
+      nameErrors,
+      passwordErrors,
+      passwordToRepeatErrors,
+      passwordToRepeat,
+      emailErrors,
+    } = this.state;
+
+    const {
+      children,
+      spinnerRun,
+      history,
+    } = this.props;
     return (
       <I18n>
         {
           (t) => (
             <div>
-              {this.props.children}
-              {this.props.spinnerRun ? <CaSpinner isActive={true} /> :
+              {children}
+              {spinnerRun ? <CaSpinner isActive={true} /> :
                 (<form
                   onSubmit={this.handleSubmit}
                   className='ca-Registration-form__container'
+                  noValidate
                 >
                   <FormGroup>
                     <TextField
                       id='email'
                       label={t('emailLabel')}
                       name='email'
-                      value={this.state.email}
+                      value={email}
                       onChange={this.onChangeEmail}
                       type='email'
                       className='ca-Registration-form__field'
-                      onBlur={this.handleBlur('email')}
-                      error={!this.state.isEmailValid && this.state.touched.email}
+                      error={!isEmailValid && touched.email}
                     />
-                    {!this.state.isEmailValid &&
-                      this.state.touched.email &&
-                      this.state.emailErrors.map((err, index) => {
+                    {!isEmailValid &&
+                      emailErrors.map((err, index) => {
                         return (
                           <div className='ca-Registration-form__error' key={index}>
                             {t(err)}
@@ -192,16 +248,14 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                       id='name'
                       label={t('nameLabel')}
                       name='name'
-                      value={this.state.name}
+                      value={name}
                       onChange={this.onChangeName}
                       type='text'
                       className='ca-Registration-form__field'
-                      onBlur={this.handleBlur('name')}
-                      error={!this.state.isNameValid && this.state.touched.name}
+                      error={!isNameValid && touched.name}
                     />
-                    {!this.state.isNameValid &&
-                      this.state.touched.name &&
-                      this.state.nameErrors.map((err, index) => {
+                    {!isNameValid &&
+                      nameErrors.map((err, index) => {
                         return (
                           <div className='ca-Registration-form__error' key={index}>
                             {t(err)}
@@ -218,16 +272,14 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                       id='password'
                       label={t('passwordLabel')}
                       name='password'
-                      value={this.state.password}
+                      value={password}
                       onChange={this.onChangePassword}
                       type='password'
                       className='ca-Registration-form__field'
-                      onBlur={this.handleBlur('password')}
-                      error={!this.state.isPasswordValid && this.state.touched.password}
+                      error={!isPasswordValid && touched.password}
                     />
-                    {!this.state.isPasswordValid &&
-                      this.state.touched.password &&
-                      this.state.passwordErrors.map((err, index) => {
+                    {!isPasswordValid &&
+                      passwordErrors.map((err, index) => {
                         return (
                           <div className='ca-Registration-form__error' key={index}>
                             {t(err)}
@@ -242,25 +294,24 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                       id='passwordToRepeat'
                       label={t('repeatPasswordLabel')}
                       name='passwordToRepeat'
-                      value={this.state.passwordToRepeat}
+                      value={passwordToRepeat}
                       onChange={this.onChangePasswordToRepeat}
                       type='password'
                       className='ca-Registration-form__field'
-                      onBlur={this.handleBlur('passwordToRepeat')}
                       error={
-                        this.state.touched.password &&
-                        this.state.touched.passwordToRepeat &&
-                        this.state.password !== this.state.passwordToRepeat
+                        !isPasswordToRepeatValid &&
+                        touched.passwordToRepeat
                       }
                     />
 
-                    {this.state.touched.password &&
-                      this.state.touched.passwordToRepeat &&
-                      this.state.password !== this.state.passwordToRepeat && (
-                        <div className='ca-Registration-form__error'>
-                          {t('matchPassword')}
-                        </div>
-                      )}
+                    {!isPasswordToRepeatValid &&
+                      passwordToRepeatErrors.map((err, index) => {
+                        return (
+                          <div className='ca-Registration-form__error' key={index}>
+                            {t(err)}
+                          </div>
+                        );
+                      })}
                   </FormGroup>
 
                   <CaButton
@@ -268,16 +319,16 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                     type='submit'
                     className='ca-Registration-form__registration-btn'
                     disabled={
-                      !this.state.isEmailValid ||
-                      !this.state.isPasswordValid ||
-                      !this.state.isNameValid ||
-                      this.state.password !== this.state.passwordToRepeat
+                      !email ||
+                      !password ||
+                      !name ||
+                      !passwordToRepeat
                     }
                   >
                     {t('register')}
                   </CaButton>
                   <SocNetBlock
-                    history={this.props.history}
+                    history={history}
                     isRestorePasswordVisible={false}
                   />
                 </form>)

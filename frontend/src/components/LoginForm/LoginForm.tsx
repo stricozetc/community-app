@@ -59,7 +59,7 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
   public onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (this.EmailValidation() && this.PasswordValidation()) {
+    if (this.isValidData()) {
       const user: UserFieldsToLogin = {
         email: this.state.email,
         password: this.state.password
@@ -69,8 +69,9 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
     }
   }
 
-  public EmailValidation = (): boolean => {
+  public isValidData = (): boolean => {
     let emailErrors: string[] = [];
+    let passwordErrors: string[] = [];
 
     if (!this.state.email) {
       emailErrors.push(frontEndValidationErrorsLogin.email.required);
@@ -89,22 +90,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
         frontEndValidationErrorsLogin.email.mustBeCorrect
       );
     }
-
-    this.setState({ emailErrors });
-
-    if (emailErrors.length <= 0) {
-      this.isInputErrorStyle('email');
-      this.setState({ isEmailValid: true });
-      return true;
-    } else {
-      this.setState({ isEmailValid: false });
-      return false;
-    }
-  }
-
-  public PasswordValidation = (): boolean => {
-    let passwordErrors: string[] = [];
-
     if (!this.state.password) {
       passwordErrors.push(frontEndValidationErrorsLogin.password.required);
     } else {
@@ -123,16 +108,25 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       );
     }
 
-    this.setState({ passwordErrors });
+    this.setState({ emailErrors, passwordErrors });
+
+    if (emailErrors.length <= 0) {
+      this.isInputErrorStyle('email');
+      this.setState({ isEmailValid: true });
+    } else {
+      this.setState({ isEmailValid: false });
+      return false;
+    }
 
     if (passwordErrors.length <= 0) {
       this.setState({ isPasswordValid: true });
-      return true;
     } else {
       this.isInputErrorStyle('password');
       this.setState({ isPasswordValid: false });
       return false;
     }
+
+    return true;
   }
 
   public isInputErrorStyle = (field: string) => () => {
@@ -157,7 +151,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       touched,
       emailErrors,
       passwordErrors,
-      /* isSpinnerRun */
     } = this.state;
 
     return (
