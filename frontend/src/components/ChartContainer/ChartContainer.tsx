@@ -20,10 +20,10 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
     };
   }
 
-  public componentDidUpdate(prevProps: ChartContainerProps): void {
-    if (prevProps.chartList !== this.props.chartList) {
+  public componentDidUpdate(prevProps: ChartContainerProps): void {    
+    if (prevProps.chartList.length !== this.props.chartList.length) {
       this.setState({
-        chartName: this.props.chartList[0] || ''
+        chartName: this.props.chartList[0]
       });
     }
   }
@@ -88,9 +88,9 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
   }
 
   public render(): JSX.Element {
-    const { statistics, itemName, chartList } = this.props;
+    const { statistics, itemName, chartList } = this.props;    
 
-    const isItemSelected = itemName.length !== 0 ? true : false;
+    const isItemSelected = (itemName.length !== 0) && ( this.props.games.map( item => item.appName).indexOf(itemName) !== -1 ) ? true : false;
 
     return (
       <I18n>

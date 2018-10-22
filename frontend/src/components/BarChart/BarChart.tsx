@@ -173,6 +173,16 @@ export class BarChart extends React.Component<BarChartProps> {
       Math.abs(prevWidth - currentWidth) > 5;
   }
 
+  public componentDidUpdate(prevProps: BarChartProps){
+    const dimensions = this.getHeightAndWidthOfContainer();
+    const height = dimensions.height;
+    const width = dimensions.width;
+
+    if (prevProps.diagramData !== this.props.diagramData) {
+      this.updateGraph(height, width);
+    }
+  }
+
   public render(): JSX.Element {
     return (
       <div className="ca-BarChart">
