@@ -6,9 +6,9 @@ Feature: Enter to game
       | email             | password | name     | language |
       | testemail@mail.ru | 123456   | testuser | en       |
     And User "testuser" creates game with name "FlappyBirdTestGame" on port "8030"
-    And User adds game with name "FlappyBirdTestGame" to App
     And User sets new maxRoomPlayer "1" to game "FlappyBirdTestGame"
     And User sets redirectUrl "http://localhost:8000/home" to game "FlappyBirdTestGame"
+    And User adds game with name "FlappyBirdTestGame" to App
     And User sets appToken for game "FlappyBirdTestGame" to DB
     And User edit the game "FlappyBirdTestGame"
     When Ui User "testuser" logs in to App
