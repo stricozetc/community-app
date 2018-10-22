@@ -61,14 +61,14 @@ export class StatisticController {
   */
   @httpGet('/recent-games', passport.authenticate('jwt', { session: false }))
   public async getRecentGames(request: Request, response: Response): Promise<void | Response> {
-    const userId = request.query.userId;
+    const userToken = request.query.userId;
 
-    if (!userId) {
-      return response.status(400).json(logicErr.userIdIsRequired);
+    if (!userToken) {
+      return response.status(400).json(logicErr.userTokenIsRequired);
     }
 
     try {
-      const recentGames = await this.statisticRepository.getRecentGames(userId);
+      const recentGames = await this.statisticRepository.getRecentGames(userToken);
       return response.status(200).json(recentGames);
     } catch (error) {
       return error.code >= 2000 ?
