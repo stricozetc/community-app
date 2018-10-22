@@ -116,6 +116,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
                     statistics={this.props.statistic}
                     itemName={this.state.tableItemName}
                     chartList={this.getChartList(this.state.tableItemName)}
+                    games={this.props.games.games}
                   />
                 </div>
               </div>
