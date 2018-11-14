@@ -15,11 +15,11 @@ export class MyGameController {
     @inject(AppTokenService) private tokenService: AppTokenService) {
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {Game} request.body - information about the game you want to remove
     * return all games after changes if you successfully deleted the game
-  */
+    */
   @httpPost('/delete-game')
   public async deleteGame(request: Request, response: Response): Promise<void | Response> {
     const gameThatNeedToDelete: Game = request.body;
@@ -31,11 +31,11 @@ export class MyGameController {
     }
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {Game} request.body - information about the game you want to update
     * return all games after changes if you successfully edited the game
-  */
+    */
   @httpPost('/edit-game')
   public async editGame(request: Request, response: Response): Promise<void | Response> {
     const data: Game = request.body;
@@ -47,11 +47,11 @@ export class MyGameController {
     }
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {Game} request.body - information about the game you want to add
     * return info about the game if you successfully added the game
-  */
+    */
   @httpPost('/add-game')
   public async addGame(request: Request, response: Response): Promise<void | Response> {
     let newGame: Game = request.body;
@@ -72,12 +72,12 @@ export class MyGameController {
     }
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {Game} request.query - data from request
     * @param {number} request.query.userId - id of the user who created the game
     * return array of games from db if the user created them with the passed id
-  */
+    */
   @httpGet('/get-games')
   public async getGames(request: Request, response: Response): Promise<void | Response> {
 

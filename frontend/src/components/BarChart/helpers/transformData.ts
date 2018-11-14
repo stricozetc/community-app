@@ -1,6 +1,6 @@
-import { WeekReportData, ConvertedWeekReportData } from 'models';
+import { ConvertedWeekReportData, WeekReportData } from 'models';
 
-export const transformData = (inputData: WeekReportData[]):  { 
+export const transformData = (inputData: WeekReportData[]): {
   data: ConvertedWeekReportData[],
   arrayOfScores: number[],
   shortWeekdays: string[]

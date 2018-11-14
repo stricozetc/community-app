@@ -1,4 +1,9 @@
-import { ResultStatus, WinRateDiagramData, WeekReportData } from 'models';
+import {
+  RecentGames,
+  ResultStatus,
+  WeekReportData,
+  WinRateDiagramData
+} from 'models';
 import { i18nInstance } from 'utils/i18n';
 
 import { EChartOption } from 'echarts';
@@ -9,11 +14,11 @@ import { translateNumberOfWeekToItsName } from 'utils/translateNumberOfWeekToIts
 import { isEmpty } from 'utils/isEmpty';
 
 export class ChartsService {
-  private constructor() {}
+  private constructor() { }
 
   public static getWinRateData(
     gameName: string,
-    gameData: any[]
+    gameData: RecentGames[]
   ): WinRateDiagramData {
     const gameResults = gameData
       .filter(item => item.game === gameName)
@@ -108,17 +113,17 @@ export class ChartsService {
 
   public static getWeekReportData(
     gameName: string,
-    historyOfUserGames: any[]
+    historyOfUserGames: RecentGames[]
   ): WeekReportData[] {
     const d = new Date();
 
     const today: number = d.getDay(); // 0 - 6. 0 for Sunday, 1 for Monday, 2 for Tuesday, and so on.
 
-    let daysToShowOnScreen: Array<number> = [];
+    let daysToShowOnScreen: number[] = [];
 
-    let historyForGame = historyOfUserGames.filter(
+    const historyForGame = historyOfUserGames.filter(
       item => item.game === gameName
-    );    
+    );
 
     switch (today) {
       case DaysOfWeek.SUNDAY: {
@@ -196,12 +201,12 @@ export class ChartsService {
     const weekReportData: WeekReportData[] = daysToShowOnScreen.map(
       (day: number) => {
         const historyForDay = historyForGame.filter(item => {
-          const playedAtTime = new Date(item.playedAt);          
+          const playedAtTime = new Date(item.playedAt);
 
           const thatTime = {
             day: playedAtTime.getDay(),
             date: playedAtTime.getDate()
-          }          
+          };
 
           return thatTime.day === day && Math.abs(d.getDate() - thatTime.date) <= 6; // if this is that day of week and current week
         });
@@ -248,7 +253,7 @@ export class ChartsService {
         };
       }
     );
-    
+
     return weekReportData;
   }
 }

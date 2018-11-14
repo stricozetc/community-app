@@ -328,7 +328,7 @@ export interface ConvertedWeekReportData {
   values: YAxisFields[];
 }
 
-export interface Margin{
+export interface Margin {
   top: number;
   left: number;
   bottom: number;

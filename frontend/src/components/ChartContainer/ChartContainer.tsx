@@ -20,7 +20,7 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
     };
   }
 
-  public componentDidUpdate(prevProps: ChartContainerProps): void {    
+  public componentDidUpdate(prevProps: ChartContainerProps): void {
     if (prevProps.chartList.length !== this.props.chartList.length) {
       this.setState({
         chartName: this.props.chartList[0]
@@ -68,8 +68,8 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
           ticksNumber: 5,
           legendRectMargins: 38,
           legendTextMargins: 44
-        }
-        chartComponent = <BarChart diagramData={diagramData} config={config}/>;
+        };
+        chartComponent = <BarChart diagramData={diagramData} config={config} />;
 
         break;
       }
@@ -88,14 +88,15 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
   }
 
   public render(): JSX.Element {
-    const { statistics, itemName, chartList } = this.props;    
+    const { statistics, itemName, chartList } = this.props;
 
-    const isItemSelected = (itemName.length !== 0) && ( this.props.games.map( item => item.appName).indexOf(itemName) !== -1 ) ? true : false;
+    const isItemSelected = (itemName.length !== 0)
+      && (this.props.games.map(item => item.appName).indexOf(itemName) !== -1) ? true : false;
 
     return (
       <I18n>
         {
-          ( t ) => (
+          (t) => (
             <div className='chart-table'>
               <div className='chart-table__title'>
                 {itemName}
@@ -104,13 +105,13 @@ export class ChartContainer extends React.Component<ChartContainerProps, ChartCo
                 <div className='chart-table__chart-select'>
                   {
                     isItemSelected
-                    ? <CaSelect
+                      ? <CaSelect
                         values={chartList}
                         displayedValues={chartList.map(item => t(item))}
                         handleChange={this.handleSelectChange}
                         currentValue={this.state.chartName}
                       />
-                    : null
+                      : null
                   }
                 </div>
               </div>

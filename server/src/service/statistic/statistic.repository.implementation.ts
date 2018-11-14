@@ -81,18 +81,21 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
       try {
         const appNames = await Promise.all(promises);
         if (!isEmpty(recentGames)) {
-          recentGames = recentGames.reduce((accumulator, game, index) => {
-            const gameName = appNames[index];
+          recentGames = recentGames.reduce(
+            (accumulator, game, index) => {
+              const gameName = appNames[index];
 
-            const result = {
-              game: gameName,
-              scores: game.scores,
-              result: game.resultStatus,
-              playedAt: game.updatedAt
-            };
+              const result = {
+                game: gameName,
+                scores: game.scores,
+                result: game.resultStatus,
+                playedAt: game.updatedAt
+              };
 
-            return accumulator.concat(result);
-          }, []);
+              return accumulator.concat(result);
+            },
+            []
+          );
         }
 
         return recentGames;
@@ -257,8 +260,8 @@ export class StatisticRepositoryImplementation implements StatisticRepository {
               db.connect.query(
                 "SELECT u.name, s.scores FROM `community-app`.users as u inner join (SELECT max(scores) as scores, userToken, createdAt FROM `community-app`.statistic where appToken = '"
                 + token
-                + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10"
-                , { type: Sequelize.QueryTypes.SELECT })
+                + "' group by userToken) as s on s.userToken = u.token order by s.scores desc, s.createdAt asc limit 10",
+                { type: Sequelize.QueryTypes.SELECT })
                 .then((users) => {
                   const promises = users.map((currentUser: Leaders) => {
                     try {

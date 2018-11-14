@@ -20,12 +20,12 @@ export class UserController {
   constructor(@inject(UserAuthenticationRepository) private userAuthenticationRepository: UserAuthenticationRepository) {
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {UserFieldsToRegister} request.body - user data for registration
     * after successful validation input data,
     * controller return user data
-  */
+    */
   @httpPost('/register')
   public postRegister(request: Request, response: Response): Promise<Response | User> | Response {
     const { errors, isValid } = validateRegisterInput(request.body);
@@ -41,12 +41,13 @@ export class UserController {
       });
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {User} request.body - user data for login
     * after successful validation input data,
     * controller return Promise<{ success: boolean, token: string }>
-  */
+    */
+
   @httpPost('/login')
   public postLogin(request: Request, response: Response): Promise<Response | { success: boolean, token: string }> | Response {
     const { errors, isValid } = validateLoginInput(request.body);
@@ -63,14 +64,14 @@ export class UserController {
       });
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {object} request.body - data from request
     * @param {string} request.body.userEmail - user email
     * @param {string} request.body.userLanguage - language data
     * after successful validation input data,
     * controller return Promise<{ success: boolean, token: string }>
-  */
+    */
   @httpPost('/user-language')
   public async userLanguage(request: Request, response: Response): Promise<Response> {
     const userEmail: string = request.body.userEmail;
@@ -95,13 +96,13 @@ export class UserController {
 
   }
 
- /**
+   /**
     * @param {Request} request - data from request
     * @param {object} request.query - data from request
     * @param {string} request.query.email - user email
     * after successful validation email,
     * controller return user language from db
-  */
+    */
   @httpGet('/get-user-language')
   public async getUserLanguage(request: Request, response: Response): Promise<Response> {
     const userEmail: string = request.query.email;
@@ -122,7 +123,7 @@ export class UserController {
     }
   }
 
-  /**
+   /**
     * @param {Request} request - data from request
     * @param {object} request.body - data from request
     * @param {string} request.body.email - user email
@@ -132,7 +133,7 @@ export class UserController {
     * @param {string} request.body.imageUrl - user imageUrl
     * after successful validation input data,
     * controller return Promise<{ success: boolean, token: string }>
-  */
+    */
   @httpPost('/google-auth')
   public async googleAuth(request: Request, response: Response): Promise<Response | { success: boolean, token: string }> {
     const { email, name, language, accessToken, imageUrl } = request.body;

@@ -310,7 +310,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                         error={!this.state[`${input}`] && this.state.touched[`${input}`]}
                       />
                       {!isEmpty(this.state[`${input}Errors`]) &&
-                        
+
                         this.state[`${input}Errors`].map((err: string, index: number) => {
                           return (
                             <div className='ca-Registration-form__error' key={index}>
@@ -333,7 +333,7 @@ export class GameForm extends React.Component<GameFormProps, GameFormState> {
                     !this.state.requestUrl ||
                     !this.state.maxWaitingTime ||
                     !this.state.redirectUrl
-                  } 
+                  }
                 >
                   {this.props.config}
                 </CaButton>

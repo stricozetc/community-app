@@ -217,7 +217,7 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
                 (<form
                   onSubmit={this.handleSubmit}
                   className='ca-Registration-form__container'
-                  noValidate
+                  noValidate={true}
                 >
                   <FormGroup>
                     <TextField

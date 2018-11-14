@@ -108,7 +108,7 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
             <CaSpinner isActive={!isDataLoaded} />
           </div>
         ) : (
-            <StatisticTables statistic={this.props.statistic} 
+            <StatisticTables statistic={this.props.statistic}
             games={this.props.games}
             />
           )}
