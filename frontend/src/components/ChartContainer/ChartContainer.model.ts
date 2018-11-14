@@ -5,7 +5,7 @@ export interface ChartContainerProps {
   statistics: StatisticState;
   itemName: string;
   chartList: string[];
-  games: GameModel[]
+  games: GameModel[];
 }
 
 export interface ChartContainerState {

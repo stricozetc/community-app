@@ -25,7 +25,7 @@ export class SocketServiceImplementation implements SocketService {
     }
   }
 
-  public static getInstance() {
+  public static getInstance(): SocketServiceImplementation {
     if (!SocketServiceImplementation.instance) {
       SocketServiceImplementation.instance = new SocketServiceImplementation();
     }

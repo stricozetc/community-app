@@ -7,7 +7,7 @@ export class TimerService {
         onComplete: () => void,
         ms: number,
         interval: number = 1000
-    ): number {
+    ): NodeJS.Timer {
         ms *= 60000;
         const countDownDate = new Date((new Date()).getTime() + ms).getTime();
 

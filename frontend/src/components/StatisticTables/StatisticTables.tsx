@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { CaTab, CaTable, CaTabs } from 'components';
 
-import {  
+import {
   MyGameCharts,
   MyWeekCharts,
   Row,
@@ -62,12 +62,12 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
     }
   }
 
-  public getChartList = (itemName: string) => {    
+  public getChartList = (itemName: string) => {
 
     let chartList: string[];
 
-    let gamesNames: string[] = this.props.games.games.map(item => item.appName);
-    gamesNames.indexOf(itemName) != -1 ? chartList = [...MyGameCharts, ...MyWeekCharts] :
+    const gamesNames: string[] = this.props.games.games.map(item => item.appName);
+    gamesNames.indexOf(itemName) !== -1 ? chartList = [...MyGameCharts, ...MyWeekCharts] :
     chartList = [chartsTypes.NoChartsAvailable];
 
     return chartList;
@@ -196,7 +196,7 @@ export class StatisticTables extends React.Component<StatisticTablesProps, Stati
           },
         ];
         const rowData = [...this.props.statistic.mostPopularGames] || [];
-        
+
         if (!this.isArrayEmpty(rowData)) {
 
           this.setState({

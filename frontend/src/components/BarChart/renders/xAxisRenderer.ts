@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { ConvertedWeekReportData } from 'models';
 
 import { XRendererOutput } from './interfaces';
-import { winRate, averageScores } from '../constants';
+import { averageScores, winRate } from '../constants';
 
 export class XAxisRenderer {
 

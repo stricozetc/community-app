@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
 import { Margin } from 'models';
 
-
 export class GraphAreaRenderer {
 
   private graphArea!: d3.Selection<d3.BaseType, {}, HTMLElement, any>;

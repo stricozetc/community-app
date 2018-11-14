@@ -157,63 +157,65 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       <I18n>{(t) => (
         <div className='ca-login-form'>
           {children}
-          {this.props.spinnerRun ? <CaSpinner isActive={true} /> : (<form onSubmit={this.onSubmit} className='ca-login-form__container' noValidate>
-            <FormGroup>
-              <TextField
-                id='email'
-                label={t('emailLabel')}
-                name='email'
-                value={email}
-                onChange={this.onChangeEmail}
-                type='email'
-                error={!isEmailValid && touched.email}
-              />
-              {!isEmailValid &&
-                emailErrors.map((err, index) => {
-                  return (
-                    <div className='ca-login-form__error' key={index}>
-                      {t(err)}
-                    </div>
-                  );
-                })}
-            </FormGroup>
+          {this.props.spinnerRun
+            ? <CaSpinner isActive={true} />
+            : (<form onSubmit={this.onSubmit} className='ca-login-form__container' noValidate={true}>
+              <FormGroup>
+                <TextField
+                  id='email'
+                  label={t('emailLabel')}
+                  name='email'
+                  value={email}
+                  onChange={this.onChangeEmail}
+                  type='email'
+                  error={!isEmailValid && touched.email}
+                />
+                {!isEmailValid &&
+                  emailErrors.map((err, index) => {
+                    return (
+                      <div className='ca-login-form__error' key={index}>
+                        {t(err)}
+                      </div>
+                    );
+                  })}
+              </FormGroup>
 
-            <FormGroup>
-              <TextField
-                className='ca-login-form__password-field'
-                style={{ marginTop: '20px' }}
-                id='password'
-                label={t('passwordLabel')}
-                name='password'
-                value={password}
-                onChange={this.onChangePassword}
-                type='password'
-                error={!isPasswordValid && touched.password}
+              <FormGroup>
+                <TextField
+                  className='ca-login-form__password-field'
+                  style={{ marginTop: '20px' }}
+                  id='password'
+                  label={t('passwordLabel')}
+                  name='password'
+                  value={password}
+                  onChange={this.onChangePassword}
+                  type='password'
+                  error={!isPasswordValid && touched.password}
+                />
+                {!isPasswordValid &&
+                  passwordErrors.map((err, index) => {
+                    return (
+                      <div className='ca-login-form__error' key={index}>
+                        {t(err)}
+                      </div>
+                    );
+                  })}
+              </FormGroup>
+              <div className='ca-login-form__button-container'>
+                <CaButton
+                  color='primary'
+                  type='submit'
+                  className='ca-login-form__login-btn'
+                  disabled={!password || !email}
+                >
+                  {t('login').toUpperCase()}
+                </CaButton>
+              </div>
+              <SocNetBlock
+                history={this.props.history}
+                isRestorePasswordVisible={true}
               />
-              {!isPasswordValid &&
-                passwordErrors.map((err, index) => {
-                  return (
-                    <div className='ca-login-form__error' key={index}>
-                      {t(err)}
-                    </div>
-                  );
-                })}
-            </FormGroup>
-            <div className='ca-login-form__button-container'>
-              <CaButton
-                color='primary'
-                type='submit'
-                className='ca-login-form__login-btn'
-                disabled={!password || !email}
-              >
-                {t('login').toUpperCase()}
-              </CaButton>
-            </div>
-            <SocNetBlock
-              history={this.props.history}
-              isRestorePasswordVisible={true}
-            />
-          </form>)
+            </form>)
           }
 
         </div>

@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { YAxisFields, Margin } from 'models';
+import { Margin, YAxisFields } from 'models';
 
 export class LegendRenderer {
   private legendText!: d3.Selection<d3.BaseType, {}, HTMLElement, any>;

@@ -35,9 +35,8 @@ export const deleteGame$ = (action$: ActionsObservable<DeleteGame>) =>
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new DeleteGameError();
 
-                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}), new DeleteGameError());
                 })
             )
         )
@@ -47,17 +46,16 @@ export const editGame$ = (action$: ActionsObservable<EditGame>) =>
     action$.pipe(
         ofType(MyGamesActionTypes.EditGame),
         switchMap(action =>
-            from(HttpWrapper.post<GameModel, GameModel[]>('api/v1/my-games/edit-game', action.payload)).pipe(
-                map(response =>  new EditGameSuccess(response.data)),
+            from(HttpWrapper.post<GameModel, GameModel[]>('api/v1/my-games/my-games/edit-game', action.payload)).pipe(
+                map(response => new EditGameSuccess(response.data)),
                 catchError(error => {
                     const messages: ErrorBlock[] =
                     !error.response ? [{msg: error.message}] :
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new EditGameError();
 
-                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}), new EditGameError());
                 })
             )
         )
@@ -75,9 +73,8 @@ export const addGame$ = (action$: ActionsObservable<AddGame>) =>
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new AddGameError();
 
-                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}), new AddGameError());
                 })
             );
             }
@@ -96,9 +93,8 @@ export const initMyGames$ = (action$: ActionsObservable<InitMyGames>) =>
                     error.name !== 'Error' ? [{msg: error.message}] :
                     Array.isArray(error.response.data) ? error.response.data :
                     [error.response.data];
-                    new LoadMyGamesError(error);
 
-                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}));
+                    return of(new OpenSnackbar({ type: SnackbarType.Error, messages}), new LoadMyGamesError(error));
                     }
                 )
             )

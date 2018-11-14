@@ -1,7 +1,7 @@
 import { History } from 'history';
 
 import { AuthStatus } from 'models';
-import { FrontEndUser, StatisticState, GamesState } from 'store';
+import { FrontEndUser, GamesState, StatisticState} from 'store';
 
 export interface StatisticProps {
   authStatus: AuthStatus;

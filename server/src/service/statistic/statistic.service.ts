@@ -21,7 +21,7 @@ export class StatisticService {
 
   }
 
-  public sortBy<T>(array: Array<T>, property: keyof T): Array<T> {
+  public sortBy<T>(array: T[], property: keyof T): T[] {
     return array.sort((a: T, b: T) => {
       if (a[property] < b[property]) {
         return 1;
