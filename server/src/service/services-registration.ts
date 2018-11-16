@@ -20,6 +20,7 @@ import { MyGamesRepository } from './my-games/my-games.repository';
 import { MyGamesRepositoryImplementation } from './my-games/my-games.repository.implementation';
 import { UserSettingsRepository, UserSettingsRepositoryImplementation } from './user-settings';
 import { MailerService } from './mailer';
+import { EventsRepository, EventsRepositoryImplementation } from 'service/events';
 
 export const CONTAINER = new Container();
 
@@ -39,5 +40,6 @@ CONTAINER.bind<StatisticService>(StatisticService).to(StatisticService);
 CONTAINER.bind<MyGamesRepository>(MyGamesRepository).to(MyGamesRepositoryImplementation);
 CONTAINER.bind<UserSettingsRepository>(UserSettingsRepository).to(UserSettingsRepositoryImplementation);
 CONTAINER.bind<MailerService>(MailerService).to(MailerService);
+CONTAINER.bind<EventsRepository>(EventsRepository).to(EventsRepositoryImplementation);
 
 export const inject = getDecorators(CONTAINER).lazyInject;

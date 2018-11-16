@@ -7,31 +7,31 @@ export class TimerService {
         onComplete: () => void,
         ms: number,
         interval: number = 1000
-    ): NodeJS.Timer {
+    ): number {
         ms *= 60000;
         const countDownDate = new Date((new Date()).getTime() + ms).getTime();
 
         onInterval(ms);
 
-        const newInterval = setInterval(() => {
-            // get todays date and time
-            const now = new Date().getTime();
+        const newInterval: number = window.setInterval(
+            () => {
+                const now = new Date().getTime();
 
-            // find the distance between now an the count down date
-            const distance = countDownDate - now;
+                const distance = countDownDate - now;
 
-            onInterval(distance);
+                onInterval(distance);
 
-            if (distance < 0) {
-                clearInterval(newInterval);
-                onComplete();
-            }
-        },                              interval);
+                if (distance < 0) {
+                    clearInterval(newInterval);
+                    onComplete();
+                }
+            },
+            interval);
 
         return newInterval;
     }
 
-    public end(timer: NodeJS.Timer): void {
+    public end(timer: number): void {
         clearInterval(timer);
     }
 }

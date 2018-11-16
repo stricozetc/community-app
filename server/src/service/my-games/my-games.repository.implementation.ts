@@ -38,7 +38,7 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
             updateRoomsInfoEventName: game.updateRoomsInfoEventName,
             notifyCountdown: game.notifyCountdown
         },
-                                    { where: { id: +game.id } }
+            { where: { id: +game.id } }
         );
 
             return GamesModel.findAll({

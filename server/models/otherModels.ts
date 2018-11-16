@@ -1,4 +1,7 @@
-import { SequelizeStaticAndInstance, Model } from "../node_modules/@types/sequelize";
+import {
+  SequelizeStaticAndInstance,
+  Model
+} from 'sequelize';
 
 export interface RecentGameFromServer {
   game: string;
@@ -42,34 +45,36 @@ export interface ModelsDbInterface {
   users: Model<SequelizeStaticAndInstance['Model'], {}>;
 }
 
-export interface DbConfig{    
-        connection: {
-            host: string;
-            user: string;
-            password: string;
-        };
-        defaultUser: {
-            userName: string;
-            userPassword: string;
-            userRole: string;
-        };
-        defaultAdmin: {
-            userName: string;
-            userPassword: string;
-            userRole: string;
-        };
-        dialect: string;
-        database: string;
-        usersModel: string;
-        usersTable: string;
-        rolesModel: string;
-        rolesTable: string;
-        appTokensModel: string;
-        appTokensTable: string;
-        userRolesModel: string;
-        userRolesTable: string;
-        statisticModel: string;
-        statisticTable: string;
-        gamesModel: string;
-        gamesTable: string;    
-} 
+export interface DbConfig {
+  connection: {
+    host: string;
+    user: string;
+    password: string;
+  };
+  defaultUser: {
+    userName: string;
+    userPassword: string;
+    userRole: string;
+  };
+  defaultAdmin: {
+    userName: string;
+    userPassword: string;
+    userRole: string;
+  };
+  dialect: string;
+  database: string;
+  usersModel: string;
+  usersTable: string;
+  rolesModel: string;
+  rolesTable: string;
+  appTokensModel: string;
+  appTokensTable: string;
+  userRolesModel: string;
+  userRolesTable: string;
+  statisticModel: string;
+  statisticTable: string;
+  gamesModel: string;
+  gamesTable: string;
+  eventModel: string;
+  eventTable: string;
+}
