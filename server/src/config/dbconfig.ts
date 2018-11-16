@@ -29,5 +29,7 @@ export const dbConfig = {
     statisticModel: 'statistic',
     statisticTable: 'statistic',
     gamesModel: 'games',
-    gamesTable: 'games'
+    gamesTable: 'games',
+    eventTable: 'events',
+    eventModel: 'events',
 };

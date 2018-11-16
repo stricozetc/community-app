@@ -9,7 +9,6 @@ import { ResultStatus } from '../../models';
 import { ParticipationStatus } from '../../models';
 import { logicErr } from '../../errors/logicErr';
 import { validateGameDataInput } from '../validation/statistic';
-import { Leaders, RecentGameFromServer, BestUsersFromServer, PopularGamesFromServer } from '../../models/otherModels';
 
 export interface GameData {
   userToken: string;
@@ -33,6 +32,7 @@ export class StatisticController {
     */
   @httpPost('/set-game-result')
   public async setGameResult(request: Request, response: Response): Promise<void | Response> {
+
     const data: GameData[] = request.body;
     for (let index = 0; index < data.length; index++) {
       const { errors, isValid } = validateGameDataInput(data[index]);

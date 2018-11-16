@@ -13,3 +13,4 @@ export * from './timer';
 export * from './user-authentication';
 export * from './user-settings';
 export * from './services-registration';
+export * from './events';
