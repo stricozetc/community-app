@@ -19,15 +19,18 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { CaAbout } from 'scenes/About';
-import { CaBattles } from 'scenes/Battles';
-import { CurrentBattle } from 'scenes/CurrentBattle';
-import { CaForgetPasswordPage } from 'scenes/ForgetPassword';
-import { Landing } from 'scenes/Landing';
-import { CaLeadersPage } from 'scenes/Leaders';
-import { PageNotFound } from 'scenes/PageNotFound';
-import { CaStatisticPage } from 'scenes/Statistic';
-import { CaUserSettings } from 'scenes/UserSettings';
+import {
+  CaAbout,
+  CaBattles,
+  CaEvents,
+  CaForgetPasswordPage,
+  CaLeadersPage,
+  CaStatisticPage,
+  CaUserSettings,
+  CurrentBattle,
+  Landing,
+  PageNotFound,
+} from 'scenes';
 
 import {
   AppState,
@@ -184,6 +187,12 @@ export class RootComponent extends React.Component<RootProps> {
               //   activeClassName: 'ca-navbar__nav-item--active',
               //   disabled: !isAuthorized
               // }
+              {
+                text: t('events'),
+                to: '/events',
+                activeClassName: 'ca-navbar__nav-item--active',
+                disabled: !isAuthorized
+              },
               {
                 text: t('about'),
                 to: '/about',
@@ -370,7 +379,17 @@ export class RootComponent extends React.Component<RootProps> {
               )}
             />
 
-             <Route
+            <Route
+              exact={true}
+              path='/events'
+              render={props => (
+                <CaEvents {...props}>
+                  {this.getNavbar(status)}
+                </CaEvents>
+              )}
+            />
+
+            <Route
               exact={true}
               path='/about'
               render={props => (
