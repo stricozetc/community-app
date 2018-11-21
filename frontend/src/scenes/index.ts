@@ -4,3 +4,8 @@ export * from './Landing';
 export * from './Battles';
 export * from './CurrentBattle';
 export * from './About';
+export * from './Events';
+export * from './ForgetPassword';
+export * from './Leaders';
+export * from './PageNotFound';
+export * from './UserSettings';
