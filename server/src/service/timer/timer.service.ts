@@ -7,13 +7,13 @@ export class TimerService {
         onComplete: () => void,
         ms: number,
         interval: number = 1000
-    ): number {
+    ): NodeJS.Timer {
         ms *= 60000;
         const countDownDate = new Date((new Date()).getTime() + ms).getTime();
 
         onInterval(ms);
 
-        const newInterval: number = window.setInterval(
+        const newInterval = setInterval(
             () => {
                 const now = new Date().getTime();
 
@@ -31,7 +31,7 @@ export class TimerService {
         return newInterval;
     }
 
-    public end(timer: number): void {
+    public end(timer: NodeJS.Timer): void {
         clearInterval(timer);
     }
 }

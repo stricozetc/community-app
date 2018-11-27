@@ -10,6 +10,6 @@ export interface Room {
   players: SocketIO.Socket[];
   token: string;
   status: RoomStatus;
-  timer?: number;
+  timer?: NodeJS.Timer;
   distance?: number;
 }
