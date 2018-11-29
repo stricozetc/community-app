@@ -64,7 +64,7 @@ export class GameEventsContoller {
 
     @httpGet('/get-event')
     public async getEvent(req: Request, res: Response): Promise<void | Response> {
-        const eventId: number = req.body.id;
+        const eventId: number = req.query.id;
         try {
             const event: Event = await this.eventsRepository.getEvent(eventId);
 
