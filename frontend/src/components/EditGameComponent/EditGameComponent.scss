@@ -1,0 +1,23 @@
+.ca-Registration-form{
+    &__container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 4rem;
+        background-color: white;
+        font-size:  1.6rem;
+    }
+
+    &__error {
+        color: #f92a42;
+        display: block;
+        padding: 5px 10px;
+        background-color: rgba(239, 38, 78, .4);
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    &__registration-btn {
+      margin-top: 20px;
+      font-size: 1.6rem;
+    }
+}

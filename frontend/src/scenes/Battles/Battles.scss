@@ -1,0 +1,69 @@
+@import "../../style/settings.scss";
+@import "../../style/mixins.scss";
+
+.ca-homepage {
+  &__container {
+    margin: 0 4rem;
+    @include flexbox();
+  }
+
+  &__container-for-games {
+    margin-top: 6rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
+  }
+
+  &__spinner-container {
+    background-color: $background-color;
+    z-index: 100;
+    position: fixed;
+    top: $nav-height;
+    width: 100vw;
+    height: 100vh;
+    @include flexbox-center-all();
+  }
+}
+@include respond-to(extra-small-range) {
+  .ca-homepage {
+    &__container {
+      margin: 0 1rem;
+    }
+    &__container-for-games {
+      margin: 1rem 0 0 0;
+      width: 100%;
+    }
+  }
+}
+@include respond-to(small-range) {
+  .ca-homepage {
+    &__container {
+      margin: 0;
+    }
+    &__container-for-games {
+      margin: 2rem 0;
+      width: 100%;
+      @include flexbox-center-main-ax();
+    }
+  }
+}
+@include respond-to(medium-range) {
+  .ca-game-card {
+    
+  }
+  .ca-homepage {
+  &__container-for-games {
+    margin-top: 6rem;
+    margin-right: 3rem;
+    margin-left: 3rem;
+    display: flex;
+  }
+}
+}
+@include respond-to(large-range) {
+  .ca-game-card {
+  }
+}
+@include respond-to(extra-large-range) {
+  .ca-game-card {
+  }
+}

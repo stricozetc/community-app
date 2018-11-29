@@ -1,32 +1,29 @@
-import * as Validator from 'validator';
-import { User } from './../../Interfaces/User';
+import Validator from 'validator';
+import { User } from 'interfaces/User';
 import { isEmpty } from './is-empty';
-import { loginErr } from './../../errors/loginErr';
+import { logicErr } from 'errors/logicErr';
+import { ErrorBlock } from 'models/error';
 
-
-export function validateLoginInput(data: User): {errors: any, isValid: boolean} {
-    let errors: any = {};
+export function validateLoginInput(data: User): { errors: ErrorBlock[], isValid: boolean } {
+    const errors: ErrorBlock[] = [];
 
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';
 
-
     if (!Validator.isEmail(data.email)) {
-        errors.email = loginErr.emailMustBeValid;
+        errors.push(logicErr.emailMustBeValid);
     }
 
     if (Validator.isEmpty(data.email)) {
-        errors.email = loginErr.emailIsRequired;
+        errors.push(logicErr.emailIsRequired);
     }
-
 
     if (Validator.isEmpty(data.password)) {
-        errors.password = loginErr.passwordIsRequired;
+        errors.push(logicErr.passwordIsRequired);
     }
-
 
     return {
         errors,
         isValid: isEmpty(errors)
-    }; 
+    };
 }

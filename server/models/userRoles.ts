@@ -1,9 +1,9 @@
-import * as Sequelize from "sequelize";
+import Sequelize, { SequelizeStaticAndInstance } from 'sequelize';
 import { db } from './SequelizeConnect';
-import { dbConfig } from './../src/config/dbconfig';
+import { dbConfig } from 'config/dbconfig';
+import { ModelsDbInterface } from 'models/otherModels';
 
-
-export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
+export const UserRoles: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.userRolesModel, {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -28,15 +28,16 @@ export const UserRoles = db.connect.define(dbConfig.userRolesModel, {
     }
 
 }, {
-        // If freezeTableName is true, sequelize will not try to alter the DAO name to get the table name. Otherwise, the model name will be pluralized
+        // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
+        // otherwise, the model name will be pluralized
         freezeTableName: true,
-        //Defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
+        // defaults to pluralized model name, unless freezeTableName is true, in which case it uses model name verbatim
         tableName: dbConfig.userRolesTable,
         classMethods: {
-            associate: (models: any) => {
+            associate: (models: ModelsDbInterface) => {
                 // skip associating during working with DB
-                UserRoles.belongsTo(models.users, { foreignKey: 'userId', onDelete: "CASCADE", onUpdate: 'CASCADE' });
-                UserRoles.belongsTo(models.roles, { foreignKey: 'roleId', onDelete: "CASCADE", onUpdate: 'CASCADE' });
+                UserRoles.belongsTo(models.users, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+                UserRoles.belongsTo(models.roles, { foreignKey: 'roleId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
             }
         },
 

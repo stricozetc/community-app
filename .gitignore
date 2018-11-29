@@ -1,2 +1,9 @@
 server/error.log
 server/combined.log
+node_modules
+.idea
+.vscode
+target
+*.iml
+*.html
+*.png

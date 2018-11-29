@@ -1,0 +1,119 @@
+.ca-current-battle {
+  &__content {
+    margin: 6rem 0 0 10.6rem;
+  }
+
+  &__header {
+    display: flex;
+    margin: 0 0 3.8rem 0;
+  }
+
+  &__logo {
+    width: 6rem;
+    height: 6rem;
+    object-fit: contain;
+  }
+
+  &__header-text {
+    text-align: start;
+    margin: 0 0 0 2rem;
+  }
+
+  &__title {
+    margin: 0 0 .6rem 0;
+    height: 3.6rem;
+    font-family: Source Sans Pro;
+    font-size: 3.2rem;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.13;
+    letter-spacing: normal;
+    color: #ffffff;
+  }
+
+  &__sub-title {
+    height: 1.8rem;
+    font-family: Source Sans Pro;
+    font-size: 1.4rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #d7dde2;
+  }
+
+  &__time-line {
+    margin: 0 0 3.8rem 0;
+    display: flex;
+  }
+
+  &__time {
+    display: flex;
+    margin: 0 6.2rem 0 0;
+    height: 3.1rem;
+    font-family: Source Sans Pro;
+    font-size: 2.4rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #d3fbd8;
+  }
+
+  &__time-description {
+    margin: 0 1.2rem 0 0;
+  }
+
+  &__info {
+    display: flex;
+    margin: 0 0 13px 0;
+
+  }
+
+  &__info-icon {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+    margin: 0 1rem 0 0;
+  }
+
+  &__info-text {
+    margin: 0 .6rem 0 0;
+    height: 2.3rem;
+    font-family: Source Sans Pro;
+    font-size: 1.8rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #d7dde2;
+  }
+
+  &__info-count {
+    height: 2.3rem;
+    font-family: Source Sans Pro;
+    font-size: 1.8rem;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffeccc;
+  }
+
+  &__invite-button {
+    margin: 3.8rem 0 1.8rem 0;
+  }
+
+  &__waiting-for-redirect {
+    color: #f4b33a;
+    font-size: 2.6rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

@@ -1,12 +1,16 @@
-import { AuthStatus } from "models";
+import { AuthStatus } from 'models';
 
 export interface AuthState {
-  status: AuthStatus,
-  user: FrontEndUser | undefined
+  status: AuthStatus;
+  user: FrontEndUser | undefined;
+  spinnerRun: boolean;
 }
 
 export interface FrontEndUser {
-  id: string,
-  name: string,
-  email: string
+  id: number;
+  name: string;
+  email: string;
+  token: string;
+  language: string;
+  imageUrl?: string;
 }

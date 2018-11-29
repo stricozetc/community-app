@@ -1,0 +1,22 @@
+.ca-user-settings {
+    font-size: 1.6rem;
+
+    &__container {
+        margin-top: 5rem;
+        width: 80%;
+        margin-left: 10%;
+    }
+
+    &__view {
+        color: white;
+    }
+
+    &__container-for-form {
+        margin-top: 4rem;
+        animation: fadeIn .5s, moveInBottom .5s;
+    }
+
+    &__body {
+      background-color: #fff;
+    }
+}

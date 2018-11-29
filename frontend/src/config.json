@@ -1,0 +1,25 @@
+{
+    "frontEnd": {
+        "facebookApi": {
+            "id": "328331921069724"
+        },
+        "googleApi": {
+            "id": "227700117302-q4uvo0fsvcujktrdaim4cta15chs1lgv.apps.googleusercontent.com"
+        },
+        "vkApi": {
+            "id": "6688447"
+        },
+        "port": "3000"
+    },
+    "backEndPath": {
+        "port": "3030",
+        "schema": "http",
+        "host": "localhost"
+    },
+    "dbConfig": {
+        "host": "localhost",
+        "user": "root",
+        "password": "password",
+        "dialect": "mysql"
+    }
+}

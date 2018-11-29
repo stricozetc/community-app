@@ -1,4 +1,4 @@
-import { injectable, decorate } from "inversify";
+import { injectable } from 'inversify';
 
 import {
     createLogger,
@@ -7,24 +7,25 @@ import {
     transports
 } from 'winston';
 
-import { LoggerService } from "./logger.service";
+import appConfig from 'config/app.config.json';
+import loggerConfig from 'config/logger.config.json';
+
+import { LoggerService } from './logger.service';
 
 @injectable()
 export class LoggerServiceImplementation implements LoggerService {
-    private loggerConfig: any = require('../../config/logger.config.json');
-    private appConfig: any = require('../../config/app.config.json');
 
     private logger: Logger = createLogger({
-        level: this.loggerConfig.level,
+        level: loggerConfig.level,
         format: format.json(),
         transports: [
-            new transports.File({ filename: this.loggerConfig.errorLogName, level: this.loggerConfig.errorLevel }),
-            new transports.File({ filename: this.loggerConfig.combinedLogName })
+            new transports.File({ filename: loggerConfig.errorLogName, level: loggerConfig.errorLevel }),
+            new transports.File({ filename: loggerConfig.combinedLogName })
         ]
     });
 
     constructor() {
-        if (process.env.NODE_ENV !== this.appConfig.production) {
+        if (process.env.NODE_ENV !== appConfig.production) {
             this.logger.add(new transports.Console({
                 format: format.simple()
             }));

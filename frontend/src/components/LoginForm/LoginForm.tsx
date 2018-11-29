@@ -1,69 +1,75 @@
-import "./LoginForm.scss";
+import * as React from 'react';
+import { I18n } from 'react-i18next';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { Button, FormGroup, TextField } from "@material-ui/core";
-
-import * as React from "react";
-import { connect } from "react-redux";
-
+import { FormGroup, TextField } from '@material-ui/core';
+import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsLogin } from 'constes';
-import { AppState, LoginUser } from "store";
+import { SocialNetworksUser } from 'models';
+import { AppState, LoginUser, SocialNetworksLogin } from 'store';
 
 import {
   AuthStatus,
   UserFieldsToLogin,
-  UserFieldsToRegister
-} from "models";
+  UserFieldsToRegister,
+} from 'models';
 
 import {
-  initLoginFormState,
   LoginFormProps,
-  LoginFormState
-} from "./LoginForm.model";
+  LoginFormState,
+  initLoginFormState
+} from './LoginForm.model';
+
+import './LoginForm.scss';
+import { SocNetBlock } from '../SocialNetworksBlock';
+import { CaSpinner } from '../Spinner';
 
 export class LoginFormComponent extends React.Component<LoginFormProps, LoginFormState> {
   constructor(props: LoginFormProps) {
     super(props);
 
     this.state = initLoginFormState;
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.checkValidation = this.checkValidation.bind(this);
   }
 
   public componentWillReceiveProps(nextProps: LoginFormProps): void {
-    if (nextProps.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+    if (nextProps.status === AuthStatus.Authorized) {
+      this.props.history.push('/homepage');
     }
   }
 
   public componentDidMount(): void {
-    if (this.props.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
+    if (this.props.status === AuthStatus.Authorized) {
+      this.props.history.push('/homepage');
     }
   }
 
-  public onChange(event: any): void {
-    const target = event.target;
+  public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const email = event.target.value;
 
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({ [name]: value } as LoginFormState);
+    this.setState({ email });
   }
 
-  public onSubmit(event: any): void {
+  public onChangePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const password = event.target.value;
+
+    this.setState({ password });
+  }
+
+  public onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const user: UserFieldsToLogin = {
-      email: this.state.email,
-      password: this.state.password
-    };
+    if (this.isValidData()) {
+      const user: UserFieldsToLogin = {
+        email: this.state.email,
+        password: this.state.password
+      };
 
-    this.props.loginUser(user);
+      this.props.loginUser(user);
+    }
   }
 
-  public checkValidation(): void {
+  public isValidData = (): boolean => {
     let emailErrors: string[] = [];
     let passwordErrors: string[] = [];
 
@@ -84,7 +90,6 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
         frontEndValidationErrorsLogin.email.mustBeCorrect
       );
     }
-
     if (!this.state.password) {
       passwordErrors.push(frontEndValidationErrorsLogin.password.required);
     } else {
@@ -103,90 +108,120 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
       );
     }
 
+    this.setState({ emailErrors, passwordErrors });
+
     if (emailErrors.length <= 0) {
+      this.isInputErrorStyle('email');
       this.setState({ isEmailValid: true });
     } else {
       this.setState({ isEmailValid: false });
+      return false;
     }
 
     if (passwordErrors.length <= 0) {
       this.setState({ isPasswordValid: true });
     } else {
+      this.isInputErrorStyle('password');
       this.setState({ isPasswordValid: false });
+      return false;
     }
 
-    this.setState({ emailErrors, passwordErrors });
+    return true;
   }
 
-  public onBlur = (field: string) => (evt: any) => {
+  public isInputErrorStyle = (field: string) => () => {
     this.setState({
       touched: {
         ...this.state.touched,
         [field]: true
       }
     });
-    this.checkValidation();
-  };
+  }
 
   public render(): JSX.Element {
+    const {
+      children
+    } = this.props;
+
+    const {
+      email,
+      password,
+      isEmailValid,
+      isPasswordValid,
+      touched,
+      emailErrors,
+      passwordErrors,
+    } = this.state;
+
     return (
-      <div>
-        <form onSubmit={this.onSubmit} className="ca-login-form__container">
-          <FormGroup>
-            <TextField
-              id="email"
-              label="Email"
-              name="email"
-              value={this.state.email}
-              onChange={this.onChange}
-              type="email"
-              onBlur={this.onBlur("email")}
-              error={!this.state.isEmailValid && this.state.touched.email}
-            />
-            {!this.state.isEmailValid &&
-              this.state.touched.email &&
-              this.state.emailErrors.map((err, index) => {
-                return (
-                  <div className="ca-login-form__error" key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
+      <I18n>{(t) => (
+        <div className='ca-login-form'>
+          {children}
+          {this.props.spinnerRun
+            ? <CaSpinner isActive={true} />
+            : (<form onSubmit={this.onSubmit} className='ca-login-form__container' noValidate={true}>
+              <FormGroup>
+                <TextField
+                  id='email'
+                  label={t('emailLabel')}
+                  name='email'
+                  value={email}
+                  onChange={this.onChangeEmail}
+                  type='email'
+                  error={!isEmailValid && touched.email}
+                />
+                {!isEmailValid &&
+                  emailErrors.map((err, index) => {
+                    return (
+                      <div className='ca-login-form__error' key={index}>
+                        {t(err)}
+                      </div>
+                    );
+                  })}
+              </FormGroup>
 
-          <FormGroup>
-            <TextField
-              className="ca-login-form__password-field"
-              id="password"
-              label="Password"
-              name="password"
-              value={this.state.password}
-              onChange={this.onChange}
-              type="password"
-              onBlur={this.onBlur("password")}
-              error={!this.state.isPasswordValid && this.state.touched.password}
-            />
-            {!this.state.isPasswordValid &&
-              this.state.touched.password &&
-              this.state.passwordErrors.map((err, index) => {
-                return (
-                  <div className="CA-Registration-form__error" key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
+              <FormGroup>
+                <TextField
+                  className='ca-login-form__password-field'
+                  style={{ marginTop: '20px' }}
+                  id='password'
+                  label={t('passwordLabel')}
+                  name='password'
+                  value={password}
+                  onChange={this.onChangePassword}
+                  type='password'
+                  error={!isPasswordValid && touched.password}
+                />
+                {!isPasswordValid &&
+                  passwordErrors.map((err, index) => {
+                    return (
+                      <div className='ca-login-form__error' key={index}>
+                        {t(err)}
+                      </div>
+                    );
+                  })}
+              </FormGroup>
+              <div className='ca-login-form__button-container'>
+                <CaButton
+                  color='primary'
+                  type='submit'
+                  className='ca-login-form__login-btn'
+                  disabled={!password || !email}
+                >
+                  {t('login').toUpperCase()}
+                </CaButton>
+              </div>
+              <SocNetBlock
+                history={this.props.history}
+                isRestorePasswordVisible={true}
+              />
+            </form>)
+          }
 
-          <Button
-            color="primary"
-            type="submit"
-            className="ca-login-form__login-btn"
-            disabled={!this.state.isEmailValid || !this.state.isPasswordValid}
-          >
-            LOGIN
-          </Button>
-        </form>
-      </div>
+        </div>
+      )
+      }
+      </I18n>
     );
   }
 
@@ -205,11 +240,14 @@ export class LoginFormComponent extends React.Component<LoginFormProps, LoginFor
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status
+  status: state.auth.status,
+  errors: state.errors,
+  spinnerRun: state.auth.spinnerRun
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user))
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loginUser: (user: UserFieldsToRegister) => dispatch(new LoginUser(user)),
+  socialNetworksLogin: (socialNetworksUser: SocialNetworksUser) => dispatch(new SocialNetworksLogin(socialNetworksUser))
 });
 
 export const LoginForm = connect(

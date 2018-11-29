@@ -1,0 +1,104 @@
+@import "../../style/settings.scss";
+@import "../../style/mixins.scss";
+
+.ca-game-footer {
+  width: 100%;
+  height: 56px;
+  min-height: 5.6rem;
+  @include flexbox();
+
+  &--unlocked-game-background {
+    @include background-color($grey-2);
+  }
+
+  &--locked-game-background {
+    @include background-color($locked-footer-color);
+  }
+
+  &__container-single-player {
+    color: #fff;
+    line-height: 56px;
+    width: 100%;
+    font-size: 2.6rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  &__container {
+    width: 100%;
+    @include flexbox-center-cross-ax();
+    height: 100%;
+    justify-content: space-around;
+  }
+
+  &__alert {
+    color: $grey;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
+
+  &__placeholder {
+    display: flex;
+  }
+
+  &__icon {
+    margin-right: .5rem;
+  }
+
+  &__info {
+  }
+
+  &__first-line {
+    max-width: 100%;
+    font-size: 1.3rem;
+    color: $grey;
+    max-width: 100%;
+    min-width: 51%;
+  }
+
+  &__second-line {
+    max-width: 100%;
+    font-size: 1.8rem;
+    color: $beige;
+    max-width: 100%;
+    min-width: 51%;
+
+    &--full-players {
+      color: $green;
+    }
+  }
+}
+@media(max-width: 768px) {
+  .ca-game-footer {
+    &__first-line {
+      font-size: 1.3rem;
+    }
+
+    &__second-line {
+      font-size: 1.8rem;
+    }
+  }
+}
+@media(max-width:600px) {
+  .ca-game-footer {
+    &__first-line {
+      font-size: 1.3rem;
+    }
+
+    &__second-line {
+      font-size: 1.8rem;
+    }
+  }
+}
+@media(max-width:420px) {
+  .ca-game-footer {
+
+    &__first-line {
+      font-size: 1.3rem;
+    }
+
+    &__second-line {
+      font-size: 1.8rem;
+    }
+  }
+}

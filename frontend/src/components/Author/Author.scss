@@ -1,0 +1,30 @@
+@import "../../style/settings.scss";
+
+.ca-author {
+
+  &__container {
+    width: 330px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 40px;
+  }
+
+  &__image {
+    height: 100px;
+    border-radius: 50%;
+  }
+
+  &__user-name-container {
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__user-name-container h1 {
+    color: #f4b33a;
+    font-size: 2.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+  }
+}

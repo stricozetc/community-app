@@ -1,0 +1,51 @@
+@mixin clearFix {
+  &::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+}
+
+@mixin resetLink($color) {
+  text-decoration: none;
+  color: $color;
+}
+
+@mixin background-color($color) {
+  background-color: $color;
+}
+
+@mixin center-text() {
+  text-align: center;
+}
+
+@mixin flexbox() {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@mixin flexbox-center-all() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flexbox-center-main-ax() {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flexbox-center-cross-ax() {
+  display: flex;
+  align-items: center;
+}
+
+@mixin respond-to($media) {
+    @if not map-contains($media-types, $media) {
+      @warn "#{$media} is not a known media type. Using large-range instead.";
+      $media: large-range;
+    }
+    @media #{map-get($media-types, $media)} {
+        @content;
+    }
+}

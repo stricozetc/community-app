@@ -1,13 +1,14 @@
 import 'reflect-metadata';
 
 import { InversifyExpressServer } from 'inversify-express-utils';
-import { inject } from './service/services-registration';
 
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import * as morgan from "morgan";
-import * as SocketIO from 'socket.io';
-import * as passport from 'passport';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import SocketIO from 'socket.io';
+import passport from 'passport';
+import cors from 'cors';
+
+import configFile from '../../frontend/src/config.json';
 
 import {
     LoggerService,
@@ -19,25 +20,23 @@ import {
 import './controller';
 import { CONTAINER } from './service/services-registration';
 
-import { db } from './../models/SequelizeConnect';
-import { RoleModel, Roles } from './../models/role';
+import { db, RoleModel, Roles } from 'models';
 import { passportConfig } from './config/passport';
 
-let server = new InversifyExpressServer(CONTAINER);
+const server = new InversifyExpressServer(CONTAINER);
 
-// tslint:disable-next-line:no-var-requires
-const config = require('./config/app.config.json');
+import config from './config/app.config.json';
 
 server.setConfig((app) => {
     process.env.NODE_ENV !== config.production ? app.use(morgan('dev')) : app.use(morgan('prod'));
 
+    app.use(cors());
     app.use(bodyParser.urlencoded({
         extended: true
     }));
     app.use(passport.initialize());
     passportConfig(passport);
     app.use(bodyParser.json());
-    app.use(express.static(config.staticUrl));
 });
 
 // makeAssosiations();
@@ -47,30 +46,32 @@ db.connect.sync({
 })
     .then(() => {
         return RoleModel.upsert({
-            name: Roles.admin,
+            name: Roles.User,
             createAt: Date.now(),
             updatedAt: Date.now()
         });
     })
     .then(() => {
         return RoleModel.upsert({
-            name: Roles.user,
+            name: Roles.Admin,
             createAt: Date.now(),
             updatedAt: Date.now()
         });
     })
     .catch((err) => {
-        console.log(err);
+        logger.errorLog(err);
     });
 
-let logger: LoggerService = new LoggerServiceImplementation();
-let application = server.build();
+const logger: LoggerService = new LoggerServiceImplementation();
+const application = server.build();
 
-let serverInstance = application.listen(config.port, () => {
-    logger.infoLog(`App is running at http://localhost:${config.port}`);
+const serverInstance = application.listen(config.port, () => {
+    logger.infoLog(`App is running at
+    ${configFile.backEndPath.schema}://
+    ${configFile.backEndPath.host}:
+    ${configFile.backEndPath.port}`);
     logger.infoLog('Press CTRL+C to stop\n');
 });
 
-const socketService: SocketService = new SocketServiceImplementation();
+const socketService: SocketServiceImplementation = SocketServiceImplementation.getInstance();
 socketService.setSocket(SocketIO(serverInstance));
-

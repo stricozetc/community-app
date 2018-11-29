@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const { root } = require('./helpers');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 let cleanOptions = {
     verbose: true,
@@ -22,7 +23,8 @@ let webpackConfig = {
     devtool: 'source-map',
 
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        plugins: [new TsconfigPathsPlugin({ configFile: "./tsconfig.json" })]
     },
 
     resolveLoader: {

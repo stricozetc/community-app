@@ -11,7 +11,7 @@
     "target": "es5",
     "lib": [
       "es6",
-      "dom"
+      "dom",
     ],
     "outDir": "build",
     "sourceMap": true,
@@ -23,12 +23,59 @@
     ],
     "paths": {
       "*": [
-        "node_modules/@types/*",
-        "./src/types/*"
-      ]
+        "node_modules/@types/*"
+      ],
+      "errors": [
+        "errors"
+      ],
+      "errors/*": [
+        "errors/*"
+      ],
+      "interfaces": [
+        "interfaces"
+      ],
+      "interfaces/*": [
+        "interfaces/*"
+      ],
+      "models": [
+        "models"
+      ],
+      "models/*": [
+        "models/*"
+      ],
+      "config/*": [
+        "src/config/*"
+      ],
+      "controller": [
+        "src/controller"
+      ],
+      "controller/*": [
+        "src/controller/*"
+      ],
+      "service": [
+        "src/service"
+      ],
+      "service/*": [
+        "src/service/*"
+      ],
+      "typing": [
+        "src/typing"
+      ],
+      "typing/*": [
+        "src/typing/*"
+      ],
+      "validation": [
+        "src/validation"
+      ],
+      "validation/*": [
+        "src/validation/*"
+      ],
     },
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "jest": {
     "globals": {

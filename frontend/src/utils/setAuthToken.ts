@@ -7,9 +7,9 @@ export const setAuthToken = (token: string) => {
     } else {
         throw new Error('Token can not be empty');
     }
-}
+};
 
 export const deleteAuthToken = () => {
     // tslint:disable-next-line:no-string-literal
     delete axios.defaults.headers.common['Authorization'];
-}
+};

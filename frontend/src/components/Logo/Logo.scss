@@ -1,0 +1,9 @@
+@import "../../style/settings.scss";
+
+.ca-logo{
+  color: $orange;
+  font-size: $big-font;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+}

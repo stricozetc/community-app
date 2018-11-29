@@ -1,0 +1,27 @@
+
+@import "../../style/main.scss";
+@import "fonts.scss";
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: $background-color;
+  /* margin-top: $nav-height +  $space-between-nav-and-content; */
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.ca-global-fadeIn {
+  animation: fadeIn 1s;
+}
+
+.ca-nav-children-container-right {
+  justify-self: right;  
+}
+@media(max-width:800px){
+  
+}
+

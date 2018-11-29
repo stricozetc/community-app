@@ -1,35 +1,48 @@
-import { technicalErrCodes } from "./errCodes";
+import { TechnicalErrCodes } from './errCodes';
 
 export const technicalErr = {
-  saltIsNotGenerated: (err: any) => {
-    return {
-      code: technicalErrCodes.saltIsNotGenerated,
-      msg: 'Salt was not generated',
-      err
-    };
-  },
+    databaseCrash: {
+        code: TechnicalErrCodes.DatabaseCrash,
+        msg: 'Database crashed',
+    },
 
-  canNotBcryptString: (err: any) => {
-    return {
-      code: technicalErrCodes.canNotBcryptString,
-      msg: 'String was not bcrypted',
-      err
-    };
-  },
+    saltIsNotGenerated: {
+        code: TechnicalErrCodes.SaltIsNotGenerated,
+        msg: 'Salt was not generated',
+    },
 
-  userIsNotFound: (err: any) => {
-    return {
-      code: technicalErrCodes.smtIsNotFoundedInDb,
-      msg: 'User can not be found in Db',
-      err
-    };
-  },
+    canNotBcryptString: {
+        code: TechnicalErrCodes.CanNotBcryptString,
+        msg: 'String was not bcrypted',
+    },
 
-  userRoleIsNotFound: (err: any) => {
-    return {
-      code: technicalErrCodes.smtIsNotFoundedInDb,
-      msg: 'User Role can not be found in Db',
-      err
-    };
-  }
+    canNotCreateHash: {
+        code: TechnicalErrCodes.CanNotCreateHash,
+        msg: 'Hash was not created',
+    },
+
+    applicationTokenIsNotUpsertedInDb: {
+        code: TechnicalErrCodes.ApplicationTokenIsNotUpsertedInDb,
+        msg: 'Application Token can not be upsert in DB',
+    },
+
+    userRoleIsNotUpsertedInDb: {
+        code: TechnicalErrCodes.UserRoleIsNotUpsertedInDb,
+        msg: 'User Role can not be upsert in DB',
+    },
+
+    userRoleIsNotSaveInDb: {
+        code: TechnicalErrCodes.UserRoleIsNotSaveInDb,
+        msg: 'User Role can not be saved in DB',
+    },
+
+    userLanguageIsNotUpdatedInDb: {
+        code: TechnicalErrCodes.UserLanguageIsNotUpdatedInDb,
+        msg: 'User language can not be updated in DB',
+    },
+
+    mailNotSend: {
+        code: TechnicalErrCodes.MailNotSend,
+        msg: 'Mail not send',
+    },
 };

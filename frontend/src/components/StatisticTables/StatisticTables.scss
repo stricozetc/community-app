@@ -1,0 +1,101 @@
+@import "../../style/settings.scss";
+@import "../../style/mixins.scss";
+
+.ca-users-tables {
+  display: flex;
+  min-height: calc(100vh - 6rem);
+
+  &__statistics-title, &__charts-title {
+      padding-left: 105px;
+      color: #fff;
+      font-size: 32px;
+      font-weight: 600;
+      margin-top: 60px;
+      margin-bottom: 20px;
+  }
+
+  &__statistics {
+    width: 50%;
+  }
+
+  &__statistics-container {
+    height: 100%;
+    margin-bottom: - 165px;
+    border-right: 1px solid rgb(161, 161, 161);
+  }
+
+  &__charts {
+    position: relative;
+    width: 50%;
+  }
+
+  &__chart-container {
+    position: absolute;
+    top: 112px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+@include respond-to(medium-range) {
+  .ca-users-tables__statistics {
+    width: 60%;
+  }
+
+  .ca-users-tables__charts {
+    width: 40%;
+  }
+}
+
+@include respond-to(small-range) {
+  .ca-users-tables {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    height: auto;
+
+    &__statistics {
+      width: 100%;
+    }
+
+    &__charts {
+      width: 100%;
+      height: 400px;
+    }
+
+    &__statistics-title, &__charts-title {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    &__chart-container {
+      top: 72px;
+    }
+  }
+}
+
+@include respond-to(extra-small-range) {
+  .ca-users-tables {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    height: auto;
+
+    &__statistics {
+      width: 100%;
+    }
+
+    &__charts {
+      width: 100%;
+      height: 300px;
+    }
+
+    &__statistics-title, &__charts-title {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    &__chart-container {
+      top: 72px;
+    }
+  }
+}

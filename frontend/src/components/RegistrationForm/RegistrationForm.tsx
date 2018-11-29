@@ -1,71 +1,77 @@
-import "./RegistrationForm.scss";
+import * as React from 'react';
+import { I18n } from 'react-i18next';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import {
-  Button,
-  FormGroup,
-  TextField
-} from "@material-ui/core";
-
-import * as React from "react";
-import { connect } from "react-redux";
-
+import { FormGroup, TextField } from '@material-ui/core';
+import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
-import { AuthStatus, UserFieldsToRegister } from "models";
+import { SocialNetworksUser, UserFieldsToRegister } from 'models';
+import { AppState, RegisterUser, SocialNetworksLogin } from 'store';
 
 import {
-  AppState,
-  RegisterUser
-} from "store";
-
-import {
-  initRegistrationFormState,
   RegistrationFormProps,
-  RegistrationFormState
-} from "./RegistrationForm.model";
+  RegistrationFormState,
+  initRegistrationFormState
+} from './RegistrationForm.model';
+
+import './RegistrationForm.scss';
+import { CaSpinner } from '../Spinner';
+import { SocNetBlock } from '../SocialNetworksBlock';
 
 export class RegistrationFormComponent extends React.Component<RegistrationFormProps, RegistrationFormState> {
-  constructor(props: any) {
+  constructor(props: RegistrationFormProps) {
     super(props);
     this.state = initRegistrationFormState;
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.checkValidation = this.checkValidation.bind(this);
   }
 
-  public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
-    if (nextProps.status === AuthStatus.AUTHORIZED) {
-      this.props.history.push("/dashboard");
-    }
+  public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const email = event.target.value;
+
+    this.setState({ email });
   }
 
-  public handleChange(event: any): void {
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
+  public onChangeName = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const name = event.target.value;
 
-    this.setState({ [name]: value } as RegistrationFormState);
-    this.checkValidation();
+    this.setState({ name });
   }
 
-  public handleSubmit(event: any): void {
+  public onChangePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const password = event.target.value;
+
+    this.setState({ password });
+  }
+
+  public onChangePasswordToRepeat = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const passwordToRepeat = event.target.value;
+
+    this.setState({ passwordToRepeat });
+  }
+
+  public handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const user: UserFieldsToRegister = {
-      email: this.state.email,
-      name: this.state.name,
-      password: this.state.password,
-      password2: this.state.passwordToRepeat
-    };
+    if (this.isValidData()) {
+      const user: UserFieldsToRegister = {
+        email: this.state.email,
+        name: this.state.name,
+        password: this.state.password,
+        password2: this.state.passwordToRepeat,
+        language: this.props.language,
+      };
 
+      this.props.registerUser(user);
+    }
 
-    this.props.registerUser(user);
+    console.log(this.state);
   }
 
-  public checkValidation(): void {
+  public isValidData = (): boolean => {
     let emailErrors: string[] = [];
     let passwordErrors: string[] = [];
     let nameErrors: string[] = [];
+    let passwordToRepeatErrors: string[] = [];
 
     if (!this.state.email) {
       emailErrors.push(frontEndValidationErrorsRegister.email.required);
@@ -115,159 +121,222 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
       );
     }
 
+    if (!this.state.passwordToRepeat) {
+      passwordToRepeatErrors.push(frontEndValidationErrorsRegister.passwordToRepeat.required);
+    } else {
+      passwordToRepeatErrors = this.removeElFromArrByValue(
+        passwordToRepeatErrors,
+        frontEndValidationErrorsRegister.passwordToRepeat.required
+      );
+    }
+
+    if (this.state.password !== this.state.passwordToRepeat) {
+      passwordToRepeatErrors.push(frontEndValidationErrorsRegister.passwordToRepeat.match);
+    } else {
+      passwordToRepeatErrors = this.removeElFromArrByValue(
+        passwordToRepeatErrors,
+        frontEndValidationErrorsRegister.passwordToRepeat.match
+      );
+    }
+
+    this.setState({ emailErrors, passwordErrors, nameErrors, passwordToRepeatErrors });
+
     if (emailErrors.length <= 0) {
       this.setState({ isEmailValid: true });
     } else {
+      this.isInputErrorStyle('email');
       this.setState({ isEmailValid: false });
+      return false;
     }
 
     if (nameErrors.length <= 0) {
       this.setState({ isNameValid: true });
     } else {
+      this.isInputErrorStyle('name');
       this.setState({ isNameValid: false });
+      return false;
     }
 
     if (passwordErrors.length <= 0) {
       this.setState({ isPasswordValid: true });
     } else {
+      this.isInputErrorStyle('password');
       this.setState({ isPasswordValid: false });
+      return false;
     }
 
-    this.setState({ emailErrors, passwordErrors, nameErrors });
+    if (passwordToRepeatErrors.length <= 0) {
+      this.setState({ isPasswordToRepeatValid: true });
+    } else {
+      this.isInputErrorStyle('passwordToRepeat');
+      this.setState({ isPasswordToRepeatValid: false });
+      return false;
+    }
+
+    return true;
   }
 
-  public handleBlur = (field: string) => (evt: any) => {
+  public isInputErrorStyle = (field: string) => (event: React.FormEvent<HTMLElement>) => {
     this.setState({
       touched: {
         ...this.state.touched,
         [field]: true
       }
     });
-    this.checkValidation();
-  };
+  }
 
   public render(): JSX.Element {
+    const {
+      isNameValid,
+      isPasswordValid,
+      isPasswordToRepeatValid,
+      isEmailValid,
+      touched,
+      email,
+      password,
+      name,
+      nameErrors,
+      passwordErrors,
+      passwordToRepeatErrors,
+      passwordToRepeat,
+      emailErrors,
+    } = this.state;
+
+    const {
+      children,
+      spinnerRun,
+      history,
+    } = this.props;
     return (
-      <div>
-        <form
-          onSubmit={this.handleSubmit}
-          className="CA-Registration-form__container"
-        >
-          <FormGroup>
-            <TextField
-              id="email"
-              label="Email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              type="email"
-              onBlur={this.handleBlur("email")}
-              error={!this.state.isEmailValid && this.state.touched.email}
-            />
-            {!this.state.isEmailValid &&
-              this.state.touched.email &&
-              this.state.emailErrors.map((err, index) => {
-                return (
-                  <div className="CA-Registration-form__error" key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
+      <I18n>
+        {
+          (t) => (
+            <div>
+              {children}
+              {spinnerRun ? <CaSpinner isActive={true} /> :
+                (<form
+                  onSubmit={this.handleSubmit}
+                  className='ca-Registration-form__container'
+                  noValidate={true}
+                >
+                  <FormGroup>
+                    <TextField
+                      id='email'
+                      label={t('emailLabel')}
+                      name='email'
+                      value={email}
+                      onChange={this.onChangeEmail}
+                      type='email'
+                      className='ca-Registration-form__field'
+                      error={!isEmailValid && touched.email}
+                    />
+                    {!isEmailValid &&
+                      emailErrors.map((err, index) => {
+                        return (
+                          <div className='ca-Registration-form__error' key={index}>
+                            {t(err)}
+                          </div>
+                        );
+                      })}
+                  </FormGroup>
 
-          <FormGroup>
-            <TextField
-              style={{
-                marginTop: "20px"
-              }}
-              id="name"
-              label="Name"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-              type="text"
-              onBlur={this.handleBlur("name")}
-              error={!this.state.isNameValid && this.state.touched.name}
-            />
-            {!this.state.isNameValid &&
-              this.state.touched.name &&
-              this.state.nameErrors.map((err, index) => {
-                return (
-                  <div className="CA-Registration-form__error" key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
+                  <FormGroup>
+                    <TextField
+                      style={{
+                        marginTop: '20px'
+                      }}
+                      id='name'
+                      label={t('nameLabel')}
+                      name='name'
+                      value={name}
+                      onChange={this.onChangeName}
+                      type='text'
+                      className='ca-Registration-form__field'
+                      error={!isNameValid && touched.name}
+                    />
+                    {!isNameValid &&
+                      nameErrors.map((err, index) => {
+                        return (
+                          <div className='ca-Registration-form__error' key={index}>
+                            {t(err)}
+                          </div>
+                        );
+                      })}
+                  </FormGroup>
 
-          <FormGroup>
-            <TextField
-              style={{
-                marginTop: "20px"
-              }}
-              id="password"
-              label="Password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-              onBlur={this.handleBlur("password")}
-              error={!this.state.isPasswordValid && this.state.touched.password}
-            />
-            {!this.state.isPasswordValid &&
-              this.state.touched.password &&
-              this.state.passwordErrors.map((err, index) => {
-                return (
-                  <div className="CA-Registration-form__error" key={index}>
-                    {err}
-                  </div>
-                );
-              })}
-          </FormGroup>
+                  <FormGroup>
+                    <TextField
+                      style={{
+                        marginTop: '20px'
+                      }}
+                      id='password'
+                      label={t('passwordLabel')}
+                      name='password'
+                      value={password}
+                      onChange={this.onChangePassword}
+                      type='password'
+                      className='ca-Registration-form__field'
+                      error={!isPasswordValid && touched.password}
+                    />
+                    {!isPasswordValid &&
+                      passwordErrors.map((err, index) => {
+                        return (
+                          <div className='ca-Registration-form__error' key={index}>
+                            {t(err)}
+                          </div>
+                        );
+                      })}
+                  </FormGroup>
 
-          <FormGroup>
-            <TextField
-              style={{ marginTop: "20px" }}
-              id="passwordToRepeat"
-              label="Repeat password"
-              name="passwordToRepeat"
-              value={this.state.passwordToRepeat}
-              onChange={this.handleChange}
-              type="password"
-              onBlur={this.handleBlur("passwordToRepeat")}
-              error={
-                this.state.touched.password &&
-                this.state.touched.passwordToRepeat &&
-                this.state.password !== this.state.passwordToRepeat
+                  <FormGroup>
+                    <TextField
+                      style={{ marginTop: '20px' }}
+                      id='passwordToRepeat'
+                      label={t('repeatPasswordLabel')}
+                      name='passwordToRepeat'
+                      value={passwordToRepeat}
+                      onChange={this.onChangePasswordToRepeat}
+                      type='password'
+                      className='ca-Registration-form__field'
+                      error={
+                        !isPasswordToRepeatValid &&
+                        touched.passwordToRepeat
+                      }
+                    />
+
+                    {!isPasswordToRepeatValid &&
+                      passwordToRepeatErrors.map((err, index) => {
+                        return (
+                          <div className='ca-Registration-form__error' key={index}>
+                            {t(err)}
+                          </div>
+                        );
+                      })}
+                  </FormGroup>
+
+                  <CaButton
+                    color='primary'
+                    type='submit'
+                    className='ca-Registration-form__registration-btn'
+                    disabled={
+                      !email ||
+                      !password ||
+                      !name ||
+                      !passwordToRepeat
+                    }
+                  >
+                    {t('register')}
+                  </CaButton>
+                  <SocNetBlock
+                    history={history}
+                    isRestorePasswordVisible={false}
+                  />
+                </form>)
               }
-            />
-
-            {this.state.touched.password &&
-              this.state.touched.passwordToRepeat &&
-              this.state.password !== this.state.passwordToRepeat && (
-                <div className="CA-Registration-form__error">
-                  Passwords must match!
-                </div>
-              )}
-          </FormGroup>
-
-          <Button
-            color="primary"
-            type="submit"
-            style={{
-              marginTop: "20px"
-            }}
-            disabled={
-              !this.state.isEmailValid ||
-              !this.state.isPasswordValid ||
-              !this.state.isNameValid ||
-              this.state.password !== this.state.passwordToRepeat
-            }
-          >
-            REGISTER
-          </Button>
-        </form>
-      </div>
+            </div>
+          )
+        }
+      </I18n>
     );
   }
 
@@ -286,15 +355,17 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 }
 
 const mapStateToProps = (state: AppState) => ({
-  status: state.auth.status
+  status: state.auth.status,
+  language: state.userSettings.language,
+  spinnerRun: state.auth.spinnerRun
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user))
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  registerUser: (user: UserFieldsToRegister) => dispatch(new RegisterUser(user)),
+  socialNetworksLogin: (socialNetworksUser: SocialNetworksUser) => dispatch(new SocialNetworksLogin(socialNetworksUser))
 });
 
 export const RegistrationForm = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RegistrationFormComponent);
-

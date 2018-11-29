@@ -1,0 +1,16 @@
+{
+  "apiKey": "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",
+  "helperAddress": "example.battle.net@gmail.com",
+  "forgetPassword": {
+    "ru": {
+      "subject": "Востановление пароля",
+      "text": "Вы запросили востановление Вашего пароля на сайте Battle Net. Если Вы этого не делали, проигнорируйте это письмо,Чтобы поменять пароль на другой, пройдите по этой ссылке: {restoreLink}. С уважением, Администрация Battle.Net",
+      "htmlLink": "./src/config/ru/forget-password.html"
+    },
+    "en": {
+      "subject": "Restore password",
+      "text": "You requested the restore of your password on the Battle Net site. If you did not, ignore this letter. o change the password to another one, follow this link: {restoreLink}. Best regards, Battle.Net administration",
+      "htmlLink": "./src/config/en/forget-password.html"
+    }
+  }
+}
