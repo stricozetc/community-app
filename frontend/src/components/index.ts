@@ -17,3 +17,5 @@ export * from './Mui';
 export * from './VkDialog';
 export * from './ProtectedRoute';
 export * from './Author';
+export * from './YandexMap';
+export * from './GithubButton';

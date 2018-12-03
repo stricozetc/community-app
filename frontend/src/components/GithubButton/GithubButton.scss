@@ -1,0 +1,21 @@
+.ca-github-button {
+  &__github-svg {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 0;
+    transform: rotate(-90deg);
+  }
+
+  &__github-url {
+    color: #fff;
+  }
+
+  &__github-url:hover &__octo-arm {
+    animation: github-animation 560ms ease-in-out;
+  }
+
+  &__octo-arm {
+    transform-origin: 130px 106px;
+  }
+}

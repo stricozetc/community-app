@@ -23,6 +23,7 @@
     @include flexbox-center-all();
   }
 }
+
 @include respond-to(extra-small-range) {
   .ca-homepage {
     &__container {
@@ -47,23 +48,12 @@
   }
 }
 @include respond-to(medium-range) {
-  .ca-game-card {
-    
-  }
   .ca-homepage {
-  &__container-for-games {
-    margin-top: 6rem;
-    margin-right: 3rem;
-    margin-left: 3rem;
-    display: flex;
-  }
-}
-}
-@include respond-to(large-range) {
-  .ca-game-card {
-  }
-}
-@include respond-to(extra-large-range) {
-  .ca-game-card {
+    &__container-for-games {
+      margin-top: 6rem;
+      margin-right: 3rem;
+      margin-left: 3rem;
+      display: flex;
+    }
   }
 }
