@@ -14,9 +14,6 @@ export enum EventsActionTypes {
   LoadEvents = '[event] Load Events',
   LoadEventsSuccess = '[event] Load Event (Success)',
   LoadEventsError = '[event] Load Events (Error)',
-  LoadEvent = '[event] Load Event',
-  LoadEventSuccess = '[event] Load Event (Success)',
-  LoadEventError = '[event] Load Event (Error)'
 }
 
 @action()
@@ -93,25 +90,6 @@ export class LoadEventsError {
   public readonly type = EventsActionTypes.LoadEventsError;
 }
 
-@action()
-export class LoadEvent {
-  public readonly type = EventsActionTypes.LoadEvent;
-
-  public constructor(public payload: number) {}
-}
-
-@action()
-export class LoadEventSuccess {
-  public readonly type = EventsActionTypes.LoadEventSuccess;
-
-  public constructor(public payload: Event) {}
-}
-
-@action()
-export class LoadEventError {
-  public readonly type = EventsActionTypes.LoadEventError;
-}
-
 export type EventActions =
   | AddEvent
   | AddEventSuccess
@@ -124,7 +102,4 @@ export type EventActions =
   | EditEventError
   | LoadEvents
   | LoadEventsSuccess
-  | LoadEventsError
-  | LoadEvent
-  | LoadEventSuccess
-  | LoadEventError;
+  | LoadEventsError;

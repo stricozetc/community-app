@@ -64,6 +64,12 @@ import {
   userSettingsReducer
 } from './userSettings';
 
+import {
+  EventState,
+  EventsEffects,
+  eventsReducer
+} from './events';
+
 const rootReducers = combineReducers({
   auth: authReducer,
   games: gamesReducer,
@@ -74,6 +80,7 @@ const rootReducers = combineReducers({
   userSettings: userSettingsReducer,
   restorePassword: restorePasswordReducer,
   room: roomReducer,
+  events: eventsReducer,
 });
 
 const rootEpic = combineEpics(
@@ -85,6 +92,7 @@ const rootEpic = combineEpics(
   ...UserSettingsEffects,
   ...RestorePasswordEffects,
   ...RoomEffects,
+  ...EventsEffects,
 );
 
 const epicMiddleware = createEpicMiddleware();
@@ -100,6 +108,7 @@ export interface AppState {
   userSettings: UserSettingsState;
   myGames: MyGamesState;
   room: RoomState;
+  events: EventState;
 }
 
 declare global {
