@@ -66,7 +66,6 @@ export class CaAboutPageComponent extends React.Component<AboutProps> {
   public render(): JSX.Element {
     return (
       <div className='ca-about'>
-        {this.props.children}
         <h1 className='ca-about__title'>Developers team</h1>
         <div className='ca-about__authors-container'>
           {

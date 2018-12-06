@@ -61,7 +61,6 @@ export class CurrentBattleComponent extends React.Component<CurrentBattleProps> 
         {
           (t) => (
             <section className='ca-current-battle'>
-              {this.props.children}
               <div className='ca-current-battle__content'>
                 <div className='ca-current-battle__header'>
                   <div className='ca-current-battle__logo'>

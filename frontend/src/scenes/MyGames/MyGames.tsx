@@ -115,7 +115,6 @@ export class CaMyGamesComponent extends React.Component<MyGameProps, MyGameState
 
         return (
             <div>
-                {this.props.children}
                 <h1 className='myGames__title'>My Games</h1>
                 <CaTable rowData={rowData} columnDef={columnDef} />
                 <div className='add-button-block'>

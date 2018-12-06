@@ -41,7 +41,6 @@ export class EditGameComponent extends React.Component<EditGameComponentProps> {
 
         return (
             <div>
-                {this.props.children}
                 {this.props.user &&
                     <GameForm
                         id={id}

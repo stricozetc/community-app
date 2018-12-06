@@ -30,7 +30,6 @@ class LandingComponent extends React.Component<LandingProps> {
         {
           ( t ) => (
             <div className='ca-landing'>
-              {this.props.children}
               <div className='ca-landing__container'>
                 <h2 className='ca-landing__title'>{t('landingTitle')}</h2>
                 <div className='ca-landing__buttons-container'>

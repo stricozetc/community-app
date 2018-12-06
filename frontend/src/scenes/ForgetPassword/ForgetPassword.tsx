@@ -83,7 +83,6 @@ class CaForgetPasswordComponent extends React.Component<ForgetPasswordProps, For
         {
           (t) => (
             <div className='ca-forget-password-form'>
-              {this.props.children}
               {this.props.status === RestorePasswordStatus.Init ?
                 <form onSubmit={this.onSubmit} className='ca-forget-password-form__container'>
                   <FormGroup>

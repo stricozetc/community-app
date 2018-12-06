@@ -11,7 +11,6 @@ export class PageNotFound extends React.Component {
         {
           ( t ) => (
             <div className='ca-page-not-found'>
-              {this.props.children}
               <div className='ca-page-not-found__container'>
                 <h1 className='ca-page-not-found__text' >
                   {'404 ' + t('pageNotFound')}

@@ -42,7 +42,6 @@ export class AddGameComponent extends React.Component<AddGameComponentProps> {
     public render(): JSX.Element {
         return (
             <div>
-                {this.props.children}
                 {this.props.user &&
                     < GameForm
                         userId={this.props.user && this.props.user.id}

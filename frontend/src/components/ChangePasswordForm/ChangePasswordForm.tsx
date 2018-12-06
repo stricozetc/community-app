@@ -165,7 +165,6 @@ export class ChangePasswordForm extends React.Component<
       <I18n>
         {t => (
           <div className='ca-change-password-form'>
-            {this.props.children}
             <form
               onSubmit={this.handleSubmit}
               className='ca-change-password-form__container'

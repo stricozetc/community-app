@@ -87,7 +87,6 @@ export class CaUserSettingsComponent extends React.Component<
       <I18n>
         {t => (
           <div className='ca-user-settings'>
-            {this.props.children}
             <div className='ca-user-settings__container'>
               <CaTabs
                 value={this.state.value}

@@ -101,7 +101,6 @@ class CaStatisticPageComponent extends React.Component<StatisticProps> {
       this.props.statistic.mostPopularGamesStatus === LoadStatus.Error;
     return (
       <div className='ca-statistic'>
-        {this.props.children}
 
         {!isDataLoaded && !isDataFailed ? (
           <div className='ca-homepage__spinner-container'>
