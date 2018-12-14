@@ -1,0 +1,106 @@
+@import "../../style/settings.scss";
+
+.event {
+    margin: 0 12%;
+    background-color: $nav-color;
+
+    &__header {
+        padding: 100px 0;
+        background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
+         url(https://generocity.org/philly/wp-content/uploads/sites/2/2015/10/GenerocityMeetup1.jpg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: 100% 50%;
+
+        &__title {
+            color: $orange;
+            font-weight: 500;
+            font-size: $big-font-2;
+            text-align: center;
+        }
+    }
+
+    &__information__wrapper {
+        width: 100%;
+        font-size: $medium-font-2;
+        border-top: 2px solid $background-color;
+        border-bottom: 2px solid $background-color;
+    }
+
+    &__information {
+        width: 75%;
+        height: 15%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        color: $grey-light;
+        padding: 2% 0;
+
+        &-place:last-child {
+            border: none;
+            width: 40%
+        }
+    }
+
+    &__description {
+        width: 80%;
+        margin: 0 auto;
+        padding-top: 20px;
+
+        &__main-text {
+            color: $orange;
+            font-size: $big-font-2;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        &__second-text {
+            color: $grey-light;
+            font-size: $big-font;
+            font-weight: 300;
+        }
+    }
+
+    &__address-title-text {
+        padding: 20px;
+        border-bottom: 2px solid $background-color;
+        font-size: $big-font;
+        color: $orange;
+        text-align: center;
+        margin: 30px 10% 20px;
+    }
+
+    &__place {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 80%;
+        height: 320px;
+        margin: 0 auto;
+
+        &-address {
+            font-size: $big-font;
+            text-align: center;
+            color: $orange;
+        }
+
+        &-map {
+            width: 300px;
+            height: 300px;
+            border: 2px solid $orange;
+        }
+    }
+}
+
+.event__information > div{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-right: 2px solid $background-color;
+    height: 80px;
+    width: 30%;
+}

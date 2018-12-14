@@ -9,3 +9,4 @@ export * from './ForgetPassword';
 export * from './Leaders';
 export * from './PageNotFound';
 export * from './UserSettings';
+export * from './EventPage';

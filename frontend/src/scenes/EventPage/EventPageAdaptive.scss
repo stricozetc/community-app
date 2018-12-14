@@ -1,0 +1,174 @@
+@import "../../style/settings.scss";
+@import "../../style/mixins.scss";
+
+@include respond-to(medium-range) {
+    .event {
+        margin: 0;
+
+        &__information {
+            width: 75%;
+        }
+
+        &__description {
+            width: 90%;
+        }
+    }
+}
+
+@include respond-to(small-range) {
+    .event {
+        margin: 0;
+
+        &__header {
+            padding: 65px 0;
+
+            &__title {
+                font-size: $big-font;
+            }
+        }
+
+        &__information__wrapper {
+            font-size: $medium-font-2;
+        }
+
+        &__information {
+            flex-direction: column;
+
+            div {
+                border-right: none;
+               
+                width: 100%;
+            }
+
+            &-place:last-child {
+                width: 100%
+            }
+    
+        }
+
+        &__description{
+
+            &__main-text {
+                font-size: $big-font;
+            }
+
+            &__second-text {
+                font-size: $medium-font-2;
+            }
+        }
+
+        &__address-title-text {
+            margin: 0px 10% 20px;
+        }
+
+        &__place {
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 350px;
+
+            &-address {
+                margin: 0;
+                margin-bottom: 20px;
+            }
+
+            &-map {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        &__address-title-text {
+            font-size: $big-font;
+        }
+
+        &__place {
+
+            &-address {
+                font-size: $medium-font-2;
+            }
+        }
+    }
+
+    .event__information > div {
+        border-bottom: 2px solid $background-color;
+    }
+}
+
+@include respond-to(extra-small-range) {
+    .event {
+        margin: 0;
+
+        &__header {
+            padding: 65px 0;
+
+            &__title {
+                font-size: $big-font;
+            }
+        }
+
+        &__information__wrapper {
+            font-size: $medium-font-2;
+        }
+
+        &__information {
+            flex-direction: column;
+
+            div {
+                border-right: none;
+                width: 100%;
+            }
+
+            &-place:last-child {
+                width: 100%
+            }
+    
+        }
+
+        &__description{
+            width: 95%;
+
+            &__main-text {
+                font-size: $big-font;
+            }
+
+            &__second-text {
+                font-size: $medium-font-2;
+            }
+        }
+
+        &__address-title-text {
+            margin: 0px 10% 20px;
+        }
+
+        &__place {
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 350px;
+
+            &-address {
+                margin: 0;
+                margin-bottom: 20px;
+            }
+
+            &-map {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        &__address-title-text {
+            font-size: $big-font;
+        }
+
+        &__place {
+
+            &-address {
+                font-size: $medium-font-2;
+            }
+        }
+    }
+
+    .event__information > div {
+        border-bottom: 2px solid $background-color;
+    }
+}
