@@ -1,9 +1,7 @@
 import { Avatar } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-// (Yegor): comment icons imports cuz of temporary removed nav links
-// import SettingsIcon from '@material-ui/icons/SettingsRounded';
-// import AdminIcon from '@material-ui/icons/SupervisorAccount';
+import AdminIcon from '@material-ui/icons/SupervisorAccount';
 
 import * as Cookies from 'js-cookie';
 import * as jwt_decode from 'jwt-decode';
@@ -53,8 +51,6 @@ import {
 
 import {
   AppMenu,
-  CaAddGame,
-  CaEditGame,
   CaLogo,
   CaNavbar,
   CaSelect,
@@ -72,13 +68,11 @@ import {
   transitionDirection,
 } from 'models';
 
-import { CaMyGames } from '../MyGames/MyGames';
-
 import { RootProps } from './Root.model';
 
 import './root.scss';
 
-const token = Cookies.get('jwtToken');
+const token = Cookies.get('jwtTokenUser');
 
 if (token) {
   setAuthToken(token);
@@ -145,28 +139,35 @@ export class RootComponent extends React.Component<RootProps> {
     );
   }
 
+  public generateAppMenuItems = (title: string, appMenuItems: AppMenuItem[]): AppMenuItem[] => {
+    const isAuthorized = this.props.status === AuthStatus.Authorized;
+    switch (title) {
+      case 'adminPage': {
+        return [...appMenuItems, {
+          icon: <AdminIcon />,
+          title: 'adminPage',
+          action: () => window.location.href = 'http://localhost:8000/#/',
+        }];
+      }
+      case 'logout': {
+        return [...appMenuItems, {
+          icon: <LogoutIcon />,
+          title: 'logout',
+          action: isAuthorized ? this.logoutUser : this.redToLogin
+        }];
+      }
+      default: return appMenuItems;
+    }
+  }
+
   public getNavbar(authStatus: number): JSX.Element {
 
     const isAuthorized = authStatus === AuthStatus.Authorized;
-    const appMenuItems: AppMenuItem[] = [
-      // (Yegor): temporary hide settings cuz they aren't ready yet
-      // {
-      //   icon: <SettingsIcon />,
-      //   title: 'settings',
-      //   action: () => this.props.history.push('/settings')
-      // },
-      // (Yegor): hide nav link to admin page
-      // {
-      //   icon: <AdminIcon />,
-      //   title: 'adminPage',
-      //   action: () => this.props.history.push('/_admin_console')
-      // },
-      {
-        icon: <LogoutIcon />,
-        title: 'logout',
-        action: isAuthorized ? this.logoutUser : this.redToLogin
-      }
-    ];
+    let appMenuItems: AppMenuItem[] = [];
+
+    this.props.appMenuLinks.filter(item => {
+      appMenuItems = this.generateAppMenuItems(item, appMenuItems);
+    });
 
     const { user, isSnackbarOpen, snackbarType, errors } = this.props;
 
@@ -318,29 +319,6 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/_admin_console'
-              render={props => (
-                <CaMyGames {...props} />
-              )}
-            />
-
-            <Route
-              exact={true}
-              path='/_admin_console/add-game'
-              render={props => (
-                <CaAddGame {...props} />
-              )}
-            />
-
-            <Route
-              exact={true}
-              path='/_admin_console/edit-game/:idOfTheGame'
-              render={props => (
-                <CaEditGame {...props} />
-              )}
-            />
-            <Route
-              exact={true}
               path='/settings'
               render={props => (
                 <CaUserSettings {...props} />
@@ -399,6 +377,7 @@ const mapStateToProps = (state: AppState) => ({
   isSnackbarOpen: state.snackbarUi.isOpen,
   snackbarType: state.snackbarUi.type,
   user: state.auth.user,
+  appMenuLinks: state.auth.appMenuLinks,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

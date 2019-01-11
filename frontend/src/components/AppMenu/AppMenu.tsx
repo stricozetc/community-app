@@ -61,9 +61,9 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
                 onClick={this.handleIconClick}
                 className={classes.icon}
               >
-              {imageUrl ?
-                <Avatar src={imageUrl} /> :
-                <AccountCircle />}
+                {imageUrl ?
+                  <Avatar src={imageUrl} /> :
+                  <AccountCircle />}
               </IconButton>
 
               <Popper open={open} anchorEl={anchorEl} transition={true} disablePortal={true}>
@@ -82,6 +82,7 @@ export class AppMenu extends React.Component<AppMenuProps, AppMenuState> {
                         {
                           appMenuItems.map(item => {
                             return (
+                              !item.disabled &&
                               <MenuItem key={item.title} onClick={item.action} className={classes.menuItem} >
                                 <ListItemIcon className={classes.icon}>
                                   {item.icon}

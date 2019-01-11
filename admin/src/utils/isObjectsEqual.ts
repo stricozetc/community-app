@@ -1,0 +1,25 @@
+export const isObjectsEqual = (a: object, b: object) => {
+  // create arrays of property names
+  const aProps = Object.getOwnPropertyNames(a);
+  const bProps = Object.getOwnPropertyNames(b);
+
+  // if number of properties is different,
+  // objects are not equivalent
+  if (aProps.length !== bProps.length) {
+    return false;
+  }
+
+  for (let i = 0; i < aProps.length; i++) {
+    const propName = aProps[i];
+
+    // if values of same property are not equal,
+    // objects are not equivalent
+    if (a[propName] !== b[propName]) {
+      return false;
+    }
+  }
+
+  // if we made it this far, objects
+  // are considered equivalent
+  return true;
+};

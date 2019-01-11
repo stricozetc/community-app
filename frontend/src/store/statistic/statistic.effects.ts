@@ -63,7 +63,7 @@ export const initRecentGames$ = (actions$: ActionsObservable<InitRecentGames>) =
       from(HttpWrapper.get<RecentGames[]>(`api/v1/statistic/recent-games?userId=${action.userToken}`)).pipe(
         map((response) => new LoadRecentGamesCompleted(response.data)),
         catchError((error) => {
-          console.log();
+
           const messages: ErrorBlock[] =
             !error.response ? [{ msg: error.message }] :
               error.name !== 'Error' ? [{ msg: error.message }] :

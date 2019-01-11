@@ -17,6 +17,7 @@ export interface RootProps {
   snackbarType: SnackbarType;
   errors: ErrorBlock[];
   language?: string;
+  appMenuLinks: string[];
 
   leaveRoom(battleName: string): void;
 

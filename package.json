@@ -5,7 +5,7 @@
     "install": "node install.js",
     "build": "node build.js",
     "full-build": "npm install && npm run build",
-    "start": "concurrently \"cd frontend && npm start\" \"cd server && npm start\"",
+    "start": "concurrently \"cd frontend && npm start\" \"cd server && npm start\" \"cd admin && npm start\"",
     "full-start": "npm install && npm start"
   },
   "dependencies": {

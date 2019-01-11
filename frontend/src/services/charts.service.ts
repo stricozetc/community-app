@@ -196,8 +196,6 @@ export class ChartsService {
       }
     }
 
-    console.log(daysToShowOnScreen, gameName);
-
     const weekReportData: WeekReportData[] = daysToShowOnScreen.map(
       (day: number) => {
         const historyForDay = historyForGame.filter(item => {
@@ -228,7 +226,6 @@ export class ChartsService {
         });
 
         const numberOfBattles = winsNumber + losesNumber + drawNumber;
-        console.log('numberOfBattles', numberOfBattles);
         const winRate = (winsNumber / numberOfBattles) * 100 || 0;
         let averageScores = 0;
 

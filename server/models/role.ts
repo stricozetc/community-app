@@ -2,21 +2,24 @@ import Sequelize, { SequelizeStaticAndInstance } from 'sequelize';
 import { db } from './SequelizeConnect';
 import { dbConfig } from 'config/dbconfig';
 
-export const RoleModel: SequelizeStaticAndInstance['Model'] = db.connect.define(dbConfig.rolesModel, {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true,
-        validate: {
-            notEmpty: true
+export const RoleModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
+    dbConfig.rolesModel,
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: {
+            type: Sequelize.STRING(30),
+            allowNull: false,
+            unique: true,
+            validate: {
+                notEmpty: true
+            }
         }
-    }
-}, {
+    },
+    {
         // if freezeTableName is true, sequelize will not try to alter the DAO name to get the table name.
         // otherwise, the model name will be pluralized
         freezeTableName: true,
@@ -27,4 +30,9 @@ export const RoleModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
 export enum Roles {
     Admin = 'admin',
     User = 'user'
+}
+
+export enum RolesId {
+    User = 1,
+    Admin = 2
 }

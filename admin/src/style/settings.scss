@@ -1,0 +1,42 @@
+
+
+$background-color: #1c2227;
+
+// FONT-COLOR
+$beige: #ffeccc;
+$orange: #f4b33a;
+$white: white;
+$grey:#d7dde2;
+$green: #d3fbd8;
+$red: #ffa39e;
+$green-light: #35bd9a;
+$grey-2: #556776;
+
+// SPECIFIC
+$locked-game-color: rgba(71, 86, 98, 0.2);
+$unlocked-game-color:rgba(71, 86, 98, 0.79);
+$unactive-link-color: #888e93;
+$nav-color: #313c45;
+$btn-font-size: 1.5rem;
+$top-border-unactive-game: #666666;
+
+$locked-footer-color: rgba(85, 103, 118, 0.2);
+
+$nav-height: 6rem;
+$space-between-nav-and-content: 0rem;
+
+// FONT-SIZE
+$medium-font: 1.4rem;
+$medium-font-2: 2rem;
+$big-font: 2.6rem;
+$big-font-2: 4rem;
+$icon-font: 7rem;
+
+// MEDIA BreakPoint
+$media-types: (
+    extra-small-range: '(max-width: 499px)',
+    small-range: '(min-width: 500px) and (max-width: 959px)',
+    medium-range: '(min-width: 960px) and (max-width: 1279px)',
+    large-range: '(min-width: 1280px) and (max-width: 1919px)',
+    extra-large-range: '(min-width: 1920px)'
+);

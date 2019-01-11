@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import uuid from 'uuid/v4';
 
-import { RoleModel, UserModel, UserRoles } from 'models';
+import { RoleModel, UserModel, UserRoles, RolesId } from 'models';
 import { Role, User } from 'interfaces';
 import { logicErr, technicalErr } from 'errors';
 
@@ -214,8 +214,8 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                             email: savedUser.email,
                             token: savedUser.token,
                             imageUrl: savedUser.imageUrl,
+                            roleId: userRole.id
                         };
-                        console.log('AAAAAAAAAAAAA', payload);
 
                         jwt.sign(payload, keys.secretOrKey, (error: Error, token: string) => {
                             if (error) {
@@ -239,5 +239,61 @@ export class UserAuthenticationRepositoryImplementation implements UserAuthentic
                 }
             }
         });
+    }
+
+    public async getUserLinks(id: number): Promise<string[]> {
+        try {
+            const { roleId }: { roleId: number } = await UserRoles.findOne({
+                where: {
+                    userId: id
+                },
+                attributes: ['roleId']
+            });
+
+            if (roleId === RolesId.Admin) {
+                return ['adminPage', 'logout'];
+            } else if (roleId === RolesId.User) {
+                return ['logout'];
+            } else {
+                throw { msg: `no such user in DB with id ${id}` };
+            }
+        } catch (err) {
+            if (err.msg) {
+                this.loggerService.errorLog(err.msg);
+
+                throw { msg: err.msg };
+            } else {
+                this.loggerService.errorLog(err);
+
+                throw technicalErr.databaseCrash;
+            }
+        }
+    }
+
+    public async getUserRole(id: number): Promise<number> {
+        try {
+            const { roleId }: { roleId: number } = await UserRoles.findOne({
+                where: {
+                    userId: id
+                },
+                attributes: ['roleId']
+            });
+            if (roleId) {
+
+                return roleId;
+            } else {
+                throw { msg: `no such user in DB with id ${id}` };
+            }
+        } catch (err) {
+            if (err.msg) {
+                this.loggerService.errorLog(err.msg);
+
+                throw { msg: err.msg };
+            } else {
+                this.loggerService.errorLog(err);
+
+                throw { msg: technicalErr.databaseCrash };
+            }
+        }
     }
 }

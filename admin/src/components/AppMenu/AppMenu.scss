@@ -1,0 +1,32 @@
+.app-menu__profile {
+  display: flex;
+  padding: 16px;
+  border-radius: 4px 4px 0 0;
+  background-color: #4a5966;
+  min-width: 250px;
+
+  &-icon-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -3px;
+    margin-right: 14px;
+  }
+
+  &-text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  &-name, &-email {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+
+  &-name {
+    font-size: 1.6rem;
+  }
+}

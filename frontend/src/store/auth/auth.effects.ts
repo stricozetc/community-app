@@ -8,10 +8,13 @@ import { ErrorBlock, SnackbarType, UserFieldsToLogin } from 'models';
 import { HttpWrapper } from 'services';
 import { SetLanguage, store } from 'store';
 import { OpenSnackbar } from 'store/snackbar';
-import { deleteAuthToken, history, setAuthToken } from 'utils';
+import { deleteAuthToken, setAuthToken } from 'utils';
 
 import {
   AuthTypes,
+  GetUserLinks,
+  GetUserLinksError,
+  GetUserLinksSuccess,
   LoginError,
   LoginUser,
   LogoutUser,
@@ -31,7 +34,7 @@ export const loginUser$ = (actions$: ActionsObservable<LoginUser>) =>
       from(HttpWrapper.post<UserFieldsToLogin, { token: string }>('api/users/login', action.payload)).pipe(
         map(res => {
           const { token } = res.data;
-          Cookies.set('jwtToken', token);
+          Cookies.set('jwtTokenUser', token);
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
 
@@ -56,7 +59,11 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
     ofType(AuthTypes.RegisterUser),
     switchMap(action =>
       from(HttpWrapper.post('api/users/register', action.payload)).pipe(
-        map(() => new RegistrationSuccess('/login')),
+        map(() => {
+          const user: UserFieldsToLogin = { email: action.payload.email, password: action.payload.password };
+
+          return new RegistrationSuccess(user);
+        }),
         catchError((error) => {
           const messages: ErrorBlock[] =
             !error.response ? [{ msg: error.message }] :
@@ -64,8 +71,7 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
                 Array.isArray(error.response.data) ? error.response.data :
                   [error.response.data];
 
-          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new RegistrationError()
-          );
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new RegistrationError());
         })
       )
     )
@@ -74,18 +80,18 @@ export const registerUser$ = (actions$: ActionsObservable<RegisterUser>) =>
 export const successRegistration$ = (action$: ActionsObservable<RegistrationSuccess>) =>
   action$.ofType(AuthTypes.RegistrationSuccess).pipe(
     map(action => {
-      history.push(action.payload);
-    }),
-    ignoreElements()
+
+      return new LoginUser(action.payload);
+    })
   );
 
 export const logoutUser$ = (actions$: ActionsObservable<LogoutUser>) =>
   actions$.pipe(
     ofType(AuthTypes.LogoutUser),
     map(() => {
-      Cookies.remove('jwtToken');
+      Cookies.remove('jwtTokenUser');
       deleteAuthToken();
-      console.log(`logout`);
+
       return new SetCurrentUser(undefined);
     })
   );
@@ -96,9 +102,29 @@ export const setCurrentUser$ = (action$: ActionsObservable<SetCurrentUser>) =>
       const user: FrontEndUser | undefined = action.payload;
       if (user) {
         store.dispatch(new SetLanguage(user.email));
+        store.dispatch(new GetUserLinks(user.id));
       }
     }),
     ignoreElements()
+  );
+
+export const getUserLinks$ = (actions$: ActionsObservable<GetUserLinks>) =>
+  actions$.pipe(
+    ofType(AuthTypes.GetUserLinks),
+    switchMap(action =>
+      from(HttpWrapper.post<{ userId: number }, string[]>('api/users/get-user-links', { userId: action.userId })).pipe(
+        map(res => {
+
+          return new GetUserLinksSuccess(res.data);
+        }),
+        catchError((error) => {
+          const messages: ErrorBlock[] = [{ msg: error.response.data }];
+
+          return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new GetUserLinksError()
+          );
+        })
+      )
+    )
   );
 
 export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksLogin>) =>
@@ -108,7 +134,7 @@ export const socialNetworksLogin$ = (actions$: ActionsObservable<SocialNetworksL
       from(HttpWrapper.post<object, FrontEndUser>('api/users/google-auth', action.payload)).pipe(
         map(res => {
           const { token } = res.data;
-          Cookies.set('jwtToken', token);
+          Cookies.set('jwtTokenUser', token);
           setAuthToken(token);
           const decoded: FrontEndUser = jwt_decode(token);
 
@@ -132,7 +158,8 @@ export const AuthEffects = [
   loginUser$,
   registerUser$,
   logoutUser$,
-  successRegistration$,
   setCurrentUser$,
   socialNetworksLogin$,
+  successRegistration$,
+  getUserLinks$
 ];

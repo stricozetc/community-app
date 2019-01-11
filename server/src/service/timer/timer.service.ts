@@ -13,7 +13,7 @@ export class TimerService {
 
         onInterval(ms);
 
-        const newInterval = setInterval(
+        const newInterval = global.setInterval(
             () => {
                 const now = new Date().getTime();
 

@@ -1,13 +1,17 @@
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import bcrypt from 'bcryptjs';
 
 import { UserSettingsRepository } from './user-settings';
 
 import { ErrorBlock, FieldsToChangePassword, UserModel } from 'models';
 import { logicErr, technicalErr } from 'errors';
+import { LoggerService } from '../logger';
 
 @injectable()
 export class UserSettingsRepositoryImplementation implements UserSettingsRepository {
+  constructor(
+    @inject(LoggerService) private loggerService: LoggerService,
+  ) { }
 
   public async changePassword(fields: FieldsToChangePassword): Promise<{ result: boolean; errors?: ErrorBlock[] }> {
     try {
@@ -67,14 +71,16 @@ export class UserSettingsRepositoryImplementation implements UserSettingsReposit
       try {
         salt = await bcrypt.genSalt(10);
       } catch (error) {
-        console.log(error);
+        this.loggerService.errorLog(error);
+
         throw technicalErr.canNotCreateHash;
       }
 
       try {
         newHashPassword = await bcrypt.hash(newPassword, salt);
       } catch (error) {
-        console.log(error);
+        this.loggerService.errorLog(error);
+
         throw technicalErr.canNotCreateHash;
       }
 
@@ -84,7 +90,8 @@ export class UserSettingsRepositoryImplementation implements UserSettingsReposit
       if (error.code) {
         throw error;
       } else {
-        console.log(error);
+        this.loggerService.errorLog(error);
+
         throw technicalErr.databaseCrash;
       }
     }

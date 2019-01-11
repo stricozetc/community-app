@@ -21,12 +21,6 @@ export const authReducer = (state = initialState, action: AuthActions) => {
                 spinnerRun: true
             };
         }
-        case AuthTypes.RegistrationSuccess: {
-            return {
-                ...state,
-                spinnerRun: false
-            };
-        }
         case AuthTypes.LoginUser: {
             return {
                 ...state,
@@ -39,10 +33,34 @@ export const authReducer = (state = initialState, action: AuthActions) => {
                 spinnerRun: false
             };
         }
+        case AuthTypes.RegistrationSuccess: {
+            return {
+                ...state,
+                spinnerRun: false
+            };
+        }
         case AuthTypes.LoginError: {
             return {
                 ...state,
                 spinnerRun: false
+            };
+        }
+        case AuthTypes.GetUserLinks: {
+            return {
+                ...state,
+                spinnerRun: true
+            };
+        }
+        case AuthTypes.GetUserLinksError: {
+            return {
+                ...state,
+                spinnerRun: false
+            };
+        }
+        case AuthTypes.GetUserLinksSuccess: {
+            return {
+                ...state,
+                appMenuLinks: action.userLinks
             };
         }
         default:

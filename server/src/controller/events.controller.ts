@@ -15,39 +15,38 @@ export class GameEventsContoller {
 
     @httpPost('/add-event')
     public async addEvent(req: Request, res: Response): Promise<void | Response> {
-        const event: Event = req.body;
+        const { event, userId }: { event: Event, userId: number } = req.body;
         try {
-            await this.eventsRepository.addEvent(event);
+            await this.eventsRepository.addEvent(event, userId);
 
             return res.sendStatus(200);
         } catch (err) {
 
-            return res.status(400).json(err.message);
+            return res.status(400).json(err.msg);
         }
     }
 
     @httpPost('/delete-event')
     public async deleteEvent(req: Request, res: Response): Promise<void | Response> {
-        const eventId: number = req.body.id;
+        const { eventId, userId }: { eventId: number, userId: number } = req.body;
         try {
-            await this.eventsRepository.deleteEvent(eventId);
+            await this.eventsRepository.deleteEvent(eventId, userId);
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.status(400).json(err.message);
+            return res.status(400).json(err.msg);
         }
     }
 
     @httpPost('/edit-event')
     public async editEvent(req: Request, res: Response): Promise<void | Response> {
-        const event: Event = req.body;
-
+        const { event, userId }: { event: Event, userId: number } = req.body;
         try {
-            await this.eventsRepository.editEvent(event);
+            await this.eventsRepository.editEvent(event, userId);
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.status(500).json(err.message);
+            return res.status(500).json(err.msg);
         }
     }
 
@@ -58,7 +57,7 @@ export class GameEventsContoller {
 
             return res.status(200).json(events);
         } catch (err) {
-            return res.status(500).json(err.message);
+            return res.status(500).json(err.msg);
         }
     }
 
@@ -70,7 +69,7 @@ export class GameEventsContoller {
 
             return res.status(200).json(event);
         } catch (err) {
-            return res.status(400).json(err.message);
+            return res.status(400).json(err.msg);
         }
     }
 }

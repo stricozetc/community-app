@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import { FormGroup, TextField } from '@material-ui/core';
 import { CaButton } from 'components';
 import { emailRegExp, frontEndValidationErrorsRegister } from 'constes';
-import { SocialNetworksUser, UserFieldsToRegister } from 'models';
+import { AuthStatus, SocialNetworksUser, UserFieldsToRegister } from 'models';
 import { AppState, RegisterUser, SocialNetworksLogin } from 'store';
 
 import {
@@ -23,6 +23,18 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
   constructor(props: RegistrationFormProps) {
     super(props);
     this.state = initRegistrationFormState;
+  }
+
+  public componentWillReceiveProps(nextProps: RegistrationFormProps): void {
+    if (nextProps.status === AuthStatus.Authorized) {
+      this.props.history.push('/homepage');
+    }
+  }
+
+  public componentDidMount(): void {
+    if (this.props.status === AuthStatus.Authorized) {
+      this.props.history.push('/homepage');
+    }
   }
 
   public onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -63,8 +75,6 @@ export class RegistrationFormComponent extends React.Component<RegistrationFormP
 
       this.props.registerUser(user);
     }
-
-    console.log(this.state);
   }
 
   public isValidData = (): boolean => {

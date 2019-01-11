@@ -1,0 +1,91 @@
+@import "../../style/settings.scss";
+@import "../../style/_mixins.scss";
+
+.ca-navbar {
+
+  height: $nav-height;
+
+  &__container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    color: $white;
+    z-index: 101;
+    font-size: 1.8rem;
+    display: flex;
+    height: inherit;
+    background-color: $nav-color;
+  }
+
+  &__items-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin-left: 3rem;
+    @include flexbox-center-all();
+  }
+
+  &__nav-item {
+    @include resetLink($unactive-link-color);
+    position: relative;
+    margin: 1.5rem;
+    cursor: pointer;
+    transition: all .3s;
+  }
+
+  &__nav-item--active {
+    color: $white;
+  }
+
+  &__menu-container {
+    order: 1;
+    margin-left: auto;
+    margin-right: 4rem;
+    display: flex;
+  }
+
+  &__select-language {
+    width: 80px;
+    margin-left: 20px;
+  }
+
+  &__profile-name {
+    display: flex;
+    align-items: center;
+  }
+}
+@media(max-width: 800px) {
+  .ca-navbar {
+    &__nav-item:last-child {
+      display: none;
+    }
+  }
+}
+@media(max-width:320px) {
+  .ca-navbar {
+    &__items-container {
+      width: auto;
+      margin-left: 1rem;
+    }
+
+    &__nav-item {
+      margin: .5rem;
+    }
+
+    &__menu-container {
+      margin-left: 0;
+      }
+
+    &__select-language {
+      width: 65px;
+      margin-left: 16px;
+    }
+  }
+}
+@include respond-to(extra-small-range) {
+  .ca-navbar {
+    &__profile-name {
+      display: none;
+    }
+  }
+}

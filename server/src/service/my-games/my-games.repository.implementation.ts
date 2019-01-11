@@ -25,28 +25,29 @@ export class MyGamesRepositoryImplementation implements MyGamesRepository {
     }
 
     public async editGame(game: Game): Promise<Game[]> {
-            await GamesModel.update({
-            appName: game.appName,
-            description: game.description,
-            maxRoomPlayer: +game.maxRoomPlayer,
-            maxRooms: +game.maxRooms,
-            requestUrl: game.requestUrl,
-            maxWaitingTime: +game.maxWaitingTime,
-            redirectUrl: game.redirectUrl,
-            registrationEventName: game.registrationEventName,
-            leaveEventName: game.leaveEventName,
-            updateRoomsInfoEventName: game.updateRoomsInfoEventName,
-            notifyCountdown: game.notifyCountdown
-        },
+        await GamesModel.update(
+            {
+                appName: game.appName,
+                description: game.description,
+                maxRoomPlayer: +game.maxRoomPlayer,
+                maxRooms: +game.maxRooms,
+                requestUrl: game.requestUrl,
+                maxWaitingTime: +game.maxWaitingTime,
+                redirectUrl: game.redirectUrl,
+                registrationEventName: game.registrationEventName,
+                leaveEventName: game.leaveEventName,
+                updateRoomsInfoEventName: game.updateRoomsInfoEventName,
+                notifyCountdown: game.notifyCountdown
+            },
             { where: { id: +game.id } }
         );
 
-            return GamesModel.findAll({
-                where: {
-                    userId: game.userId
-                }
-            });
-        }
+        return GamesModel.findAll({
+            where: {
+                userId: game.userId
+            }
+        });
+    }
 
     public addGame(data: Game): Promise<Game> {
         return new Promise<Game>((resolve, reject) => {
