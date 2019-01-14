@@ -10,6 +10,8 @@ import {
   AuthStatus,
 } from 'models';
 
+import { CaEventCard } from 'components/EventCard';
+
 import { EventsProps } from './Events.model';
 
 import './Events.scss';
@@ -28,6 +30,7 @@ export class CaEventsPageComponent extends React.Component<EventsProps> {
     return (
       <div className='ca-about'>
         {this.props.children}
+        <CaEventCard />
       </div>
     );
   }
