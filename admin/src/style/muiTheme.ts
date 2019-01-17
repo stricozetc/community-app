@@ -13,7 +13,7 @@ import {
   MuiSnackbarContent,
   MuiTable,
   MuiTableRow,
-  MuiTypography
+  MuiTypography,
 } from 'components';
 
 export const theme = createMuiTheme({
