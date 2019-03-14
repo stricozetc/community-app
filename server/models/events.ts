@@ -10,8 +10,7 @@ export interface Event {
   city: string;
   place: string;
   address: string;
-  locationX: string;
-  locationY: string;
+  location: string;
   begginingInTime: string;
   begginingDate: string;
 }
