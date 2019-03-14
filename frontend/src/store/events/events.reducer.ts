@@ -28,6 +28,25 @@ export const eventsReducer = (state = initialState, action: EventActions) => {
         loadEventsStatus: LoadStatus.Error
       };
     }
+    case EventsActionTypes.LoadEvent: {
+      return {
+        ...state,
+        loadEventStatus: LoadStatus.Fetching
+      }
+    }
+    case EventsActionTypes.LoadEventSuccess: {
+      return {
+        ...state,
+        events: [action.payload],
+        loadEventStatus: LoadStatus.Success
+      };
+    }
+    case EventsActionTypes.LoadEventError: {
+      return {
+        ...state,
+        loadEventStatus: LoadStatus.Error
+      };
+    }
     case EventsActionTypes.AddEvent: {
       return {
         ...state,

@@ -1,6 +1,6 @@
 import { injectable, inject } from 'inversify';
 import { EventsRepository } from 'service/events/events.repository';
-import { Event, EventModel, UserRoles, Roles } from 'models';
+import { Event, EventModel, UserRoles, Roles, RolesId } from 'models';
 import { LoggerService } from 'service/logger';
 import { technicalErr } from 'errors';
 
@@ -14,7 +14,7 @@ export class EventsRepositoryImplementation implements EventsRepository {
       const user = await UserRoles.findOne({
         where: {
           userId: id,
-          roleId: Roles.Admin
+          roleId: RolesId.Admin
         }
       });
 
@@ -26,10 +26,11 @@ export class EventsRepositoryImplementation implements EventsRepository {
           city: event.description,
           place: event.place,
           address: event.address,
-          location: event.locationX,
+          location: event.location,
           begginingInTime: event.begginingInTime,
           begginingDate: event.begginingDate
         });
+        
         await gameEvent.save();
         this.loggerService.infoLog(`event with id ${event.id} added succesfull`);
       } else {
@@ -104,7 +105,7 @@ export class EventsRepositoryImplementation implements EventsRepository {
             city: event.description,
             place: event.place,
             address: event.address,
-            location: event.locationX,
+            location: event.location,
             begginingInTime: event.begginingInTime,
             begginingDate: event.begginingDate
           },
