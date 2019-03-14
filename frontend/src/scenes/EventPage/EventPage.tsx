@@ -13,27 +13,43 @@ import {
 import './EventPage.scss';
 import './EventPageAdaptive.scss';
 import { YandexMap } from 'components';
-import { EventProps } from './Event.model';
+import {
+    EventProps,
+    EventPageState
+} from './Event.model';
+import { Dispatch } from 'redux';
+import { LoadEvent } from 'store/events';
 
-export class EventPageComp extends React.Component<EventProps> {
+export class EventPageComp extends React.Component<EventProps, EventPageState> {
+
     public componentWillMount(): void {
         if (this.props.authStatus === AuthStatus.NotAuthorized) {
             this.props.history.push('/battles');
         }
     }
 
+    public componentDidMount(): void {
+        const { loadEvent } = this.props;
+        loadEvent(this.props.match.params['id']);
+    }
+
     public render(): JSX.Element {
+        const { events } = this.props;
+        console.log('AAAAAAAAAAAA', this.props.match.params['id'])
+        console.log('VVVVVVV', events)
+        console.log('VVVVVVV', events[this.props.match.params['id'] - 1])
+        console.log('AAAAA', events);
         return (
             <I18n>{t => (
                 <div className='event'>
                     <div className='event__header'>
-                        <h1 className='event__header__title'>IT SUMMER MEETUP</h1>
+                        <h1 className='event__header__title'>{events[this.props.match.params['id']].id}</h1>
                     </div>
                     <div className='event__information__wrapper'>
                         <div className='event__information'>
                             <div className='event__information-city'>
                                 г.Могилев
-                            </div>
+                                        </div>
                             <div className='event__information-time'>
                                 <div>{t('startingIn')}:</div>
                                 <div>18:00</div>
@@ -62,7 +78,7 @@ export class EventPageComp extends React.Component<EventProps> {
                             el velit justo. Nunc interdum tortor sed libero iaculis, varius aliquam justo accumsan. Proin ut mag
                             na metus. Pellentesque gravida tristique rhoncus. Praesent tincidunt, lorem et molestie maximus, orci
                             purus varius augue, ut interdum urna turpis condimentum neque. Fusce luctus odio sit amet quam aliquam, vel elementum urna rhoncus.
-                        </p>
+                                    </p>
                     </div>
                     <div className='event__address-title'>
                         <p className='event__address-title-text'>{t('eventPlace')}</p>
@@ -76,13 +92,19 @@ export class EventPageComp extends React.Component<EventProps> {
                         </div>
                     </div>
                 </div>
-             )}</I18n>
+            )
+            }</I18n>
         );
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
-    authStatus: state.auth.status,
+const mapDisparchToProps = (dispatch: Dispatch) => ({
+    loadEvent: (id: number) => dispatch(new LoadEvent(id)),
 });
 
-export const EventPage = connect(mapStateToProps)(EventPageComp);
+const mapStateToProps = (state: AppState) => ({
+    authStatus: state.auth.status,
+    events: state.events.events,
+});
+
+export const EventPage = connect(mapStateToProps, mapDisparchToProps)(EventPageComp);
