@@ -338,14 +338,14 @@ export interface Margin {
 
 export interface Event {
   id?: number;
-  userId?: number;
+  //userId?: number;
   title: string;
   description: string;
   city: string;
   place: string;
   address: string;
-  locationX: string;
-  locationY: string;
+  location: string;
+  //locationY: string;
   begginingInTime: string;
   begginingDate: string;
   createAt?: Date;
