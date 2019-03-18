@@ -88,7 +88,7 @@ export const loadEvent$ = (action$: ActionsObservable<LoadEvent>) =>
     switchMap(action =>
       from(HttpWrapper.get<Event>('api/events/get-event?id=' + action.payload))
         .pipe(
-          map((res) => {console.log('events.effects', res); new LoadEventSuccess(res.data)},
+          map((res) => new LoadEventSuccess(res.data),
             catchError((error) => {
               const messages: ErrorBlock[] = [{ msg: error.response.body }];
               return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new LoadEventError());

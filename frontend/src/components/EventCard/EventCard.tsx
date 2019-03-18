@@ -10,9 +10,7 @@ export const CaEventCard = ({ id, title, city, place, begginingInTime, beggining
       <button className='ca-about_card_edit-btn'>Edit</button>
       <button className='ca-about_card_delete-btn'>+</button>
       <div className='ca-about_card_img'>
-        <NavLink to={`/event/${id}`} >{
-          console.log(id)
-        }
+        <NavLink to={`/event/${id}`} >
           <button className='ca-about_card_img_btn'>JOIN US</button>
         </NavLink>
       </div>
