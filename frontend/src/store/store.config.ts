@@ -1,6 +1,5 @@
 import { connect as nativeConnect } from 'react-redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import thunk from 'redux-thunk';
 
 import {
   AuthEffects,
@@ -126,11 +125,11 @@ const composeForAllBrowsers = (devTools: StoreEnhancer<{
   dispatch: {};
 }, {}>) => {
   return devTools ? compose(
-    applyMiddleware(epicMiddleware, thunk),
+    applyMiddleware(epicMiddleware),
     devTools
   )
     : compose(
-      applyMiddleware(epicMiddleware, thunk)
+      applyMiddleware(epicMiddleware)
     );
 };
 
