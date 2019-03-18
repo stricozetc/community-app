@@ -28,13 +28,13 @@ export class EventPageComp extends React.Component<EventProps> {
     }
 
     public componentDidMount(): void {
-        const { loadEvent } = this.props;
-        loadEvent(this.props.match.params['id']);
+        const { loadEvent, match } = this.props;
+        loadEvent(match.params['id']);
     }
 
     public componentWillReceiveProps(nextProps: EventProps): void {
-        const { loadEvent } = this.props;
-        if (nextProps.match.params['id'] !== this.props.match.params['id']) {
+        const { loadEvent, match } = this.props;
+        if (nextProps.match.params['id'] !== match.params['id']) {
             loadEvent(nextProps.match.params['id']);
         }
     }
