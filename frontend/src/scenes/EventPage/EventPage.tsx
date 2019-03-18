@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { I18n } from 'react-i18next';
 
 import {
-    AuthStatus
+    AuthStatus,
+    LoadStatus
 } from 'models';
 
 import {
@@ -44,7 +45,7 @@ export class EventPageComp extends React.Component<EventProps> {
         return (
             <div>
                 {
-                    loadEventStatus === 3
+                    loadEventStatus === LoadStatus.Error
                         ? <Redirect to="/events" />
                         : events.map(event => {
                             return (

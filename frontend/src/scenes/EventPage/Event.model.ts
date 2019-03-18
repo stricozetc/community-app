@@ -3,7 +3,8 @@ import { match } from 'react-router';
 
 import {
     AuthStatus,
-    Event
+    Event,
+    LoadStatus
 } from 'models';
 
 export interface EventProps {
@@ -12,7 +13,7 @@ export interface EventProps {
     authStatus: AuthStatus;
     match: match<number>;
     events: Event[];
-    loadEventStatus: number;
+    loadEventStatus: LoadStatus;
 
     loadEvent(id: number): void;
 }
