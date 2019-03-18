@@ -36,7 +36,6 @@ export class CaEventsPageComponent extends React.Component<EventsProps> {
     const { events } = this.props;
     return (
       <div className='ca-about'>
-        {this.props.children}
         {
           events.map(event => {
             return (
