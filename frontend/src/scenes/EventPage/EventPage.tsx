@@ -43,59 +43,61 @@ export class EventPageComp extends React.Component<EventProps> {
     public render(): JSX.Element {
         const { events, loadEventStatus } = this.props;
         return (
-            <div>
+            <I18n>
                 {
-                    loadEventStatus === LoadStatus.Error
-                        ? <Redirect to="/events" />
-                        : events.map(event => {
-                            return (
-                                <I18n key={event.id}>{t => (
-                                    <div className='event'>
-                                        <div className='event__header'>
-                                            <h1 className='event__header__title'>{event.id}</h1>
-                                        </div>
-                                        <div className='event__information__wrapper'>
-                                            <div className='event__information'>
-                                                <div className='event__information-city'>
-                                                    {event.address}
+                    (t) => (
+                        <React.Fragment>
+                            {
+                                loadEventStatus === LoadStatus.Error
+                                    ? <Redirect to="/events" />
+                                    : events.map(event => {
+                                        return (
+                                            <div className='event'>
+                                                <div className='event__header'>
+                                                    <h1 className='event__header__title'>{event.id}</h1>
                                                 </div>
-                                                <div className='event__information-time'>
-                                                    <div>{t('startingIn')}:</div>
-                                                    <div>18:00</div>
+                                                <div className='event__information__wrapper'>
+                                                    <div className='event__information'>
+                                                        <div className='event__information-city'>
+                                                            {event.address}
+                                                        </div>
+                                                        <div className='event__information-time'>
+                                                            <div>{t('startingIn')}:</div>
+                                                            <div>18:00</div>
+                                                        </div>
+                                                        <div className='event__information-date'>
+                                                            <div>{t('eventDate')}:</div>
+                                                            <div>2018-07-29</div>
+                                                        </div>
+                                                        <div className='event__information-place'>
+                                                            <div>{t('eventPlace')}:</div>
+                                                            <div>Косманавтов 19</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className='event__information-date'>
-                                                    <div>{t('eventDate')}:</div>
-                                                    <div>2018-07-29</div>
+                                                <div className='event__description'>
+                                                    <p className='event__description__main-text'>{t('description')}</p>
+                                                    <p className='event__description__second-text'>{event.description}
+                                                    </p>
                                                 </div>
-                                                <div className='event__information-place'>
-                                                    <div>{t('eventPlace')}:</div>
-                                                    <div>Косманавтов 19</div>
+                                                <div className='event__address-title'>
+                                                    <p className='event__address-title-text'>{t('eventPlace')}</p>
+                                                </div>
+                                                <div className='event__place'>
+                                                    <div className='event__place-address'>
+                                                        <p>г.Могилев, Косманавтов 19</p>
+                                                    </div>
+                                                    <div className='event__place-map'>
+                                                        <YandexMap positionX={53.908087} positionY={30.308924} zoom={17} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className='event__description'>
-                                            <p className='event__description__main-text'>{t('description')}</p>
-                                            <p className='event__description__second-text'>{event.description}
-                                            </p>
-                                        </div>
-                                        <div className='event__address-title'>
-                                            <p className='event__address-title-text'>{t('eventPlace')}</p>
-                                        </div>
-                                        <div className='event__place'>
-                                            <div className='event__place-address'>
-                                                <p>г.Могилев, Косманавтов 19</p>
-                                            </div>
-                                            <div className='event__place-map'>
-                                                <YandexMap positionX={53.908087} positionY={30.308924} zoom={17} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                                }</I18n>
-                            );
-                        })
-                }
-            </div>
+                                        );
+                                    }
+                                    )}
+                        </React.Fragment>
+                    )}
+            </I18n>
         );
     }
 }
