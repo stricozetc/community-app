@@ -12,9 +12,6 @@ export interface EventProps {
     authStatus: AuthStatus;
     match: match<number>;
     events: Event[];
-    loadEvent(id: number): void;
-}
 
-export interface EventPageState {
-    checkRouteId: boolean,
+    loadEvent(id: number): void;
 }
