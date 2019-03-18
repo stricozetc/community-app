@@ -12,6 +12,7 @@ export interface EventProps {
     authStatus: AuthStatus;
     match: match<number>;
     events: Event[];
+    loadEventStatus: number;
 
     loadEvent(id: number): void;
 }

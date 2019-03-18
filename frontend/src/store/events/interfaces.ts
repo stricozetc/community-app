@@ -6,4 +6,5 @@ export interface EventState {
   editEventStatus: LoadStatus;
   deleteEventStatus: LoadStatus;
   addEventStatus: LoadStatus;
+  loadEventStatus: LoadStatus;
 }
