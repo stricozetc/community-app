@@ -52,7 +52,7 @@ export class EventPageComp extends React.Component<EventProps> {
                                     ? <Redirect to="/events" />
                                     : events.map(event => {
                                         return (
-                                            <div className='event'>
+                                            <div key={event.id} className='event'>
                                                 <div className='event__header'>
                                                     <h1 className='event__header__title'>{event.id}</h1>
                                                 </div>
