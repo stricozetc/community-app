@@ -19,6 +19,7 @@ import {
 import {
   Landing,
   PageNotFound,
+  CaEvents,
 } from 'scenes';
 
 import {
@@ -234,14 +235,6 @@ export class RootComponent extends React.Component<RootProps> {
 
             <Route
               exact={true}
-              path='/events'
-              render={props => (
-                <CaMyGames {...props} />
-              )}
-            />
-
-            <Route
-              exact={true}
               path='/games'
               render={props => (
                 <CaMyGames {...props} />
@@ -261,6 +254,14 @@ export class RootComponent extends React.Component<RootProps> {
               path='/games/edit-game/:idOfTheGame'
               render={props => (
                 <CaEditGame {...props} />
+              )}
+            />
+
+            <Route
+              exact={true}
+              path='/events'
+              render={props => (
+                <CaEvents {...props} />
               )}
             />
 
