@@ -5,7 +5,7 @@ import './EventCard.scss';
 import { EventCardProps } from './EventCard.model';
 import { NavLink } from 'react-router-dom';
 
-export class CaEventCard extends React.Component<EventCardProps> {
+export class CaEventCard extends React.PureComponent<EventCardProps> {
   render() {
     const { id, title, city, place, begginingInTime, begginingDate } = this.props;
     return (
