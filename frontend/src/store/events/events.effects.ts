@@ -90,7 +90,7 @@ export const loadEvent$ = (action$: ActionsObservable<LoadEvent>) =>
         .pipe(
           map((res) => new LoadEventSuccess(res.data)),
           catchError((error) => {
-            const messages: ErrorBlock[] = [{ msg: error.response.body }];
+            const messages: ErrorBlock[] = [{ msg: error.response.data }];
             return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new LoadEventError());
           })
         ))
