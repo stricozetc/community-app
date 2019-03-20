@@ -19,6 +19,9 @@ import {
   LoadEvents,
   LoadEventsError,
   LoadEventsSuccess,
+  LoadEvent,
+  LoadEventSuccess,
+  LoadEventError,
 } from './events.action';
 
 import { OpenSnackbar } from '../snackbar';
@@ -79,9 +82,24 @@ export const loadEvents$ = (action$: ActionsObservable<LoadEvents>) =>
         ))
   );
 
+export const loadEvent$ = (action$: ActionsObservable<LoadEvent>) =>
+  action$.pipe(
+    ofType(EventsActionTypes.LoadEvent),
+    switchMap(action =>
+      from(HttpWrapper.get<Event>('api/events/get-event?id=' + action.payload))
+        .pipe(
+          map((res) => new LoadEventSuccess(res.data)),
+          catchError((error) => {
+            const messages: ErrorBlock[] = [{ msg: error.response.body }];
+            return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new LoadEventError());
+          })
+        ))
+  );
+
 export const EventsEffects = [
   addEvent$,
   deleteEvent$,
   editEvent$,
   loadEvents$,
+  loadEvent$,
 ];
