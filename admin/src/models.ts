@@ -139,6 +139,11 @@ export enum TypeOfColumn {
   Date = 'Date',
   Increment = 'Increment'
 }
+
+export interface EventModel {
+  event: Event;
+}
+
 export interface GameModel {
   id?: number;
   userId?: number;
@@ -181,9 +186,22 @@ export interface GameForSettingForm {
   redirectUrl: string;
 }
 
+export interface EventForSettingForm {
+  title: string;
+  description: string;
+  city: string;
+  place: string;
+  address: string;
+  location: string;
+  begginingInTime: string;
+  begginingDate: string;
+}
+
 export enum SettingFormType {
   EditGame = 'Edit Game',
-  AddGame = 'Add Game'
+  AddGame = 'Add Game',
+  AddEvent = 'Add Event',
+  EditEvent = 'Edit Event',
 }
 
 export enum chartsTypes {
@@ -219,6 +237,17 @@ export interface FrontEndValidationErrorsGameRegister {
   requestUrl: { mustBeCorrect: string, required: string };
   maxWaitingTime: { mustBeCorrect: string, required: string };
   redirectUrl: { mustBeCorrect: string, required: string };
+}
+
+export interface FrontEndValidationErrorsEventRegister {
+  title: { length: string, required: string };
+  description: { length: string, required: string };
+  city: { length: string, required: string };
+  place: { length: string, required: string };
+  address: { length: string, required: string };
+  location: { length: string, required: string };
+  begginingInTime: { length: string, required: string };
+  begginingDate: { length: string, required: string };
 }
 
 export interface Leaders {
@@ -332,8 +361,7 @@ export interface Event {
   city: string;
   place: string;
   address: string;
-  locationX: string;
-  locationY: string;
+  location: string;
   begginingInTime: string;
   begginingDate: string;
   createAt?: Date;
