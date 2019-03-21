@@ -27,11 +27,12 @@ export const addEvent$ = (action$: ActionsObservable<AddEvent>) =>
   action$.pipe(
     ofType(EventsActionTypes.AddEvent),
     switchMap(action =>
-      from(HttpWrapper.post('api/events/add-event', action.payload))
+      from(HttpWrapper.post<Event, Event>('api/events/add-event', action.payload))
         .pipe(
-          map(res => new AddEventSuccess(action.payload.event)),
+          map(res => new AddEventSuccess(action.payload)),
           catchError((error) => {
-            const messages: ErrorBlock[] = [{ msg: error.response.body }];
+            console.log(action.payload);
+            const messages: ErrorBlock[] = [{ msg: error.response.data }];
             return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new AddEventError());
           })
         ))

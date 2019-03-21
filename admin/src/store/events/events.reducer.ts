@@ -5,9 +5,9 @@ import {
   EventsActionTypes
 } from './events.action';
 
-import { initialState } from './events.initial';
+import { initialStateEvent } from './events.initial';
 
-export const eventsReducer = (state = initialState, action: EventActions) => {
+export const eventsReducer = (state = initialStateEvent, action: EventActions) => {
   switch (action.type) {
     case EventsActionTypes.LoadEvents: {
       return {
