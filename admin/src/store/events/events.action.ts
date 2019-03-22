@@ -58,7 +58,7 @@ export class DeleteEventError {
 export class EditEvent {
   public readonly type = EventsActionTypes.EditEvent;
 
-  public constructor(public payload: { event: Event, userId: number }) { }
+  public constructor(public payload: Event) { }
 }
 
 @action()
