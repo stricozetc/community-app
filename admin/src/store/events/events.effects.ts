@@ -29,9 +29,8 @@ export const addEvent$ = (action$: ActionsObservable<AddEvent>) =>
     switchMap(action =>
       from(HttpWrapper.post<Event, Event>('api/events/add-event', action.payload))
         .pipe(
-          map(res => new AddEventSuccess(action.payload)),
+          map(res => new AddEventSuccess(res.data)),
           catchError((error) => {
-            console.log(action.payload);
             const messages: ErrorBlock[] = [{ msg: error.response.data }];
             return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new AddEventError());
           })
@@ -58,7 +57,7 @@ export const editEvent$ = (action$: ActionsObservable<EditEvent>) =>
     switchMap(action =>
       from(HttpWrapper.post('api/events/edit-event', action.payload))
         .pipe(
-          map(res => new EditEventSuccess(action.payload.event)),
+          map(res => new EditEventSuccess(action.payload)),
           catchError((error) => {
             const messages: ErrorBlock[] = [{ msg: error.response.body }];
             return of(new OpenSnackbar({ type: SnackbarType.Error, messages }), new EditEventError());
