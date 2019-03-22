@@ -7,13 +7,13 @@ import { NavLink } from 'react-router-dom';
 
 export class CaEventCard extends React.PureComponent<EventCardProps> {
   render() {
-    const { title, city, place, begginingInTime, begginingDate } = this.props;
+    const { id, title, city, place, begginingInTime, begginingDate } = this.props;
     return (
       <div className='ca-about_card'>
         <I18n>
           {
             t => (
-              <NavLink to="edit-event">
+              <NavLink to={`/events/edit-event/${id}`}>
                 <button className='ca-about_card_edit-btn'>{t('Edit')}</button>
               </NavLink>
             )
