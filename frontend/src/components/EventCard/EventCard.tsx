@@ -10,8 +10,6 @@ export class CaEventCard extends React.PureComponent<EventCardProps> {
     const { id, title, city, place, begginingInTime, begginingDate } = this.props;
     return (
       <div className='ca-about_card'>
-        <button className='ca-about_card_edit-btn'>Edit</button>
-        <button className='ca-about_card_delete-btn'>+</button>
         <div className='ca-about_card_img'>
           <I18n>
             {
