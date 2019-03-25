@@ -171,6 +171,17 @@ export interface Row {
   [key: string]: any;
 }
 
+export interface EventForSettingForm {
+  title: string;
+  description: string;
+  city: string;
+  place: string;
+  address: string;
+  location: string;
+  begginingInTime: string;
+  begginingDate: string;
+}
+
 export interface GameForSettingForm {
   appName: string;
   description: string;
@@ -183,7 +194,9 @@ export interface GameForSettingForm {
 
 export enum SettingFormType {
   EditGame = 'Edit Game',
-  AddGame = 'Add Game'
+  AddGame = 'Add Game',
+  EditEvent = 'Edit Game',
+  AddEvent = 'Add Game',
 }
 
 export enum chartsTypes {

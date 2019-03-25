@@ -9,3 +9,4 @@ export * from './GameForm';
 export * from './Mui';
 export * from './ProtectedRoute';
 export * from './EventCard';
+export * from './AddEventComponent';

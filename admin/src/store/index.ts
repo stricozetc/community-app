@@ -4,3 +4,4 @@ export * from './auth';
 export * from './my-games';
 export * from './snackbar';
 export * from './userSettings';
+export * from './events';
