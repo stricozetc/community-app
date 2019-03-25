@@ -1,0 +1,135 @@
+@import "../../style/settings.scss";
+
+.ca-about_card {
+  margin: 25px;
+  position: relative;
+  width: 400px;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &_edit-btn {
+      position: absolute;
+      top: -15px;
+      right: 60px;
+      z-index: 100;
+      border: none;
+      border-radius: 4px;
+      height: 30px;
+      width: 60px;
+      outline: none;
+      cursor: pointer;
+      font-size: 18px;
+      background-color: white;
+      color: #f05537;
+      transition-duration: 0.2s;
+  }
+
+  &_edit-btn:hover {
+      background-color: #f05537;
+      color: white;
+  }
+
+  &_delete-btn {
+      position: absolute;
+      z-index: 100;
+      border: none;
+      border-radius: 100%;
+      outline: none;
+      height: 35px;
+      width: 35px;
+      top: -17.5px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 25px;
+      transform: rotate(45deg);
+      background-color: white;
+      color: #f05537;
+      transition-duration: 0.2s;
+  }
+
+  &_delete-btn:hover {
+      background-color: #f05537;
+      color: white;
+  }
+
+  &_img {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      width: 100%;
+      height: 200px;
+      background: url(https://thehustle.co/wp-content/uploads/2017/11/wework-buys-meetup.jpg);
+      position: relative;
+      transition: 0.5s;
+
+      &_btn {
+          background-color: #e0e0e0;
+          position:absolute;
+          top: 40%;
+          left: 50%;
+          transform: translate(-50%, 0);
+          border-radius: 20px;
+          border: none;
+          background-color: white;
+          font-size: 20px;
+          padding: 5px 30px;
+          font-weight: 400;
+          display: none;
+          cursor: pointer;
+          outline: none;
+          transition-duration: 0.2s;
+      }
+
+      &_btn:hover {
+          background-color: black;
+          color: white;
+      }
+  }
+
+  &_img:hover {
+      filter: grayscale(100%);
+
+      & .ca-about_card_img_btn {
+          display: block;
+      }
+  }
+
+  &_information {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 20px 24px;
+
+      &_date {
+          display: flex;
+          flex-direction: column;
+          width: 16%;
+          padding-right: 16px;
+
+          &_month {
+              color: #f05537;
+              text-align: center;
+              font-size: 18px;
+          }
+
+          &_num {
+              color: #6f7287;
+              text-align: center;
+              font-size: 18px;
+          }
+      }
+
+      &_text {
+
+          &_title {
+              font-size: 18px;
+              padding-bottom: 5px;
+          }
+
+          &_time-address {
+              color: #6f7287;
+              font-size: 14px;
+          }
+      }
+  }
+}
