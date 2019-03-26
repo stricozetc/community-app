@@ -20,14 +20,14 @@ export enum EventsActionTypes {
 export class AddEvent {
   public readonly type = EventsActionTypes.AddEvent;
 
-  public constructor(public payload: { event: Event, userId: number }) {}
+  public constructor(public payload: { event: Event, userId: number }) { }
 }
 
 @action()
 export class AddEventSuccess {
   public readonly type = EventsActionTypes.AddEventSuccess;
 
-  public constructor(public payload: Event) {}
+  public constructor(public payload: Event) { }
 }
 
 @action()
@@ -39,14 +39,14 @@ export class AddEventError {
 export class DeleteEvent {
   public readonly type = EventsActionTypes.DeleteEvent;
 
-  public constructor(public payload: { event: Event, userId: number }) {}
+  public constructor(public payload: { event: Event, userId: number }) { }
 }
 
 @action()
 export class DeleteEventSuccess {
   public readonly type = EventsActionTypes.DeleteEventSuccess;
 
-  public constructor(public payload: Event) {}
+  public constructor(public payload: Event) { }
 }
 
 @action()
@@ -58,14 +58,14 @@ export class DeleteEventError {
 export class EditEvent {
   public readonly type = EventsActionTypes.EditEvent;
 
-  public constructor(public payload: { event: Event, userId: number }) {}
+  public constructor(public payload: Event) { }
 }
 
 @action()
 export class EditEventSuccess {
   public readonly type = EventsActionTypes.EditEventSuccess;
 
-  public constructor(public payload: Event) {}
+  public constructor(public payload: Event) { }
 }
 
 @action()
@@ -82,7 +82,7 @@ export class LoadEvents {
 export class LoadEventsSuccess {
   public readonly type = EventsActionTypes.LoadEventsSuccess;
 
-  public constructor(public payload: Event[]) {}
+  public constructor(public payload: Event[]) { }
 }
 
 @action()
