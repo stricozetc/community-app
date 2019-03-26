@@ -42,6 +42,7 @@ import {
   AppMenu,
   CaAddGame,
   CaEditGame,
+  CaAddEvent,
   CaLogo,
   CaNavbar,
   CaSelect,
@@ -262,6 +263,14 @@ export class RootComponent extends React.Component<RootProps> {
               path='/events'
               render={props => (
                 <CaEvents {...props} />
+              )}
+            />
+
+            <Route
+              exact={true}
+              path='/events/add-event'
+              render={props => (
+                <CaAddEvent {...props} />
               )}
             />
 
