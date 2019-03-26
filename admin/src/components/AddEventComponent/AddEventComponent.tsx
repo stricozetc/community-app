@@ -21,8 +21,6 @@ const initFormForAddingNewEvent: EventForSettingForm = {
     place: '',
     address: '',
     locationX: '',
-    begginingInTime: '',
-    begginingDate: '',
 };
 export class AddEventComponent extends React.Component<AddEventComponentProps> {
     constructor(props: AddEventComponentProps) {

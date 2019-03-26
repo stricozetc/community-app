@@ -193,8 +193,6 @@ export interface EventForSettingForm {
   place: string;
   address: string;
   locationX: string;
-  begginingInTime: string;
-  begginingDate: string;
 }
 
 export enum SettingFormType {
