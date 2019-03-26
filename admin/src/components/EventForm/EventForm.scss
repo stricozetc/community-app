@@ -1,0 +1,35 @@
+.ca-game-form {
+    &__container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 4rem;
+        background-color: white;
+        font-size:  1.6rem;
+    }
+
+    &__error {
+        color: #f92a42;
+        display: block;
+        padding: 5px 10px;
+        background-color: rgba(239, 38, 78, .4);
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    &__game-btn {
+      margin-top: 20px;
+      font-size: 1.6rem;
+    }
+}
+
+@media(max-width:320px) {
+    .ca-game-form {
+        &__container{
+            padding: 3.2rem;
+        }
+
+        &__game-btn {
+            margin-left: 25px;
+        }
+    }
+}
