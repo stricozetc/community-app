@@ -1,7 +1,7 @@
 import { FormGroup, TextField } from '@material-ui/core';
 import * as React from 'react';
 
-import { CaButton } from 'components';
+import { CaButton, CaDatePickers, CaTimePickers } from 'components';
 import { frontEndValidationEventRegister } from 'constes';
 import { Event, SettingFormType } from 'models';
 import { I18n } from 'react-i18next';
@@ -23,10 +23,6 @@ const MIN_LENGTH_ADDRESS = 3;
 const MAX_LENGTH_ADDRESS = 70;
 const MIN_LENGTH_LOCATION = 3;
 const MAX_LENGTH_LOCATION = 50;
-const MIN_LENGTH_BEGGINING_IN_TIME = 3;
-const MAX_LENGTH_BEGGINING_IN_TIME = 20;
-const MIN_LENGTH_BEGGINING_DATE = 3;
-const MAX_LENGTH_BEGGINING_DATE = 20;
 
 export class EventForm extends React.Component<EventFormProps, EventFormState> {
   constructor(props: EventFormProps) {
@@ -39,8 +35,8 @@ export class EventForm extends React.Component<EventFormProps, EventFormState> {
       place: '',
       address: '',
       locationX: '',
-      begginingInTime: '',
-      begginingDate: '',
+      begginingInTime: '2019-01-16',
+      begginingDate: '07:30',
       isTitleValid: false,
       isDescriptionValid: false,
       isCityValid: false,
@@ -194,14 +190,6 @@ export class EventForm extends React.Component<EventFormProps, EventFormState> {
       );
     }
 
-    if (this.state.begginingInTime.length < MIN_LENGTH_BEGGINING_IN_TIME || this.state.begginingInTime.length > MAX_LENGTH_BEGGINING_IN_TIME) {
-      begginingInTimeErrors.push(frontEndValidationEventRegister.begginingInTime.length);
-    } else {
-      begginingInTimeErrors = this.removeElFromArrByValue(
-        begginingInTimeErrors,
-        frontEndValidationEventRegister.begginingInTime.length);
-    }
-
     if (!this.state.begginingDate) {
       begginingDateErrors.push(frontEndValidationEventRegister.begginingDate.length);
     } else {
@@ -210,15 +198,6 @@ export class EventForm extends React.Component<EventFormProps, EventFormState> {
         frontEndValidationEventRegister.begginingDate.length
       );
     }
-
-    if (this.state.begginingDate.length < MIN_LENGTH_BEGGINING_DATE || this.state.begginingDate.length > MAX_LENGTH_BEGGINING_DATE) {
-      begginingDateErrors.push(frontEndValidationEventRegister.begginingDate.length);
-    } else {
-      begginingDateErrors = this.removeElFromArrByValue(
-        begginingDateErrors,
-        frontEndValidationEventRegister.begginingDate.length);
-    }
-
 
     this.setState({
       titleErrors,
@@ -364,6 +343,22 @@ export class EventForm extends React.Component<EventFormProps, EventFormState> {
                     </FormGroup>
                   );
                 })}
+                <CaDatePickers
+                  style={{
+                    marginTop: '20px'
+                  }}
+                  name={'begginingDate'}
+                  onChange={this.handleChange}
+                  error={!this.state.begginingDate && this.state.touched.begginingDate}
+                />
+                <CaTimePickers
+                  style={{
+                    marginTop: '20px'
+                  }}
+                  name={'begginingInTime'}
+                  onChange={this.handleChange}
+                  error={!this.state.begginingInTime && this.state.touched.begginingInTime}
+                />
                 <CaButton
                   color='primary'
                   type='submit'
