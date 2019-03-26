@@ -4,7 +4,7 @@ import { EventState } from './interfaces';
 
 type State = EventState;
 
-export const initialState: State = {
+export const initialStateEvent: State = {
     events: [],
     loadEventsStatus: LoadStatus.Init,
     editEventStatus: LoadStatus.Init,
