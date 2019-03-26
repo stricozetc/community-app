@@ -343,7 +343,7 @@ export interface Event {
   city: string;
   place: string;
   address: string;
-  location: string;
+  locationX: string;
   begginingInTime: string;
   begginingDate: string;
   createAt?: Date;

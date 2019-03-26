@@ -10,9 +10,14 @@ export interface Event {
   city: string;
   place: string;
   address: string;
-  location: string;
+  locationX: string;
   begginingInTime: string;
   begginingDate: string;
+}
+
+export interface EventModel {
+  event: Event;
+  userId: number;
 }
 
 export const EventModel: SequelizeStaticAndInstance['Model'] = db.connect.define(
@@ -58,7 +63,7 @@ export const EventModel: SequelizeStaticAndInstance['Model'] = db.connect.define
         notEmpty: true
       }
     },
-    location: {
+    locationX: {
       type: Sequelize.STRING(50),
       allowNull: false,
       validate: {

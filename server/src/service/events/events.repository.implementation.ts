@@ -26,7 +26,7 @@ export class EventsRepositoryImplementation implements EventsRepository {
           city: event.description,
           place: event.place,
           address: event.address,
-          location: event.location,
+          locationX: event.locationX,
           begginingInTime: event.begginingInTime,
           begginingDate: event.begginingDate
         });
@@ -105,7 +105,7 @@ export class EventsRepositoryImplementation implements EventsRepository {
             city: event.description,
             place: event.place,
             address: event.address,
-            location: event.location,
+            locationX: event.locationX,
             begginingInTime: event.begginingInTime,
             begginingDate: event.begginingDate
           },

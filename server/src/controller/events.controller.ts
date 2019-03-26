@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 
 import { EventsRepository } from 'service/events';
-import { Event } from 'models';
+import { Event, EventModel } from 'models';
 
 @controller('/api/events')
 export class GameEventsContoller {
@@ -15,7 +15,7 @@ export class GameEventsContoller {
 
     @httpPost('/add-event')
     public async addEvent(req: Request, res: Response): Promise<void | Response> {
-        const { event, userId }: { event: Event, userId: number } = req.body;
+        const { event, userId }: EventModel = req.body;
         try {
             await this.eventsRepository.addEvent(event, userId);
 
