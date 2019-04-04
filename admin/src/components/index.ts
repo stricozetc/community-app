@@ -10,3 +10,4 @@ export * from './AddEventComponent';
 export * from './EventForm';
 export * from './Mui';
 export * from './ProtectedRoute';
+export * from './EventDescription';

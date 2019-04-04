@@ -1,7 +1,7 @@
 import { FormGroup, TextField } from '@material-ui/core';
 import * as React from 'react';
 
-import { CaButton, CaDatePickers, CaTimePickers } from 'components';
+import { CaButton, CaDatePickers, CaTimePickers, CaEventDescription } from 'components';
 import { frontEndValidationEventRegister } from 'constes';
 import { Event, SettingFormType } from 'models';
 import { I18n } from 'react-i18next';
@@ -359,6 +359,7 @@ export class EventForm extends React.Component<EventFormProps, EventFormState> {
                   onChange={this.handleChange}
                   error={!this.state.begginingInTime && this.state.touched.begginingInTime}
                 />
+                  <CaEventDescription />
                 <CaButton
                   color='primary'
                   type='submit'
