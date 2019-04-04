@@ -10,12 +10,17 @@
   },
   "dependencies": {
     "@types/d3": "^5.0.0",
+    "@types/draft-js": "^0.10.29",
     "concurrently": "^3.6.1",
     "d3-tip": "^0.9.1",
+    "draft-js": "^0.10.5",
+    "react": "^16.8.5",
     "react-d3": "^0.4.0",
-    "react-d3-tooltip": "^1.4.14"
+    "react-d3-tooltip": "^1.4.14",
+    "react-dom": "^16.8.5"
   },
   "devDependencies": {
-    "@types/history": "^4.7.0"
+    "@types/history": "^4.7.0",
+    "@types/node": "^11.12.0"
   }
 }
