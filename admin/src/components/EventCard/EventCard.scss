@@ -1,6 +1,6 @@
 @import "../../style/settings.scss";
 
-.ca-about_card {
+.ca-about-card {
   margin: 25px;
   position: relative;
   width: 400px;
@@ -8,7 +8,7 @@
   border-radius: 4px;
   cursor: pointer;
 
-  &_edit-btn {
+  &__edit-btn {
       position: absolute;
       top: -15px;
       right: 60px;
@@ -25,12 +25,12 @@
       transition-duration: 0.2s;
   }
 
-  &_edit-btn:hover {
+  &__edit-btn:hover {
       background-color: #f05537;
       color: white;
   }
 
-  &_delete-btn {
+  &__delete-btn {
       position: absolute;
       z-index: 100;
       border: none;
@@ -48,12 +48,12 @@
       transition-duration: 0.2s;
   }
 
-  &_delete-btn:hover {
+  &__delete-btn:hover {
       background-color: #f05537;
       color: white;
   }
 
-  &_img {
+  &__img {
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
       width: 100%;
@@ -62,7 +62,7 @@
       position: relative;
       transition: 0.5s;
 
-      &_btn {
+      &__btn {
           background-color: #e0e0e0;
           position:absolute;
           top: 40%;
@@ -80,53 +80,53 @@
           transition-duration: 0.2s;
       }
 
-      &_btn:hover {
+      &__btn:hover {
           background-color: black;
           color: white;
       }
   }
 
-  &_img:hover {
+  &__img:hover {
       filter: grayscale(100%);
 
-      & .ca-about_card_img_btn {
+      & .ca-about-card_img_btn {
           display: block;
       }
   }
 
-  &_information {
+  &__information {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       padding: 20px 24px;
 
-      &_date {
+      &-date {
           display: flex;
           flex-direction: column;
           width: 16%;
           padding-right: 16px;
 
-          &_month {
+          &-month {
               color: #f05537;
               text-align: center;
               font-size: 18px;
           }
 
-          &_num {
+          &-num {
               color: #6f7287;
               text-align: center;
               font-size: 18px;
           }
       }
 
-      &_text {
+      &-text {
 
-          &_title {
+          &-title {
               font-size: 18px;
               padding-bottom: 5px;
           }
 
-          &_time-address {
+          &-time-address {
               color: #6f7287;
               font-size: 14px;
           }
