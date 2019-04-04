@@ -188,7 +188,6 @@ export interface GameForSettingForm {
 
 export interface EventForSettingForm {
   title: string;
-  description: string;
   city: string;
   place: string;
   address: string;
