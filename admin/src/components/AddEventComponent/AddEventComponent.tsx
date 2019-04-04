@@ -16,7 +16,6 @@ import { AddEventComponentProps } from './AddEventComponent.model';
 
 const initFormForAddingNewEvent: EventForSettingForm = {
     title: '',
-    description: '',
     city: '',
     place: '',
     address: '',
